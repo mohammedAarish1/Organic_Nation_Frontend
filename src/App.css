@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Jersey+10&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+*{
+  margin:0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root{
+  --bgColorPrimary:#1B381A;
+  --bgColorSecondary:#F0ECE0;
+  --hoverEffect:#dcd3b9;
+  --titleTextColor:#544006;
+  --paraTextColor:#6D613B;
+  --otherTextColor:#000000;
+  --gradient: linear-gradient(#6D613B, #D3BB71);
+}
+
+/* shop button hover  */
+.shop:hover .dropDown{
+  display: flex;
+}
+
+/* cart animation  */
+.animate{
+  animation: cart 2s linear infinite;
+}
+
+@keyframes cart {
+  0%{transform: translateX(0px);}
+  50%{transform: translateX(10px);}
+  75%{transform: translateX(-5px);}
+  100%{transform: translateX(0px);}
+
+}
+.stop-animation:hover .animate {
+  animation-play-state: paused;
+}
+
+/* logo animation class is provided by tailwind */
+.animate-spin{
+  animation-duration: 6s !important;
+}
+
+/* product effect */
+.figure {
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s linear;
+}
+
+  .figure::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: var(--paraTextColor);
+    opacity: 0.5;
+    transition: all 0.4s linear;
+    cursor: pointer;
+  }
+  .figure:hover::before {
+      width: 100%;
+    }
+    .figure:hover{
+      transform: scale(0.9);
+    }
