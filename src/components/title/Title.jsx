@@ -2,7 +2,7 @@ import React from 'react'
 
 const Title = ({text }) => {
   return (
-    <h2 className='text-[30px] font-medium text-[var(--titleTextColor)]'>{text}</h2>
+    <h2 className='xs:text-[30px] text-2xl font-medium text-[var(--themeColor)] md:tracking-widest'>{text}</h2>
   )
 }
 

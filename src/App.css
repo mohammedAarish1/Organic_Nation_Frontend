@@ -1,54 +1,102 @@
-@import url('https://fonts.googleapis.com/css2?family=Jersey+10&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+/* ============== 
+   General CSS
+   ==============
+*/
+
+@import url("https://fonts.googleapis.com/css2?family=Jersey+10&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
 body {
   font-family: "Roboto", sans-serif;
 }
 
-*{
-  margin:0;
+* {
+  margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-:root{
-  --bgColorPrimary:#1B381A;
-  --bgColorSecondary:#F0ECE0;
-  --hoverEffect:#dcd3b9;
-  --titleTextColor:#544006;
-  --paraTextColor:#6D613B;
-  --otherTextColor:#000000;
-  --gradient: linear-gradient(#6D613B, #D3BB71);
+:root {
+  --themeColor: #712522;
+  --bgColorPrimary: #1b381a;
+  --bgColorSecondary: #f0ece0;
+  --hoverEffect: #dcd3b9;
+  --titleTextColor: #544006;
+  --paraTextColor: #6d613b;
+  --otherTextColor: #000000;
+  --gradient: linear-gradient(#6d613b, #d3bb71);
 }
 
-/* shop button hover  */
-.shop:hover .dropDown{
-  display: flex;
+/* ============== 
+   shop menu css
+   ==============
+*/
+
+.shop:hover .dropDown {
+  max-height: 1000px; /* Adjust as needed */
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 
-/* cart animation  */
-.animate{
-  animation: cart 2s linear infinite;
+.dropDown {
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(40px);
+  transition: all 1s ease;
 }
 
-@keyframes cart {
-  0%{transform: translateX(0px);}
-  50%{transform: translateX(10px);}
-  75%{transform: translateX(-5px);}
-  100%{transform: translateX(0px);}
 
+/* ==================== 
+   custom css for banners 
+   ========================
+*/
+
+.bannerCustomCss .swiper-pagination {
+  padding-bottom:20px ;
 }
-.stop-animation:hover .animate {
-  animation-play-state: paused;
+.bannerCustomCss .swiper-pagination-bullet {
+  width: 18px ;
+  height: 5px ;
+  border-radius: 5px ;
+  margin: 0 6px ;
 }
 
-/* logo animation class is provided by tailwind */
-.animate-spin{
-  animation-duration: 6s !important;
+@media screen and (max-width: 450px) {
+  .swiper-pagination-bullet {
+    display: none;
+  }
 }
 
-/* product effect */
+
+
+
+
+/* ================================================== 
+   hide scrollbar width in 'you may also like section'
+   ==================================================
+*/
+
+
+.hidden-scrollbar {
+  overflow-x: auto;
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.hidden-scrollbar::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}
+
+
+
+/* ============================ 
+   hover effect on product image
+   ============================
+*/
+
+
 .figure {
-  width: auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -57,21 +105,538 @@ body {
   transition: all 0.5s linear;
 }
 
-  .figure::before {
-    content: "";
+.figure::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background-color: var(--paraTextColor);
+  opacity: 0.5;
+  transition: all 0.4s linear;
+  cursor: pointer;
+}
+
+.figure:hover::before {
+  width: 100%;
+  content: "View Details";
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  z-index: 888;
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.figure:hover {
+  transform: scale(0.9);
+}
+
+
+
+
+/* ==================================== 
+   hover effect on continue shopping btn
+   ====================================
+*/
+
+.underline-hover {
+  position: relative;
+}
+
+.underline-hover::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 2px;
+  background-color: #000;
+  /* Change color as needed */
+  transition: width 0.3s ease;
+}
+
+.underline-hover:hover::after {
+  width: 100%;
+}
+
+
+
+/* ================================================ 
+   css for price input range in product details page
+   ================================================
+*/
+
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  input[type="range"] {
+    -webkit-appearance: none;
+    background-color: #712522;
+    border-radius: 10px;
+  }
+  input[type="range"]::-webkit-slider-runnable-track {
+    height: 5px;
+    -webkit-appearance: none;
+    margin-top: -1px;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    width: 20px;
+    height: 20px;
+    transform: translateY(-33%);
+    border-radius: 50%;
+    cursor: pointer;
+    background: white;
+    -webkit-appearance: none;
+  }
+}
+
+/* For Firefox */
+
+input[type="range"] {
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #712522;
+  border-radius: 10px;
+  height: 5px; /* Set a default height */
+  width: 60%; /* Make sure the range input takes full width */
+}
+
+input[type="range"]::-moz-range-track {
+  -moz-appearance: none;
+  appearance: none;
+  height: 5px;
+  background-color: #712522; /* Adjust track color */
+}
+
+input[type="range"]::-moz-range-thumb {
+  -moz-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  background: white;
+  margin-top: -8px; /* Adjust thumb position */
+}
+
+
+
+
+/* =============== 
+   css for loaders
+   ===============
+*/
+
+.imgLoader {
+  width: 19.2px;
+  height: 19.2px;
+  color: #1b381a;
+  background: conic-gradient(
+      from -45deg at top 9.6px left 50%,
+      #0000,
+      currentColor 1deg 90deg,
+      #0000 91deg
+    ),
+    conic-gradient(
+      from 45deg at right 9.6px top 50%,
+      #0000,
+      currentColor 1deg 90deg,
+      #0000 91deg
+    ),
+    conic-gradient(
+      from 135deg at bottom 9.6px left 50%,
+      #0000,
+      currentColor 1deg 90deg,
+      #0000 91deg
+    ),
+    conic-gradient(
+      from -135deg at left 9.6px top 50%,
+      #0000,
+      currentColor 1deg 90deg,
+      #0000 91deg
+    );
+  animation: shapes-q299i1mn 1.7999999999999998s infinite
+    cubic-bezier(0.3, 1, 0, 1);
+}
+
+@keyframes shapes-q299i1mn {
+  50% {
+    width: 28.799999999999997px;
+    height: 28.799999999999997px;
+    transform: rotate(180deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loader {
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #514b82;
+  -webkit-mask: radial-gradient(
+    circle closest-side at 50% 40%,
+    #0000 94%,
+    #000
+  );
+  transform-origin: 50% 40%;
+  animation: l25 1s infinite linear;
+}
+@keyframes l25 {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+
+
+/* for showing filters in mobile devices  */
+
+/* .show .filters-container {
+  transform: translateX(0%);
+} */
+
+/* ====== Shop Page rsponsive ====== */
+
+/* @media screen and (max-width: 768px) {
+  .filters-container {
     position: absolute;
+    backdrop-filter: blur(5px);
     top: 0;
     left: 0;
-    width: 0%;
-    height: 100%;
-    background-color: var(--paraTextColor);
-    opacity: 0.5;
-    transition: all 0.4s linear;
-    cursor: pointer;
+    height: 100vh;
+    z-index: 999;
+    padding-top: 100px;
+    padding-left: 20px;
+    transform: translateX(-100%);
+    transition: all 1s;
   }
-  .figure:hover::before {
-      width: 100%;
-    }
-    .figure:hover{
-      transform: scale(0.9);
-    }
+  .filters {
+    background-color: #dbcfaa;
+    width: 50%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 2rem;
+  }
+}
+
+
+/* ========================== 
+   css for order details modal
+   ==========================
+*/
+
+.modal-background {
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black */
+  backdrop-filter: blur(8px); /* apply blur effect to the background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.7s ease, visibility 0.3s ease; /* smooth transition effect */
+}
+
+.modal-background.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal {
+  background-color: var(--bgColorPrimary);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* add shadow effect */
+  z-index: 999; /* ensure modal appears on top of everything */
+  position: relative;
+  opacity: 0;
+  transform: translateY(-50px);
+  transition: opacity 0.3s ease, transform 0.3s ease; /* smooth transition effect */
+}
+
+.modal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+
+
+/* ============================ 
+   css for product review modal
+   ============================
+*/
+
+.product-review-modal-bg {
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(0px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.product-review-modal-bg.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.product-review-modal {
+  background-color: var(--bgColorPrimary);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  position: relative;
+  opacity: 0;
+  transform: translateY(-50px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.product-review-modal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+
+/* ============================ 
+   css for mobile menu
+   ============================
+*/
+
+
+.mobile-menu-container {
+  position: fixed;
+  z-index: 99;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black */
+  backdrop-filter: blur(8px); /* apply blur effect to the background */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease; /* smooth transition effect */
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.mobile-menu-container.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-menu {
+  background-color: var(--bgColorPrimary);
+  z-index: 999;
+  width: 70%;
+  /* height: 100%; */
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* add shadow effect */
+  z-index: 999; /* ensure modal appears on top of everything */
+  position: relative;
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: opacity 0.5s ease, transform 0.5s ease; /* smooth transition effect */
+}
+
+.mobile-menu.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+
+
+
+/* ============================ 
+   css for sidebar filters 
+   ============================
+*/
+
+
+@media screen and (max-width: 768px) {
+  .filters-container {
+    position: fixed;
+    z-index: 99;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black */
+    backdrop-filter: blur(10px); /* apply blur effect to the background */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease; /* smooth transition effect */
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  .filters-container.active {
+    opacity: 1;
+    visibility: visible;
+  }
+  .filters {
+    background-color: var(--bgColorPrimary);
+    font-family: "Courier New", Courier, monospace;
+    z-index: 999;
+    width: 50%;
+    height: 100%;
+    padding: 50px 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* add shadow effect */
+    z-index: 999; /* ensure modal appears on top of everything */
+    position: relative;
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 0.5s ease, transform 0.5s ease; /* smooth transition effect */
+  }
+
+  .filters.active {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@media screen and (max-width: 400px) {
+  .filters {
+    width: 80%;
+  }
+}
+
+/* ============================ 
+   css for buttons used 
+   ============================
+*/
+
+
+.btn {
+  position: relative;
+  display: inline-block;
+  padding: 20px 30px;
+  /* color: var(--titleTextColor); */
+  /* text-decoration: none; */
+  text-transform: uppercase;
+  transition: 0.5s;
+  letter-spacing: 4px;
+  overflow: hidden;
+}
+
+.btn:hover {
+  background: #1b381a;
+  color: white;
+  box-shadow: 0 0 2px #1b381a, 0 0 2px #1b381a, 0 0 2px #1b381a, 0 0 5px #1b381a;
+  /* -webkit-box-reflect: below 1px linear-gradient(transparent, #0005); */
+}
+
+/* responsive */
+@media screen and (max-width: 940px) {
+  .btn {
+    display: inline-block;
+    padding: 15px 10px;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: 0.5s;
+    letter-spacing: 1px;
+    /* margin-right: 50px; */
+  }
+}
+@media screen and (max-width: 620px) {
+  .btn {
+    font-size: 11px;
+  }
+}
+@media screen and (max-width: 460) {
+  .btn {
+    font-size: 10px;
+  }
+}
+
+/* buttonTwo css  */
+.btn-97,
+.btn-97 *,
+.btn-97 :after,
+.btn-97 :before,
+.btn-97:after,
+.btn-97:before {
+  border: 0 solid;
+  box-sizing: border-box;
+}
+.btn-97 {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: button;
+  cursor: pointer;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  font-size: 11px;
+  line-height: 1.5;
+  margin: 0;
+  -webkit-mask-image: -webkit-radial-gradient(#000, #fff);
+}
+.btn-97:disabled {
+  cursor: default;
+}
+.btn-97:-moz-focusring {
+  outline: auto;
+}
+
+.btn-97 [hidden] {
+  display: none;
+}
+.btn-97 {
+  background: var(--hoverEffect);
+  border-radius: 999px;
+  box-sizing: border-box;
+  color: var(--titleTextColor);
+  display: block;
+  font-weight: 600;
+  -webkit-mask-image: none;
+  overflow: hidden;
+  padding: 0.4rem 2rem;
+  position: relative;
+  text-transform: uppercase;
+  transition: 0.2s;
+}
+.btn-97:hover {
+  box-shadow: 0 6px 0 -4px #fff, 0 9px 0 -4px #aaa, 0 12px 0 -4px #000;
+  transform: translateY(-5px);
+  border: 1px solid;
+}
+
+@media screen and (max-width: 450px) {
+  .btn-97 {
+    font-size: 8px;
+    border-radius: 5px;
+    font-weight: 400;
+    padding: 0.2rem 0.4rem;
+  }
+  .btn-97:hover {
+    box-shadow: none;
+    transform: none;
+    border: none;
+  }
+}
+
+
+
+
+/* ==============================  **** end **** ==================================================  */

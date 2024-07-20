@@ -1,28 +1,94 @@
-import React from 'react'
-import { BsCart4 } from "react-icons/bs";
+import React, { useEffect, useState } from 'react'
+import {  NavLink } from 'react-router-dom';
+import AddToCartBtn from '../add-to-cart-btn/AddToCartBtn';
+import axios from 'axios';
+import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
+import { AiOutlineStar } from 'react-icons/ai';
 
 
-const Product = ({gridView}) => {
-    return (
-        <div className={`${gridView ? "flex flex-row justify-start items-center gap-5 ":"flex flex-col gap-1"} `}>
-            {/* image  */}
-            <div className='figure'>
-                <a href="#">
+const Product = ({ gridView, product }) => {
 
-                <img src="images/products/product.webp" alt="product" className=' w-60 rounded-2xl' />
-                </a>
-            </div>
-            {/* info  */}
-            <div className='flex flex-col gap-1 '>
-            <p><span className='font-semibold text-xl'>Garlic Pickle</span> (200/400 gm jars)</p>
-            {gridView && <p className='w-[80%] text-sm'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto reprehenderit repellendus aspernatur aliquam officiis minus magni tempore impedit suscipit laudantium?</p>}
-            <p>**** <span className='text-sm'>190 reveiws</span></p>
-            <p className='text-sm'>MRP Rs. 599/- (10% off)</p>
-            <a href="#" className='flex justify-center items-center gap-1 mt-2 bg-[var(--bgColorPrimary)] w-max text-white py-2 px-4'><BsCart4 className='text-white animate-bounce' /> Add to Cart</a>
-            </div>
+  const [imgLoading, setImgLoading] = useState(true);
+  const [avgRating, setAvgRating] = useState(null)
+
+
+  const getProductAvgRating = async (nameUrl) => {
+    if (!nameUrl) return;
+
+    try {
+
+      const response = await axios.get(`http://localhost:4000/api/reviews/average/${nameUrl}`)
+      if (response.status === 200) {
+        setAvgRating(response.data.averageRating)
+      }
+
+
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        setAvgRating(0)
+      }
+    }
+  }
+
+  useEffect(() => {
+    getProductAvgRating(product['name-url']);
+  }, [product['name-url']]);
+
+
+  return (
+    <div className={`${!gridView ? "flex flex-row lg:pl-32 justify-start items-center gap-5  " : "flex justify-between items-center flex-col gap-2 "} font-sans`}
+      data-aos="zoom-in-up"
+      data-aos-duration="1000"
+    >
+      {/* image  */}
+      <NavLink to={`/shop/all/product-details/${product['name-url']}`}>
+        <div className={`figure  ${gridView ? 'w-[250px]' : 'xs:w-[250px] w-[100px]'} `}>
+          {imgLoading && <div className='imgLoader'></div>}
+          <img
+            src={Array.isArray(product.img) ? product.img.filter(path => path.toLowerCase().includes('front'))[0] : null}
+            alt="product_Image"
+            className={`${!gridView ? 'sm:min-w-60 w-40 max-h-[240px] rounded-2xl ' : 'max-h-[240px] rounded-2xl'} object-contain`}
+            onLoad={() => setImgLoading(false)}
+          />
         </div>
-    )
+      </NavLink>
+      {/* info  */}
+      <div className={`flex flex-col sm:gap-1  justify-between  ${!gridView ? 'items-start' : 'items-center'} flex-1`}>
+        <p className={`font-medium sm:text-xl  ${gridView ? 'text-center w-2/3' : ''}    text-[#712522]`}>{product.name}</p>
+        <p className='text-gray-500'>Weight: {product.weight}</p>
+        {!gridView && <p className='lg:w-[70%] sm:block hidden text-sm font-serif'>{product.description}</p>}
+        {/* <p>{error ? 'No reviews yet' : averageRating}</p> */}
+        <div className='flex justify-start items-center gap-2'>
+          {[...Array(5)].map((star, index) => {
+            const ratingValue = index + 0.5;
+            return (
+              <label key={index}>
+                <input
+                  type="radio"
+                  name="rating"
+                  value={ratingValue}
+                  className='hidden'
+                />
+                {avgRating >= index + 1 ? (
+                  <FaStar className="text-orange-400" />
+                ) : avgRating >= index + 0.5 ? (
+                  <FaStarHalfAlt className='text-orange-400' />
+                ) : (
+                  <AiOutlineStar className="text-orange-400" />
+                )}
+               
+              </label>
+            );
+          })}
+        </div>
+
+
+        {/* there is extra space in discount property, need to correct it  */}
+        <p className=''>₹ <span className='font-semibold'>{Math.round(product.price - (product.price * product['discount '] / 100))}</span>/- &nbsp; <span className='text-green-700'>{product['discount ']}% off</span></p>
+        <AddToCartBtn item={product} />
+      </div>
+    </div>
+  )
 }
 
-export default Product
-// flex flex-col gap-1
+export default Product;

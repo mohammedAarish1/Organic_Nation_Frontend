@@ -1,20 +1,42 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Logo from '../logo/Logo'
 import Search from '../search/Search'
-import NavMenu from '../navMenu/NavMenu'
 import OtherNavItems from '../userRegister/OtherNavItems'
+import NavMenu from '../navMenu/NavMenu'
 
 const Header = () => {
+
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      if (scrollPosition > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [isScrolled]);
+
   return (
-    <header>
-    <div className='flex justify-between items-center xs:px-10 relative pt-2 pb-2'>
-      <Logo/>
-      <Search/>
-      <NavMenu/>
-      <OtherNavItems />
-    </div>
+    <header className={`sticky top-0 w-full z-50 ${isScrolled ? 'bg-[var(--bgColorSecondary)] shadow-xl' : 'bg-transparent'}`}>
+      <div className={`flex justify-between  items-center sm:px-10 px-3 relative py-4 xs:py-2 z-30`}>
+        <Logo />
+        <div className='md:block hidden relative w-[35%] '>
+          <Search />
+        </div>
+        <NavMenu />
+        <OtherNavItems />
+      </div>
     </header>
   )
 }
 
-export default Header
+export default Header;

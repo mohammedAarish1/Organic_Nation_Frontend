@@ -1,0 +1,60 @@
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.customCss .swiper-pagination-bullet {
+  width: 16px;
+  height: 4px;
+  border-radius: 5px;
+  margin: 0 6px;
+}
+
+.swiper-pagination {
+  bottom: 2px !important;
+}
+
+.customCss .swiper-wrapper {
+  height: max-content !important;
+  width: max-content !important;
+  padding-bottom: 64px;
+}
+
+.swiper-pagination-bullet-active {
+  background: var(--bgColorPrimary);
+}
+
+.swiper-slide.swiper-slide-active > .slide_active\:border-indigo-600 {
+  --tw-border-opacity: 1;
+  border-color: rgb(79 70 229 / var(--tw-border-opacity));
+}
+
+.swiper-slide.swiper-slide-active > .group .slide_active\:text-gray-800 {
+  ---tw-text-opacity: 1;
+  color: rgb(31 41 55 / var(--tw-text-opacity));
+}
+
+/* for hiding the arrows  */
+.swiper-button-next {
+  display: none;
+}
+.swiper-button-prev {
+  display: none;
+}

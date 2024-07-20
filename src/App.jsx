@@ -1,42 +1,73 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import './App.css'
-import Footer from './components/footer/Footer'
-import Header from './components/header/Header'
-import Info from './components/info/Info'
-import Home from './pages/home/Home'
-import About from './pages/about/About'
-import Shop from './pages/shop/Shop'
-import TrackOrder from './pages/track-order/TrackOrder'
-import ContactUs from './pages/contact-us/ContactUs'
-import Cart from './pages/cart/Cart'
-import Login from './pages/login-signup/Login'
-import Recipes from './pages/recipes/Recipes'
-import Testimonials from './pages/testimonials/Testimonials'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import React, { Suspense, useEffect } from 'react';
+import './App.css';
+//======== tostify =======
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+// animation
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
+import {
+  Header, Footer, Info, Breadcrumbs, WhatsApp,  ScrollToTop,  getProductsData, getAllCartItems, fetchUserData, getAllOrders, 
+} from './imports';
+import getRoutes from './routes/routes';
+
 
 function App() {
 
-  const moveToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
+
+  // animation initialization 
+  AOS.init();
+
+  const token = JSON.parse(sessionStorage.getItem('token'));
+  const dispatch = useDispatch();
+
+
+
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      dispatch(getProductsData());
+      dispatch(getAllCartItems());
+      if (token) {
+        await Promise.all([
+          dispatch(fetchUserData(token)),
+          dispatch(getAllOrders(token))
+        ]);
+      }
+    };
+
+    fetchInitialData();
+  }, [token, dispatch]);
+
 
   return (
     <>
       <BrowserRouter>
-        <div className='bg-[var(--bgColorSecondary)]'>
+        <ScrollToTop />
+        <div className={`bg-[var(--bgColorSecondary)] relative`}>
           <Info text="Buy products worth Rs. 3500 & get 30% off by using our code: ON30MAR" />
+          <ToastContainer position='bottom-right' autoClose={1000} />
           <Header />
-          <Routes>
-            <Route path='/' element={<Home/>} />
-            <Route path='shop' element={<Shop />} />
-            <Route path='track-order' element={<TrackOrder />} />
-            <Route path='contact-us' element={<ContactUs />} />
-            <Route path='cart' element={<Cart />} />
-            <Route path='register' element={<Login />} />
-            <Route path='our-recipes' element={<Recipes />} />
-            <Route path='testimonials' element={<Testimonials />} />
-            <Route path='about-us' element={<About />} />
-          </Routes>
-          <Footer moveToTop={moveToTop} />
+          <div >
+            <Breadcrumbs />
+            <Suspense fallback={
+              <div className='py-52 flex justify-center items-center'>
+              <div className="loader"></div>
+            </div>
+          }>
+              <Routes>
+              
+              {getRoutes()}
+              </Routes>
+            </Suspense>
+            <Footer />
+            {/* whatsApp feature */}
+            <div className=' max-w-max fixed xs:bottom-10 bottom-5  xs:right-10 right-5 z-50'>
+              <WhatsApp />
+            </div>
+          </div>
           <Info text="Organic Nation © All rights reserved." />
         </div>
       </BrowserRouter>

@@ -1,0 +1,382 @@
+import React, { useState } from 'react';
+import Logo from '../../components/logo/Logo';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { userSignup, userLogin, fetchUserData } from '../../features/auth/userSlice';
+import { getAllOrders } from '../../features/manageOrders/manageOrders';
+import { Formik, Form, Field } from 'formik';
+import { signUpSchema } from '../../form-validation/signUpSchema';
+import { loginSchema } from '../../form-validation/loginSchema';
+import Alert from '../../components/alert/Alert';
+import { getAllCartItems, mergeCart } from '../../features/cart/cart';
+// react icons 
+import { FcGoogle, FcIphone } from "react-icons/fc";
+import { ImSpinner9 } from 'react-icons/im';
+import { FaArrowRight } from 'react-icons/fa';
+
+
+
+
+
+const Auth = () => {
+
+
+
+  // belo code is for handling the navigation after otp verified by the user (extracting phone number)
+  const location = useLocation();
+  const otpUser = location?.state;
+  // console.log('phonenumber in auth', data)
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+  const [userExist, setUserExist] = useState(otpUser ? false : true);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const { checkoutStatus } = useSelector(state => state.orders);
+  const { user, user_loading, error, } = useSelector(state => state.user);
+
+
+
+  const initialValues = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: otpUser ? otpUser.phoneNumber : '',
+    password: '',
+    // confirm_password: ''
+  }
+
+
+
+
+  const hideAlert = () => {
+    setIsAlertOpen(false);
+    localStorage.removeItem('cart');
+    if (checkoutStatus) {
+      navigate('/cart/checkout')
+    } else {
+
+      navigate('/')
+    }
+  };
+
+  const handleCartMerge = (action) => {
+    console.log('mergecart', action)
+    const localCart = JSON.parse(localStorage.getItem('cart'))
+    // setIsAlertOpen(false);
+    dispatch(mergeCart({ localCart, replaceCart: action.replaceCart }))
+      .then(() => {
+        setIsAlertOpen(false);
+        localStorage.removeItem('cart');
+        dispatch(getAllCartItems());
+        if (checkoutStatus) {
+          navigate('/cart/checkout')
+        } else {
+
+          navigate('/')
+        }
+      })
+  }
+
+
+  const handleSubmit = (values, action) => {
+    if (!userExist) {
+      dispatch(userSignup(values)).then((value) => {
+        console.log(value, 'valeueeeeee')
+        if (value?.error?.message === 'Rejected') {
+          return;
+        } else {
+          toast.success("Congragulations! signed up succesfully")
+          setUserExist(true)
+        }
+
+      })
+
+
+    } else {
+      if (values.email && values.password) {
+
+
+        dispatch(userLogin({ email: values.email, password: values.password }))
+          .then((value) => {
+            if (value.meta.requestStatus === 'fulfilled') {
+              const token = value.payload.token;
+              sessionStorage.setItem("token", JSON.stringify(token));
+              dispatch(fetchUserData(token));
+              dispatch(getAllOrders(token));
+              dispatch(getAllCartItems());
+              toast.success("Log in Successfully");
+
+              const localCart = JSON.parse(localStorage.getItem('cart') || '[]');
+              if (localCart.length > 0) {
+                setIsAlertOpen(true)
+              } else {
+                if (checkoutStatus) {
+                  navigate('/cart/checkout')
+                } else {
+
+                  navigate('/');
+                }
+
+              }
+            }
+
+          })
+
+      }
+    }
+
+    action.resetForm()
+  }
+
+
+
+
+  return (
+    <section className='xs:px-10 px-2 pb-20 mt-5 sm:mt-0 font-mono'>
+      <div className='lg:w-[80%] h-auto py-2 bg-opacity-35 mx-auto'>
+        {otpUser ? (
+          <p className='text-center'>*Please provide us the following details to complete the signing up process*</p>
+        ) : (
+          <h2 className="text-4xl text-center sm:mt-6 mt-10 sm:mb-2 mb-6 text-[var(--bgColorPrimary)] ">{userExist ? 'Welcome Back !' : 'Create Your Account'}</h2>
+        )}
+
+
+        <div className='md:w-[90%] py-10 flex sm:flex-row flex-col sm:gap-0 gap-6 shadow-md shadow-black justify-center h-[100%] mx-auto  my-auto bg-[var(--bgColorPrimary)] '>
+
+          {/* ============== right side ================  */}
+
+          <div className='sm:w-[40%] mt-3 sm:mt-0 flex justify-center items-center'>
+            <div className='flex justify-center items-center sm:flex-col gap-3 '>
+              <div>
+                <Logo />
+              </div>
+              <div className='flex flex-col justify-center items-center'>
+                <span className='sm:text-2xl uppercase text-[var(--bgColorSecondary)]'>Login to</span>
+                <span className='sm;text-2xl uppercase text-[var(--bgColorSecondary)]'>Organic Nation</span>
+              </div>
+            </div>
+          </div>
+
+          {/* ============== left side ================  */}
+
+          <div className='sm:w-[60%]'>
+            <div className="sm:w-[80%]  mx-auto">
+
+              <h2 className='px-8 text-[var(--bgColorSecondary)] mb-2  text-2xl'>{!userExist ? "Sign up" : "Log in"}</h2>
+
+
+              {!userExist ? (
+                <p className='px-8 text-gray-400'>Already have an account ? <button className='text-white hover:border-b-2 cursor-pointer' onClick={() => setUserExist(true)}>Log in</button></p>
+              ) : (
+                <p className='px-8 text-gray-400'>Don't have an account ? <button className='text-white hover:border-b-2 cursor-pointer' onClick={() => setUserExist(false)}>Sign up</button></p>
+              )}
+
+              {/* === Form ===  */}
+              <Formik
+                initialValues={initialValues}
+                validationSchema={!userExist ? signUpSchema : loginSchema}
+                onSubmit={handleSubmit}
+              >
+                {({ values, errors, touched, handleChange, handleBlur }) => (
+                  <Form className="  rounded px-8 pt-6 pb-2 mb-4">
+
+
+
+                    {/* firstName input  */}
+                    {!userExist && (
+                      <div className="mb-4">
+                        <label
+                          className="uppercase tracking-widest block text-[var(--bgColorSecondary)] text-sm font-bold mb-2" htmlFor="firstName">
+                          First Name
+                        </label>
+                        <Field
+                          className="shadow appearance-none border bg-[var(--bgColorPrimary)] w-full py-2 px-3 text-white tracking-widest leading-tight focus:outline-none focus:shadow-outline"
+                          id="firstName"
+                          type="text"
+                          name="firstName"
+                        />
+                        {errors.firstName && touched.firstName ? (
+                          <p className='text-red-600'>*{errors.firstName}</p>
+                        ) : (
+                          null
+                        )}
+                      </div>
+                    )}
+                    {/* lastName input  */}
+                    {!userExist && (
+                      <div className="mb-4">
+                        <label
+                          className="uppercase tracking-widest block text-[var(--bgColorSecondary)] text-sm font-bold mb-2" htmlFor="lastName">
+                          Last Name
+                        </label>
+                        <Field
+                          className="shadow appearance-none border bg-[var(--bgColorPrimary)] w-full py-2 px-3 text-white tracking-widest leading-tight focus:outline-none focus:shadow-outline"
+                          id="lastName"
+                          type="text"
+                          name="lastName"
+                        />
+                        {errors.lastName && touched.lastName ? (
+                          <p className='text-red-600'>*{errors.lastName}</p>
+                        ) : (
+                          null
+                        )}
+                      </div>
+                    )}
+
+                    {/* Email input  */}
+                    <div className="mb-4">
+                      <label
+                        className="uppercase tracking-widest block text-[var(--bgColorSecondary)] text-sm font-bold mb-2" htmlFor="firstName">
+                        Email
+                      </label>
+                      <Field
+                        className="shadow appearance-none border bg-[var(--bgColorPrimary)] w-full py-2 px-3 text-white tracking-widest leading-tight focus:outline-none focus:shadow-outline"
+                        id="email"
+                        type="text"
+                        name="email"
+                      />
+                      {errors.email && touched.email ? (
+                        <p className='text-red-600'>*{errors.email}</p>
+                      ) : (
+                        null
+                      )}
+                    </div>
+                    {/* phone no.  */}
+                    {!userExist && (
+                      <div className="mb-4">
+                        <label
+                          className="uppercase tracking-widest block text-[var(--bgColorSecondary)] text-sm font-bold mb-2" htmlFor="phoneNumber">
+                          Phone No.
+                        </label>
+                        <Field
+                          className="shadow appearance-none border bg-[var(--bgColorPrimary)] w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                          id="phoneNumber"
+                          type="text"
+                          maxLength={10}
+                          minLength={10}
+                          name="phoneNumber"
+                        />
+                        {errors.phoneNumber && touched.phoneNumber ? (
+                          <p className='text-red-600'>*{errors.phoneNumber}</p>
+                        ) : (
+                          null
+                        )}
+                      </div>
+                    )}
+                    {/* password input  */}
+                    <div className="mb-6">
+                      <label className="uppercase tracking-widest block text-[var(--bgColorSecondary)] text-sm font-bold mb-2" htmlFor="password">
+                        Password
+                      </label>
+                      <Field
+                        className="shadow appearance-none border  bg-[var(--bgColorPrimary)] w-full py-2 px-3 text-white  leading-tight focus:outline-none focus:shadow-outline"
+                        id="password"
+                        type="password"
+                        name="password"
+                      />
+                      {errors.password && touched.password ? (
+                        <p className='text-red-600'>*{errors.password}</p>
+                      ) : (
+                        null
+                      )}
+                      <Link
+                        to='/auth/forgot-password'
+                        className='text-end text-[var(--bgColorSecondary)] text-[11px] hover:underline cursor-pointer'
+                      >
+                        Forgot Password
+                      </Link>
+                    </div>
+                    {/* email and password error msg */}
+                    {error && (
+                      <div className='text-center pb-4 text-red-600'>
+                        {userExist ? (
+                          <p>{error?.msg}</p>
+                        ) : (
+                          <p>{error.msg}</p>
+                        )}
+                      </div>
+                    )}
+
+                    <div className="flex items-center justify-between">
+                      {!userExist ? (
+                        <button
+                          type="submit"
+                          className='p-2 bg-[var(--bgColorSecondary)] hover:bg-green-500 hover:text-white transition-all duration-300 w-full flex justify-center items-center gap-2 rounded-md '
+                        >
+                          Sign up
+                          {user_loading ? (
+                            <ImSpinner9 className='animate-spin' />
+                          ) : (
+                            <FaArrowRight />
+                          )}
+
+
+                        </button>
+                      ) : (
+                        <button
+                          type="submit"
+                          className='p-2 bg-[var(--bgColorSecondary)] hover:bg-green-500 hover:text-white transition-all duration-300 w-full flex justify-center items-center gap-2 rounded-md '
+                        >
+                          Log in
+                          {user_loading ? (
+                            <ImSpinner9 className='animate-spin' />
+                          ) : (
+                            <FaArrowRight />
+                          )}
+
+
+                        </button>
+                      )}
+
+                    </div>
+                  </Form>
+                )}
+
+              </Formik>
+              {/* horizontal line */}
+              <div className='flex justify-center gap-4 items-center mb-4'>
+                <div className='h-1 md:w-[35%] xs:w-[35%] w-[30%] bg-gradient-to-r from-[#6D613B] to-[#D3BB71]'></div>
+                <span className='text-[var(--bgColorSecondary)]'>or</span>
+                <div className='h-1 md:w-[35%] xs:w-[35%] w-[30%] bg-gradient-to-r from-[#D3BB71] to-[#6D613B]'></div>
+              </div>
+              {/* other login options */}
+
+              <div className='flex flex-col  px-8 gap-3'>
+                {/* otp sign up  */}
+                {!otpUser && (
+                  <div className='flex justify-center items-center gap-3 py-1 border text-[var(--bgColorSecondary)] hover:bg-white hover:text-black'>
+                    <FcIphone className='text-2xl' />
+                    <Link to="/otp-login" className=''>Log in with OTP</Link>
+                  </div>
+                )}
+
+
+                {/* google  */}
+
+                <div className='flex justify-center items-center gap-3 py-1 border text-[var(--bgColorSecondary)] hover:bg-white hover:text-black'>
+                  <FcGoogle className='text-2xl' />
+                  <a href="http://localhost:4000/api/auth/google" className=''>Log in with Google</a>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* alert for cart merge  */}
+      <Alert
+        isOpen={isAlertOpen}
+        alertMessage='You have items in your cart from a previous session. Would you like to merge them with your current cart?'
+        actionMessageOne='Yes, merge the Cart'
+        actionMessageTwo='No, Keep the Previous Session cart'
+        actionMessageThree='No, Keep the Current Session cart'
+        hideAlert={hideAlert}
+        handleAction1={() => handleCartMerge({ replaceCart: false })}
+        handleAction2={() => handleCartMerge({ replaceCart: true })}
+      />
+    </section>
+  );
+};
+
+export default Auth;
