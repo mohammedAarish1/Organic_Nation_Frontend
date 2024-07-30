@@ -13,14 +13,14 @@ const Checkout = () => {
 
     const dispatch = useDispatch()
     const { checking, shippingFee } = useSelector(state => state.delivery)
-    const { cartItemsList, totalCartAmount, totalWeight } = useSelector((state) => state.cart);
+    const { cartItemsList, totalCartAmount, totalWeight, totalTax } = useSelector((state) => state.cart);
     const [showSummary, setShowSummary] = useState(false);
 
     const toggleInfo = () => {
         setShowSummary(!showSummary);
     };
 
-  
+
 
     useEffect(() => {
         dispatch(calculateShippingFee({ pinCode: '', weight: totalWeight }));
@@ -53,14 +53,14 @@ const Checkout = () => {
                                     {cartItemsList?.map((product) => (
                                         <div key={product?._id} className="grid grid-cols-2 items-center xs:gap-4">
                                             <div className="px-4 shrink-0  ">
-                                                <img src={Array.isArray(product.img) ? product.img.filter(path => path.includes('front'))[0] : null} className="lg:w-20 lg:h-24  sm:w-28 object-contain rounded-2xl" />
+                                                <img src={Array.isArray(product.img) ? product.img.filter(path => path.includes('front'))[0] : null} className="lg:w-20 lg:h-24 w-16  object-contain rounded-2xl" />
                                             </div>
                                             <div>
                                                 <h3 className="text-base font-bold text-white">{product.name}</h3>
                                                 <ul className="text-xs text-white xs:space-y-3 xs:mt-4">
                                                     <li className="flex flex-wrap gap-4">Weight <span className="ml-auto">{product.weight}</span></li>
                                                     <li className="flex flex-wrap gap-4">Quantity <span className="ml-auto">{product.quantity} Pcs.</span></li>
-                                                    <li className="flex flex-wrap gap-4">Total Price <span className="ml-auto">₹ {(product.price - (product.price * product['discount '] / 100)) * product.quantity}</span></li>
+                                                    <li className="flex flex-wrap gap-4">Total Price <span className="ml-auto font-bold">₹ {Math.round((product.price - (product.price * product['discount '] / 100)) * product.quantity)}</span></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -70,8 +70,9 @@ const Checkout = () => {
                                 </div>
                             </div>
                             <div className="lg:absolute left-0 bottom-0 bg-[var(--bgColorPrimary)] w-full p-4">
+                                <h4 className="flex flex-wrap gap-4 text-base text-white">Total taxes (+) <span className="ml-auto">₹ {totalTax}</span></h4>
                                 <h4 className="flex flex-wrap gap-4 text-base text-white">Shipping Fee (+) <span className="ml-auto">₹ {shippingFee}</span></h4>
-                                <h4 className="flex flex-wrap gap-4 text-xl font-bold text-white">Total <span className="ml-auto text-xl">₹{totalCartAmount + shippingFee}</span></h4>
+                                <h4 className="flex flex-wrap gap-4 text-xl font-bold text-white">Total <span className="ml-auto text-xl">₹{Math.round(totalCartAmount + shippingFee + totalTax) || 0}</span></h4>
                             </div>
                         </div>
                     </div>

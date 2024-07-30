@@ -33,9 +33,7 @@ const VerifyEmail = () => {
     });
 
     const handleEmailSubmit = (values) => {
-        console.log(values.email)
         dispatch(verifyEmail(values.email)).then((value) => {
-            console.log('adsfsadf value', value)
             setEmailSent(true)
             toast.info(value.payload.message)
         })

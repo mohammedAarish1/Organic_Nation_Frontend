@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import {  NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import AddToCartBtn from '../add-to-cart-btn/AddToCartBtn';
 import axios from 'axios';
 import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
 import { AiOutlineStar } from 'react-icons/ai';
+import { useSelector } from 'react-redux';
 
 
 const Product = ({ gridView, product }) => {
 
   const [imgLoading, setImgLoading] = useState(true);
-  const [avgRating, setAvgRating] = useState(null)
+  const [avgRating, setAvgRating] = useState(null);
+  const apiUrl = import.meta.env.VITE_BACKEND_URL;
+  const { categoryBtnValue } = useSelector((state) => state.filterData);
 
 
   const getProductAvgRating = async (nameUrl) => {
@@ -17,7 +20,7 @@ const Product = ({ gridView, product }) => {
 
     try {
 
-      const response = await axios.get(`http://localhost:4000/api/reviews/average/${nameUrl}`)
+      const response = await axios.get(`${apiUrl}/api/reviews/average/${nameUrl}`)
       if (response.status === 200) {
         setAvgRating(response.data.averageRating)
       }
@@ -41,9 +44,9 @@ const Product = ({ gridView, product }) => {
       data-aos-duration="1000"
     >
       {/* image  */}
-      <NavLink to={`/shop/all/product-details/${product['name-url']}`}>
+      <NavLink to={`/shop/${categoryBtnValue}/${product['name-url']}`}>
         <div className={`figure  ${gridView ? 'w-[250px]' : 'xs:w-[250px] w-[100px]'} `}>
-          {imgLoading && <div className='imgLoader'></div>}
+          {imgLoading && <div className='loader'></div>}
           <img
             src={Array.isArray(product.img) ? product.img.filter(path => path.toLowerCase().includes('front'))[0] : null}
             alt="product_Image"
@@ -76,7 +79,7 @@ const Product = ({ gridView, product }) => {
                 ) : (
                   <AiOutlineStar className="text-orange-400" />
                 )}
-               
+
               </label>
             );
           })}

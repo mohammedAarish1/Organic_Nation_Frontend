@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import ProductQty from '../../components/productQty/ProductQty';
 import { useDispatch, useSelector } from 'react-redux';
 // react icons 
@@ -9,12 +9,11 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import { ImSpinner9 } from "react-icons/im";
 // product image tempoeary 
 import { Link } from 'react-router-dom';
-import {  getAllCartItems, clearCart, removeFromCart, updateQty } from '../../features/cart/cart';
+import { getAllCartItems, clearCart, removeFromCart, updateQty } from '../../features/cart/cart';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import { calculateShippingFee, checkDeliveryAvailability } from '../../features/check-delivery/checkDelivery';
+import { calculateShippingFee, checkDeliveryAvailability, setIsAvailable } from '../../features/check-delivery/checkDelivery';
 import { resetCheckoutStatus } from '../../features/manageOrders/manageOrders';
-
 
 
 
@@ -23,11 +22,11 @@ const Cart = () => {
 
 
   const { user } = useSelector(state => state.user);
-  const { cartItemsList, loading, totalCartAmount, totalWeight } = useSelector((state) => state.cart);
+  const { cartItemsList, loading, totalCartAmount, totalWeight, totalTax } = useSelector((state) => state.cart);
   const { isAvailable, message, checking } = useSelector(state => state.delivery);
   const dispatch = useDispatch()
 
-
+ 
 
   const pincodeRegExp = /^(\+\d{1,3}[- ]?)?\d{6}$/;
 
@@ -42,10 +41,14 @@ const Cart = () => {
       }
       dispatch(checkDeliveryAvailability(values.pincode))
         .then((res) => {
+
           if (res.payload.available) {
             dispatch(calculateShippingFee({ pinCode: res.meta.arg, weight: totalWeight }))
               .then((res) => {
-                localStorage.setItem('deliveryChargeToken', res.payload.token);
+                if (res.meta.requestStatus === 'fulfilled') {
+
+                  localStorage.setItem('deliveryChargeToken', res?.payload?.token);
+                }
               })
 
           }
@@ -54,7 +57,10 @@ const Cart = () => {
   }
 
 
+  useEffect(() => {
+    dispatch(setIsAvailable())
 
+  }, [setIsAvailable])
 
 
   return (
@@ -128,7 +134,7 @@ const Cart = () => {
                   <div className="font-semibold text-gray-900 ">{curItem.name}</div>
                 </td>
                 <td className="px-6 py-4 text-center whitespace-nowrap lg:table-cell hidden">
-                  <div className=" text-gray-900">₹ {curItem.price - (curItem.price * curItem['discount '] / 100)}</div>
+                  <div className=" text-gray-900">₹ {Math.round(curItem.price - (curItem.price * curItem['discount '] / 100))}</div>
                 </td>
                 <td className="px-6 py-4 text-center   whitespace-nowrap">
                   {/* <div className=" text-gray-900 flex justify-center items-center "><ProductQty qty={curItem.qty} increaseQty={() => dispatch(increaseProductQty(curItem.id))} decreaseQty={() => dispatch(decreaseProductQty(curItem.id))} /></div> */}
@@ -153,7 +159,7 @@ const Cart = () => {
                 </td>
                 <td className="px-6 py-4 text-center whitespace-nowrap ">
                   <div className=" text-gray-900">
-                    ₹ {(curItem.price - (curItem.price * curItem['discount '] / 100)) * curItem.quantity}
+                    ₹ {Math.round((curItem.price - (curItem.price * curItem['discount '] / 100)) * curItem.quantity)}
                   </div>
                 </td>
                 <td className="px-6 py-4  text-center whitespace-nowrap">
@@ -206,13 +212,13 @@ const Cart = () => {
         <div className='bg-[var(--hoverEffect)] flex flex-col  gap-4 p-5 md:w-[35%] '>
           <div className='flex justify-between items-center gap-10'>
             <span>Subtotal:</span>
-            <span>₹ {totalCartAmount || 0}</span>
+            <span>₹ {Math.round(totalCartAmount || 0)}</span>
           </div>
           {/* Shipping Fee */}
-          {/* <div className='flex justify-between items-center gap-10'>
-            <span>Shipping Fee:</span>
-            <span>₹ {cartItemsList?.length > 0 ? shippingFee : 0}</span>
-          </div> */}
+          <div className='flex justify-between items-center gap-10'>
+            <span>Total tax: (+)</span>
+            <span>₹ {cartItemsList?.length > 0 ? totalTax : 0}</span>
+          </div>
           {/* coupon  */}
           {/* <div className="flex  items-center">
             <input type="text" placeholder="Enter coupon code" className="border border-gray-300 p-1 rounded-l-md focus:outline-none   focus:border-transparent w-full" />
@@ -222,7 +228,7 @@ const Cart = () => {
           <hr />
           <div className='flex justify-between items-center gap-10'>
             <span>Order Total:</span>
-            <span className='font-semibold'>₹ {totalCartAmount || 0}</span>
+            <span className='font-semibold'>₹ {totalCartAmount+totalTax || 0}</span>
           </div>
           {/* pin code availability check  */}
           <div className='flex flex-col gap-2'>
@@ -255,7 +261,7 @@ const Cart = () => {
                       {isAvailable ? (
                         <p className='text-center text-green-700 text-[13px] py-1 break-all'>{message}</p>
                       ) : (
-                        <p className='text-center text-red-500 text-[13px] py-1 break-all'>{message}</p>
+                        <p className='text-center text-red-500 text-[13px] py-1 break-all'>{isAvailable === false && message}</p>
                       )}
                     </div>
                   </Form>

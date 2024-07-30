@@ -2,7 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 
 import {
-    VerifyEmail, ResetPassword, SearchedProduct, Home, About, Shop, ContactUs, Cart, Auth, Recipes, Testimonials, Faq, PrivacyPolicy, TermsAndConditions, CsrPolicy, BulkOrder, ProductDetails, Checkout, BlogDetail, OtpLogin, Blogs, RecipeDetails, GoogleSignup, ManageOrders
+    VerifyEmail, ResetPassword, SearchedProduct, Home, About, Shop, ContactUs, Cart, Auth, Recipes, Testimonials, Faq, PrivacyPolicy, TermsAndConditions, CsrPolicy, BulkOrder, ProductDetails, Checkout, BlogDetail, OtpLogin, Blogs, RecipeDetails, GoogleSignup, ManageOrders, OrderConfirm, PaymentGateway, NoPageFound
 } from '../imports';
 
 const getRoutes = () => [
@@ -58,12 +58,12 @@ const getRoutes = () => [
     />,
     <Route
         key="recipe-details"
-        path='/recipe-details'
+        path='/recipes/:id'
         element={<RecipeDetails
         />} />,
     <Route
-        key="blog-details"
-        path='/blog-details'
+        key="blogsId"
+        path='/blogs/:id'
         element={<BlogDetail />}
     />,
     <Route
@@ -103,7 +103,7 @@ const getRoutes = () => [
     />,
     <Route
         key="product-details"
-        path='/shop/all/product-details/:nameUrl'
+        path='/shop/:category/:nameUrl'
         element={<ProductDetails />}
     />,
     <Route
@@ -125,6 +125,21 @@ const getRoutes = () => [
         key="otp-login"
         path='/otp-login'
         element={<OtpLogin />}
+    />,
+    <Route
+        key="order-confirmed"
+        path='/order-confirmed/:orderId'
+        element={<OrderConfirm />}
+    />,
+    <Route
+        key="payment-gateway"
+        path='/payment-gateway'
+        element={<PaymentGateway />}
+    />,
+    <Route
+        key="no-page-found"
+        path='*'
+        element={<NoPageFound />}
     />,
 ];
 

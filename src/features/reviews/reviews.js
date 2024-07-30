@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const apiUrl = import.meta.env.VITE_BACKEND_URL;
+
 
 // for adding reviews 
 export const addReviews = createAsyncThunk(
@@ -9,7 +11,7 @@ export const addReviews = createAsyncThunk(
         try {
             const token = JSON.parse(sessionStorage.getItem('token'));
             if (token) {
-                const response = await axios.post('http://localhost:4000/api/reviews', reviews,
+                const response = await axios.post(`${apiUrl}/api/reviews`, reviews,
                     {
                         headers: {
                             'Authorization': `Bearer ${token}`,
@@ -17,7 +19,6 @@ export const addReviews = createAsyncThunk(
                         }
                     }
                 );
-                console.log(response);
                 // return response.data;
             }
 
@@ -37,9 +38,7 @@ export const getAllReviews = createAsyncThunk(
     async (nameUrl, { rejectWithValue }) => {
         try {
 
-            console.log('nameUrllllllllllll', nameUrl);
-            const response = await axios.get(`http://localhost:4000/api/reviews/${nameUrl}`);
-            console.log('responseeeeeeeeeeee', response.data);
+            const response = await axios.get(`${apiUrl}/api/reviews/${nameUrl}`);
             if (response.data) {
                 return response.data;
             }
@@ -60,13 +59,10 @@ export const getAverageRating = createAsyncThunk(
     'reviews/getAverageRating',
     async (nameUrl, { rejectWithValue }) => {
         try {
-            console.log('averageRating url', nameUrl)
-            const response = await axios.get(`http://localhost:4000/api/reviews/average/${nameUrl}`);
-            console.log('averagerating', response.data.averageRating);
+            const response = await axios.get(`${apiUrl}/api/reviews/average/${nameUrl}`);
             return response.data.averageRating;
 
         } catch (error) {
-            console.log(error, 'ccccccccccccccccccccccccccccccccc')
             return rejectWithValue({
                 message: error.message,
                 status: error.response?.status
@@ -148,7 +144,6 @@ const reviews = createSlice({
                 }
             })
             .addCase(getAverageRating.fulfilled, (state, action) => {
-                console.log('averageRating', action.payload)
                 return {
                     ...state,
                     loading: false,
@@ -156,7 +151,6 @@ const reviews = createSlice({
                 }
             })
             .addCase(getAverageRating.rejected, (state, action) => {
-                console.log('avratingerror', action.payload)
                 return {
                     ...state,
                     loading: false,

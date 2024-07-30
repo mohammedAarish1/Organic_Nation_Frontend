@@ -23,7 +23,6 @@ const ResetPassword = () => {
 
     // extracting token from the URL 
     const { token } = useParams();
-    console.log('token', token)
 
 
     const initialValues = {
@@ -38,7 +37,6 @@ const ResetPassword = () => {
     });
 
     const handlePasswordSubmit = (values) => {
-        console.log(values.newPassword)
         if (token) {
             dispatch(resetPassword({ token, newPassword: values.newPassword }))
                 .then((value) => {

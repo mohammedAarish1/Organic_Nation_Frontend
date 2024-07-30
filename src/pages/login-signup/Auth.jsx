@@ -19,6 +19,7 @@ import { FaArrowRight } from 'react-icons/fa';
 
 
 
+
 const Auth = () => {
 
 
@@ -26,7 +27,8 @@ const Auth = () => {
   // belo code is for handling the navigation after otp verified by the user (extracting phone number)
   const location = useLocation();
   const otpUser = location?.state;
-  // console.log('phonenumber in auth', data)
+  const apiUrl = import.meta.env.VITE_BACKEND_URL;
+
 
   const dispatch = useDispatch();
   const navigate = useNavigate()
@@ -61,7 +63,6 @@ const Auth = () => {
   };
 
   const handleCartMerge = (action) => {
-    console.log('mergecart', action)
     const localCart = JSON.parse(localStorage.getItem('cart'))
     // setIsAlertOpen(false);
     dispatch(mergeCart({ localCart, replaceCart: action.replaceCart }))
@@ -82,7 +83,6 @@ const Auth = () => {
   const handleSubmit = (values, action) => {
     if (!userExist) {
       dispatch(userSignup(values)).then((value) => {
-        console.log(value, 'valeueeeeee')
         if (value?.error?.message === 'Rejected') {
           return;
         } else {
@@ -119,6 +119,10 @@ const Auth = () => {
                 }
 
               }
+            } else if (value.payload === 'Request failed with status code 400') {
+              toast.error('Invalid Credentials')
+            } else if (value.meta.requestStatus === 'rejected') {
+              toast.error(error)
             }
 
           })
@@ -142,7 +146,7 @@ const Auth = () => {
         )}
 
 
-        <div className='md:w-[90%] py-10 flex sm:flex-row flex-col sm:gap-0 gap-6 shadow-md shadow-black justify-center h-[100%] mx-auto  my-auto bg-[var(--bgColorPrimary)] '>
+        <div className='md:w-[90%] py-10 flex sm:flex-row flex-col sm:gap-0 gap-6 shadow-md shadow-black justify-center h-[100%] mx-auto  my-auto bg-gradient-to-r to-green-700 from-[var(--themeColor)] '>
 
           {/* ============== right side ================  */}
 
@@ -246,17 +250,27 @@ const Auth = () => {
                     {!userExist && (
                       <div className="mb-4">
                         <label
-                          className="uppercase tracking-widest block text-[var(--bgColorSecondary)] text-sm font-bold mb-2" htmlFor="phoneNumber">
+                          className="uppercase tracking-widest block text-[var(--bgColorSecondary)] text-sm font-bold mb-2"
+                          htmlFor="phoneNumber"
+                        >
+
                           Phone No.
                         </label>
-                        <Field
-                          className="shadow appearance-none border bg-[var(--bgColorPrimary)] w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
-                          id="phoneNumber"
-                          type="text"
-                          maxLength={10}
-                          minLength={10}
-                          name="phoneNumber"
-                        />
+                        <div className='flex  items-center gap-2 border border-[var(--bgColorSecondary)] '>
+                          <div className='flex justify-center items-center pl-2 pr-1 gap-1 text-[var(--bgColorSecondary)]'>
+                            {/* <FaFlag /> */}
+                            <img src='https://organicnationmages.s3.ap-south-1.amazonaws.com/other_images/flag.png' alt="country_flag" className='w-8' />
+                            <span>+91</span>
+                          </div>
+                          <Field
+                            className="shadow appearance-none  bg-[var(--bgColorPrimary)] w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                            id="phoneNumber"
+                            type="text"
+                            maxLength={10}
+                            minLength={10}
+                            name="phoneNumber"
+                          />
+                        </div>
                         {errors.phoneNumber && touched.phoneNumber ? (
                           <p className='text-red-600'>*{errors.phoneNumber}</p>
                         ) : (
@@ -356,7 +370,7 @@ const Auth = () => {
 
                 <div className='flex justify-center items-center gap-3 py-1 border text-[var(--bgColorSecondary)] hover:bg-white hover:text-black'>
                   <FcGoogle className='text-2xl' />
-                  <a href="http://localhost:4000/api/auth/google" className=''>Log in with Google</a>
+                  <a href={`${apiUrl}/api/auth/google`} className=''>Log in with Google</a>
                 </div>
 
               </div>

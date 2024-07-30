@@ -8,6 +8,8 @@ import { addToCart, getAllCartItems } from '../../features/cart/cart';
 import { toast } from 'react-toastify';
 // react icons
 import { IoIosCloseCircleOutline } from "react-icons/io";
+const apiUrl = import.meta.env.VITE_BACKEND_URL;
+
 
 
 
@@ -23,13 +25,12 @@ const SingleOrder = ({ curOrder }) => {
     const getCurOrderItem = async () => {
 
         try {
-            const response = await axios.get(`http://localhost:8000/category/organic-honey/${nameUrl}`);
-            console.log('singleitem', response.data.product[0])
-            if (response.data.product[0]) {
-                setSingleOrderItem(response.data.product[0])
+            const response = await axios.get(`${apiUrl}/category/organic-honey/${nameUrl}`);
+            if (response.data.product) {
+                setSingleOrderItem(response.data.product)
             }
         } catch (error) {
-            console.log("error in fetching single product", error)
+            throw error
         }
     }
 
@@ -45,7 +46,7 @@ const SingleOrder = ({ curOrder }) => {
     };
 
     return (
-        <div className='flex flex-col gap-4'>
+        <div className='flex flex-col gap-4 font-sans'>
             <div className='flex xs:flex-row flex-col gap-5 xs:gap-0 justify-between xs:items-center'>
                 <div className='flex justify-start xs:gap-5 gap-5 items-center'>
                     <div>
@@ -54,7 +55,7 @@ const SingleOrder = ({ curOrder }) => {
                     <div className='flex flex-col justify-start xs:gap-3 gap-1 text-sm xs:text-[16px] text-white '>
                         <p>{singleOrderItem.name}</p>
                         <p>Quantity : {curOrder[2]} Pcs.</p>
-                        <p>Price: ₹ {singleOrderItem.price}</p>
+                        <p>Rate Per Quantity: ₹ {Math.round(singleOrderItem.price - (singleOrderItem.price * singleOrderItem['discount '] / 100))} <span className='text-green-300 text-sm'>({singleOrderItem['discount ']}% off)</span></p>
                     </div>
                 </div>
                 {/* ==================buttons============ */}
@@ -63,7 +64,7 @@ const SingleOrder = ({ curOrder }) => {
 
                     {/* ====== View Product Button ==============  */}
 
-                    <Link to={`/shop/${nameUrl}`} >
+                    <Link to={`/shop/all/${nameUrl}`} >
                         <ButtonTwo text="View Product" />
                     </Link>
 
@@ -83,7 +84,6 @@ const SingleOrder = ({ curOrder }) => {
 
                     <div
                         onClick={() => {
-                            console.log(curOrder[0])
                             setShowProductReview(true)
                         }}>
                         <ButtonTwo text="Review Product" />

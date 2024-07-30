@@ -10,9 +10,10 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 import {
-  Header, Footer, Info, Breadcrumbs, WhatsApp,  ScrollToTop,  getProductsData, getAllCartItems, fetchUserData, getAllOrders, 
+  Header, Footer, Info, Breadcrumbs, WhatsApp, ScrollToTop, getProductsData, getAllCartItems, getAllBlogs, getAllRecipes, fetchUserData, getAllOrders,
 } from './imports';
 import getRoutes from './routes/routes';
+
 
 
 function App() {
@@ -30,6 +31,8 @@ function App() {
     const fetchInitialData = async () => {
       dispatch(getProductsData());
       dispatch(getAllCartItems());
+      dispatch(getAllBlogs());
+      dispatch(getAllRecipes());
       if (token) {
         await Promise.all([
           dispatch(fetchUserData(token)),
@@ -54,12 +57,11 @@ function App() {
             <Breadcrumbs />
             <Suspense fallback={
               <div className='py-52 flex justify-center items-center'>
-              <div className="loader"></div>
-            </div>
-          }>
+                <div className="loader"></div>
+              </div>
+            }>
               <Routes>
-              
-              {getRoutes()}
+                {getRoutes()}
               </Routes>
             </Suspense>
             <Footer />
@@ -75,4 +77,4 @@ function App() {
   )
 }
 
-export default App
+export default App;

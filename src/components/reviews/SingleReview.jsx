@@ -4,31 +4,30 @@ import { FaStar } from 'react-icons/fa6';
 
 const SingleReview = ({ reviews }) => {
 
-    const [customerName, setCustomerName] = useState('');
-    console.log(reviews)
+    const apiUrl = import.meta.env.VITE_BACKEND_URL;
+    
 
 
-    const getCustomerName = async (email) => {
+    // const getCustomerName = async (email) => {
 
-        try {
-            const response = await axios.get(`http://localhost:4000/api/auth/user/${email}`,
-            );
-            console.log('responseeeeeeeeee', response)
-            if (response.statusText === 'OK') {
-                let fullName = response?.data?.firstName + ' ' + response?.data?.lastName
-                setCustomerName(fullName);
-            }
-        } catch (error) {
-            return error
-        }
-    }
+    //     try {
+    //         const response = await axios.get(`${apiUrl}/api/auth/user/${email}`,
+    //         );
+    //         if (response.statusText === 'OK') {
+    //             let fullName = response?.data?.firstName + ' ' + response?.data?.lastName
+    //             setCustomerName(fullName);
+    //         }
+    //     } catch (error) {
+    //         return error
+    //     }
+    // }
 
 
-    useEffect(() => {
-        if (reviews) {
-            getCustomerName(reviews.userEmail)
-        }
-    }, [])
+    // useEffect(() => {
+    //     if (reviews) {
+    //         getCustomerName(reviews.userEmail)
+    //     }
+    // }, [])
 
     return (
         <div className='w-full shadow-lg px-5 py-4 rounded-lg  flex flex-col gap-3' >
@@ -53,7 +52,7 @@ const SingleReview = ({ reviews }) => {
                         );
                     })}
                 </div>
-                <div><span className='text-[14px] font-mono text-gray-500'>{new Date(reviews?.createdAt).toDateString()}</span></div>
+                {/* <div><span className='text-[14px] font-mono text-gray-500'>{new Date(reviews?.createdAt).toDateString()}</span></div> */}
             </div>
 
             <div className='text-sm text-gray-600 font-sans tracking-widest'>
@@ -61,8 +60,8 @@ const SingleReview = ({ reviews }) => {
             </div>
 
             <div className='flex justify-start items-center gap-2 '>
-                <p className='px-2 py-1  bg-[var(--bgColorPrimary)] rounded-full text-white'>{customerName[0]}</p>
-                <p className='tracking-wider font-sans xs:text-sm text-xs '>{customerName}</p>
+                <p className='px-2 py-1  bg-[var(--bgColorPrimary)] rounded-full text-white'>{reviews?.userName[0]}</p>
+                <p className='tracking-wider font-sans xs:text-sm text-xs '>{reviews?.userName}</p>
             </div>
 
         </div>

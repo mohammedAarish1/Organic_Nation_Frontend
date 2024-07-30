@@ -16,7 +16,6 @@ const initialValues = {
 
 const GoogleSignup = () => {
 
-  console.log('inside google signup component')
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [token, setToken] = useState('');
@@ -30,7 +29,6 @@ const GoogleSignup = () => {
     // Extract token from URL
     const query = new URLSearchParams(window.location.search);
     const token = query.get('token');
-    console.log(token)
     setToken(token)
   }, [])
 

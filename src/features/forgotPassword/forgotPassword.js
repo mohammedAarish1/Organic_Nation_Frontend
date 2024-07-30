@@ -1,12 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const apiUrl = import.meta.env.VITE_BACKEND_URL;
+
+
 export const verifyEmail = createAsyncThunk(
     'forgotPassword/verifyEmail',
     async (email, { rejectWithValue }) => {
         try {
-            const response = await axios.post('http://localhost:4000/api/forgot-password/verify-email', { email });
-            // console.log(response)
+            const response = await axios.post(`${apiUrl}/api/forgot-password/verify-email`, { email });
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data);
@@ -17,10 +19,8 @@ export const verifyEmail = createAsyncThunk(
 export const resetPassword = createAsyncThunk(
     'forgotPassword/resetPassword',
     async ({ token, newPassword }, { rejectWithValue }) => {
-        console.log('pass==', newPassword)
         try {
-            const response = await axios.post('http://localhost:4000/api/forgot-password/reset-password', { token, newPassword });
-            console.log('resetPass', response)
+            const response = await axios.post(`${apiUrl}/api/forgot-password/reset-password`, { token, newPassword });
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data);
@@ -49,7 +49,6 @@ const forgotPassword = createSlice({
                 }
             })
             .addCase(verifyEmail.fulfilled, (state, action) => {
-                console.log('verify email res', action.payload.message)
                 return {
                     ...state,
                     loading: false,

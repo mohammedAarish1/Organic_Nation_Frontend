@@ -11,6 +11,7 @@ import reviewsReducer from '../features/reviews/reviews';
 import deliveryReducer from '../features/check-delivery/checkDelivery';
 import otpSliceReducer from '../features/auth/OTPSlice';
 import forgotPasswordReducer from '../features/forgotPassword/forgotPassword';
+import blogReducer from '../features/blogs/blogs';
 
 
 
@@ -27,6 +28,7 @@ export const store = configureStore({
         reviews: reviewsReducer,
         delivery: deliveryReducer,
         OTPSlice: otpSliceReducer,
-        forgotPassword: forgotPasswordReducer
+        forgotPassword: forgotPasswordReducer,
+        blog: blogReducer
     },
 })

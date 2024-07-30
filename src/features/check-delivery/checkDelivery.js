@@ -1,13 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const apiUrl = import.meta.env.VITE_BACKEND_URL;
+
 
 export const checkDeliveryAvailability = createAsyncThunk(
     'delivery/checkDeliveryAvailability',
     async (pincode, { rejectWithValue }) => {
         try {
-            const response = await axios.get(`http://localhost:4000/api/delivery/check-availability/${pincode}`);
-            console.log(response.data)
+            const response = await axios.get(`${apiUrl}/api/delivery/check-availability/${pincode}`);
             return response.data;
         } catch (error) {
             return rejectWithValue({
@@ -23,9 +24,7 @@ export const calculateShippingFee = createAsyncThunk(
     async ({ pinCode, weight }, { rejectWithValue }) => {
         try {
             let deliveryChargeToken = localStorage.getItem('deliveryChargeToken')
-            console.log('dfasdfasd', deliveryChargeToken)
-            // console.log('dataaaaaaa', typeof pinCode, typeof weight)
-            const response = await axios.post(`http://localhost:4000/api/delivery-charges/calculate`, { pinCode, weight },
+            const response = await axios.post(`${apiUrl}/api/delivery-charges/calculate`, { pinCode, weight },
                 {
                     headers: deliveryChargeToken ? {
                         'Authorization': `Bearer ${deliveryChargeToken}`,
@@ -33,10 +32,8 @@ export const calculateShippingFee = createAsyncThunk(
                     } : {}
                 }
             );
-            console.log('calcu', response.data)
             return response.data;
         } catch (error) {
-            console.log('error', error)
             return rejectWithValue({
                 message: err.message,
                 status: err.response?.status
@@ -57,6 +54,14 @@ const initialState = {
 const checkDelivery = createSlice({
     name: "delivery",
     initialState,
+    reducers: {
+        setIsAvailable: (state) => {
+            return {
+                ...state,
+                isAvailable: null,
+            }
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(checkDeliveryAvailability.pending, (state) => {
             return {
@@ -67,7 +72,7 @@ const checkDelivery = createSlice({
         builder.addCase(checkDeliveryAvailability.fulfilled, (state, action) => {
             return {
                 ...state,
-                isAvailable: action.payload.available,
+                isAvailable: action.payload?.available,
                 message: action.payload.message,
                 checking: false,
             }
@@ -109,5 +114,6 @@ const checkDelivery = createSlice({
     }
 })
 
+export const { setIsAvailable } = checkDelivery.actions;
 
 export default checkDelivery.reducer;

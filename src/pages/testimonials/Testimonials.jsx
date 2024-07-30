@@ -1,7 +1,4 @@
 import React from 'react'
-
-// testimonials images 
-import bannerImg from '../../images/testimonialBanner.png'
 import TestimonialSlider from '../../components/testimonialSlider/TestimonialSlider';
 import TestimonialSection from '../../components/testimonial-section/TestimonialSection';
 
@@ -12,7 +9,7 @@ const Testimonials = () => {
   return (
     <div className=' mb-28'>
       <div className=''>
-        <img src={bannerImg} alt="image" className='w-full' />
+        <img src='https://organicnationmages.s3.ap-south-1.amazonaws.com/other_banners/testimonialBanner.png' alt="image" className='w-full' />
       </div>
       {/* images or videos */}
       <div>

@@ -1,14 +1,16 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from 'axios';
 
+const apiUrl = import.meta.env.VITE_BACKEND_URL;
+
 export const getProductsData = createAsyncThunk(
   "getData",
   async () => {
     try {
-      const response = await axios.get('http://localhost:8000/category/all');
+      const response = await axios.get(`${apiUrl}/category/all`);
       return response.data;
     } catch (error) {
-      console.log('error fetching initial product data', error);
+      throw error
     }
   })
 
@@ -33,30 +35,33 @@ export const productsDataSlice = createSlice({
     })
     builder.addCase(getProductsData.fulfilled, (state, action) => {
 
-      const data = [...action.payload?.product];
+      if (action.payload) {
+        const data = [...action.payload?.product];
 
-      let categoryListData = data?.map(product => ({
-        category: product.category,
-        categoryUrl: product['category-url'] // Accessing category-url using bracket notation
-      }));
+        let categoryListData = data?.map(product => ({
+          category: product.category,
+          categoryUrl: product['category-url'] // Accessing category-url using bracket notation
+        }));
 
-      let uniqueData = categoryListData.filter((product, index, self) =>
-        index === self.findIndex(t =>
-          t.category === product.category && t.categoryUrl === product.categoryUrl
-        )
-      );
+        let uniqueData = categoryListData.filter((product, index, self) =>
+          index === self.findIndex(t =>
+            t.category === product.category && t.categoryUrl === product.categoryUrl
+          )
+        );
 
-      categoryListData = [{ category: 'All', categoryUrl: 'All' }, ...uniqueData];
+        categoryListData = [{ category: 'All', categoryUrl: 'All' }, ...uniqueData];
 
-      return {
-        ...state,
-        isLoading: false,
-        productData: action.payload.product,
-        categoryList: categoryListData,
+        return {
+          ...state,
+          isLoading: false,
+          productData: action.payload.product,
+          categoryList: categoryListData,
+        }
       }
+
+
     })
     builder.addCase(getProductsData.rejected, (state, action) => {
-      // console.log("error", action.payload)
       return {
         ...state,
         isError: true,

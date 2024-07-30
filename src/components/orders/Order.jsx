@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { cancelOrder } from '../../features/manageOrders/manageOrders';
 import { useDispatch } from 'react-redux';
 import SingleOrder from './SingleOrder';
@@ -7,7 +7,6 @@ import Alert from '../alert/Alert';
 // react icons 
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { MdOutlineFileDownload, MdOutlineCancel } from "react-icons/md";
-import { FaCheckCircle } from "react-icons/fa";
 import { GoDotFill } from "react-icons/go";
 import { IoCheckmarkDoneCircleSharp, IoChevronDownOutline } from "react-icons/io5";
 import { BsCartX } from "react-icons/bs";
@@ -41,7 +40,6 @@ const Order = ({ order }) => {
         dispatch(cancelOrder(order._id))
         navigate('/manage-orders')
 
-        console.log('Order cancelled');
         setIsAlertOpen(false);
     };
 
@@ -52,11 +50,11 @@ const Order = ({ order }) => {
     return (
         <>
             {/* order 1 start */}
-            <div className='shadow-xl'>
+            <div className='shadow-xl font-sans'>
                 <div>
                     {/* order details heading  */}
                     <div className='flex sm:justify-between justify-center items-center bg-[var(--bgColorPrimary)] text-white py-3 px-4 uppercase'>
-                        <div className='flex justify-start items-center gap-10 font-mono'>
+                        <div className='flex justify-start items-center gap-10 '>
                             <div className='lg:block hidden' >
                                 <p>Order Number</p>
                                 <p className='text-gray-300 text-sm'>#{order?.orderNo}</p>
@@ -149,8 +147,28 @@ const Order = ({ order }) => {
 
 
                     {/* order footer section  */}
-                    <div className='flex xs:items-center bg-[#6D613B] xs:text-[16px] text-sm'>
-                        <div className={`w-1/4 ${order?.orderStatus !== 'active' ? 'bg-[#D3BB71]' : 'bg-[#D3BB71] hover:bg-[#e0cf9c]'}  `}>
+                    <div className=' bg-[#6D613B] '>
+                       
+                        {/* <p className='flex justify-start items-center xs:gap-2 max-w-max'><span className='xs:text-[16px] text-[12px]'>Payment Done</span> <span><FaCheckCircle className='text-green-600 xs:text-[1rem] text-[15px] ' /> </span></p> */}
+                        <div className='text-white xs:px-5 px-1 py-3'>
+                            <div className='flex justify-between'>
+                                <p className='text-end xs:text-[18px] text-[12px]'>Sub Total:</p>
+                                <p> ₹ {order?.subTotal}</p>
+                            </div>
+                            <div className='flex justify-between items-center'>
+                                <p className='text-end xs:text-[12px] text-[12px]'>Total taxes:</p>
+                                <p> ₹ {order?.taxAmount}</p>
+                            </div>
+                            <div className='flex justify-between items-center'>
+                                <p className='text-end xs:text-[12px] text-[12px]'>Shipping Fee:</p>
+                                <p> ₹ {order?.shippingFee}</p>
+                            </div>
+                            <div className='flex justify-between items-center xs:text-[20px] text-[12px] font-semibold'>
+                                <p className='text-end '>Total Amount Payable:</p>
+                                <p> ₹ {order?.subTotal + order?.taxAmount + order?.shippingFee}</p>
+                            </div>
+                        </div>
+                        <div className={` ${order?.orderStatus !== 'active' ? 'bg-[#D3BB71]' : 'bg-[#D3BB71] hover:bg-[#e0cf9c]'}  `}>
                             <button
                                 className='flex w-full h-full justify-center  py-3 gap-1 items-center'
                                 onClick={showAlert}
@@ -159,10 +177,6 @@ const Order = ({ order }) => {
                                 <span> <BsCartX className={`${order?.orderStatus !== 'active' ? 'text-red-400' : 'text-red-500'} text-xl  `} /></span>
                                 <span className={`${order?.orderStatus !== 'active' ? 'text-gray-400' : ''} xs:block hidden`}>Cancel order</span>
                             </button>
-                        </div>
-                        <div className='flex justify-between items-center text-white w-3/4 xs:px-5 px-1'>
-                            <p className='flex justify-start items-center xs:gap-2 max-w-max'><span className='xs:text-[16px] text-[12px]'>Payment Done</span> <span><FaCheckCircle className='text-green-600 xs:text-[1rem] text-[15px] ' /> </span></p>
-                            <p className='text-end xs:text-[16px] text-[12px]'>Total Price: <span className='font-semibold text-xl'> ₹{order?.amountPaid}</span></p>
                         </div>
                     </div>
                 </div>

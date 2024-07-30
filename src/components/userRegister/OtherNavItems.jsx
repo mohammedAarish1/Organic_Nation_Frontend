@@ -19,7 +19,7 @@ const OtherNavItems = () => {
   const navigate = useNavigate()
   const [showUserMenu, setShowUserMenu] = useState(false);
   const { totalCartItems } = useSelector((state) => state.cart)
-  const { user, user_loading} = useSelector(state => state.user);
+  const { user, user_loading } = useSelector(state => state.user);
 
 
 
@@ -45,7 +45,6 @@ const OtherNavItems = () => {
   // handle log out of the user
   const handleLogout = () => {
     if (user && !user_loading) {
-      console.log('checking log out button')
       // localStorage.removeItem('cart');
       dispatch(userLogout());
       dispatch(clearUserOrders());
@@ -64,17 +63,20 @@ const OtherNavItems = () => {
 
 
   return (
-    <div className='text-[var(--themeColor)]'>
+    <div className='text-[var(--themeColor)] font-sans'>
       <ul className='flex justify-center items-center sm:gap-4 gap-3 font-medium'>
         {/* cart  */}
-        <li className='cursor-pointer'>
-          <Link to="cart" className='flex flex-col justify-center items-center'>
+        <li className='cursor-pointer hover:underline hover:underline-offset-4'>
+          <NavLink
+            to="cart"
+            className={({ isActive }) => `flex flex-col justify-center items-center ${isActive ? 'underline underline-offset-4' : null}`}
+          >
             <div className='relative'>
               <BsCart4 className='  text-2xl' />
               <span className='bg-[var(--bgColorPrimary)] py-1 px-3 text-sm text-white rounded-full absolute top-[-100%] -right-4'>{totalCartItems || 0}</span>
             </div>
             <span>Cart</span>
-          </Link>
+          </NavLink>
         </li>
         {/* login  */}
         {user && !user_loading && user.email ? (
@@ -87,20 +89,20 @@ const OtherNavItems = () => {
               <span>{user.firstName}</span>
             </div>
 
-
-            <ul ref={userMenuRef} className={`${showUserMenu ? 'max-h-max translate-y-[0] py-2' : 'max-h-0 overflow-hidden invisible opacity-0 -translate-y-[40px] py-0'} text-[var(--titleTextColor)] transition-all duration-700   bg-[var(--hoverEffect)] flex flex-col gap-2 absolute right-2  rounded-md shadow-xl min-w-max`}>
+            {/* ====================== manage order ===================  */}
+            <ul ref={userMenuRef} className={`${showUserMenu ? 'max-h-max translate-y-[0] py-6' : 'max-h-0 overflow-hidden invisible opacity-0 -translate-y-[40px] py-0'} text-[var(--bgColorSecondary)] transition-all duration-700   bg-[var(--bgColorPrimary)] flex flex-col gap-2 absolute right-2  rounded-md shadow-xl min-w-max`}>
               <li className=''>
                 <p className='pl-2 pr-20'>Signed in as</p>
                 <p className='lowercase text-sm px-2'>{user.email}</p>
-                <div className='h-[2px] w-full bg-[var(--bgColorPrimary)] mt-1'></div>
+                <div className='h-[2px] w-full bg-[var(--bgColorSecondary)] mt-1'></div>
               </li>
-              <li className='hover:bg-[var(--bgColorSecondary)] cursor-pointer pl-4   py-1' onClick={() => setShowUserMenu(false)}>
+              <li className='hover:bg-[var(--bgColorSecondary)] hover:text-[var(--bgColorPrimary)]  cursor-pointer pl-4   py-1' onClick={() => setShowUserMenu(false)}>
                 <Link to="/manage-orders">
                   Manage Orders
                 </Link>
               </li>
-              <li className='hover:bg-[var(--bgColorSecondary)] cursor-pointer pl-4  py-1'>Help</li>
-              <li className='hover:bg-[var(--bgColorSecondary)] cursor-pointer pl-4  py-1' onClick={() => handleLogout()}>Sign out</li>
+              {/* <li className='hover:bg-[var(--bgColorSecondary)] text-[var(--bgColorPrimary)] cursor-pointer pl-4  py-1'>Help</li> */}
+              <li className='hover:bg-[var(--bgColorSecondary)] hover:text-[var(--bgColorPrimary)] cursor-pointer pl-4  py-1' onClick={() => handleLogout()}>Sign out</li>
             </ul>
 
 
@@ -108,7 +110,7 @@ const OtherNavItems = () => {
         ) : (
 
           <li>
-            <NavLink to="register" className={({ isActive }) => `cursor-pointer sm:p-4 p-1 rounded-md hover:bg-[var(--hoverEffect)] flex flex-col justify-center items-center ${isActive ? 'bg-[var(--hoverEffect)]' : null} `}>
+            <NavLink to="register" className={({ isActive }) => `cursor-pointer sm:p-4 p-1 rounded-md hover:underline hover:underline-offset-4 flex flex-col justify-center items-center ${isActive ? 'underline underline-offset-4' : null} `}>
               <IoMdLogIn className='text-2xl' />
               <span>Login</span>
             </NavLink>
@@ -122,3 +124,4 @@ const OtherNavItems = () => {
 }
 
 export default OtherNavItems;
+

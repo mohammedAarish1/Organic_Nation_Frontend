@@ -1,9 +1,7 @@
 import React from 'react'
 import Title from '../title/Title'
 import { Link } from 'react-router-dom';
-// react icons 
 
-import customers from '../../images/customers/customer.webp'
 
 
 const TestimonialSection = ({ showBtn = false }) => {
@@ -21,7 +19,7 @@ const TestimonialSection = ({ showBtn = false }) => {
                     data-aos="flip-right"
                     data-aos-duration="1000"
                 >
-                    <img src={customers} alt="recipes" className='md:w-96 rounded-2xl' />
+                    <img src='https://organicnationmages.s3.ap-south-1.amazonaws.com/other_images/customer.jpeg' alt="recipes" className='md:w-96 rounded-2xl' />
 
 
                 </div>
@@ -29,7 +27,7 @@ const TestimonialSection = ({ showBtn = false }) => {
                     data-aos="flip-right"
                     data-aos-duration="1000"
                 >
-                    <img src={customers} alt="recipes" className='md:w-96 rounded-2xl' />
+                    <img src='https://organicnationmages.s3.ap-south-1.amazonaws.com/other_images/customer.jpeg' alt="recipes" className='md:w-96 rounded-2xl' />
 
 
                 </div>
@@ -37,24 +35,11 @@ const TestimonialSection = ({ showBtn = false }) => {
                     data-aos="flip-right"
                     data-aos-duration="1000"
                 >
-                    <img src={customers} alt="recipes" className='md:w-96 rounded-2xl' />
+                    <img src='https://organicnationmages.s3.ap-south-1.amazonaws.com/other_images/customer.jpeg' alt="recipes" className='md:w-96 rounded-2xl' />
 
 
                 </div>
-                <div className=' flex md:w-1/4 flex-col justify-center items-center '
-                    data-aos="flip-right"
-                    data-aos-duration="1000"
-                >
-                    <img src={customers} alt="recipes" className='md:w-96 rounded-2xl' />
-
-
-                </div>
-                <div className=' flex md:w-1/4 flex-col justify-center items-center '
-                    data-aos="flip-right"
-                    data-aos-duration="1000"
-                >
-                    <img src={customers} alt="recipes" className='md:w-96 rounded-2xl' />
-                </div>
+            
 
             </div>
 

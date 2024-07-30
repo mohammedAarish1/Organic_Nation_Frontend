@@ -1,16 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const apiUrl = import.meta.env.VITE_BACKEND_URL;
+
 // thunk for signing up 
 export const userSignup = createAsyncThunk(
     'auth/userSignup',
     async (userData, { rejectWithValue }) => {
         try {
-            const response = await axios.post('http://localhost:4000/api/auth/signup', userData);
-            console.log("response", response.data)
+            const response = await axios.post(`${apiUrl}/api/auth/signup`, userData);
             return response.data
         } catch (error) {
-            console.log(error)
             return rejectWithValue(error.response.data)
         }
     }
@@ -19,10 +19,9 @@ export const userSignup = createAsyncThunk(
 export const userGoogleSignup = createAsyncThunk(
     'auth/userGoogleSignup',
     async ({ userData, token }, { rejectWithValue }) => {
-        console.log(userData, token);
         try {
             if (token) {
-                const response = await axios.post('http://localhost:4000/api/auth/google/phone', userData,
+                const response = await axios.post(`${apiUrl}/api/auth/google/phone`, userData,
                     {
                         headers: {
                             'Authorization': `Bearer ${token}`,
@@ -30,11 +29,10 @@ export const userGoogleSignup = createAsyncThunk(
                         }
                     }, { withCredentials: true },
                 );
-                console.log("response-google-signup", response.data)
                 return response.data;
             }
         } catch (error) {
-            console.log(error)
+            throw error
         }
     }
 );
@@ -44,8 +42,7 @@ export const userLogin = createAsyncThunk(
     'auth/userLogin',
     async (userData, { rejectWithValue }) => {
         try {
-            const response = await axios.post('http://localhost:4000/api/auth/login', userData);
-            console.log('log in data', response.data)
+            const response = await axios.post(`${apiUrl}/api/auth/login`, userData);
 
             if (response.data) {
                 // const localCart = JSON.parse(localStorage.getItem('cart') || []);
@@ -56,8 +53,7 @@ export const userLogin = createAsyncThunk(
                 // return { user, hasLocalCart: false };
             }
         } catch (error) {
-            console.log('error', error.response.data)
-            return rejectWithValue(error.response.data)
+            return rejectWithValue(error.message)
         }
     }
 )
@@ -67,9 +63,8 @@ export const userLogin = createAsyncThunk(
 export const fetchUserData = createAsyncThunk(
     'auth/fetchUserData',
     async (token, { rejectWithValue }) => {
-        // console.log('inside fetch data', email)
         try {
-            const response = await axios.get(`http://localhost:4000/api/auth/user`,
+            const response = await axios.get(`${apiUrl}/api/auth/user`,
                 {
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -77,7 +72,6 @@ export const fetchUserData = createAsyncThunk(
                     }
                 }
             );
-            // console.log(response.data, 'response')
             return response.data;
         } catch (error) {
             if (error.response && error.response.data) {
@@ -109,7 +103,7 @@ const userSlice = createSlice({
                 token: ''
             }
         },
-        
+
     },
     extraReducers: (builder) => {
         builder
@@ -122,7 +116,6 @@ const userSlice = createSlice({
                 }
             })
             .addCase(userSignup.fulfilled, (state, action) => {
-                console.log('usersignup', action.payload)
                 return {
                     ...state,
                     user_loading: false,
@@ -131,7 +124,6 @@ const userSlice = createSlice({
                 }
             })
             .addCase(userSignup.rejected, (state, action) => {
-                console.log('usersignup rejected', action.payload)
                 return {
                     ...state,
                     user_loading: false,
@@ -148,7 +140,6 @@ const userSlice = createSlice({
                 }
             })
             .addCase(userGoogleSignup.fulfilled, (state, action) => {
-                console.log('usergooglesignup', action.payload)
                 return {
                     ...state,
                     user_loading: false,
@@ -173,11 +164,10 @@ const userSlice = createSlice({
                 }
             })
             .addCase(userLogin.fulfilled, (state, action) => {
-                console.log('log in dataaaaaaaaa', action.payload)
 
                 state.user_loading = false
                 state.token = action.payload.token
-               
+
             })
             .addCase(userLogin.rejected, (state, action) => {
                 return {
@@ -195,7 +185,6 @@ const userSlice = createSlice({
                 }
             })
             .addCase(fetchUserData.fulfilled, (state, action) => {
-                console.log('userdata', action.payload)
                 return {
                     ...state,
                     user_loading: false,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkoutSchema } from '../../form-validation/checkoutSchema';
 import { clearCart } from '../../features/cart/cart';
@@ -8,7 +8,7 @@ import { addOrders } from '../../features/manageOrders/manageOrders';
 // state list 
 import { states } from '../../helper/stateList';
 // react icons 
-import { MdEmail,MdOutlinePhoneAndroid,MdLocationCity } from "react-icons/md";
+import { MdEmail, MdOutlinePhoneAndroid, MdLocationCity } from "react-icons/md";
 import { FaUserEdit } from "react-icons/fa";
 import { PiFileZipFill } from "react-icons/pi";
 // formik
@@ -16,12 +16,13 @@ import { Formik, Form, Field, } from 'formik';
 
 
 const CheckoutForm = () => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const { user } = useSelector((state) => state.user);
-    
-    const { cartItemsList, totalCartAmount,  } = useSelector((state) => state.cart);
-    const {  shippingFee } = useSelector(state => state.delivery)
+
+    const { cartItemsList, totalCartAmount, totalTax } = useSelector((state) => state.cart);
+    const { shippingFee } = useSelector(state => state.delivery)
 
     const initialValues = {
         firstName: user?.firstName || '',
@@ -72,32 +73,38 @@ const CheckoutForm = () => {
 
         // below orderDetails will contain each item id and qty in 2D array
         const orderDetails = cartItemsList.map(item => [item['name-url'], item._id, item.quantity]);
-        // console.log(orderDetails)
         let checkoutData = {
             orderNo: Math.floor(Math.random() * 100),
-            orderStatus: 'completed',
+            orderStatus: 'active',
             userEmail: user?.email,
             billingAddress: address(values.billingAddress),
             shippingAddress: address(values.shippingAddress),
             orderDetails: orderDetails,
-            amountPaid: totalCartAmount + shippingFee,
+            subTotal: totalCartAmount,
+            paymentStatus: 'pending',
+            taxAmount: totalTax,
+            shippingFee: shippingFee,
             paymentMethod: values.paymentMethod,
             receiverDetails: {
                 name: !values.sameAsContact ? values.receiverFirstName || '' : '',
                 phoneNumber: !values.sameAsContact ? values.receiverPhone || '' : '',
             }
         }
-        console.log('checkdata', checkoutData)
         if (user && cartItemsList.length > 0) {
-            dispatch(addOrders(checkoutData))
-                .then((value) => {
-                    if (value.type === "manageOrders/addOrders/fulfilled") {
-                        dispatch(clearCart());
-                        localStorage.removeItem('deliveryChargeToken');
-                    }
-                })
+            if (values.paymentMethod === 'cash_on_delivery') {
+                dispatch(addOrders(checkoutData))
+                    .then((value) => {
+                        if (value.type === "manageOrders/addOrders/fulfilled") {
+                            dispatch(clearCart());
+                            localStorage.removeItem('deliveryChargeToken');
+                            navigate(`/order-confirmed/${value.payload.orderId}`)
+                        }
+                    })
+            } else {
+                navigate('/payment-gateway', { state: { totalCartAmount, shippingFee, } })
+            }
+
         } else {
-            console.log('errrrrrr')
         }
 
         action.resetForm();
@@ -114,7 +121,7 @@ const CheckoutForm = () => {
                 onSubmit={handleSubmit}
 
             >
-                {({ values, errors, touched,  setFieldValue }) => (
+                {({ values, errors, touched, setFieldValue }) => (
                     <Form className="mt-10">
                         {/*============== contact details ================= */}
                         <div>
@@ -133,7 +140,7 @@ const CheckoutForm = () => {
                                         name="firstName"
                                         className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer "
                                         placeholder=" "
-                                    // autocomplete="off"
+                                        autocomplete="off"
 
                                     />
 
@@ -153,7 +160,10 @@ const CheckoutForm = () => {
                                         name="lastName"
                                         id="lastName"
                                         className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
-                                        placeholder=" " />
+                                        placeholder=" "
+                                        autocomplete="off"
+                                    />
+
 
                                     <label htmlFor="lastName" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">Last Name</label>
 
@@ -171,7 +181,10 @@ const CheckoutForm = () => {
                                         name="email"
                                         id="email"
                                         className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
-                                        placeholder=" " />
+                                        placeholder=" "
+                                        autocomplete="off"
+                                    />
+
 
                                     <label htmlFor="email" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">Email</label>
                                     <MdEmail className='absolute top-4 right-4 text-xl' />
@@ -188,7 +201,9 @@ const CheckoutForm = () => {
                                         name="phone"
                                         id="phone"
                                         className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
-                                        placeholder=" " />
+                                        placeholder=" "
+                                        autocomplete="off"
+                                    />
 
                                     <label htmlFor="phone" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">Phone</label>
 
@@ -209,6 +224,7 @@ const CheckoutForm = () => {
                                     type="checkbox"
                                     id="sameAsContact"
                                     name="sameAsContact"
+                                    autocomplete="off"
                                     onChange={(e) => {
                                         setFieldValue('sameAsContact', e.target.checked);
                                         if (e.target.checked && values.sameAsContact) {
@@ -236,7 +252,9 @@ const CheckoutForm = () => {
                                             name="receiverFirstName"
                                             id="receiverFirstName"
                                             className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
-                                            placeholder=" " />
+                                            placeholder=" "
+                                            autocomplete="off"
+                                        />
 
                                         <label htmlFor="receiverFirstName" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">First Name</label>
                                         <FaUserEdit className='absolute top-4 right-4 text-xl' />
@@ -253,7 +271,10 @@ const CheckoutForm = () => {
                                             name="receiverLastName"
                                             id="receiverLastName"
                                             className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
-                                            placeholder=" " />
+                                            placeholder=" "
+                                            autocomplete="off"
+                                        />
+
 
                                         <label htmlFor="receiverLastName" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">Last Name</label>
 
@@ -271,7 +292,9 @@ const CheckoutForm = () => {
                                             name="receiverEmail"
                                             id="receiverEmail"
                                             className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
-                                            placeholder=" " />
+                                            placeholder=" "
+                                            autocomplete="off"
+                                        />
 
                                         <label htmlFor="receiverEmail" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">Email</label>
                                         <MdEmail className='absolute top-4 right-4 text-xl' />
@@ -288,7 +311,9 @@ const CheckoutForm = () => {
                                             name="receiverPhone"
                                             id="receiverPhone"
                                             className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
-                                            placeholder=" " />
+                                            placeholder=" "
+                                            autocomplete="off"
+                                        />
 
                                         <label htmlFor="receiverPhone" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">Phone</label>
 
@@ -319,6 +344,7 @@ const CheckoutForm = () => {
                                             id="shippingAddress.address"
                                             className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
                                             placeholder=" "
+                                            autocomplete="off"
                                         />
 
                                         <label htmlFor="shippingAddress.address" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">Address Line</label>
@@ -337,6 +363,7 @@ const CheckoutForm = () => {
                                             id="shippingAddress.city"
                                             className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
                                             placeholder=" "
+                                            autocomplete="off"
                                         />
 
                                         <label htmlFor="shippingAddress.city" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">City</label>
@@ -375,6 +402,7 @@ const CheckoutForm = () => {
                                             id="shippingAddress.zipCode"
                                             className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
                                             placeholder=" "
+                                            autocomplete="off"
                                         />
 
                                         <label htmlFor="shippingAddress.zipCode" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">Zip Code</label>
@@ -391,7 +419,7 @@ const CheckoutForm = () => {
                                             as="select"
                                             name="shippingAddress.country"
                                             id="shippingAddress.country"
-                                            className='block py-2.5     border-0  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer bg-transparent border-gray-600 text-[#333] w-full text-sm border-b-2  outline-none '
+                                            className='block py-2.5 border-0  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer bg-transparent border-gray-600 text-[#333] w-full text-sm border-b-2  outline-none '
                                         >
                                             <option value="india">India</option>
                                         </Field>
@@ -438,6 +466,7 @@ const CheckoutForm = () => {
                                                 id="billingAddress.address"
                                                 className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
                                                 placeholder=" "
+                                                autocomplete="off"
                                             />
 
                                             <label htmlFor="billingAddress.address" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">Address Line</label>
@@ -456,6 +485,7 @@ const CheckoutForm = () => {
                                                 id="billingAddress.city"
                                                 className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
                                                 placeholder=" "
+                                                autocomplete="off"
                                             />
 
                                             <label htmlFor="billingAddress.city" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">City</label>
@@ -495,6 +525,7 @@ const CheckoutForm = () => {
                                                 id="billingAddress.zipCode"
                                                 className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
                                                 placeholder=" "
+                                                autocomplete="off"
                                             />
 
                                             <label htmlFor="billingAddress.zipCode" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">Zip Code</label>
@@ -579,7 +610,8 @@ const CheckoutForm = () => {
                             {/* cancel and complete btn  */}
                             <div className="flex gap-10 max-sm:flex-col mt-10">
                                 {/* <button type="button" className="rounded-md px-6 py-3 w-full text-sm font-semibold bg-transparent hover:bg-gray-100 border-2 text-[#333]">Cancel</button> */}
-                                <button type="submit" className="rounded-md px-6 py-3 w-full text-sm font-semibold bg-[var(--bgColorPrimary)] text-white hover:tracking-widest transition-all duration-500">Proceed to payment</button>
+
+                                <button type="submit" className="rounded-md px-6 py-3 w-full text-sm font-semibold bg-[var(--bgColorPrimary)] text-white hover:tracking-widest transition-all duration-500">Complete Your Order</button>
                             </div>
                         </div>
                     </Form>

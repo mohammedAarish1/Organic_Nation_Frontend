@@ -22,7 +22,6 @@ const BulkOrder = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // You can handle form submission here, for example, by sending the data to your backend
-    console.log(formData);
     // Reset form data after submission
     setFormData({
       name: '',

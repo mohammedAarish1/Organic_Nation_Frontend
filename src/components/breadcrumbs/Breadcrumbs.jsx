@@ -28,7 +28,9 @@ const Breadcrumbs = () => {
                 {pathNames.map((path, index) => {
                     breadcrumbPath += `/${path}`;
                     const isLast = index === pathNames.length - 1;
-
+                    if (path === 'shop') {
+                        return (<Link key={breadcrumbPath} to={breadcrumbPath} className='text-[var(--themeColor)] text-xl' ></Link>)
+                    }
 
                     return isLast ? <span key={breadcrumbPath} className='flex justify-center text-xs xs:text-sm items-center capitalize text-gray-400 '> <FaAngleRight /> {path}</span> :
                         <Link to={breadcrumbPath} key={breadcrumbPath} ><span className='flex  items-center capitalize hover:underline underline-offset-4'><FaAngleRight /> {path}</span></Link>

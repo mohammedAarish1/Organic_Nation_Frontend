@@ -11,7 +11,6 @@ const SearchedProduct = () => {
 
 
     const { searchInputValue } = useSelector(state => state.filterData);
-    console.log(searchInputValue);
 
     return (
         <div>

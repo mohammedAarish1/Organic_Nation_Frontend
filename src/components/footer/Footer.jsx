@@ -10,13 +10,6 @@ import { GrLinkedin } from "react-icons/gr";
 import { ImFacebook2 } from "react-icons/im";
 import { FaInstagramSquare } from "react-icons/fa";
 
-// images 
-import chemicalFree from '../../images/footer_images/chemicalFree.png';
-import ethical from '../../images/footer_images/ethical.png';
-import global from '../../images/footer_images/global.png';
-import nonGmo from '../../images/footer_images/nonGmo.png';
-import sustainable from '../../images/footer_images/sustainable.png';
-
 const Footer = ({ moveToTop }) => {
 
     const dispatch = useDispatch();
@@ -26,23 +19,23 @@ const Footer = ({ moveToTop }) => {
 
     const qualities = [
         {
-            img: sustainable,
+            img: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/footer_images/sustainable.png',
             text: 'Sustainable Farming Techniques'
         },
         {
-            img: chemicalFree,
+            img: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/footer_images/chemicalFree.png',
             text: 'Chemical Pesticide-free'
         },
         {
-            img: ethical,
+            img: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/footer_images/ethical.png',
             text: 'Locally Ethically Sourced'
         },
         {
-            img: nonGmo,
+            img: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/footer_images/nonGmo.png',
             text: 'Non-GMO Produce'
         },
         {
-            img: global,
+            img: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/footer_images/global.png',
             text: 'Global Testing Standards'
         },
     ]
@@ -80,12 +73,14 @@ const Footer = ({ moveToTop }) => {
                         </ul>
                         <h2 className="text-lg font-semibold  uppercase">Quick Links</h2>
                         <ul className='flex flex-col gap-1'>
+                            <li><Link to="/our-blogs"> <span className="flex items-center max-w-max gap-2 cursor-pointer hover:text-orange-500 hover:translate-x-1 transition-all duration-300 tracking-widest"><FaAnglesRight />Blogs</span></Link></li>
+                            <li><Link to="/our-recipes"> <span className="flex items-center max-w-max gap-2 cursor-pointer hover:text-orange-500 hover:translate-x-1 transition-all duration-300 tracking-widest"><FaAnglesRight />Recipe</span></Link></li>
                             <li><Link to="frequently-asked-questions"> <span className="flex items-center max-w-max gap-2 cursor-pointer hover:text-orange-500 hover:translate-x-1 transition-all duration-300 tracking-widest"><FaAnglesRight />FAQ's</span></Link></li>
                             <li><Link to="privacy-policy"> <span className="flex items-center gap-2 max-w-max cursor-pointer hover:text-orange-500 hover:translate-x-1 transition-all duration-300 tracking-widest"><FaAnglesRight />Privacy Policy</span></Link></li>
                             <li><Link to="terms&conditions"> <span className="flex items-center gap-2 max-w-max cursor-pointer hover:text-orange-500 hover:translate-x-1 transition-all duration-300 tracking-widest"><FaAnglesRight />Terms & Conditions</span></Link></li>
                             {/* <li><Link to="return-refund-policy"> <span className="flex items-center max-w-max gap-2 cursor-pointer hover:text-orange-500 hover:translate-x-1 transition-all duration-300"><FaAnglesRight />Return & Refund Policy</span></Link></li> */}
                             <li><Link to="csr-policy"> <span className="flex items-center max-w-max gap-2 cursor-pointer hover:text-orange-500 hover:translate-x-1 transition-all duration-300 tracking-widest"><FaAnglesRight />CSR Policy</span></Link></li>
-                            <li><Link to="bulk-order"> <span className="flex items-center gap-2 cursor-pointer max-w-max hover:text-orange-500 hover:translate-x-1 transition-all duration-300 tracking-widest"><FaAnglesRight />Bulk Orders </span></Link></li>
+                            {/* <li><Link to="bulk-order"> <span className="flex items-center gap-2 cursor-pointer max-w-max hover:text-orange-500 hover:translate-x-1 transition-all duration-300 tracking-widest"><FaAnglesRight />Bulk Orders </span></Link></li> */}
 
                         </ul>
                         <div>

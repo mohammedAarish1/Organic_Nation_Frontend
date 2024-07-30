@@ -1,9 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import bannerImage from '../../images/about_us_banner.png';
-import aboutUsImage from '../../images/about-us.webp';
-import prodfileImage from '../../images/profile.jpeg'
-
 
 const About = () => {
     const [scrollPosition, setScrollPosition] = useState(0);
@@ -22,19 +18,19 @@ const About = () => {
     }, []);
 
 
-    const founders = [
-        { name: 'Jane Doe', role: 'CEO & Co-Founder', image: prodfileImage },
-        { name: 'John Smith', role: 'CTO & Co-Founder', image: prodfileImage },
-    ];
+    // const founders = [
+    //     { name: 'Jane Doe', role: 'CEO & Co-Founder', image: prodfileImage },
+    //     { name: 'John Smith', role: 'CTO & Co-Founder', image: prodfileImage },
+    // ];
 
-    const teamMembers = [
-        { name: 'Alice Johnson', role: 'Marketing Director', image: prodfileImage },
-        { name: 'Bob Williams', role: 'Lead Developer', image: prodfileImage },
-        { name: 'Carol Brown', role: 'Product Manager', image: prodfileImage },
-        { name: 'David Lee', role: 'UX Designer', image: prodfileImage },
-        { name: 'Eva Garcia', role: 'Data Scientist', image: prodfileImage },
-        { name: 'Frank Chen', role: 'Operations Manager', image: prodfileImage },
-    ];
+    // const teamMembers = [
+    //     { name: 'Alice Johnson', role: 'Marketing Director', image: prodfileImage },
+    //     { name: 'Bob Williams', role: 'Lead Developer', image: prodfileImage },
+    //     { name: 'Carol Brown', role: 'Product Manager', image: prodfileImage },
+    //     { name: 'David Lee', role: 'UX Designer', image: prodfileImage },
+    //     { name: 'Eva Garcia', role: 'Data Scientist', image: prodfileImage },
+    //     { name: 'Frank Chen', role: 'Operations Manager', image: prodfileImage },
+    // ];
 
 
     return (
@@ -42,7 +38,7 @@ const About = () => {
             {/* banner  */}
             <div className='relative'>
                 <div>
-                    <img src={bannerImage} alt="banner-image" className='w-full h-[400px] object-cover' />
+                    <img src='https://organicnationmages.s3.ap-south-1.amazonaws.com/other_banners/banner_about.png' alt="banner-image" className='w-full  object-cover' />
                 </div>
             </div>
             {/* ================= introduction ===================  */}
@@ -117,7 +113,7 @@ const About = () => {
                         <div className="w-full  lg:w-[calc(50%-2px)] bg-gray-200 h-72 rounded-lg overflow-hidden">
                             {/* Replace with your actual image */}
                             <img
-                                src={aboutUsImage}
+                                src='https://organicnationmages.s3.ap-south-1.amazonaws.com/AboutUs/5.png'
                                 alt='About Us'
                                 className="w-full h-full object-cover"
                             />
@@ -135,9 +131,9 @@ const About = () => {
                         <div className="w-full  lg:w-[calc(50%-2px)] bg-gray-200 h-64 rounded-lg overflow-hidden">
                             {/* Replace with your actual image */}
                             <img
-                                src={aboutUsImage}
+                                src='https://organicnationmages.s3.ap-south-1.amazonaws.com/AboutUs/3.png'
                                 alt='About Us'
-                                className="w-full h-full object-cover"
+                                className="w-full h-full object-fill"
                             />
                         </div>
 
@@ -200,9 +196,9 @@ const About = () => {
                         <div className="w-full  lg:w-[calc(50%-2px)] bg-gray-200 h-72 rounded-lg overflow-hidden">
                             {/* Replace with your actual image */}
                             <img
-                                src={aboutUsImage}
+                                src='https://organicnationmages.s3.ap-south-1.amazonaws.com/AboutUs/4.png'
                                 alt='About Us'
-                                className="w-full h-full object-cover"
+                                className="w-full h-full object-fill"
                             />
                         </div>
                     </div>
@@ -219,7 +215,7 @@ const About = () => {
                         <div className="w-full  lg:w-[calc(50%-2px)] bg-gray-200 h-64 rounded-lg overflow-hidden">
                             {/* Replace with your actual image */}
                             <img
-                                src={aboutUsImage}
+                                src='https://organicnationmages.s3.ap-south-1.amazonaws.com/AboutUs/1.png'
                                 alt='About Us'
                                 className="w-full h-full object-cover"
                             />
@@ -285,7 +281,7 @@ const About = () => {
                         <div className="w-full  lg:w-[calc(50%-2px)] bg-gray-200 h-72 rounded-lg overflow-hidden">
                             {/* Replace with your actual image */}
                             <img
-                                src={aboutUsImage}
+                                src='https://organicnationmages.s3.ap-south-1.amazonaws.com/AboutUs/2.png'
                                 alt='About Us'
                                 className="w-full h-full object-cover"
                             />
@@ -304,7 +300,7 @@ const About = () => {
                         <div className="w-full  lg:w-[calc(50%-2px)] bg-gray-200 h-64 rounded-lg overflow-hidden">
                             {/* Replace with your actual image */}
                             <img
-                                src={aboutUsImage}
+                                src='https://organicnationmages.s3.ap-south-1.amazonaws.com/AboutUs/6.png'
                                 alt='About Us'
                                 className="w-full h-full object-cover"
                             />
@@ -342,7 +338,7 @@ const About = () => {
 
 
             {/* Founders Section */}
-            <div className="mb-24 max-w-6xl mx-auto px-4 py-16">
+            {/* <div className="mb-24 max-w-6xl mx-auto px-4 py-16">
                 <h1 className="mb-14 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span className="text-transparent bg-clip-text bg-gradient-to-r to-green-700 from-[var(--themeColor)]">Meet the Founders</span></h1>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                     {founders.map((founder, index) => (
@@ -355,11 +351,11 @@ const About = () => {
                         </div>
                     ))}
                 </div>
-            </div>
+            </div> */}
 
 
             {/* Team Members Section */}
-            <div className="mb-24 max-w-6xl mx-auto px-4 py-16">
+            {/* <div className="mb-24 max-w-6xl mx-auto px-4 py-16">
                 <h1 className="mb-14 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span className="text-transparent bg-clip-text bg-gradient-to-r to-green-700 from-[var(--themeColor)]">Our Team</span></h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
                     {teamMembers.map((member, index) => (
@@ -372,8 +368,7 @@ const About = () => {
                                 />
                             </div>
                             <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 rounded-full">
-                                {/* <h3 className="text-xl font-semibold text-white">{member.name}</h3>
-                                <p className="text-indigo-300">{member.role}</p> */}
+                               
                             </div>
                             <div className="mt-4 text-center">
                                 <h3 className="text-xl font-semibold text-[var(--themeColor)] group-hover:text-indigo-600 transition-colors duration-300">{member.name}</h3>
@@ -382,7 +377,7 @@ const About = () => {
                         </div>
                     ))}
                 </div>
-            </div>
+            </div> */}
 
         </div>
     );

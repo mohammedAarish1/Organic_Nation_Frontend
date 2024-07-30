@@ -3,15 +3,6 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCurrentPage } from "../../features/pagination/pagination";
 import { fetchCategoryWiseData, setCategoryBtnValue } from "../../features/filter/filterSlice";
-// images 
-import banner1 from '../../images/banners/1.png';
-import banner2 from '../../images/banners/2.png';
-import banner3 from '../../images/banners/3.png';
-import banner4 from '../../images/banners/4.png';
-import banner5 from '../../images/banners/5.png';
-import banner6 from '../../images/banners/6.png';
-import banner7 from '../../images/banners/7.png';
-
 // swiper 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -29,31 +20,31 @@ import { EffectFade, Autoplay, Pagination } from 'swiper/modules';
 
 const images = [
   {
-    image: banner1,
+    image: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/main_banners/1.png',
     categoryUrl: `authentic-pickles`,
   },
   {
-    image: banner2,
+    image: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/main_banners/2.png',
     categoryUrl: `organic-honey`,
   },
   {
-    image: banner3,
+    image: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/main_banners/3.png',
     categoryUrl: `authentic-pickles`,
   },
   {
-    image: banner4,
+    image: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/main_banners/4.png',
     categoryUrl: `about-us`,
   },
   {
-    image: banner5,
+    image: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/main_banners/5.png',
     categoryUrl: `organic-oils`,
   },
   {
-    image: banner6,
+    image: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/main_banners/6.png',
     categoryUrl: `breakfast-cereals`,
   },
   {
-    image: banner7,
+    image: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/main_banners/7.png',
     categoryUrl: `seasonings-&-herbs`,
   },
 

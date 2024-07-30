@@ -10,7 +10,7 @@ import { getAllReviews, getAverageRating } from '../../features/reviews/reviews'
 import SingleReview from '../../components/reviews/SingleReview';
 import ReviewsAndRatings from '../../helper/ReviewsAndRatings';
 // react icons 
-import { FaCircleCheck, FaStar ,FaIndianRupeeSign} from "react-icons/fa6";
+import { FaCircleCheck, FaStar, FaIndianRupeeSign } from "react-icons/fa6";
 import { HiXCircle } from "react-icons/hi";
 import { AiOutlineStar } from "react-icons/ai";
 import { FaStarHalfAlt } from 'react-icons/fa';
@@ -27,23 +27,25 @@ const ProductDetails = () => {
 
   const filterProduct = useSelector((state) => state.filterData.data);
   const { allReviews, loading, averageRating } = useSelector((state) => state.reviews);
+  const { categoryBtnValue } = useSelector((state) => state.filterData);
+
+  const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
 
 
   const getProductDetail = async (nameUrl) => {
 
     try {
-      const response = await axios.get(`http://localhost:8000/category/organic-honey/${nameUrl}`);
-      console.log(response.data.product[0])
-      let product = response.data.product[0]
+      const response = await axios.get(`${apiUrl}/category/organic-honey/${nameUrl}`);
+      let product = response.data.product
       if (product) {
         setProduct(product)
-        dispatch(fetchCategoryWiseData(response.data.product[0]['category-url'].toLowerCase()))
+        dispatch(fetchCategoryWiseData(product['category-url'].toLowerCase()))
         dispatch(getAllReviews(product['name-url']))
         dispatch(getAverageRating(product['name-url']))
       }
     } catch (error) {
-      console.log("error in fetching single product", error)
+      throw error
     }
   }
 
@@ -106,7 +108,7 @@ const ProductDetails = () => {
                           ) : (
                             <AiOutlineStar className="text-orange-400" />
                           )}
-                         
+
                         </label>
                       );
                     })}
@@ -176,7 +178,7 @@ const ProductDetails = () => {
 
 
           {filterProduct?.map((product) => (
-            <Link to={`/shop/all/product-details/${product['name-url']}`} key={product._id} >
+            <Link to={`/shop/${categoryBtnValue}/${product['name-url']}`} key={product._id} >
               <div className='flex flex-col justify-center items-center gap-5 shadow-xl px-8 py-4 cursor-pointer hover:scale-90 hover:bg-[#dcd3b9] transition-all duration-500  min-h-[350px] max-w-64 rounded-2xl'>
                 {/* image  */}
 

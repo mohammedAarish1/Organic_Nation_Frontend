@@ -34,7 +34,6 @@ const ReviewsAndRatings = ({ productName, insideProductDetails = false }) => {
 
     const handleSubmit = (values, { resetForm }) => {
         if (user, token) {
-            console.log('user', user)
             dispatch(addReviews({ productName, ...values }))
             toast.success("Review submitted successfully");
 
@@ -88,7 +87,7 @@ const ReviewsAndRatings = ({ productName, insideProductDetails = false }) => {
                                 as="textarea"
                                 id="review"
                                 name="review"
-                                className={`${insideProductDetails ? ('text-black xs:text-[13px] text-sm w-full  px-3 pt-2 bg-[var(--bgColorSecondary)] shadow-lg outline-none tracking-widest rounded-lg') : ('text-black xs:text-[16px] text-sm w-full outline-none px-2 py-1')} `}
+                                className={`${insideProductDetails ? ('text-black xs:text-[13px] text-sm w-full  px-3 pt-2 bg-[var(--bgColorSecondary)] border border-black  tracking-widest rounded-lg') : ('text-black xs:text-[16px] text-sm w-full outline-none px-2 py-1')} `}
                                 placeholder="Write your review here"
                                 cols="50"
                                 rows={`${insideProductDetails ? '2' : '10'}`}

@@ -1,17 +1,18 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const apiUrl = import.meta.env.VITE_BACKEND_URL;
+
+
 export const requestOTP = createAsyncThunk(
     'OTPSlice/requestOTP',
     async (phoneNumber, { rejectWithValue }) => {
         try {
-            console.log('phonenumber thunk', typeof phoneNumber, phoneNumber)
-            const response = await axios.post('http://localhost:4000/api/otp-auth/send-otp', { phoneNumber })
+            const response = await axios.post(`${apiUrl}/api/otp-auth/send-otp`, { phoneNumber })
             if (response) {
                 return response.data;
             }
         } catch (error) {
-            console.error('Error requesting OTP:', error);
             return rejectWithValue(error.response.data.message);
         }
     }
@@ -21,9 +22,7 @@ export const verifyOTP = createAsyncThunk(
     'auth/verifyOTP',
     async ({ phoneNumber, otp }, { rejectWithValue }) => {
         try {
-            // console.log(phoneNumber, 'otp', otp)
-            const response = await axios.post('http://localhost:4000/api/otp-auth/verify-otp', { phoneNumber, otp });
-            console.log('resss', response.data)
+            const response = await axios.post(`${apiUrl}/api/otp-auth/verify-otp`, { phoneNumber, otp });
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data.message);
@@ -53,7 +52,6 @@ const OTPSlice = createSlice({
             }
         })
         builder.addCase(requestOTP.fulfilled, (state, action) => {
-            // console.log('otp response', action.payload)
             return {
                 ...state,
                 loading: false,
@@ -61,7 +59,6 @@ const OTPSlice = createSlice({
             }
         })
         builder.addCase(requestOTP.rejected, (state, action) => {
-            // console.log('otp response', action.payload)
             return {
                 ...state,
                 loading: false,
@@ -77,7 +74,6 @@ const OTPSlice = createSlice({
             }
         })
         builder.addCase(verifyOTP.fulfilled, (state, action) => {
-            // console.log('otp response', action.payload)
             return {
                 ...state,
                 isAuthenticated: true,
@@ -85,7 +81,6 @@ const OTPSlice = createSlice({
             }
         })
         builder.addCase(verifyOTP.rejected, (state, action) => {
-            // console.log('otp response', action.payload)
             return {
                 ...state,
                 isAuthenticated: false,

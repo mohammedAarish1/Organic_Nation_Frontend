@@ -3,32 +3,44 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setCurrentPage } from '../../features/pagination/pagination';
 import { fetchCategoryWiseData, setCategoryBtnValue } from '../../features/filter/filterSlice';
 import { useNavigate } from 'react-router-dom';
-// category image 
-import Pickle from '../../images/ctaegory/Pickle.png';
-import cereals from '../../images/ctaegory/cereals.png';
-import ChutneyAndDip1 from '../../images/ctaegory/ChutneyAndDip1.png';
-import FruitPreserves from '../../images/ctaegory/FruitPreserves.png';
-import Honey from '../../images/ctaegory/Honey.png';
-import oats from '../../images/ctaegory/oats.png';
-import OrganicOil from '../../images/ctaegory/OrganicOil.png';
-import PureSalt from '../../images/ctaegory/PureSalt.png';
-import SeasoningsAndHerbs from '../../images/ctaegory/SeasoningsAndHerbs.png';
-import sweetners from '../../images/ctaegory/sweetners.png';
-import Tea from '../../images/ctaegory/Tea.png';
-import vegan from '../../images/ctaegory/vegan.png';
 import Title from '../title/Title';
 
 const ProductCategories = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const {  categoryList } = useSelector((state) => state.product_data);
+    const { categoryList } = useSelector((state) => state.product_data);
 
 
+    const categoriesImages = [
+        { 'Organic-Honey': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories/Honey.png' },
+        { 'Authentic-Pickles': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories/Pickle.png' },
+        { 'Chutney-&-Dip': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories/ChutneyAndDip1.png' },
+        { 'Fruit-Preserves': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories/FruitPreserves.png' },
+        { 'Seasonings-&-Herbs': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories/SeasoningsAndHerbs.png' },
+        { 'Organic-Tea': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories/Tea.png' },
+        { Salt: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories/PureSalt.png' },
+        { Sweetners: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories/sweetners.png' },
+        { 'Organic-Oils': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories/OrganicOil.png' },
+        { Oats: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories/oats.png' },
+        { Vegan: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories/vegan.png' },
+        { 'Breakfast-Cereals': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories/cereals.png' },
+    ]
 
-    const categoriesImages = [Honey, Pickle, ChutneyAndDip1, FruitPreserves, SeasoningsAndHerbs, Tea, PureSalt, sweetners, OrganicOil, oats, vegan, cereals,]
 
-    const categoryListWithImg = categoryList.filter((curItem) => curItem.category !== 'All').map((curItem, index) => ({ ...curItem, img: categoriesImages[index] }));
+    const imageLookup = categoriesImages.reduce((acc, obj) => {
+        const [key, value] = Object.entries(obj)[0];
+        acc[key] = value;
+        return acc;
+    }, {});
+
+    // Step 2: Map categories to include the corresponding image
+    const categoryListWithImg = categoryList?.filter(curItem => curItem.category !== 'All')?.map(curItem => ({
+        categoryUrl: curItem.categoryUrl,
+        category: curItem.category,
+        image: imageLookup[curItem.categoryUrl] || null // Fallback to null if no image found
+    }));
+
 
     return (
         <div>
@@ -43,7 +55,7 @@ const ProductCategories = () => {
             <div className='xs:pt-20 pt-10 pb-20 px-10 '>
                 <div className='flex flex-wrap justify-center items-center gap-16'>
                     {/* category   */}
-                    {categoryListWithImg.map((curItem) => (
+                    {categoryListWithImg?.map((curItem) => (
                         <div
                             key={curItem.category}
                             className='flex flex-col gap-2  cursor-pointer  '
@@ -57,7 +69,7 @@ const ProductCategories = () => {
                             data-aos-duration="1000"
                         >
                             <div>
-                                <img src={curItem.img} className='w-72 rounded-xl hover:scale-90 hover:opacity-80 transition-all duration-500' alt="category_image" />
+                                <img src={curItem.image} className='w-72 rounded-xl hover:scale-90 hover:opacity-80 transition-all duration-500' alt="category_image" />
                             </div>
                             <div>
                                 <h1 className='bg-[var(--themeColor)] text-center py-2 text-white font-medium xs:text-xl rounded-xl font-mono tracking-wide'>{curItem.category}</h1>
@@ -75,3 +87,33 @@ const ProductCategories = () => {
 }
 
 export default ProductCategories;
+
+
+
+
+// [
+//     {
+       
+//         "weight": "500 gm",
+//         "price": 390,
+//         "discount ": 20,
+//         "tax": 5,
+//         "category": "Organic Honey",
+//         "category-url": "Organic-Honey",
+//         "description": "Organic Nation's Jamun Honey is a premium product crafted from the nectar of the blossoms of Jamun trees.",
+//         "availability": 25,
+//         "quantity": 1
+//     },
+//     {
+       
+//         "weight": "500 gm",
+//         "price": 450,
+//         "discount ": 20,
+//         "tax": 12,
+//         "category": "Organic Honey",
+//         "category-url": "Organic-Honey",
+//         "description": "Introducing our Light Flora Honey, a premium product sourced from the finest flowers and crafted with utmost care",
+//         "availability": 25,
+//         "quantity": 1
+//     }
+// ]

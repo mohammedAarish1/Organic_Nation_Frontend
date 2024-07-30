@@ -117,7 +117,7 @@ const CsrPolicy = () => {
                             <p className='mb-2'>For more information about our CSR initiatives, please contact us:</p>
                             <p className='font-medium'>Foodsbay India</p>
                             <div className='flex flex-col gap-1 text-[14px]'>
-                                <p className='w-1/4'>Shop No - 336, Plot No - 134B,  Shopprix Mall, Sector-61, Noida, Gautam Buddha Nagar, Uttar Pradesh, 201301</p>
+                                <p className='sm:w-1/4'>Shop No - 336, Plot No - 134B,  Shopprix Mall, Sector-61, Noida, Gautam Buddha Nagar, Uttar Pradesh, 201301</p>
                                 <p>Info@foodsbay.com</p>
                                 <p>+919999532041</p>
                             </div>

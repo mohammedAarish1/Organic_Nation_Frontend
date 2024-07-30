@@ -11,11 +11,11 @@ import { LiaFilterSolid } from "react-icons/lia";
 const SortSection = ({ setGridView, gridView }) => {
   const [sortValue, setSortValue] = useState("sort")
   const dispatch = useDispatch()
-  const {  productData } = useSelector((state) => state.product_data);
+  const { productData } = useSelector((state) => state.product_data);
   const filterProduct = useSelector((state) => state.filterData.data);
   const { categoryBtnValue } = useSelector((state) => state.filterData);
 
-  
+
 
   return (
     <div>
@@ -26,7 +26,11 @@ const SortSection = ({ setGridView, gridView }) => {
           e.preventDefault();
 
         }}>
-          <input type="text" className='py-1 pl-2 outline-none w-full' placeholder='Search...' onChange={(e) => dispatch(getSearchedData({ value: e.target.value, productData }))} />
+          <input
+            type="text"
+            className='py-1 pl-2 outline-none w-full'
+            placeholder='Search...'
+            onChange={(e) => dispatch(getSearchedData({ value: e.target.value, productData }))} />
         </form>
       </div>
 
@@ -90,27 +94,33 @@ const SortSection = ({ setGridView, gridView }) => {
         </div>
 
 
-        {/*number of products available  */}
-        <div className='uppercase  '>
+        {/* number of products available  */}
+        {/* <div className='uppercase  '>
           Total
           <span className='font-bold text-[20px] text-[var(--themeColor)] '> {filterProduct?.length} </span><span className='font-bold text-[20px] text-[var(--themeColor)]'> {categoryBtnValue.toLowerCase() === 'all' ? '' : `${categoryBtnValue}`}</span> Products Available
-        </div>
+        </div> */}
 
         {/* sort options  */}
         <div className="relative">
-          <select id="sort" name="sort" value={sortValue} onChange={(e) => {
-            setSortValue(e.target.value)
-            dispatch(getSortData({ value: e.target.value, productData }))
-          }} className="w-auto block border cursor-pointer bg-white border-gray-300 hover:border-gray-500 p-2  leading-tight focus:outline-none">
-
+          <select
+            id="sort"
+            name="sort"
+            value={sortValue}
+            onChange={(e) => {
+              setSortValue(e.target.value)
+              dispatch(getSortData({ value: e.target.value, productData }))
+            }}
+            // className="w-auto block border cursor-pointer bg-white border-gray-300 hover:border-gray-500 p-2  leading-tight focus:outline-none"
+            className="outline-none block w-auto p-2.5"
+          >
             <option defaultValue="sort" >Sort</option>
-            <option value="#" disabled></option>
+            {/* <option value="#" disabled></option> */}
             <option value="low_to_high">Price: Low to High</option>
-            <option value="#" disabled></option>
+            {/* <option value="#" disabled></option> */}
             <option value="high_to_low">Price: High to Low</option>
-            <option value="#" disabled></option>
+            {/* <option value="#" disabled></option> */}
             <option value="a-z">a - z</option>
-            <option value="#" disabled></option>
+            {/* <option value="#" disabled></option> */}
             <option value="z-a">z - a</option>
           </select>
           <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -131,4 +141,4 @@ const SortSection = ({ setGridView, gridView }) => {
   )
 }
 
-export default SortSection
+export default SortSection;

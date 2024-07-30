@@ -23,9 +23,9 @@ const Search = ({ mobileMenu = false }) => {
   const handleSearch = (e) => {
     e.preventDefault()
     // below code is for hiding the sidebar in mobile menu after searching 
-    if (mobileMenu) {
-      dispatch(setShowSidebar())
-    }
+    // if (mobileMenu) {
+    //   dispatch(setShowSidebar())
+    // }
     if (inputValue !== '' && productData.length > 0) {
       navigate('/searched-product')
     }
@@ -45,6 +45,7 @@ const Search = ({ mobileMenu = false }) => {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           className=" w-full xs:py-2 py-1 bg-[var(--bgColorSecondary)] xs:px-4 px-2 border border-gray-400 rounded-lg focus:outline-none focus:border-[var(--themeColor)]"
+          // onMouseLeave={()=>setInputValue('')}
         />
         {/* submit button  */}
         <button

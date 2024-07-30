@@ -1,6 +1,5 @@
 import React from 'react';
 import { Tooltip } from 'react-tooltip';
-import whatsappIcon from '../../images/whatsApp.png'; // Import your WhatsApp icon
 
 const WhatsApp = () => {
     const phoneNumber = +919999532041
@@ -13,7 +12,7 @@ const WhatsApp = () => {
     return (
         <div>
             <img
-                src={whatsappIcon}
+                src='https://organicnationmages.s3.ap-south-1.amazonaws.com/other_images/whatsApp.png'
                 alt="WhatsApp"
                 onClick={handleClick}
                 className='cursor-pointer w-16'

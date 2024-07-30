@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import Logo from '../../components/logo/Logo';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
@@ -12,7 +12,6 @@ import { fetchUserData } from '../../features/auth/userSlice';
 import ResendOTP from '../../components/otp/ResendOTP';
 
 // react icons 
-import { FaFlag } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa6";
 
 
@@ -29,7 +28,7 @@ const OtpLogin = () => {
     const [showOtpInput, setShowOtpInput] = useState(false);
     const [submittedPhoneNumber, setSubmittedPhoneNumber] = useState('')
 
-    const {  loading, } = useSelector(state => state.OTPSlice);
+    const { loading, } = useSelector(state => state.OTPSlice);
 
     const initialValues = {
         phoneNumber: '',
@@ -50,7 +49,6 @@ const OtpLogin = () => {
                 toast.success(value.payload.message)
                 setShowOtpInput(true);
             }
-            console.log('phoneotp', value)
 
         })
     }
@@ -58,15 +56,12 @@ const OtpLogin = () => {
 
     //otp submission
     const handleOtpSubmit = (otp) => {
-        console.log('otp submitted successfully', otp);
         if (otp && submittedPhoneNumber) {
             dispatch(verifyOTP({ phoneNumber: submittedPhoneNumber, otp }))
                 .then((value) => {
-                    console.log(value, 'sssssssss')
                     if (value.meta.requestStatus === 'fulfilled') {
                         const token = value.payload.token;
                         if (token) {
-                            console.log('token', token)
                             sessionStorage.setItem("token", JSON.stringify(token));
                             dispatch(fetchUserData(token)).then(() => {
                                 navigate('/')
@@ -80,7 +75,7 @@ const OtpLogin = () => {
                     } else {
                         toast.error(value.payload)
                     }
-                   
+
                 })
         }
     }
@@ -127,8 +122,9 @@ const OtpLogin = () => {
                                                         Enter Your Phone Number
                                                     </label>
                                                     <div className='flex  items-center gap-2 border border-[var(--bgColorSecondary)]  rounded-md'>
-                                                        <div className='flex justify-center items-center pl-2 gap-1 text-[var(--bgColorSecondary)]'>
-                                                            <FaFlag />
+                                                        <div className='flex justify-center items-center pl-2 pr-1 gap-1 text-[var(--bgColorSecondary)]'>
+                                                            {/* <FaFlag /> */}
+                                                            <img src='https://organicnationmages.s3.ap-south-1.amazonaws.com/other_images/flag.png' alt="country_flag" className='w-8' />
                                                             <span>+91</span>
                                                         </div>
                                                         <div className='w-full'>

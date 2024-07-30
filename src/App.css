@@ -46,37 +46,32 @@ body {
   transition: all 1s ease;
 }
 
-
 /* ==================== 
    custom css for banners 
    ========================
 */
 
 .bannerCustomCss .swiper-pagination {
-  padding-bottom:20px ;
+  padding-bottom: 20px;
 }
 .bannerCustomCss .swiper-pagination-bullet {
-  width: 18px ;
-  height: 5px ;
-  border-radius: 5px ;
-  margin: 0 6px ;
+  width: 18px;
+  height: 5px;
+  background-color: var(--themeColor);
+  border-radius: 5px;
+  margin: 0 6px;
 }
 
 @media screen and (max-width: 450px) {
-  .swiper-pagination-bullet {
+  .bannerCustomCss .swiper-pagination-bullet {
     display: none;
   }
 }
-
-
-
-
 
 /* ================================================== 
    hide scrollbar width in 'you may also like section'
    ==================================================
 */
-
 
 .hidden-scrollbar {
   overflow-x: auto;
@@ -88,13 +83,10 @@ body {
   display: none; /* For Chrome, Safari, and Opera */
 }
 
-
-
 /* ============================ 
    hover effect on product image
    ============================
 */
-
 
 .figure {
   display: flex;
@@ -134,9 +126,6 @@ body {
   transform: scale(0.9);
 }
 
-
-
-
 /* ==================================== 
    hover effect on continue shopping btn
    ====================================
@@ -162,13 +151,10 @@ body {
   width: 100%;
 }
 
-
-
 /* ================================================ 
    css for price input range in product details page
    ================================================
 */
-
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   input[type="range"] {
@@ -222,57 +208,10 @@ input[type="range"]::-moz-range-thumb {
   margin-top: -8px; /* Adjust thumb position */
 }
 
-
-
-
 /* =============== 
    css for loaders
    ===============
 */
-
-.imgLoader {
-  width: 19.2px;
-  height: 19.2px;
-  color: #1b381a;
-  background: conic-gradient(
-      from -45deg at top 9.6px left 50%,
-      #0000,
-      currentColor 1deg 90deg,
-      #0000 91deg
-    ),
-    conic-gradient(
-      from 45deg at right 9.6px top 50%,
-      #0000,
-      currentColor 1deg 90deg,
-      #0000 91deg
-    ),
-    conic-gradient(
-      from 135deg at bottom 9.6px left 50%,
-      #0000,
-      currentColor 1deg 90deg,
-      #0000 91deg
-    ),
-    conic-gradient(
-      from -135deg at left 9.6px top 50%,
-      #0000,
-      currentColor 1deg 90deg,
-      #0000 91deg
-    );
-  animation: shapes-q299i1mn 1.7999999999999998s infinite
-    cubic-bezier(0.3, 1, 0, 1);
-}
-
-@keyframes shapes-q299i1mn {
-  50% {
-    width: 28.799999999999997px;
-    height: 28.799999999999997px;
-    transform: rotate(180deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
 
 .loader {
   width: 50px;
@@ -292,8 +231,6 @@ input[type="range"]::-moz-range-thumb {
     transform: rotate(1turn);
   }
 }
-
-
 
 /* for showing filters in mobile devices  */
 
@@ -372,9 +309,6 @@ input[type="range"]::-moz-range-thumb {
   transform: translateY(0);
 }
 
-
-
-
 /* ============================ 
    css for product review modal
    ============================
@@ -419,13 +353,10 @@ input[type="range"]::-moz-range-thumb {
   transform: translateY(0);
 }
 
-
-
 /* ============================ 
    css for mobile menu
    ============================
 */
-
 
 .mobile-menu-container {
   position: fixed;
@@ -467,14 +398,10 @@ input[type="range"]::-moz-range-thumb {
   transform: translateX(0);
 }
 
-
-
-
 /* ============================ 
    css for sidebar filters 
    ============================
 */
-
 
 @media screen and (max-width: 768px) {
   .filters-container {
@@ -526,7 +453,6 @@ input[type="range"]::-moz-range-thumb {
    css for buttons used 
    ============================
 */
-
 
 .btn {
   position: relative;

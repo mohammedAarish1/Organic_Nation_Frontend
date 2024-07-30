@@ -1,6 +1,6 @@
 
 
-import  { lazy } from 'react';
+import { lazy } from 'react';
 
 // common components
 import Header from './components/header/Header';
@@ -33,9 +33,12 @@ export const Checkout = lazy(() => import('./pages/checkout/Checkout'));
 export const BlogDetail = lazy(() => import('./pages/blog-detail-page/BlogDetail'));
 export const OtpLogin = lazy(() => import('./pages/login-signup/OtpLogin'));
 export const Blogs = lazy(() => import('./pages/blogs/Blogs'));
-export const ScrollToTop =lazy(()=>import('./helper/ScrollToTop'))  ;
-export const RecipeDetails=lazy(()=>import('./pages/recipe-detail-page/RecipeDetails')) ;
-export const GoogleSignup =lazy(()=>import('./pages/login-signup/GoogleSignup')) ;
+export const ScrollToTop = lazy(() => import('./helper/ScrollToTop'));
+export const RecipeDetails = lazy(() => import('./pages/recipe-detail-page/RecipeDetails'));
+export const GoogleSignup = lazy(() => import('./pages/login-signup/GoogleSignup'));
+export const OrderConfirm = lazy(() => import('./pages/order-confirmation/OrderConfirm'));
+export const PaymentGateway = lazy(() => import('./pages/payment/PaymentGateway'));
+export const NoPageFound = lazy(() => import('./pages/no-page-found/NoPageFound'));
 
 
 // Redux actions
@@ -43,17 +46,19 @@ export { getProductsData } from '../src/features/productData/productsDataSlice';
 export { getAllCartItems } from './features/cart/cart';
 export { fetchUserData } from './features/auth/userSlice';
 export { getAllOrders } from './features/manageOrders/manageOrders';
-import ManageOrders  from './pages/manage-orders/ManageOrders';
+export { getAllBlogs } from './features/blogs/blogs';
+export { getAllRecipes } from './features/blogs/blogs'
+import ManageOrders from './pages/manage-orders/ManageOrders';
 
 
-export { 
-    Header, 
-    Footer, 
-    Info, 
-    Breadcrumbs, 
-    WhatsApp, 
-    VerifyEmail, 
-    ResetPassword, 
-    SearchedProduct ,
-    ManageOrders
-  };
+export {
+  Header,
+  Footer,
+  Info,
+  Breadcrumbs,
+  WhatsApp,
+  VerifyEmail,
+  ResetPassword,
+  SearchedProduct,
+  ManageOrders
+};

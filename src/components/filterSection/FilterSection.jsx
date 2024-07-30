@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilterInitialValues, getFilterData, getPricerRangeData, getSearchedData, fetchCategoryWiseData, setCategoryBtnValue, clearFilters } from '../../features/filter/filterSlice';
 import { setCurrentPage } from '../../features/pagination/pagination';
 import { setShowFilters } from '../../features/toggleSidebar/toggleSidebar';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // react icons 
 import { IoCloseSharp } from 'react-icons/io5';
 
@@ -11,6 +11,8 @@ import { IoCloseSharp } from 'react-icons/io5';
 const FilterSection = () => {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [inputValue, setInputValue] = useState('')
   const { productData, categoryList } = useSelector((state) => state.product_data);
   const { showFilters } = useSelector(state => state.sidebar);
   const { price, minPrice, maxPrice } = useSelector((state) => state.filterData.priceRangeFilter);
@@ -50,7 +52,19 @@ const FilterSection = () => {
           dispatch(setShowFilters('hide'))
 
         }}>
-          <input type="text" className='py-1 pl-2 outline-none' placeholder='Search...' onChange={(e) => dispatch(getSearchedData({ value: e.target.value, productData }))} />
+          <input
+            type="text"
+            className='py-1 pl-2 outline-none'
+            placeholder='Search...'
+            value={inputValue}
+            onChange={(e) => {
+              e.preventDefault()
+              setInputValue(e.target.value)
+              if (inputValue.length > 0) {
+                dispatch(getSearchedData({ value: e.target.value, productData }))
+              }
+            }}
+          />
         </form>
       </div>
 
@@ -79,13 +93,20 @@ const FilterSection = () => {
       </div>
       {/*  category filter showing in mobile devices  */}
 
-      <select name="category" id="category" className='md:hidden block w-[80%] p-2 outline-none' onChange={(e) => {
-        dispatch(setShowFilters('hide'))
-        dispatch(setCurrentPage(1))
-        dispatch(setCategoryBtnValue(e.target.value))
-        dispatch(fetchCategoryWiseData(e.target.value.toLowerCase()))
-      }}>
+      <select
+        name="category"
+        id="category"
+        defaultValue={categoryBtnValue}
+        className='md:hidden block w-[80%] p-2 outline-none'
+        onChange={(e) => {
+          dispatch(setShowFilters('hide'))
+          dispatch(setCurrentPage(1))
+          dispatch(setCategoryBtnValue(e.target.value))
+          dispatch(fetchCategoryWiseData(e.target.value.toLowerCase()))
+          navigate(`/shop/${e.target.value.toLowerCase()}`)
+        }}>
         {categoryList.map((curItem) => (
+
           <option value={curItem.categoryUrl} key={curItem.categoryUrl}>{curItem.category}</option>
 
         ))}

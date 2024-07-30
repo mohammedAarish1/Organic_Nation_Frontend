@@ -26,8 +26,10 @@ const Header = () => {
   }, [isScrolled]);
 
   return (
-    <header className={`sticky top-0 w-full z-50 ${isScrolled ? 'bg-[var(--bgColorSecondary)] shadow-xl' : 'bg-transparent'}`}>
-      <div className={`flex justify-between  items-center sm:px-10 px-3 relative py-4 xs:py-2 z-30`}>
+    <header
+      className={`sticky top-0 w-full z-50 ${isScrolled ? 'bg-[var(--bgColorSecondary)] shadow-xl' : 'bg-transparent'}`}
+    >
+      <div className={`flex justify-between gap-2  items-center sm:px-10 px-3 relative py-4 xs:py-2 z-30`}>
         <Logo />
         <div className='md:block hidden relative w-[35%] '>
           <Search />

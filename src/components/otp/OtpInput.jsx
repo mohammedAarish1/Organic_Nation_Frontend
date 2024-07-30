@@ -24,7 +24,6 @@ const OtpInput = ({ length = 6, handleOtpSubmit = () => { } }) => {
         if (combinedOtp.length === length) {
             handleOtpSubmit(combinedOtp);
         }
-        // console.log(combinedOtp)
     };
 
     // below code is optional, it consist of more validation like if one of the input field is empty or not

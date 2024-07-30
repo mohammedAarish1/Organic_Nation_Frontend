@@ -1,20 +1,6 @@
 import React, { useEffect } from 'react'
 import Banner from '../../components/banner/Banner'
 import Title from '../../components/title/Title'
-// images - how we are better
-import homestyle from '../../images/better/homestyle.png';
-import minimallyProcessed from '../../images/better/minimallyProcessed.png';
-import natural from '../../images/better/natural.png';
-import noArtificialColor from '../../images/better/noArtificialColor.png'
-import authentic from '../../images/better/authentic.png';
-
-// images - certificates
-import usoca from '../../images/certificates/usoca.png'
-import fssi from '../../images/certificates/fssi.webp'
-import haccp from '../../images/certificates/haccp.webp'
-import jaivik from '../../images/certificates/jaivik.webp'
-import organicCertificate from '../../images/certificates/organic.webp'
-import usda from '../../images/certificates/usda.webp'
 
 import { useDispatch, useSelector } from 'react-redux'
 import RecipeSection from '../../components/recipe-section/RecipeSection'
@@ -33,24 +19,24 @@ import BlogSection from '../../components/blog-section/BlogSection';
 // images 
 const betterImages = [
     {
-        img: noArtificialColor,
+        img: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/how_we_are_better/noArtificialColor.png',
         text: "No Added Colour"
     },
     {
-        img: natural,
+        img: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/how_we_are_better/natural.png',
         text: "100% Naturally Organic"
     },
     {
-        img: authentic,
+        img: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/how_we_are_better/authentic.png',
         text: "Authentic Indian Recipes"
     },
     {
-        img: homestyle,
+        img: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/how_we_are_better/homestyle.png',
         text: "Homestyle Prepared"
     },
 
     {
-        img: minimallyProcessed,
+        img: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/how_we_are_better/minimallyProcessed.png',
         text: "Minimally Processed"
     },
 
@@ -58,18 +44,18 @@ const betterImages = [
 
 // cartificate images
 const certificates = [
-    usoca,
-    fssi,
-    haccp,
-    jaivik,
-    organicCertificate,
-    usda,
+    'https://organicnationmages.s3.ap-south-1.amazonaws.com/certificates/usoca.png',
+    'https://organicnationmages.s3.ap-south-1.amazonaws.com/certificates/fssi.webp',
+    'https://organicnationmages.s3.ap-south-1.amazonaws.com/certificates/haccp.webp',
+    'https://organicnationmages.s3.ap-south-1.amazonaws.com/certificates/jaivik.webp',
+    'https://organicnationmages.s3.ap-south-1.amazonaws.com/certificates/organic.webp',
+    'https://organicnationmages.s3.ap-south-1.amazonaws.com/certificates/usda.webp',
 ]
 
 
 const Home = () => {
     const dispatch = useDispatch();
-    const { isLoading,  productData } = useSelector((state) => state.product_data);
+    const { isLoading, productData } = useSelector((state) => state.product_data);
     const reviewsAndRating = JSON.parse(sessionStorage.getItem('reviews&rating'))
 
     // below code is for log in the user strightaway if they are already registered with the same email id
@@ -83,7 +69,7 @@ const Home = () => {
             dispatch(fetchUserData(token))
                 .then(() => {
                     sessionStorage.setItem("token", JSON.stringify(token));
-                    toast.success("You are already registered")
+                    toast.success("Logged in successfully")
                 })
         }
 

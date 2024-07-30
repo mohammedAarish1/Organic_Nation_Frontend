@@ -17,7 +17,6 @@ const paginationSlice = createSlice({
         // for previous button 
         setPrev: (state, action) => {
             let {currentPage,totalPages}=action.payload
-            console.log(currentPage,totalPages)
             if(currentPage===1){
                 return {
                     ...state,
@@ -32,7 +31,6 @@ const paginationSlice = createSlice({
         // for next button 
         setNext: (state, action) => {
             let {currentPage,totalPages}=action.payload
-            console.log(currentPage,totalPages)
             if(currentPage===totalPages){
                 return {
                     ...state,

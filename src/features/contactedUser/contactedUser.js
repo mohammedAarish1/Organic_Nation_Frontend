@@ -1,13 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const apiUrl = import.meta.env.VITE_BACKEND_URL;
+
+
 // Async thunk for submitting the contact form
 export const submitContactForm = createAsyncThunk(
     'contactedUser/submitContactForm',
     async (formData, { rejectWithValue }) => {
         try {
-            const response = await axios.post('http://localhost:4000/api/user-query/submit-contact-details', formData);
-            console.log(response.data)
+            const response = await axios.post(`${apiUrl}/api/user-query/submit-contact-details`, formData);
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data);

@@ -1,6 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios";
 
+const apiUrl = import.meta.env.VITE_BACKEND_URL;
+
+
 
 export const fetchCategoryWiseData = createAsyncThunk(
     "filterSlice/fetchCategoryWiseData",
@@ -9,22 +12,19 @@ export const fetchCategoryWiseData = createAsyncThunk(
             let response;
             if (category === "all") {
                 // Handle case for all categories
-                response = await axios.get("http://localhost:8000/category/all");
+                response = await axios.get(`${apiUrl}/category/all`);
                 if (response.data) {
                     return response.data.product;
                 }
 
             } else {
-                console.log('category---', category)
                 // Handle case for specific category
-                response = await axios.get(`http://localhost:8000/category/${category}`);
-
+                response = await axios.get(`${apiUrl}/category/${category}`);
                 if (response.data) {
                     return response.data.products;
                 }
             }
         } catch (error) {
-            console.error("Error fetching category wise data:", error);
             return error.message;
 
         }
@@ -53,7 +53,7 @@ const filterSlice = createSlice({
     name: "filterData",
     initialState,
     reducers: {
-       
+
         setFilterInitialValues: (state, action) => {
 
             if (Array.isArray(action.payload)) {
@@ -79,13 +79,12 @@ const filterSlice = createSlice({
 
         },
         setCategoryBtnValue: (state, action) => {
-            console.log('categoryBtn value', action.payload)
             return {
                 ...state,
                 categoryBtnValue: action.payload.toLowerCase(),
             }
         },
-       
+
         getFilterData: (state, action) => {
             const { type, data } = action.payload;
 
@@ -97,7 +96,6 @@ const filterSlice = createSlice({
                         price: data.value,
                     }
                 }
-                console.log(data)
             }
 
         },
@@ -129,7 +127,6 @@ const filterSlice = createSlice({
         getPricerRangeData: (state, action) => {
             let filterData;
             const { price, productData } = action.payload;
-            console.log(action.payload, state.data)
             if (price === 0) {
                 filterData = productData.filter((curItem) => curItem.price === price)
                 return {
@@ -148,7 +145,6 @@ const filterSlice = createSlice({
         getSearchedData: (state, action) => {
             const { value, productData } = action.payload;
             const data = [...productData];
-            console.log(value)
             let filterData;
 
             if (value === '') {
@@ -176,7 +172,6 @@ const filterSlice = createSlice({
 
         },
         clearFilters: (state, action) => {
-            // console.log("clear filter inside");
 
             const productData = [...action.payload]
 
@@ -184,7 +179,6 @@ const filterSlice = createSlice({
 
                 const productPriceArr = action.payload.map((curElm) => curElm.price)
                 let maxPrice = Math.max(...productPriceArr)
-                // console.log(maxPrice)
 
                 return {
                     ...state,

@@ -39,10 +39,8 @@ const ContactUs = () => {
   })
 
   const handleOnSubmit = (values, action) => {
-    console.log("form submitted", values);
     dispatch(submitContactForm(values))
       .then((res) => {
-        console.log('adfasdfasdf', res.payload.message)
         toast.success(res.payload.message)
       })
 
@@ -53,8 +51,8 @@ const ContactUs = () => {
     <section className='xs:px-10 px-2 pb-20 mt-5 sm:mt-0 font-mono'>
 
       <div className='lg:w-[90%] h-auto py-2 bg-opacity-35 mx-auto'>
-        <h2 className="text-4xl text-center sm:mt-6 mt-10 sm:mb-2 mb-6 text-[var(--bgColorPrimary)] ">Contact us</h2>
-        <div className='md:w-[95%] pb-16 pt-16 flex sm:gap-0 gap-20 sm:flex-row flex-col  justify-center h-[100%] mx-auto  my-auto bg-[var(--bgColorPrimary)] '>
+        <h2 className="mb-4 text-2xl text-center font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-5xl"><span className="text-transparent bg-clip-text bg-gradient-to-r to-green-700 from-[var(--themeColor)]">Contact Us</span></h2>
+        <div className='md:w-[95%] pb-16 pt-16 flex sm:gap-0 gap-20 sm:flex-row flex-col  justify-center h-[100%] mx-auto  my-auto bg-gradient-to-r to-green-700 from-[var(--themeColor)] '>
 
           {/* right side  */}
           <div className='sm:w-[40%] mt-3 sm:mt-0  '>

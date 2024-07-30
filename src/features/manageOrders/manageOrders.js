@@ -1,14 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const apiUrl = import.meta.env.VITE_BACKEND_URL;
+
+
 // add orders 
 export const addOrders = createAsyncThunk(
     'manageOrders/addOrders',
     async (checkoutData, { rejectWithValue }) => {
         const token = JSON.parse(sessionStorage.getItem('token'));
-        // console.log('token', token)
         try {
-            const response = await axios.post('http://localhost:4000/api/orders', checkoutData, {
+            const response = await axios.post(`${apiUrl}/api/orders`, checkoutData, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
@@ -16,7 +18,6 @@ export const addOrders = createAsyncThunk(
             });
             return response.data;
         } catch (err) {
-            console.log('order error', err)
             return rejectWithValue(err.response.data);
         }
     }
@@ -29,7 +30,7 @@ export const getAllOrders = createAsyncThunk(
     'manageOrders/getAllOrders',
     async (token, { rejectWithValue }) => {
         try {
-            const response = await axios.get(`http://localhost:4000/api/orders/all`,
+            const response = await axios.get(`${apiUrl}/api/orders/all`,
                 {
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -37,15 +38,24 @@ export const getAllOrders = createAsyncThunk(
                     }
                 }
             );
-            console.log('orderdata', response.data)
             return response.data;
-        } catch (err) {
-            console.log('fetch orders error', err);
-            return rejectWithValue(err.response.data);
+        } catch (error) {
+            return rejectWithValue(error.response.data);
         }
     }
 );
 
+
+// export const getSingleOrder = createAsyncThunk(
+//     'manageOrders/getSingleOrder',
+//     async (orderId, { rejectWithValue }) => {
+//         try {
+//             const response = await axios.get(`${apiUrl}/api/orders/${orderId}`);
+//         } catch (error) {
+//             return rejectWithValue(err.response.data);
+//         }
+//     }
+// )
 
 
 
@@ -53,10 +63,8 @@ export const cancelOrder = createAsyncThunk(
     'manageOrders/cancelOrder',
     async (id, { rejectWithValue }) => {
         try {
-            const response = await axios.delete(`http://localhost:4000/api/orders/${id}`)
-            console.log('cance order response', response)
+            const response = await axios.delete(`${apiUrl}/api/orders/${id}`)
         } catch (error) {
-            console.log('cancel order error', err);
             return rejectWithValue(err.response.data);
         }
     }
@@ -65,6 +73,7 @@ export const cancelOrder = createAsyncThunk(
 
 const initialState = {
     orders: [],
+    singleOrder: {},
     loading: false,
     error: null,
     ordersByStatus: {
@@ -162,7 +171,7 @@ const manageOrders = createSlice({
                     error: null,
                 }
             })
-            .addCase(addOrders.rejected, (state,action) => {
+            .addCase(addOrders.rejected, (state, action) => {
                 return {
                     ...state,
                     loading: false,
@@ -195,7 +204,30 @@ const manageOrders = createSlice({
                     loading: false,
                     error: action.payload || 'Something went wrong'
                 }
-            });
+            })
+            // get single orders
+            // .addCase(getSingleOrder.pending, (state) => {
+            //     return {
+            //         ...state,
+            //         loading: true,
+            //     }
+            // })
+            // .addCase(getSingleOrder.fulfilled, (state, action) => {
+
+            //     return {
+            //         ...state,
+            //         loading: false,
+            //         error: null,
+            //         singleOrder: action.payload
+            //     }
+            // })
+            // .addCase(getSingleOrder.rejected, (state, action) => {
+            //     return {
+            //         ...state,
+            //         loading: false,
+            //         error: action.payload || 'Something went wrong'
+            //     }
+            // });
     }
 
 })
