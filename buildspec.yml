@@ -10,6 +10,8 @@ phases:
       - npm install
   build:
     commands:
+      - echo Creating .env file...
+      - echo "VITE_BACKEND_URL=https://dpzi63xcomvst.cloudfront.net" > .env
       - echo Building React app...
       - npm run build
 
