@@ -44,6 +44,7 @@ export const addToCart = createAsyncThunk(
         try {
             if (user.token) {
                 // const token = JSON.parse(sessionStorage.getItem('token'));
+                console.log('user', user, 'pId', productId)
 
                 const response = await axios.post(`${apiUrl}/api/cart`, { productId, quantity, productName },
                     {
@@ -54,6 +55,7 @@ export const addToCart = createAsyncThunk(
                     }
                 )
                 if (response.statusText === 'OK') {
+                    console.log('response', response.data)
                     return response.data;
                 }
 
