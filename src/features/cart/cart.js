@@ -44,7 +44,6 @@ export const addToCart = createAsyncThunk(
         try {
             if (user.token) {
                 // const token = JSON.parse(sessionStorage.getItem('token'));
-                console.log('user', user, 'pId', productId)
 
                 const response = await axios.post(`${apiUrl}/api/cart`, { productId, quantity, productName },
                     {
@@ -54,9 +53,7 @@ export const addToCart = createAsyncThunk(
                         }
                     }
                 )
-                console.log('response', response)
-                if (response.statusText === 'OK') {
-                    console.log('response', response.data)
+                if (response.status === 200) {
                     return response.data;
                 }
 
@@ -94,7 +91,7 @@ export const getAllCartItems = createAsyncThunk(
                     }
                 );
 
-                if (response.statusText === 'OK') {
+                if (response.status === 200) {
                     const products = response.data.map(product => {
                         return {
                             nameUrl: product.productName,
@@ -158,7 +155,7 @@ export const clearCart = createAsyncThunk(
                         }
                     }
                 )
-                if (response.statusText === 'OK') {
+                if (response.status === 200) {
                     return response.data;
                 }
             } else {
@@ -188,7 +185,7 @@ export const removeFromCart = createAsyncThunk(
                         }
                     }
                 )
-                if (response.statusText === 'OK') {
+                if (response.status === 200) {
                     return response.data;
                 }
             } else {
@@ -220,7 +217,7 @@ export const updateQty = createAsyncThunk(
                         }
                     }
                 )
-                if (response.statusText === 'OK') {
+                if (response.status === 200) {
                     return response.data;
                 }
             } else {

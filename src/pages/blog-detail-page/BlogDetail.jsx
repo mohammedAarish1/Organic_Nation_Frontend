@@ -21,7 +21,7 @@ const BlogDetail = () => {
 
         try {
             const response = await axios.get(`${apiUrl}/api/blogs/${id}`);
-            if (response.statusText === "OK") {
+            if (response.status === 200) {
                 setSingleBlog(response.data)
             }
         } catch (error) {

@@ -25,7 +25,7 @@ const RecipeDetails = () => {
 
         try {
             const response = await axios.get(`${apiUrl}/api/recipes/${id}`);
-            if (response.statusText === "OK") {
+            if (response.status === 200) {
                 setSingleRecipe(response.data)
             }
         } catch (error) {
@@ -66,7 +66,7 @@ const RecipeDetails = () => {
                     {/* Ingredients */}
                     <div className=' flex md:flex-row gap-10 md:gap-0 flex-col justify-between'>
                         <div className="mb-8">
-                           <ReactMarkdown>{singleRecipe.description?.replace(/\\n/g, '\n')}</ReactMarkdown>
+                            <ReactMarkdown>{singleRecipe.description?.replace(/\\n/g, '\n')}</ReactMarkdown>
                         </div>
                         {/* author  */}
                         {/* <div className='md:w-52 shadow-2xl md:order-last order-first border-2  px-4 md:-translate-y-20 py-3 flex flex-col justify-ce items-center gap-2'>
@@ -90,7 +90,7 @@ const RecipeDetails = () => {
                     </div>
                     {/* Methods */}
                     <div>
-                    <ReactMarkdown>{singleRecipe.ingredients?.replace(/\\n/g, '\n')}</ReactMarkdown>
+                        <ReactMarkdown>{singleRecipe.ingredients?.replace(/\\n/g, '\n')}</ReactMarkdown>
                     </div>
                     <div>
                         <Link to='/our-recipes'>
