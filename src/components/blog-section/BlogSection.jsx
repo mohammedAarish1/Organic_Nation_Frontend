@@ -25,24 +25,29 @@ const BlogSection = ({ showBtn = false }) => {
                 <p className='sm:w-1/2 text-center text-[var(--themeColor)]'>Passionate about sustainable living, Organic Nation offers expert tips, eco-friendly products, and inspiring stories for a greener, healthier lifestyle.</p>
             </div>
 
-            <div className='flex flex-wrap justify-center items-center gap-10 px-10 py-10'>
+            <div className='flex flex-wrap justify-center gap-10 px-10 py-10 '>
                 {blogs?.map(blog => (
                     <div
                         key={blog._id}
-                        className='flex md:w-1/4  flex-col justify-center items-start '
+                        className='flex md:w-1/4  flex-col gap-2 '
                         data-aos="flip-up"
                         data-aos-duration="1000"
                     >
+                        <div className='flex flex-col gap-5'>
+                            <div className='md:w-full h-[300px] '>
+                                <img src={blog.image} alt="recipes" className='w-full h-full object-cover rounded-2xl ' />
+                            </div>
+                            <p className='text-sm text-gray-800 font-bold font-serif tracking-widest '>{new Date(blog?.date).toDateString()}</p>
 
-                        <img src={blog.image} alt="recipes" className='md:w-96 rounded-2xl object-contain' />
-
-                        <div className=' flex flex-col gap-1'>
-                            <p className='text-sm text-gray-400 font-serif tracking-widest'>{new Date(blog?.date).toDateString()}</p>
-                            <p className='font-medium text-[var(--themeColor)] '>{blog.title}</p>
                         </div>
 
-                        <div className='place-self-end '>
-                            <Link to={`/blogs/${blog._id}`} className=" flex  text-[var(--themeColor)] hover:text-orange-500 justify-end items-center gap-2 py-1   font-semibold rounded-lg  uppercase "><span className='underline-hover text-sm'>Continue Reading</span> <FaArrowRightLong /></Link>
+                        <div className=' flex flex-col justify-between gap-2  h-full'>
+                            <p className=' text-[var(--bgColorPrimary)] font-semibold'>{blog.title}</p>
+
+                            <div className='place-self-end'>
+                                <Link to={`/blogs/${blog._id}`} className=" flex  text-[var(--themeColor)] hover:text-orange-500 justify-end items-center gap-2 py-1   font-semibold rounded-lg  uppercase "><span className='underline-hover text-sm'>Continue Reading</span> <FaArrowRightLong /></Link>
+                            </div>
+
                         </div>
 
                     </div>

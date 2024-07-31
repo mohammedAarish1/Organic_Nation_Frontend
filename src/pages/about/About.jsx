@@ -50,8 +50,8 @@ const About = () => {
                     </div>
                     {/* content  */}
                     <div className='flex flex-col gap-2'>
-                        <p>Welcome to <span className='font-medium'>FOODSBAY INDIA</span>, a distinguished name in the realm of organic food processing. Established in 2019 and situated in the serene landscapes of Bailparao, Uttarakhand, we have swiftly emerged as the largest supplier of organic honey in North India.</p>
-                        <p>At <span className='font-medium'>FOODSBAY INDIA</span>, we pride ourselves on producing 100% natural and homestyle pickles, chutneys, and murrabbas. Our products are crafted with traditional recipes and the finest organic ingredients, ensuring a delightful and authentic taste experience in every jar.</p>
+                        <p>Welcome to <span className='font-medium'>ORGANIC NATION -  A "ORGANIC NATION" unit (Partnership Firm ) </span>, a distinguished name in the realm of organic food processing. Established in 2019 and situated in the serene landscapes of Bailparao, Uttarakhand, we have swiftly emerged as the largest supplier of organic honey in North India.</p>
+                        <p>At <span className='font-medium'>ORGANIC NATION</span>, we pride ourselves on producing 100% natural and homestyle pickles, chutneys, and murrabbas. Our products are crafted with traditional recipes and the finest organic ingredients, ensuring a delightful and authentic taste experience in every jar.</p>
                     </div>
                 </div>
                 <div className='w-[80%] mx-auto flex justify-start gap-3'>
@@ -61,7 +61,7 @@ const About = () => {
                     </div>
                     {/* content  */}
                     <div className='flex flex-col gap-2'>
-                        <p>Our commitment to quality extends beyond <span className='font-semibold'>honey and preserves</span>. As a prominent trader and supplier, <span className='font-semibold'>we offer a diverse range of organic & Natural products including seasonings, vegetable powders, oats, vegan-friendly soya chaap, millet-based muesli, and granola</span>. Each product is a testament to our dedication to promoting <span className='font-semibold'>health and wellness</span> through natural, wholesome foods. Our journey is guided by a vision of sustainability and excellence. We adhere to rigorous organic farming practices, ensuring that our products are free from harmful chemicals and additives. This commitment not only nurtures your health but also supports environmentally friendly agricultural methods. <span className='font-semibold'> FOODSBAY INDIA's</span> reach goes beyond the Indian market, as <span className='font-semibold'>we proudly export our signature pickles to international destinations</span>. Our global presence allows us to share the <span className="font-semibold">rich and diverse flavors</span> of India with the world, celebrating the essence of our culinary heritage.</p>
+                        <p>Our commitment to quality extends beyond <span className='font-semibold'>honey and preserves</span>. As a prominent trader and supplier, <span className='font-semibold'>we offer a diverse range of organic & Natural products including seasonings, vegetable powders, oats, vegan-friendly soya chaap, millet-based muesli, and granola</span>. Each product is a testament to our dedication to promoting <span className='font-semibold'>health and wellness</span> through natural, wholesome foods. Our journey is guided by a vision of sustainability and excellence. We adhere to rigorous organic farming practices, ensuring that our products are free from harmful chemicals and additives. This commitment not only nurtures your health but also supports environmentally friendly agricultural methods. <span className='font-semibold'> ORGANIC NATION's</span> reach goes beyond the Indian market, as <span className='font-semibold'>we proudly export our signature pickles to international destinations</span>. Our global presence allows us to share the <span className="font-semibold">rich and diverse flavors</span> of India with the world, celebrating the essence of our culinary heritage.</p>
                     </div>
                 </div>
                 <div className='w-[80%] mx-auto flex justify-start gap-3'>
@@ -174,7 +174,7 @@ const About = () => {
                         <div className="w-full lg:w-[calc(50%-2px)]  p-6 rounded-lg ">
                             <p className="">
                                 {/* Your content for each section goes here */}
-                                At <span className='font-semibold'>FOODSBAY INDIA</span> , we believe in the power of community. Our partnerships with local farmers are built on the principles of fair trade, respect, and mutual growth. Through training programs and resources, we empower farmers to adopt sustainable agricultural practices that enrich soil health and biodiversity, ensuring their prosperity and the health of the land they cultivate. Our factory serves as a community hub where traditional knowledge meets innovative practices, fostering a network of mutual support and collaboration.
+                                At <span className='font-semibold'>ORGANIC NATION</span> , we believe in the power of community. Our partnerships with local farmers are built on the principles of fair trade, respect, and mutual growth. Through training programs and resources, we empower farmers to adopt sustainable agricultural practices that enrich soil health and biodiversity, ensuring their prosperity and the health of the land they cultivate. Our factory serves as a community hub where traditional knowledge meets innovative practices, fostering a network of mutual support and collaboration.
                             </p>
                         </div>
                         <div className="w-full h-0.5 lg:w-1 lg:h-64 bg-indigo-200 relative">
@@ -327,7 +327,7 @@ const About = () => {
                         <div className="w-full lg:w-[calc(50%-2px)]  p-6 rounded-lg ">
                             <p className="">
                                 {/* Your content for each section goes here */}
-                                As we continue to grow, we invite you to join us at <span className='font-semibold'>FOODSBAY INDIA </span> and embark on a journey of natural goodness. Whether you are a health-conscious individual, a culinary enthusiast, or a supporter of sustainable living, we invite you to experience the exceptional quality and taste of our organic products. Together, we can make a positive impact - one organic meal at a time. <span className='font-semibold'>Discover the essence of purity and tradition with FOODSBAY INDIA – where nature's bounty meets unparalleled craftsmanship.</span>
+                                As we continue to grow, we invite you to join us at <span className='font-semibold'>ORGANIC NATION </span> and embark on a journey of natural goodness. Whether you are a health-conscious individual, a culinary enthusiast, or a supporter of sustainable living, we invite you to experience the exceptional quality and taste of our organic products. Together, we can make a positive impact - one organic meal at a time. <span className='font-semibold'>Discover the essence of purity and tradition with ORGANIC NATION – where nature's bounty meets unparalleled craftsmanship.</span>
                             </p>
                         </div>
                         {/* image  end */}

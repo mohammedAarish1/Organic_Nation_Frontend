@@ -26,20 +26,25 @@ const RecipeSection = ({ showBtn = false }) => {
                 {recipes?.map(recipe => (
                     <div
                         key={recipe._id}
-                        className='flex md:w-1/4  flex-col justify-center items-start '
+                        className='flex md:w-1/4  flex-col gap-2 '
                         data-aos="flip-up"
                         data-aos-duration="1000"
                     >
+                        <div className='flex flex-col gap-5'>
+                            <div className='md:w-full h-[300px] '>
+                                <img src={recipe.image} alt="recipes" className='w-full h-full object-cover rounded-2xl ' />
+                            </div>
+                            <p className='text-sm text-gray-800 font-serif tracking-widest '>{new Date(recipe?.date).toDateString()}</p>
 
-                        <img src={recipe.image} alt="recipes" className='md:w-96 rounded-2xl' />
-
-                        <div className=' flex flex-col gap-1'>
-                            <p className='text-sm text-gray-400 font-serif tracking-widest'>May 21, 2024</p>
-                            <p className='font-medium text-[var(--themeColor)] '>{recipe.title}</p>
                         </div>
 
-                        <div className='place-self-end '>
-                            <Link to={`/recipes/${recipe._id}`} className=" flex  text-[var(--themeColor)] hover:text-orange-500 justify-end items-center gap-2 py-1   font-semibold rounded-lg  uppercase "><span className='underline-hover text-sm'>Continue Reading</span> <FaArrowRightLong /></Link>
+                        <div className=' flex flex-col justify-between gap-  h-full'>
+                            <p className=' text-[var(--bgColorPrimary)] font-semibold  text-[18px]'>{recipe.title}</p>
+
+                            <div className='place-self-end'>
+                                <Link to={`/blogs/${recipe._id}`} className=" flex  text-[var(--themeColor)] hover:text-orange-500 justify-end items-center gap-2 py-1   font-semibold rounded-lg  uppercase "><span className='underline-hover text-sm'>Continue Reading</span> <FaArrowRightLong /></Link>
+                            </div>
+
                         </div>
 
                     </div>
@@ -60,3 +65,6 @@ const RecipeSection = ({ showBtn = false }) => {
 }
 
 export default RecipeSection;
+
+
+

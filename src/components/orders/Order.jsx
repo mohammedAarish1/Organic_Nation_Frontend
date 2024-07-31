@@ -150,20 +150,20 @@ const Order = ({ order }) => {
                     <div className=' bg-[#6D613B] '>
                        
                         {/* <p className='flex justify-start items-center xs:gap-2 max-w-max'><span className='xs:text-[16px] text-[12px]'>Payment Done</span> <span><FaCheckCircle className='text-green-600 xs:text-[1rem] text-[15px] ' /> </span></p> */}
-                        <div className='text-white xs:px-5 px-1 py-3'>
-                            <div className='flex justify-between'>
-                                <p className='text-end xs:text-[18px] text-[12px]'>Sub Total:</p>
+                        <div className='text-white xs:px-5 px-1 py-3 xs:text-[16px] text-[12px]'>
+                            <div className='flex justify-between '>
+                                <p className='text-end '>Sub Total:</p>
                                 <p> ₹ {order?.subTotal}</p>
                             </div>
-                            <div className='flex justify-between items-center'>
-                                <p className='text-end xs:text-[12px] text-[12px]'>Total taxes:</p>
+                            <div className='flex justify-between items-center xs:text-[12px] text-[12px]'>
+                                <p className='text-end '>Total taxes:</p>
                                 <p> ₹ {order?.taxAmount}</p>
                             </div>
-                            <div className='flex justify-between items-center'>
-                                <p className='text-end xs:text-[12px] text-[12px]'>Shipping Fee:</p>
+                            <div className='flex justify-between items-center xs:text-[12px] text-[12px]'>
+                                <p className='text-end '>Shipping Fee:</p>
                                 <p> ₹ {order?.shippingFee}</p>
                             </div>
-                            <div className='flex justify-between items-center xs:text-[20px] text-[12px] font-semibold'>
+                            <div className='flex justify-between items-center xs:text-[20px]  font-semibold'>
                                 <p className='text-end '>Total Amount Payable:</p>
                                 <p> ₹ {order?.subTotal + order?.taxAmount + order?.shippingFee}</p>
                             </div>

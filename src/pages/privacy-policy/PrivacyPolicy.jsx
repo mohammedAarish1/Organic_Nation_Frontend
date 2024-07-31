@@ -1,6 +1,7 @@
 import React from 'react';
 // react icons 
 import { MdOutlinePrivacyTip } from "react-icons/md";
+import { Link } from 'react-router-dom';
 
 
 const PrivacyPolicy = () => {
@@ -27,7 +28,7 @@ const PrivacyPolicy = () => {
                         </p>
 
                         <p>Thank you for visiting organicnation.co.in. We are committed to protecting your personal information and your right to privacy.</p>
-                        <p>www.organicnation.co.in is owned and operated by FOODSBAY INDIA and is engaged in the business of curating, designing and selling consumer products under the brand name “Organic Nation”. When we say “Website”, we mean the website www.urbanplatter.in, and all related functionality, services, and content offered by or for Foodsbay India on or through www.organicnation.co.in, social media handles, and includes the systems, servers, and networks used to make the Website available. We also refer to Foodsbay India as “we,” “us” and “our.”</p>
+                        <p><span className='font-bold'>www.organicnation.co.in</span> is owned and operated by FOODSBAY INDIA and is engaged in the business of curating, designing and selling consumer products under the brand name <Link to='/' className='font-bold hover:underline underline-offset-2'>“Organic Nation”</Link>. When we say “Website”, we mean the website www.urbanplatter.in, and all related functionality, services, and content offered by or for Foodsbay India on or through www.organicnation.co.in, social media handles, and includes the systems, servers, and networks used to make the Website available. We also refer to Foodsbay India as “we,” “us” and “our.”</p>
 
                         <p>When you visit our website, and more generally, use any of our services (the “Services“, which include the Website) we appreciate that you are trusting us with your personal information. We take your privacy very seriously. In this protection arrangement, we look for to clarify to you within the clearest way conceivable what data we collect, how we utilize it and what rights you have got in connection to it. We hope you take some time to read through it carefully, because it is critical. If you come across any terms in this privacy notice that you do not agree with, please refrain from using our Services immediately.</p>
 
