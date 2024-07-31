@@ -54,6 +54,7 @@ export const addToCart = createAsyncThunk(
                         }
                     }
                 )
+                console.log('response', response)
                 if (response.statusText === 'OK') {
                     console.log('response', response.data)
                     return response.data;
@@ -67,6 +68,7 @@ export const addToCart = createAsyncThunk(
 
 
         } catch (error) {
+            console.log('error', error)
             return rejectWithValue({
                 message: err.message,
                 status: err.response?.status
