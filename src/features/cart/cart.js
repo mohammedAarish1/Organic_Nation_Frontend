@@ -65,7 +65,6 @@ export const addToCart = createAsyncThunk(
 
 
         } catch (error) {
-            console.log('error', error)
             return rejectWithValue({
                 message: err.message,
                 status: err.response?.status

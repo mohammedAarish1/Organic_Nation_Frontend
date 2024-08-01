@@ -44,7 +44,7 @@ const BlogDetail = () => {
                     <div>
                         <div className='text-center'>
                             <p className="text-gray-500">Published on {new Date(singleBlog?.date).toDateString()}</p>
-                            <h1 className="mt-2 text-4xl font-bold text-gray-900 sm:text-3xl ">{singleBlog.title}</h1>
+                            <h1 className="mt-2 text-xl font-bold text-gray-900 sm:text-3xl ">{singleBlog.title}</h1>
                             <div className="mt-6 flex flex-wrap justify-center gap-2">
                                 {singleBlog.tags?.map(tag => (
                                     <button key={tag} className="rounded-lg bg-gray-100 px-2 py-1 font-medium text-gray-600 hover:bg-gray-200">#{tag}</button>
@@ -54,7 +54,7 @@ const BlogDetail = () => {
 
 
                         <div
-                            className="mx-auto max-w-screen-lg space-y-12 rounded-b-lg px-8 pt-10 pb-20 font-serif text-lg tracking-wide  sm:shadow-lg">
+                            className="mx-auto max-w-screen-lg space-y-12 rounded-b-lg px-8 pt-10 pb-20 font-serif sm:text-lg tracking-wide  sm:shadow-lg text-sm">
                             <ReactMarkdown>{singleBlog.description?.replace(/\\n/g, '\n')}</ReactMarkdown>
                         </div>
                     </div>

@@ -34,18 +34,18 @@ const CheckoutForm = () => {
         receiverEmail: '',
         receiverPhone: '',
         shippingAddress: {
-            country: 'India',
             address: '',
             city: '',
             state: '',
             zipCode: '',
+            country: 'India',
         },
         billingAddress: {
-            country: 'India',
             address: '',
             city: '',
             state: '',
             zipCode: '',
+            country: 'India',
         },
         sameAsContact: false,
         sameAsShipping: false,
@@ -74,7 +74,7 @@ const CheckoutForm = () => {
         // below orderDetails will contain each item id and qty in 2D array
         const orderDetails = cartItemsList.map(item => [item['name-url'], item._id, item.quantity]);
         let checkoutData = {
-            orderNo: Math.floor(Math.random() * 100),
+            orderNo: 'ON' + Date.now(),
             orderStatus: 'active',
             userEmail: user?.email,
             billingAddress: address(values.billingAddress),
@@ -140,7 +140,7 @@ const CheckoutForm = () => {
                                         name="firstName"
                                         className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer "
                                         placeholder=" "
-                                        autocomplete="off"
+                                        autoComplete="off"
 
                                     />
 
@@ -161,7 +161,7 @@ const CheckoutForm = () => {
                                         id="lastName"
                                         className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
                                         placeholder=" "
-                                        autocomplete="off"
+                                        autoComplete="off"
                                     />
 
 
@@ -182,7 +182,7 @@ const CheckoutForm = () => {
                                         id="email"
                                         className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
                                         placeholder=" "
-                                        autocomplete="off"
+                                        autoComplete="off"
                                     />
 
 
@@ -202,7 +202,7 @@ const CheckoutForm = () => {
                                         id="phone"
                                         className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
                                         placeholder=" "
-                                        autocomplete="off"
+                                        autoComplete="off"
                                     />
 
                                     <label htmlFor="phone" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">Phone</label>
@@ -224,7 +224,7 @@ const CheckoutForm = () => {
                                     type="checkbox"
                                     id="sameAsContact"
                                     name="sameAsContact"
-                                    autocomplete="off"
+                                    autoComplete="off"
                                     onChange={(e) => {
                                         setFieldValue('sameAsContact', e.target.checked);
                                         if (e.target.checked && values.sameAsContact) {
@@ -253,7 +253,7 @@ const CheckoutForm = () => {
                                             id="receiverFirstName"
                                             className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
                                             placeholder=" "
-                                            autocomplete="off"
+                                            autoComplete="off"
                                         />
 
                                         <label htmlFor="receiverFirstName" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">First Name</label>
@@ -272,7 +272,7 @@ const CheckoutForm = () => {
                                             id="receiverLastName"
                                             className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
                                             placeholder=" "
-                                            autocomplete="off"
+                                            autoComplete="off"
                                         />
 
 
@@ -293,7 +293,7 @@ const CheckoutForm = () => {
                                             id="receiverEmail"
                                             className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
                                             placeholder=" "
-                                            autocomplete="off"
+                                            autoComplete="off"
                                         />
 
                                         <label htmlFor="receiverEmail" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">Email</label>
@@ -312,7 +312,7 @@ const CheckoutForm = () => {
                                             id="receiverPhone"
                                             className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
                                             placeholder=" "
-                                            autocomplete="off"
+                                            autoComplete="off"
                                         />
 
                                         <label htmlFor="receiverPhone" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">Phone</label>
@@ -344,7 +344,7 @@ const CheckoutForm = () => {
                                             id="shippingAddress.address"
                                             className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
                                             placeholder=" "
-                                            autocomplete="off"
+                                            autoComplete="off"
                                         />
 
                                         <label htmlFor="shippingAddress.address" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">Address Line</label>
@@ -363,7 +363,7 @@ const CheckoutForm = () => {
                                             id="shippingAddress.city"
                                             className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
                                             placeholder=" "
-                                            autocomplete="off"
+                                            autoComplete="off"
                                         />
 
                                         <label htmlFor="shippingAddress.city" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">City</label>
@@ -402,7 +402,7 @@ const CheckoutForm = () => {
                                             id="shippingAddress.zipCode"
                                             className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
                                             placeholder=" "
-                                            autocomplete="off"
+                                            autoComplete="off"
                                         />
 
                                         <label htmlFor="shippingAddress.zipCode" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">Zip Code</label>
@@ -466,7 +466,7 @@ const CheckoutForm = () => {
                                                 id="billingAddress.address"
                                                 className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
                                                 placeholder=" "
-                                                autocomplete="off"
+                                                autoComplete="off"
                                             />
 
                                             <label htmlFor="billingAddress.address" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">Address Line</label>
@@ -485,7 +485,7 @@ const CheckoutForm = () => {
                                                 id="billingAddress.city"
                                                 className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
                                                 placeholder=" "
-                                                autocomplete="off"
+                                                autoComplete="off"
                                             />
 
                                             <label htmlFor="billingAddress.city" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">City</label>
@@ -525,7 +525,7 @@ const CheckoutForm = () => {
                                                 id="billingAddress.zipCode"
                                                 className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
                                                 placeholder=" "
-                                                autocomplete="off"
+                                                autoComplete="off"
                                             />
 
                                             <label htmlFor="billingAddress.zipCode" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">Zip Code</label>

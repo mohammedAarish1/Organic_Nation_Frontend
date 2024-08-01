@@ -12,6 +12,8 @@ import deliveryReducer from '../features/check-delivery/checkDelivery';
 import otpSliceReducer from '../features/auth/OTPSlice';
 import forgotPasswordReducer from '../features/forgotPassword/forgotPassword';
 import blogReducer from '../features/blogs/blogs';
+import contactedUserReducer from '../features/contactedUser/contactedUser';
+import contactedUser from '../features/contactedUser/contactedUser';
 
 
 
@@ -29,6 +31,7 @@ export const store = configureStore({
         delivery: deliveryReducer,
         OTPSlice: otpSliceReducer,
         forgotPassword: forgotPasswordReducer,
-        blog: blogReducer
+        blog: blogReducer,
+        contactedUser: contactedUserReducer
     },
 })

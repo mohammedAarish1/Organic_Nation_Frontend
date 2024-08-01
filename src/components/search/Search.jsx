@@ -17,21 +17,33 @@ const Search = ({ mobileMenu = false }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const { productData } = useSelector((state) => state.product_data);
+  const { searchInputValue } = useSelector(state => state.filterData);
+
 
 
 
   const handleSearch = (e) => {
     e.preventDefault()
     // below code is for hiding the sidebar in mobile menu after searching 
-    // if (mobileMenu) {
-    //   dispatch(setShowSidebar())
-    // }
+    if (mobileMenu) {
+      dispatch(setShowSidebar())
+    }
     if (inputValue !== '' && productData.length > 0) {
       navigate('/searched-product')
     }
     setTimeout(() => {
       dispatch(getSearchedData({ value: inputValue, productData }))
     }, 100)
+
+    if (inputValue === '') {
+      navigate('/shop/all')
+    }
+
+
+  }
+
+  const handleOnChange = (e) => {
+    setInputValue(e.target.value)
 
   }
 
@@ -43,9 +55,9 @@ const Search = ({ mobileMenu = false }) => {
           type="text"
           placeholder="Search Your Product..."
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          onChange={(e) => handleOnChange(e)}
           className=" w-full xs:py-2 py-1 bg-[var(--bgColorSecondary)] xs:px-4 px-2 border border-gray-400 rounded-lg focus:outline-none focus:border-[var(--themeColor)]"
-          // onMouseLeave={()=>setInputValue('')}
+        // onMouseLeave={()=>setInputValue('')}
         />
         {/* submit button  */}
         <button

@@ -12,8 +12,8 @@ const SortSection = ({ setGridView, gridView }) => {
   const [sortValue, setSortValue] = useState("sort")
   const dispatch = useDispatch()
   const { productData } = useSelector((state) => state.product_data);
-  const filterProduct = useSelector((state) => state.filterData.data);
-  const { categoryBtnValue } = useSelector((state) => state.filterData);
+  // const filterProduct = useSelector((state) => state.filterData.data);
+  // const { categoryBtnValue } = useSelector((state) => state.filterData);
 
 
 
@@ -34,7 +34,7 @@ const SortSection = ({ setGridView, gridView }) => {
         </form>
       </div>
 
-      <div className='flex md:flex-row flex-row-reverse flex-wrap justify-between sm:gap-0 gap-5 items-center lg:px-32 px-2'>
+      <div className='flex md:flex-row flex-row-reverse flex-wrap justify-between sm:gap-0 gap-5 items-center lg:px-32 md:px-2'>
 
         {/* grid and list view  */}
         <div className=' gap-2 flex'>

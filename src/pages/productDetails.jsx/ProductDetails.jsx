@@ -68,7 +68,11 @@ const ProductDetails = () => {
 
 
   if (!product) {
-    return <div>Loading</div>
+    return (
+      <div className='min-h-screen flex justify-center items-center'>
+        <div className='loader'></div>
+      </div>
+    )
   }
   return (
     <div>

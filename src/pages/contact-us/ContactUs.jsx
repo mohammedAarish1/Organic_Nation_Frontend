@@ -1,23 +1,21 @@
 import React from 'react';
 import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { submitContactForm } from '../../features/contactedUser/contactedUser';
 import Logo from '../../components/logo/Logo';
 
 // react icons 
-import { ImOffice, ImFacebook2 } from "react-icons/im";
+import { ImOffice, ImFacebook2, ImSpinner9 } from "react-icons/im";
 import { BiSolidPhoneCall } from "react-icons/bi";
 import { GrLinkedin } from "react-icons/gr";
 import { FaSquareXTwitter } from "react-icons/fa6";
-import { FaInstagramSquare } from "react-icons/fa";
+import { FaArrowRight, FaInstagramSquare, FaYoutube } from "react-icons/fa";
 
 
 const ContactUs = () => {
 
-
-  const dispatch = useDispatch();
 
   const initialValues = {
     fullName: '',
@@ -26,6 +24,10 @@ const ContactUs = () => {
     city: '',
 
   }
+
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.contactedUser);
+
 
   const phoneRegExp = /^(\+\d{1,3}[- ]?)?\d{10}$/;
 
@@ -52,27 +54,29 @@ const ContactUs = () => {
 
       <div className='lg:w-[90%] h-auto py-2 bg-opacity-35 mx-auto'>
         <h2 className="mb-4 text-2xl text-center font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-5xl"><span className="text-transparent bg-clip-text bg-gradient-to-r to-green-700 from-[var(--themeColor)]">Contact Us</span></h2>
-        <div className='md:w-[95%] pb-16 pt-16 flex sm:gap-0 gap-20 sm:flex-row flex-col  justify-center h-[100%] mx-auto  my-auto bg-gradient-to-r to-green-700 from-[var(--themeColor)] '>
+        <div className='md:w-[95%] py-16 flex md:gap-0 gap-20 md:flex-row flex-col  justify-center h-[100%] mx-auto  my-auto bg-gradient-to-r to-green-700 from-[var(--themeColor)] '>
 
           {/* right side  */}
-          <div className='sm:w-[40%] mt-3 sm:mt-0  '>
+          <div className='md:w-[40%] mt-3 sm:mt-0   '>
             <div className='flex flex-col gap-5 text-[var(--bgColorSecondary)] text-sm justify-center h-full items-center px-3 '>
               <Logo />
               <h2 className="text-lg font-semibold ">Company Information</h2>
               <ImOffice className='text-5xl' />
-              <p className='xs:w-[50%] w-[90%] text-center'><span className='font-semibold'>Work Address:</span> M/s Earthy Foods Private Limited Bailparao,
+              <p className='xs:w-[50%] w-[90%] text-center'><span className='font-semibold'>Work Address:</span> Foodsbay India, Bailparao,
                 Ramnagar Road, Nainital, Uttarakhand-263159</p>
               <BiSolidPhoneCall className='text-5xl animate-pulse' />
-              <p><span className='font-semibold'>Phone</span> +91-9999532041 (For Bulk Queries)</p>
-              <p><span className='font-semibold'>Email:</span> info@earthyfoods.net</p>
+              <p className='text-center'><span className='font-semibold'>Phone</span> <a href="tel:+919999532041" className='underline underline-offset-2 '>+91-9999532041</a> (For Bulk Queries)</p>
+              <p>Email: <a href="mailto:info@organicnation.co.in" className='underline underline-offset-2'>info@organicnation.co.in</a> </p>
               {/* follow us  */}
-              <div className='flex justify-center items-center gap-3'>
+              <div className='flex sm:flex-row flex-col justify-center items-center gap-3'>
                 <h2>Follow us on:</h2>
-                <a href=" https://www.linkedin.com/company/earthyfoods-pvt-ltd" target='_blank'><GrLinkedin className='text-[30px]  hover:text-[var(--bgColorSecondary)]' /></a>
-                <a href="https://twitter.com/organicnation_" target='_blank'><FaSquareXTwitter className='text-[33px] hover:text-[var(--bgColorSecondary)] ' /></a>
-                <a href="https://www.facebook.com/organicnation/" target='_blank'><ImFacebook2 className='text-[29px] hover:text-[var(--bgColorSecondary)] ' /></a>
-                <a href="https://www.instagram.com/organicnationadmin/" target='_blank'><FaInstagramSquare className='text-[33px]  hover:text-[var(--bgColorSecondary)]' /></a>
-
+                <div className='flex justify-center items-center gap-3'>
+                  <a href=" https://www.linkedin.com/company/earthyfoods-pvt-ltd" target='_blank'><GrLinkedin className='text-[28px]  hover:text-[var(--bgColorSecondary)] hover:text-white' /></a>
+                  <a href="https://twitter.com/organicnation_" target='_blank'><FaSquareXTwitter className='text-[33px] hover:text-[var(--bgColorSecondary)] hover:text-white ' /></a>
+                  <a href="https://www.facebook.com/organicnation/" target='_blank'><ImFacebook2 className='text-[28px] hover:text-[var(--bgColorSecondary)] hover:text-white ' /></a>
+                  <a href="https://www.instagram.com/organicnationadmin/" target='_blank'><FaInstagramSquare className='text-[33px]  hover:text-[var(--bgColorSecondary)] hover:text-white' /></a>
+                  <a href="https://www.youtube.com/channel/UCyUSaFyepi2jx_ViFKE0TkA/community?pvf=CAI%253D" target='_blank'><FaYoutube className='text-[40px]  hover:text-[var(--bgColorSecondary)] hover:text-white' /></a>
+                </div>
               </div>
             </div>
 
@@ -80,7 +84,7 @@ const ContactUs = () => {
           </div>
 
           {/* left side  */}
-          <div className='sm:w-[60%]'>
+          <div className='md:w-[60%] '>
             <div className="sm:w-[90%]  mx-auto">
 
               <h2 className='px-8 text-[var(--bgColorSecondary)] mb-2  text-2xl'><span className=''>Have Questions?</span> Get in touch with us today</h2>
@@ -155,10 +159,15 @@ const ContactUs = () => {
                       {/* submit button  */}
                       <div className="flex items-center justify-end mt-6">
                         <button
-                          className="bg-[var(--bgColorSecondary)] w-full hover:bg-green-700 hover:text-white text-[var(--bgColorPrimary)] font-bold py-2 px-4  focus:outline-none focus:shadow-outline"
                           type="submit"
+                          className="bg-[var(--bgColorSecondary)] flex justify-center items-center gap-3 w-full hover:bg-green-700 hover:text-white text-[var(--bgColorPrimary)] font-bold py-2 px-4  focus:outline-none focus:shadow-outline"
                         >
                           Submit Your Request
+                          {loading ? (
+                            <ImSpinner9 className='animate-spin' />
+                          ) : (
+                            <FaArrowRight />
+                          )}
                         </button>
                       </div>
                     </div>

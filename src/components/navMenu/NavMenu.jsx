@@ -40,7 +40,7 @@ const NavMenu = () => {
         { Sweetners: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Sweetners.png' },
         { 'Organic-Oils': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Organic-Oils.png' },
         { Oats: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Oats.png' },
-         { Vegan: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Vegan.png' },
+        { Vegan: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Vegan.png' },
         { 'Breakfast-Cereals': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Breakfast-Cereals.png' },
     ]
 
@@ -154,7 +154,7 @@ const NavMenu = () => {
 
 
 
-            <nav id='mobileMenu' className={`mobile-menu-container ${showSidebar ? 'active' : ''} `}>
+            <nav id='mobileMenu' className={`mobile-menu-container ${showSidebar ? 'active' : ''}  `} >
                 <div className={`mobile-menu min-h-full xs:w-1/2 w-2/3 ${showDropDownMenu && 'w-full'} ${showSidebar ? 'active' : ''}`}>
 
                     <div className='p-4'>
@@ -184,7 +184,7 @@ const NavMenu = () => {
                             </Link>
                         </li>
 
-                        <li className=' cursor-pointer   p-4 relative rounded-md text-[#ffe9a1] hover:bg-[var(--bgColorSecondary)] hover:text-[var(--bgColorPrimary)] '>
+                        <li className=' cursor-pointer px-4 relative rounded-md text-[#ffe9a1] hover:bg-[var(--bgColorSecondary)] hover:text-[var(--bgColorPrimary)] '>
                             <div className='flex justify-between items-center'>
                                 <Link to="/shop/all" className='w-full flex text-xl gap-3 justify-start items-center' onClick={() => {
                                     dispatch(setShowSidebar())
@@ -194,7 +194,7 @@ const NavMenu = () => {
                                         Shop
                                     </span>
                                 </Link>
-                                <span className={`pl-1 border-l-2 border-[var(--titleTextColor)]`} onClick={() => setShowDropDownMenu((prev) => !prev)}><BsChevronDown className={`${showDropDownMenu && 'rotate-180'} transition-all duration-500`} /></span>
+                                <span className={` border-l-2 border-[var(--titleTextColor)]  p-4`} onClick={() => setShowDropDownMenu((prev) => !prev)}><BsChevronDown className={`${showDropDownMenu && 'rotate-180'} transition-all duration-500`} /></span>
                             </div>
 
                             {/* mobile dropdown menu start */}
@@ -210,8 +210,8 @@ const NavMenu = () => {
                                                 dispatch(fetchCategoryWiseData(curItem.categoryUrl.toLowerCase()))
                                                 dispatch(setShowSidebar())
                                             }}>
-                                                <img src={curItem.img} alt="authentic-pickel" className='w-10' />
-                                                <span className=' text-center text-sm'>{curItem.category}</span>
+                                                <img src={curItem.image} alt="authentic-pickel" className='w-10' />
+                                                <span className=' text-center text-sm text-[var(--themeColor)] hover:text-orange-500'>{curItem.category}</span>
                                             </Link>
                                         </li>
                                     ))}

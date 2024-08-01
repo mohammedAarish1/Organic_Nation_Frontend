@@ -50,7 +50,7 @@ const Product = ({ gridView, product }) => {
           <img
             src={Array.isArray(product.img) ? product.img.filter(path => path.toLowerCase().includes('front'))[0] : null}
             alt="product_Image"
-            className={`${!gridView ? 'sm:min-w-60 w-40 max-h-[240px] rounded-2xl ' : 'max-h-[240px] rounded-2xl'} object-contain`}
+            className={`${!gridView ? 'sm:min-w-60 w-40 max-h-[240px] rounded-2xl ' : 'sm:max-h-[240px] xs:max-h-[200px] max-h-[180px] rounded-2xl'} object-contain`}
             onLoad={() => setImgLoading(false)}
           />
         </div>

@@ -34,7 +34,7 @@ const checkoutSchema = Yup.object().shape({
   }),
   sameAsShipping: Yup.boolean().required(),
   billingAddress: Yup.object({
-    country: Yup.string().required(),
+
     address: Yup.string().when("$sameAsShipping", {
       is: false,
       then: (schema) => schema.required('Address is required'),
@@ -55,6 +55,7 @@ const checkoutSchema = Yup.object().shape({
       then: (schema) => schema.required('zipCode is required'),
       otherwise: (schema) => schema,
     }),
+    country: Yup.string().required(),
   }),
   paymentMethod: Yup.string().required('Payment method is required'),
 });
