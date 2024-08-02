@@ -233,6 +233,7 @@ const TermsAndConditions = () => {
                 <p>GENERAL</p>
                 <div className='flex flex-col gap-2'>
                   <p>We strive to deliver products purchased from Foodsbay India in excellent condition and in the fastest time possible. Also, for all the subsequent purchases of Order value of Rs. 750* or more, we will deliver the order to your doorstep free of cost. A minimal shipping charge will be applicable to all orders under Rs. 750 based on cart items.</p>
+                  <p className='font-semibold'>All the products will be shipped in 3-5 days.</p>
                   <p>Products will be shipped to an address designated by you, if applicable, so long as such address is complete. All transactions are made pursuant to a shipping contract, and, as a result, risk of loss and title for Products pass to you upon delivery of the Products to the carrier.</p>
                   <p>We take no responsibility for goods signed by an alternative person other than the person ordering the product at the address indicated at the time of the order. Since the transactions are authorised by the card holder, we do not take responsibility for incorrect addresses provided at the time of placing the order The delivery will NOT be redirected / redelivered to any other address in any circumstance.</p>
                   <p>The selected product will be delivered only in the city it is mentioned as “available” on this website.</p>
@@ -322,7 +323,7 @@ const TermsAndConditions = () => {
                 <ul className='list-inside'>
                   <li>** NEFT – 1 to 3 business days post refund initiation</li>
                   <li>** Foodsbay India Credit – Instant</li>
-                  <li>** Online Refund – 7 to 10 business days post refund initiation, depending on your bank partner</li>
+                  <li className='font-semibold'>** Online Refund – 7 to 10 business days post refund initiation, depending on your bank partner</li>
                   <li>** Wallets – Instant</li>
                 </ul>
                 <p>Please note, Foodsbay India initiates the refund after the returned item has reached us and quality check is successful. Therefore, the refund initiation time may vary by time taken by the courier partner to deliver the return to our warehouse. In case of any refund discrepancies, Foodsbay India may at its sole discretion, request you to share with us a screenshot of your bank statement.</p>
