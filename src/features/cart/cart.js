@@ -392,7 +392,7 @@ export const cartSlice = createSlice({
                     totalQty = action.payload.reduce((total, product) => total + product.quantity, 0);
 
                     totalPrice = action.payload.reduce((total, product) => {
-                        const discountedPrice = product.price * (1 - product["discount "] / 100);
+                        const discountedPrice = product.price * (1 - product.discount / 100);
                         return Math.round(total + discountedPrice * product.quantity);
                     }, 0);
 
@@ -402,7 +402,7 @@ export const cartSlice = createSlice({
                     }, 0);
 
                     totalTax = action.payload.reduce((total, product) => {
-                        const discountedPrice = product.price * (1 - product["discount "] / 100);
+                        const discountedPrice = product.price * (1 - product.discount / 100);
                         const totalAmount = discountedPrice * product.quantity;
                         const taxAmount = totalAmount * (product.tax / 100);
                         return Math.round(total + taxAmount);

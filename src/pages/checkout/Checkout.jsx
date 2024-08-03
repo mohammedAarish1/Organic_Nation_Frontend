@@ -60,7 +60,7 @@ const Checkout = () => {
                                                 <ul className="text-xs text-white xs:space-y-3 xs:mt-4">
                                                     <li className="flex flex-wrap gap-4">Weight <span className="ml-auto">{product.weight}</span></li>
                                                     <li className="flex flex-wrap gap-4">Quantity <span className="ml-auto">{product.quantity} Pcs.</span></li>
-                                                    <li className="flex flex-wrap gap-4">Total Price <span className="ml-auto font-bold">₹ {Math.round((product.price - (product.price * product['discount '] / 100)) * product.quantity)}</span></li>
+                                                    <li className="flex flex-wrap gap-4">Total Price <span className="ml-auto font-bold">₹ {Math.round((product.price - (product.price * product.discount / 100)) * product.quantity)}</span></li>
                                                 </ul>
                                             </div>
                                         </div>

@@ -39,7 +39,7 @@ const Product = ({ gridView, product }) => {
 
 
   return (
-    <div className={`${!gridView ? "flex flex-row lg:pl-32 justify-start items-center gap-5  " : "flex justify-between items-center flex-col gap-2 "} font-sans`}
+    <div className={`${!gridView ? "flex flex-row lg:pl-32 justify-start items-center gap-5  " : "flex  justify-between items-center flex-col gap-2 max-w-[260px] "} font-sans`}
       data-aos="zoom-in-up"
       data-aos-duration="1000"
     >
@@ -50,7 +50,7 @@ const Product = ({ gridView, product }) => {
           <img
             src={Array.isArray(product.img) ? product.img.filter(path => path.toLowerCase().includes('front'))[0] : null}
             alt="product_Image"
-            className={`${!gridView ? 'sm:min-w-60 w-40 max-h-[240px] rounded-2xl ' : 'sm:max-h-[240px] xs:max-h-[200px] max-h-[180px] rounded-2xl'} object-contain`}
+            className={`${!gridView ? 'sm:min-w-60 w-40 max-h-[240px] rounded-2xl ' : 'sm:min-h-[240px] xs:max-h-[200px] max-h-[180px] rounded-2xl'} object-contain`}
             onLoad={() => setImgLoading(false)}
           />
         </div>
@@ -86,8 +86,7 @@ const Product = ({ gridView, product }) => {
         </div>
 
 
-        {/* there is extra space in discount property, need to correct it  */}
-        <p className=''>₹ <span className='font-semibold'>{Math.round(product.price - (product.price * product['discount '] / 100))}</span>/- &nbsp; <span className='text-green-700'>{product['discount ']}% off</span></p>
+        <p className=''>₹ <span className='font-semibold'>{Math.round(product.price - (product.price * product.discount / 100))}</span>/- &nbsp; <span className='text-green-700'>{product.discount}% off</span></p>
         <AddToCartBtn item={product} />
       </div>
     </div>

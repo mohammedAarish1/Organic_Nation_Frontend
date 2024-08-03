@@ -122,10 +122,10 @@ const ProductDetails = () => {
               </div>
 
               <div className='flex gap-3  items-center '>
-                <p className='text-2xl text-red-600'>-{product["discount "]}%</p>
+                <p className='text-2xl text-red-600'>-{product.discount}%</p>
                 <p className='flex items-start'>
                   <FaIndianRupeeSign className='text-sm' />
-                  <span className='text-3xl font-medium'>{Math.round(product.price - (product.price * product['discount '] / 100))}</span>
+                  <span className='text-3xl font-medium'>{Math.round(product.price - (product.price * product.discount / 100))}</span>
                 </p>
               </div>
               <p><span className='text-gray-600 text-sm'>MRP:</span> <span className='line-through'> ₹{product.price}</span> </p>
@@ -194,7 +194,7 @@ const ProductDetails = () => {
                   <p className=' tracking-widest text-[var(--themeColor)] text-center font-medium w-2/3'>{product.name}</p>
                   <p className='text-[14px] text-gray-500 tracking-widest'>Weight: <span className='text-gray-600'>{product.weight}</span></p>
 
-                  <p className='text-[14px] tracking-widest'>₹ <span className='font-semibold'>{Math.round(product.price - (product.price * product['discount '] / 100))}</span>/- &nbsp; <span>{product['discount ']}% off</span></p>
+                  <p className='text-[14px] tracking-widest'>₹ <span className='font-semibold'>{Math.round(product.price - (product.price * product.discount / 100))}</span>/- &nbsp; <span>{product.discount}% off</span></p>
                   {/* <AddToCartBtn item={product} /> */}
 
                 </div>

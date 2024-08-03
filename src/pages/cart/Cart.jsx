@@ -134,7 +134,7 @@ const Cart = () => {
                   <div className="font-semibold text-gray-900 ">{curItem.name}</div>
                 </td>
                 <td className="px-6 py-4 text-center whitespace-nowrap lg:table-cell hidden">
-                  <div className=" text-gray-900">₹ {Math.round(curItem.price - (curItem.price * curItem['discount '] / 100))}</div>
+                  <div className=" text-gray-900">₹ {Math.round(curItem.price - (curItem.price * curItem.discount / 100))}</div>
                 </td>
                 <td className="px-6 py-4 text-center   whitespace-nowrap">
                   {/* <div className=" text-gray-900 flex justify-center items-center "><ProductQty qty={curItem.qty} increaseQty={() => dispatch(increaseProductQty(curItem.id))} decreaseQty={() => dispatch(decreaseProductQty(curItem.id))} /></div> */}
@@ -159,7 +159,7 @@ const Cart = () => {
                 </td>
                 <td className="px-6 py-4 text-center whitespace-nowrap ">
                   <div className=" text-gray-900">
-                    ₹ {Math.round((curItem.price - (curItem.price * curItem['discount '] / 100)) * curItem.quantity)}
+                    ₹ {Math.round((curItem.price - (curItem.price * curItem.discount / 100)) * curItem.quantity)}
                   </div>
                 </td>
                 <td className="px-6 py-4  text-center whitespace-nowrap">

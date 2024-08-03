@@ -104,21 +104,41 @@ const Auth = () => {
               sessionStorage.setItem("token", JSON.stringify(token));
               dispatch(fetchUserData(token));
               dispatch(getAllOrders(token));
-              dispatch(getAllCartItems());
+              dispatch(getAllCartItems())
+                .then(res => {
+                  const localCart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+                  if (localCart.length > 0 && res.payload.length > 0) {
+                    setIsAlertOpen(true)
+                  } else if (localCart.length > 0 && res.payload.length === 0) {
+                    dispatch(mergeCart({ localCart, replaceCart: true }))
+                      .then(() => {
+                        localStorage.removeItem('cart');
+                        dispatch(getAllCartItems());
+                        if (checkoutStatus) {
+                          navigate('/cart/checkout')
+                        } else {
+
+                          navigate('/')
+                        }
+                      }
+                      )
+                  } else {
+                    if (checkoutStatus) {
+                      navigate('/cart/checkout')
+                    } else {
+
+                      navigate('/');
+                    }
+
+                  }
+
+
+
+                })
               toast.success("Log in Successfully");
 
-              const localCart = JSON.parse(localStorage.getItem('cart') || '[]');
-              if (localCart.length > 0) {
-                setIsAlertOpen(true)
-              } else {
-                if (checkoutStatus) {
-                  navigate('/cart/checkout')
-                } else {
 
-                  navigate('/');
-                }
-
-              }
             } else if (value.payload === 'Request failed with status code 400') {
               toast.error('Invalid Credentials')
             } else if (value.meta.requestStatus === 'rejected') {
