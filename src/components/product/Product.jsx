@@ -38,6 +38,7 @@ const Product = ({ gridView, product }) => {
   }, [product['name-url']]);
 
 
+
   return (
     <div className={`${!gridView ? "flex flex-row lg:pl-32 justify-start items-center gap-5  " : "flex  justify-between items-center flex-col gap-2 max-w-[260px] "} font-sans`}
       data-aos="zoom-in-up"
