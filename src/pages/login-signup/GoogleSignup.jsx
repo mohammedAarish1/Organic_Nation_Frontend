@@ -5,6 +5,8 @@ import { userGoogleSignup } from '../../features/auth/userSlice'
 import { useFormik } from 'formik'
 
 import { useNavigate } from 'react-router-dom';
+import { requestOTP } from '../../features/auth/OTPSlice';
+import { toast } from 'react-toastify';
 // import { useHistory } from 'react-router-dom';
 
 
@@ -37,10 +39,24 @@ const GoogleSignup = () => {
     initialValues,
     // validationSchema: !userExist && signUpSchema,
     onSubmit: (values, action) => {
-      dispatch(userGoogleSignup({ userData: values, token: token }))
-        .then(() => {
-          navigate('/register')
-        })
+      // dispatch(userGoogleSignup({ userData: values, token: token }))
+      //   .then(() => {
+      //     navigate('/register')
+      //   })
+
+      if (values.phoneNumber !== '' && values.password !== '') {
+        let phoneNumber = '+91' + values.phoneNumber;
+        // dispatch the api call function 
+        dispatch(requestOTP(phoneNumber))
+          .then((value) => {
+            if (value.meta.requestStatus === 'fulfilled') {
+              toast.success(value.payload.message)
+              // setShowOtpInput(true);
+              navigate('/otp-submit', { state: { phoneNumber, otherDetails: values, googleSignup: true, token: token } })
+            }
+
+          })
+      }
 
       action.resetForm()
     }

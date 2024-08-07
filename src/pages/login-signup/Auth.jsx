@@ -10,10 +10,12 @@ import { signUpSchema } from '../../form-validation/signUpSchema';
 import { loginSchema } from '../../form-validation/loginSchema';
 import Alert from '../../components/alert/Alert';
 import { getAllCartItems, mergeCart } from '../../features/cart/cart';
+import OtpInput from '../../components/otp/OtpInput';
 // react icons 
 import { FcGoogle, FcIphone } from "react-icons/fc";
 import { ImSpinner9 } from 'react-icons/im';
 import { FaArrowRight } from 'react-icons/fa';
+import { requestOTP } from '../../features/auth/OTPSlice';
 
 
 
@@ -31,11 +33,14 @@ const Auth = () => {
 
 
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [showOtpInput, setShowOtpInput] = useState(true);
   const [userExist, setUserExist] = useState(otpUser ? false : true);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const { checkoutStatus } = useSelector(state => state.orders);
   const { user, user_loading, error, } = useSelector(state => state.user);
+  const { isAuthenticated } = useSelector(state => state.OTPSlice);
+
 
 
 
@@ -80,18 +85,46 @@ const Auth = () => {
   }
 
 
+
+
   const handleSubmit = (values, action) => {
     if (!userExist) {
-      dispatch(userSignup(values)).then((value) => {
-        if (value?.error?.message === 'Rejected') {
-          return;
-        } else {
-          toast.success("Congragulations! signed up succesfully")
-          setUserExist(true)
-        }
+      // dispatch(userSignup(values))
+      //   .then((value) => {
+      //     if (value?.error?.message === 'Rejected') {
+      //       return;
+      //     } else {
+      //       toast.success("Congragulations! signed up succesfully")
+      //       setUserExist(true)
+      //     }
 
-      })
+      //   })
 
+      if (isAuthenticated) {
+        dispatch(userSignup(values))
+          .then((value) => {
+            if (value?.error?.message === 'Rejected') {
+              return;
+            } else {
+              toast.success("Congragulations! signed up succesfully")
+              setUserExist(true)
+            }
+
+          })
+
+      } else {
+        let phoneNumber = '+91' + values.phoneNumber;
+        // dispatch the api call function 
+        dispatch(requestOTP(phoneNumber))
+          .then((value) => {
+            if (value.meta.requestStatus === 'fulfilled') {
+              toast.success(value.payload.message)
+              // setShowOtpInput(true);
+              navigate('/otp-submit', { state: { phoneNumber, otherDetails: values, googleSignup: false } })
+            }
+
+          })
+      }
 
     } else {
       if (values.email && values.password) {

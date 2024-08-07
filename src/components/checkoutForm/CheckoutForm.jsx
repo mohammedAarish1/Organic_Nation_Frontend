@@ -21,7 +21,7 @@ const CheckoutForm = () => {
 
     const { user } = useSelector((state) => state.user);
 
-    const { cartItemsList, totalCartAmount, totalTax } = useSelector((state) => state.cart);
+    const { cartItemsList, totalCartAmount } = useSelector((state) => state.cart);
     const { shippingFee } = useSelector(state => state.delivery)
 
     const initialValues = {
@@ -82,7 +82,7 @@ const CheckoutForm = () => {
             orderDetails: orderDetails,
             subTotal: totalCartAmount,
             paymentStatus: 'pending',
-            taxAmount: totalTax,
+            // taxAmount: totalTax,
             shippingFee: shippingFee,
             paymentMethod: values.paymentMethod,
             receiverDetails: {

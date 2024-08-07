@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import ProductQty from '../../components/productQty/ProductQty';
 import { useDispatch, useSelector } from 'react-redux';
 // react icons 
@@ -22,7 +22,7 @@ const Cart = () => {
 
 
   const { user } = useSelector(state => state.user);
-  const { cartItemsList, loading, totalCartAmount, totalWeight, totalTax } = useSelector((state) => state.cart);
+  const { cartItemsList, loading, totalCartAmount, totalWeight } = useSelector((state) => state.cart);
   const { isAvailable, message, checking } = useSelector(state => state.delivery);
   const dispatch = useDispatch()
 
@@ -214,11 +214,11 @@ const Cart = () => {
             <span>Subtotal:</span>
             <span>₹ {Math.round(totalCartAmount || 0)}</span>
           </div>
-          {/* Shipping Fee */}
-          <div className='flex justify-between items-center gap-10'>
+          {/* tax  */}
+          {/* <div className='flex justify-between items-center gap-10'>
             <span>Total tax: (+)</span>
             <span>₹ {cartItemsList?.length > 0 ? totalTax : 0}</span>
-          </div>
+          </div> */}
           {/* coupon  */}
           {/* <div className="flex  items-center">
             <input type="text" placeholder="Enter coupon code" className="border border-gray-300 p-1 rounded-l-md focus:outline-none   focus:border-transparent w-full" />
@@ -228,7 +228,7 @@ const Cart = () => {
           <hr />
           <div className='flex justify-between items-center gap-10'>
             <span>Order Total:</span>
-            <span className='font-semibold'>₹ {totalCartAmount+totalTax || 0}</span>
+            <span className='font-semibold'>₹ {totalCartAmount || 0}</span>
           </div>
           {/* pin code availability check  */}
           <div className='flex flex-col gap-2'>

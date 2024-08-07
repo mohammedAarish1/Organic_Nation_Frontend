@@ -34,7 +34,6 @@ const BlogDetail = () => {
         getSingleBlog(id)
     }, [id, dispatch])
 
-
     return (
         <div>
 

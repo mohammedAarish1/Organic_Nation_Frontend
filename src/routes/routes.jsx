@@ -2,7 +2,8 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 
 import {
-    VerifyEmail, ResetPassword, SearchedProduct, Home, About, Shop, ContactUs, Cart, Auth, Recipes, Testimonials, Faq, PrivacyPolicy, TermsAndConditions, CsrPolicy, BulkOrder, ProductDetails, Checkout, BlogDetail, OtpLogin, Blogs, RecipeDetails, GoogleSignup, ManageOrders, OrderConfirm, PaymentGateway, NoPageFound
+    VerifyEmail, ResetPassword, SearchedProduct, Home, About, Shop, ContactUs, Cart, Auth, Recipes, Testimonials, Faq, PrivacyPolicy, TermsAndConditions, CsrPolicy, BulkOrder, ProductDetails, Checkout, BlogDetail, OtpLogin, Blogs, RecipeDetails, GoogleSignup, ManageOrders, OrderConfirm, PaymentGateway, NoPageFound,
+    OtpSubmit
 } from '../imports';
 
 const getRoutes = () => [
@@ -125,6 +126,11 @@ const getRoutes = () => [
         key="otp-login"
         path='/otp-login'
         element={<OtpLogin />}
+    />,
+    <Route
+        key="otp-submit"
+        path='/otp-submit'
+        element={<OtpSubmit />}
     />,
     <Route
         key="order-confirmed"

@@ -64,7 +64,7 @@ const OrderConfirm = () => {
                     </div>
                     <div className="flex justify-between items-center mb-2">
                         <span className="font-semibold ">Total:</span>
-                        <span className="text-gray-800">₹ {singleOrder.subTotal + singleOrder.shippingFee + singleOrder.taxAmount}</span>
+                        <span className="text-gray-800">₹ {singleOrder.subTotal + singleOrder.shippingFee}</span>
                     </div>
                     <div className="flex justify-between items-center mb-2">
                         <span className="font-semibold ">Payment Method:</span>

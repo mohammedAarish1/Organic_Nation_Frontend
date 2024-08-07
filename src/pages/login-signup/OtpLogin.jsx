@@ -3,12 +3,10 @@ import Logo from '../../components/logo/Logo';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import OtpInput from '../../components/otp/OtpInput';
-import { requestOTP, verifyOTP } from '../../features/auth/OTPSlice';
+import { requestOTP } from '../../features/auth/OTPSlice';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { ImSpinner9 } from 'react-icons/im';
-import { fetchUserData } from '../../features/auth/userSlice';
 import ResendOTP from '../../components/otp/ResendOTP';
 
 // react icons 
@@ -25,7 +23,6 @@ const OtpLogin = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [showOtpInput, setShowOtpInput] = useState(false);
     const [submittedPhoneNumber, setSubmittedPhoneNumber] = useState('')
 
     const { loading, } = useSelector(state => state.OTPSlice);
@@ -47,37 +44,11 @@ const OtpLogin = () => {
         dispatch(requestOTP(phoneNumber)).then((value) => {
             if (value.meta.requestStatus === 'fulfilled') {
                 toast.success(value.payload.message)
-                setShowOtpInput(true);
+                // setShowOtpInput(true);
+                navigate('/otp-submit', { state: { phoneNumber } })
             }
 
         })
-    }
-
-
-    //otp submission
-    const handleOtpSubmit = (otp) => {
-        if (otp && submittedPhoneNumber) {
-            dispatch(verifyOTP({ phoneNumber: submittedPhoneNumber, otp }))
-                .then((value) => {
-                    if (value.meta.requestStatus === 'fulfilled') {
-                        const token = value.payload.token;
-                        if (token) {
-                            sessionStorage.setItem("token", JSON.stringify(token));
-                            dispatch(fetchUserData(token)).then(() => {
-                                navigate('/')
-                                toast.success(value.payload.message)
-                            })
-
-                        } else {
-
-                            navigate('/register', { state: { phoneNumber: submittedPhoneNumber } })
-                        }
-                    } else {
-                        toast.error(value.payload)
-                    }
-
-                })
-        }
     }
 
     return (
@@ -104,86 +75,61 @@ const OtpLogin = () => {
 
                     <div className='sm:w-[60%]'>
                         <div className="sm:w-[80%]  mx-auto">
-                            {!showOtpInput ? (
-                                <Formik
-                                    initialValues={initialValues}
-                                    validationSchema={phoneNumberSchema}
-                                    onSubmit={handlePhoneNumberSubmit}
-                                >
+                            <Formik
+                                initialValues={initialValues}
+                                validationSchema={phoneNumberSchema}
+                                onSubmit={handlePhoneNumberSubmit}
+                            >
 
-                                    {({ values }) => (
-                                        <Form>
-                                            <div className='flex flex-col gap-5'>
-                                                <div className='flex flex-col gap-1'>
-                                                    <label
-                                                        htmlFor="phoneNumber"
-                                                        className='text-[var(--bgColorSecondary)]'
-                                                    >
-                                                        Enter Your Phone Number
-                                                    </label>
-                                                    <div className='flex  items-center gap-2 border border-[var(--bgColorSecondary)]  rounded-md'>
-                                                        <div className='flex justify-center items-center pl-2 pr-1 gap-1 text-[var(--bgColorSecondary)]'>
-                                                            {/* <FaFlag /> */}
-                                                            <img src='https://organicnationmages.s3.ap-south-1.amazonaws.com/other_images/flag.png' alt="country_flag" className='w-8' />
-                                                            <span>+91</span>
-                                                        </div>
-                                                        <div className='w-full'>
-                                                            <Field
-                                                                type="text"
-                                                                placeholder='123-4567-890'
-                                                                name='phoneNumber'
-                                                                className=' outline-none w-full bg-transparent py-2 text-[var(--bgColorSecondary)] tracking-widest'
-                                                            />
-                                                        </div>
-
+                                {({ values }) => (
+                                    <Form>
+                                        <div className='flex flex-col gap-5'>
+                                            <div className='flex flex-col gap-1'>
+                                                <label
+                                                    htmlFor="phoneNumber"
+                                                    className='text-[var(--bgColorSecondary)]'
+                                                >
+                                                    Enter Your Phone Number
+                                                </label>
+                                                <div className='flex  items-center gap-2 border border-[var(--bgColorSecondary)]  rounded-md'>
+                                                    <div className='flex justify-center items-center pl-2 pr-1 gap-1 text-[var(--bgColorSecondary)]'>
+                                                        {/* <FaFlag /> */}
+                                                        <img src='https://organicnationmages.s3.ap-south-1.amazonaws.com/other_images/flag.png' alt="country_flag" className='w-8' />
+                                                        <span>+91</span>
                                                     </div>
-                                                    <ErrorMessage name="phoneNumber" component="div" className='text-red-600 text-[14px]' />
-                                                </div>
-                                                <div>
-                                                    <button
-                                                        type="submit"
-                                                        className='p-2 text-[#712522] bg-[var(--bgColorSecondary)] hover:bg-green-500 hover:text-white transition-all duration-300 w-full flex justify-center items-center gap-2 rounded-md '
-                                                    >
-                                                        Send OTP
-                                                        {loading ? (
-                                                            <ImSpinner9 className='animate-spin' />
-                                                        ) : (
-                                                            <FaArrowRight />
-                                                        )}
+                                                    <div className='w-full'>
+                                                        <Field
+                                                            type="text"
+                                                            placeholder='123-4567-890'
+                                                            name='phoneNumber'
+                                                            className=' outline-none w-full bg-transparent py-2 text-[var(--bgColorSecondary)] tracking-widest'
+                                                        />
+                                                    </div>
 
-
-                                                    </button>
                                                 </div>
-                                                {/* resend code  */}
-                                                <ResendOTP phoneNumber={submittedPhoneNumber} handleResendOTP={handlePhoneNumberSubmit} />
+                                                <ErrorMessage name="phoneNumber" component="div" className='text-red-600 text-[14px]' />
                                             </div>
-                                        </Form>
-                                    )}
-                                </Formik>
-                            ) : (
-                                <div className='flex flex-col gap-5'>
-                                    <header className="">
-                                        <h1 className="text-2xl font-bold mb-1 text-[var(--bgColorSecondary)] tracking-wide">OTP Verification</h1>
-                                        <p className="text-[15px] text-slate-400">Enter the 4-digit verification code that was sent to your phone number.</p>
-                                    </header>
-                                    <OtpInput length={6} handleOtpSubmit={handleOtpSubmit} />
-                                    <div>
-                                        <button
-                                            type="submit"
-                                            className='p-2 bg-[var(--bgColorSecondary)] text-[#712522] hover:bg-green-500 hover:text-white transition-all duration-300 w-full flex justify-center items-center gap-2 rounded-md '
-                                        >
-                                            Submit OTP
-                                            {loading ? (
-                                                <ImSpinner9 className='animate-spin' />
-                                            ) : (
-                                                <FaArrowRight />
-                                            )}
+                                            <div>
+                                                <button
+                                                    type="submit"
+                                                    className='p-2 text-[#712522] bg-[var(--bgColorSecondary)] hover:bg-green-500 hover:text-white transition-all duration-300 w-full flex justify-center items-center gap-2 rounded-md '
+                                                >
+                                                    Send OTP
+                                                    {loading ? (
+                                                        <ImSpinner9 className='animate-spin' />
+                                                    ) : (
+                                                        <FaArrowRight />
+                                                    )}
 
 
-                                        </button>
-                                    </div>
-                                </div>
-                            )}
+                                                </button>
+                                            </div>
+                                            {/* resend code  */}
+                                            <ResendOTP phoneNumber={submittedPhoneNumber} handleResendOTP={handlePhoneNumberSubmit} />
+                                        </div>
+                                    </Form>
+                                )}
+                            </Formik>
 
                         </div>
                     </div>

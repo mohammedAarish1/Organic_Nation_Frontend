@@ -53,9 +53,9 @@ const OTPSlice = createSlice({
         })
         builder.addCase(requestOTP.fulfilled, (state, action) => {
             return {
-                ...state,
                 loading: false,
-                otpMessage: action.payload.message
+                otpMessage: action.payload.message,
+                isAuthenticated: true
             }
         })
         builder.addCase(requestOTP.rejected, (state, action) => {

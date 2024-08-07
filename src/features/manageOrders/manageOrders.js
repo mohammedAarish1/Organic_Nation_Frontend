@@ -46,24 +46,25 @@ export const getAllOrders = createAsyncThunk(
 );
 
 
-// export const getSingleOrder = createAsyncThunk(
-//     'manageOrders/getSingleOrder',
-//     async (orderId, { rejectWithValue }) => {
-//         try {
-//             const response = await axios.get(`${apiUrl}/api/orders/${orderId}`);
-//         } catch (error) {
-//             return rejectWithValue(err.response.data);
-//         }
-//     }
-// )
-
 
 
 export const cancelOrder = createAsyncThunk(
     'manageOrders/cancelOrder',
     async (id, { rejectWithValue }) => {
         try {
-            const response = await axios.delete(`${apiUrl}/api/orders/${id}`)
+            const token = JSON.parse(sessionStorage.getItem('token'));
+            if (token) {
+                const response = await axios.delete(`${apiUrl}/api/orders/${id}`,
+                    {
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        }
+                    }
+                )
+                return response.data.msg;
+            }
+
         } catch (error) {
             return rejectWithValue(err.response.data);
         }
@@ -205,29 +206,7 @@ const manageOrders = createSlice({
                     error: action.payload || 'Something went wrong'
                 }
             })
-            // get single orders
-            // .addCase(getSingleOrder.pending, (state) => {
-            //     return {
-            //         ...state,
-            //         loading: true,
-            //     }
-            // })
-            // .addCase(getSingleOrder.fulfilled, (state, action) => {
 
-            //     return {
-            //         ...state,
-            //         loading: false,
-            //         error: null,
-            //         singleOrder: action.payload
-            //     }
-            // })
-            // .addCase(getSingleOrder.rejected, (state, action) => {
-            //     return {
-            //         ...state,
-            //         loading: false,
-            //         error: action.payload || 'Something went wrong'
-            //     }
-            // });
     }
 
 })

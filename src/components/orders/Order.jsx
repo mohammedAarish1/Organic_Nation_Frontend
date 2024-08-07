@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { cancelOrder } from '../../features/manageOrders/manageOrders';
+import { cancelOrder, getAllOrders } from '../../features/manageOrders/manageOrders';
 import { useDispatch } from 'react-redux';
 import SingleOrder from './SingleOrder';
 import Alert from '../alert/Alert';
@@ -10,6 +9,7 @@ import { MdOutlineFileDownload, MdOutlineCancel } from "react-icons/md";
 import { GoDotFill } from "react-icons/go";
 import { IoCheckmarkDoneCircleSharp, IoChevronDownOutline } from "react-icons/io5";
 import { BsCartX } from "react-icons/bs";
+import { toast } from 'react-toastify';
 
 
 
@@ -22,7 +22,6 @@ const Order = ({ order }) => {
     };
 
     const dispatch = useDispatch()
-    const navigate = useNavigate()
     const [showOrderDetails, setShowOrderDetails] = useState(false);
     const [showAllItems, setShowAllItems] = useState(false);
     const [isAlertOpen, setIsAlertOpen] = useState(false);
@@ -38,7 +37,13 @@ const Order = ({ order }) => {
     const handleOrderCancel = () => {
         // below method will be dipatched on the basis of order status 
         dispatch(cancelOrder(order._id))
-        navigate('/manage-orders')
+            .then(res => {
+                if (res.meta.requestStatus === 'fulfilled') {
+                    dispatch(getAllOrders(JSON.parse(sessionStorage.getItem('token'))))
+                    toast.info(res.payload)
+                }
+            })
+        // navigate('/manage-orders')
 
         setIsAlertOpen(false);
     };
@@ -118,8 +123,8 @@ const Order = ({ order }) => {
                                             <span className='text-gray-400 sm:w-1/3 text-end'>{order.shippingAddress}</span>
                                         </div>
                                         <div className='flex justify-between items-center  border-gray-400 border-b-2 py-2'>
-                                            <span>Total Price <span className='text-sm capitalize'> (including shippingFee & taxes)</span></span>
-                                            <span className='text-gray-400'>₹{order.subTotal + order.shippingFee + order.taxAmount}</span>
+                                            <span>Total Price <span className='text-sm capitalize'> (including shippingFee)</span></span>
+                                            <span className='text-gray-400'>₹{order.subTotal + order.shippingFee}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -155,17 +160,14 @@ const Order = ({ order }) => {
                                 <p className='text-end '>Sub Total:</p>
                                 <p> ₹ {order?.subTotal}</p>
                             </div>
-                            <div className='flex justify-between items-center xs:text-[12px] text-[12px]'>
-                                <p className='text-end '>Total taxes:</p>
-                                <p> ₹ {order?.taxAmount}</p>
-                            </div>
+                           
                             <div className='flex justify-between items-center xs:text-[12px] text-[12px]'>
                                 <p className='text-end '>Shipping Fee:</p>
                                 <p> ₹ {order?.shippingFee}</p>
                             </div>
                             <div className='flex justify-between items-center xs:text-[20px]  font-semibold'>
                                 <p className='text-end '>Total Amount Payable:</p>
-                                <p> ₹ {order?.subTotal + order?.taxAmount + order?.shippingFee}</p>
+                                <p> ₹ {order?.subTotal + order?.shippingFee}</p>
                             </div>
                         </div>
                         <div className={` ${order?.orderStatus !== 'active' ? 'bg-[#D3BB71]' : 'bg-[#D3BB71] hover:bg-[#e0cf9c]'}  `}>

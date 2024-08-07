@@ -13,7 +13,7 @@ const Checkout = () => {
 
     const dispatch = useDispatch()
     const { checking, shippingFee } = useSelector(state => state.delivery)
-    const { cartItemsList, totalCartAmount, totalWeight, totalTax } = useSelector((state) => state.cart);
+    const { cartItemsList, totalCartAmount, totalWeight } = useSelector((state) => state.cart);
     const [showSummary, setShowSummary] = useState(false);
 
     const toggleInfo = () => {
@@ -70,9 +70,9 @@ const Checkout = () => {
                                 </div>
                             </div>
                             <div className="lg:absolute left-0 bottom-0 bg-[var(--bgColorPrimary)] w-full p-4">
-                                <h4 className="flex flex-wrap gap-4 text-base text-white">Total taxes (+) <span className="ml-auto">₹ {totalTax}</span></h4>
+                                {/* <h4 className="flex flex-wrap gap-4 text-base text-white">Total taxes (+) <span className="ml-auto">₹ {totalTax}</span></h4> */}
                                 <h4 className="flex flex-wrap gap-4 text-base text-white">Shipping Fee (+) <span className="ml-auto">₹ {shippingFee}</span></h4>
-                                <h4 className="flex flex-wrap gap-4 text-xl font-bold text-white">Total <span className="ml-auto text-xl">₹{Math.round(totalCartAmount + shippingFee + totalTax) || 0}</span></h4>
+                                <h4 className="flex flex-wrap gap-4 text-xl font-bold text-white">Total <span className="ml-auto text-xl">₹{Math.round(totalCartAmount + shippingFee ) || 0}</span></h4>
                             </div>
                         </div>
                     </div>

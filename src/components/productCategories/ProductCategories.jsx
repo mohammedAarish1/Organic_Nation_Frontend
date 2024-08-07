@@ -91,29 +91,3 @@ export default ProductCategories;
 
 
 
-// [
-//     {
-       
-//         "weight": "500 gm",
-//         "price": 390,
-//         "discount ": 20,
-//         "tax": 5,
-//         "category": "Organic Honey",
-//         "category-url": "Organic-Honey",
-//         "description": "Organic Nation's Jamun Honey is a premium product crafted from the nectar of the blossoms of Jamun trees.",
-//         "availability": 25,
-//         "quantity": 1
-//     },
-//     {
-       
-//         "weight": "500 gm",
-//         "price": 450,
-//         "discount ": 20,
-//         "tax": 12,
-//         "category": "Organic Honey",
-//         "category-url": "Organic-Honey",
-//         "description": "Introducing our Light Flora Honey, a premium product sourced from the finest flowers and crafted with utmost care",
-//         "availability": 25,
-//         "quantity": 1
-//     }
-// ]
