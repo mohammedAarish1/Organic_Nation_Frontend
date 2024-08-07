@@ -13,6 +13,7 @@ import { FaUserEdit } from "react-icons/fa";
 import { PiFileZipFill } from "react-icons/pi";
 // formik
 import { Formik, Form, Field, } from 'formik';
+import { initiatePayment } from '../../features/orderPayment/payment';
 
 
 const CheckoutForm = () => {
@@ -101,7 +102,13 @@ const CheckoutForm = () => {
                         }
                     })
             } else {
-                navigate('/payment-gateway', { state: { totalCartAmount, shippingFee, } })
+                dispatch(initiatePayment(
+                    {
+                        number: values.receiverPhone ? values.receiverPhone : values.phone,
+                        amount: totalCartAmount + shippingFee,
+                    }
+                ))
+                // navigate('/payment-gateway', { state: { totalCartAmount, shippingFee, } })
             }
 
         } else {

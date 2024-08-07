@@ -13,7 +13,7 @@ import otpSliceReducer from '../features/auth/OTPSlice';
 import forgotPasswordReducer from '../features/forgotPassword/forgotPassword';
 import blogReducer from '../features/blogs/blogs';
 import contactedUserReducer from '../features/contactedUser/contactedUser';
-import contactedUser from '../features/contactedUser/contactedUser';
+import paymentReducer from '../features/orderPayment/payment';
 
 
 
@@ -32,6 +32,7 @@ export const store = configureStore({
         OTPSlice: otpSliceReducer,
         forgotPassword: forgotPasswordReducer,
         blog: blogReducer,
-        contactedUser: contactedUserReducer
+        contactedUser: contactedUserReducer,
+        payment: paymentReducer,
     },
 })
