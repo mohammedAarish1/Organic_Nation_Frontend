@@ -137,11 +137,11 @@ const getRoutes = () => [
         path='/order-confirmed/:orderId'
         element={<OrderConfirm />}
     />,
-    <Route
-        key="payment-gateway"
-        path='/payment-gateway'
-        element={<PaymentGateway />}
-    />,
+    // <Route
+    //     key="payment-gateway"
+    //     path='/payment-gateway'
+    //     element={<PaymentGateway />}
+    // />,
     <Route
         key="no-page-found"
         path='*'
