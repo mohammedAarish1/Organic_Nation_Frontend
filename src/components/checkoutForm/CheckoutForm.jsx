@@ -564,10 +564,11 @@ const CheckoutForm = () => {
                                 )}
 
                             </div>
+                            {/* payment method  */}
                             <div>
                                 <h3 className="text-lg font-bold text-[#333]  mt-6">Payment Method</h3>
                                 <div className='flex flex-wrap xs:gap-10 gap-4 mt-2'>
-                                    <div className='flex items-center gap-1'>
+                                    {/* <div className='flex items-center gap-1'>
                                         <Field
                                             type="radio"
                                             id='credit-card'
@@ -586,16 +587,16 @@ const CheckoutForm = () => {
 
                                         />
                                         <label htmlFor="debit-card">Debit Card</label>
-                                    </div>
+                                    </div> */}
                                     <div className='flex items-center gap-1'>
                                         <Field
                                             type="radio"
-                                            id='upi'
+                                            id='online_payment'
                                             name="paymentMethod"
-                                            value="UPI"
+                                            value="online_payment"
 
                                         />
-                                        <label htmlFor="upi">UPI</label>
+                                        <label htmlFor="online_payment">Online Payment</label>
                                     </div>
                                     <div className='flex items-center gap-1'>
                                         <Field

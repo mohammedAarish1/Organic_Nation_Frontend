@@ -20,6 +20,7 @@ export const initiatePayment = createAsyncThunk(
 
 
         } catch (error) {
+            console.log('gg',error)
             return rejectWithValue({
                 message: err.message,
                 status: err.response?.status
