@@ -10,14 +10,14 @@ export const initiatePayment = createAsyncThunk(
     async (data, { rejectWithValue }) => {
         console.log('data', data)
         try {
-            // const response = await axios.post(`${apiUrl}/api/phonepe/payment`, { ...data })
+            const response = await axios.post(`${apiUrl}/api/phonepe/payment`, { ...data })
 
-            // console.log('response', response)
-            // if (response.status === 200 && response.data.data.instrumentResponse.redirectInfo.url) {
-            //     window.location.href = response.data.data.instrumentResponse.redirectInfo.url;
-            // } else {
-            //     console.log('error')
-            // }
+            console.log('response', response)
+            if (response.status === 200 && response.data.data.instrumentResponse.redirectInfo.url) {
+                window.location.href = response.data.data.instrumentResponse.redirectInfo.url;
+            } else {
+                console.log('error')
+            }
 
 
         } catch (error) {
