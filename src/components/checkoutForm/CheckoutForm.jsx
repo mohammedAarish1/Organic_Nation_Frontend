@@ -104,7 +104,7 @@ const CheckoutForm = () => {
             } else {
                 dispatch(initiatePayment(
                     {
-                        number: values.receiverPhone ? values.receiverPhone : values.phone,
+                        number: values.receiverPhone ? values.receiverPhone : values.phone.slice(3),
                         amount: totalCartAmount + shippingFee,
                     }
                 ))
