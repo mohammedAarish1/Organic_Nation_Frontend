@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setCurrentPage } from '../../features/pagination/pagination';
 import { fetchCategoryWiseData, setCategoryBtnValue } from '../../features/filter/filterSlice';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Title from '../title/Title';
 
 const ProductCategories = () => {
@@ -56,14 +56,16 @@ const ProductCategories = () => {
                 <div className='flex flex-wrap justify-center items-center gap-16'>
                     {/* category   */}
                     {categoryListWithImg?.map((curItem) => (
-                        <div
+
+                        <Link
+                            to={`/shop/${curItem.categoryUrl.toLowerCase()}`}
                             key={curItem.category}
                             className='flex flex-col gap-2  cursor-pointer  '
                             onClick={() => {
                                 dispatch(setCurrentPage(1))
                                 dispatch(setCategoryBtnValue(curItem.categoryUrl))
                                 dispatch(fetchCategoryWiseData(curItem.categoryUrl.toLowerCase()))
-                                navigate(`/shop/${curItem.categoryUrl.toLowerCase()}`)
+                                // navigate(`/shop/${curItem.categoryUrl.toLowerCase()}`)
                             }}
                             data-aos="zoom-out"
                             data-aos-duration="1000"
@@ -74,7 +76,7 @@ const ProductCategories = () => {
                             <div>
                                 <h1 className='bg-[var(--themeColor)] text-center py-2 text-white font-medium xs:text-xl rounded-xl font-mono tracking-wide'>{curItem.category}</h1>
                             </div>
-                        </div>
+                        </Link>
                     ))}
 
                     {/* category  end  */}

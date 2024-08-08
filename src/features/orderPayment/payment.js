@@ -8,20 +8,14 @@ const apiUrl = import.meta.env.VITE_BACKEND_URL;
 export const initiatePayment = createAsyncThunk(
     'payment/initiatePayment',
     async (data, { rejectWithValue }) => {
-        console.log('data', data)
         try {
             const response = await axios.post(`${apiUrl}/api/phonepe/payment`, { ...data })
 
-            console.log('response', response)
             if (response.status === 200 && response.data.data.instrumentResponse.redirectInfo.url) {
                 window.location.href = response.data.data.instrumentResponse.redirectInfo.url;
-            } else {
-                console.log('error')
-            }
-
+            } 
 
         } catch (error) {
-            console.log('gg', error)
             return rejectWithValue({
                 message: err.message,
                 status: err.response?.status
@@ -36,7 +30,6 @@ export const initiatePayment = createAsyncThunk(
 
 const initialState = {
     loading: false,
-    success: false,
     error: null,
 }
 
@@ -44,34 +37,37 @@ const payment = createSlice({
     name: "payment",
     initialState,
     reducers: {},
-    // extraReducers: (builder) => {
-    //     builder
-    //         .addCase(addReviews.pending, (state) => {
-    //             return {
-    //                 ...state,
-    //                 loading: true,
-    //             }
-    //         })
-    //         .addCase(addReviews.fulfilled, (state) => {
-    //             return {
-    //                 ...state,
-    //                 loading: false,
-    //             }
-    //         })
-    //         .addCase(addReviews.rejected, (state, action) => {
-    //             return {
-    //                 ...state,
-    //                 loading: false,
-    //                 error: action.payload
-    //             }
-    //         })
+    extraReducers: (builder) => {
+        builder
+            .addCase(initiatePayment.pending, (state) => {
+                return {
+                    ...state,
+                    loading: true,
+                }
+            })
+            .addCase(initiatePayment.fulfilled, (state) => {
+                return {
+                    ...state,
+                    loading: false,
+                }
+            })
+            .addCase(initiatePayment.rejected, (state, action) => {
+                return {
+                    ...state,
+                    loading: false,
+                    error: action.payload
+                }
+            })
 
 
-    // }
+    }
 })
 
 
 // export const { setReviewStatus } = reviews.actions;
 
 export default payment.reducer;
+
+
+
 

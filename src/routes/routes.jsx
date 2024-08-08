@@ -2,9 +2,10 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 
 import {
-    VerifyEmail, ResetPassword, SearchedProduct, Home, About, Shop, ContactUs, Cart, Auth, Recipes, Testimonials, Faq, PrivacyPolicy, TermsAndConditions, CsrPolicy, BulkOrder, ProductDetails, Checkout, BlogDetail, OtpLogin, Blogs, RecipeDetails, GoogleSignup, ManageOrders, OrderConfirm, PaymentGateway, NoPageFound,
-    OtpSubmit
+    VerifyEmail, ResetPassword, SearchedProduct, Home, About, Shop, ContactUs, Cart, Auth, Recipes, Testimonials, Faq, PrivacyPolicy, TermsAndConditions, CsrPolicy, BulkOrder, ProductDetails, Checkout, BlogDetail, OtpLogin, Blogs, RecipeDetails, GoogleSignup, ManageOrders, OrderConfirm, NoPageFound, OtpSubmit, PaymentStatus
 } from '../imports';
+
+
 
 const getRoutes = () => [
     <Route
@@ -137,11 +138,11 @@ const getRoutes = () => [
         path='/order-confirmed/:orderId'
         element={<OrderConfirm />}
     />,
-    // <Route
-    //     key="payment-gateway"
-    //     path='/payment-gateway'
-    //     element={<PaymentGateway />}
-    // />,
+    <Route
+        key="payment-status"
+        path='/payment-status'
+        element={<PaymentStatus />}
+    />,
     <Route
         key="no-page-found"
         path='*'
