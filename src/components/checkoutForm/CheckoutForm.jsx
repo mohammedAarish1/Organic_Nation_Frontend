@@ -11,6 +11,8 @@ import { states } from '../../helper/stateList';
 import { MdEmail, MdOutlinePhoneAndroid, MdLocationCity } from "react-icons/md";
 import { FaUserEdit } from "react-icons/fa";
 import { PiFileZipFill } from "react-icons/pi";
+import { generateTransactionID, address } from '../../helper/helperFunctions';
+
 // formik
 import { Formik, Form, Field, } from 'formik';
 import { initiatePayment } from '../../features/orderPayment/payment';
@@ -56,21 +58,23 @@ const CheckoutForm = () => {
 
     // checkout form submission
     const handleSubmit = (values, action) => {
-        // to convert the address object into plain string 
-        function address(obj) {
-            let result = '';
-            for (const key in obj) {
-                if (obj.hasOwnProperty(key)) {
-                    const value = obj[key];
-                    if (Array.isArray(value)) {
-                        result += value.flat().join(' ') + ' ';
-                    } else {
-                        result += value + ' ';
-                    }
-                }
-            }
-            return result.trim();
-        }
+
+
+        const merchantTransactionId = generateTransactionID();
+        // function address(obj) {
+        //     let result = '';
+        //     for (const key in obj) {
+        //         if (obj.hasOwnProperty(key)) {
+        //             const value = obj[key];
+        //             if (Array.isArray(value)) {
+        //                 result += value.flat().join(' ') + ' ';
+        //             } else {
+        //                 result += value + ' ';
+        //             }
+        //         }
+        //     }
+        //     return result.trim();
+        // }
 
         // below orderDetails will contain each item id and qty in 2D array
         const orderDetails = cartItemsList.map(item => [item['name-url'], item._id, item.quantity]);
@@ -89,7 +93,8 @@ const CheckoutForm = () => {
             receiverDetails: {
                 name: !values.sameAsContact ? values.receiverFirstName || '' : '',
                 phoneNumber: !values.sameAsContact ? values.receiverPhone || '' : '',
-            }
+            },
+            merchantTransactionId: merchantTransactionId,
         }
         if (user && cartItemsList.length > 0) {
             if (values.paymentMethod === 'cash_on_delivery') {
@@ -102,12 +107,32 @@ const CheckoutForm = () => {
                         }
                     })
             } else {
-                dispatch(initiatePayment(
-                    {
-                        number: values.receiverPhone ? values.receiverPhone : values.phone.slice(3),
-                        amount: totalCartAmount + shippingFee,
-                    }
-                ))
+
+                dispatch(addOrders(checkoutData))
+                    .then((value) => {
+                        if (value.type === "manageOrders/addOrders/fulfilled") {
+                            dispatch(initiatePayment(
+                                {
+                                    number: values.receiverPhone ? values.receiverPhone : values.phone.slice(3),
+                                    amount: totalCartAmount + shippingFee,
+                                    merchantTransactionId: merchantTransactionId,
+                                }
+                            ))
+
+
+
+                            // dispatch(clearCart());
+                            // localStorage.removeItem('deliveryChargeToken');
+                            // navigate(`/order-confirmed/${value.payload.orderId}`)
+                        }
+                    })
+
+                // dispatch(initiatePayment(
+                //     {
+                //         number: values.receiverPhone ? values.receiverPhone : values.phone.slice(3),
+                //         amount: totalCartAmount + shippingFee,
+                //     }
+                // ))
                 // navigate('/payment-gateway', { state: { totalCartAmount, shippingFee, } })
             }
 
