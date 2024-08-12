@@ -24,8 +24,8 @@ const ProductList = ({ gridView }) => {
   if (isError) return <h1>Something went wrong</h1>
 
   return (
-    <div className=' mt-5'>
-      <div className={`${gridView && "flex-row justify-center  items-center gap-16"} flex flex-wrap gap-16 py-8`}>
+    <div className=' mt-5 '>
+      <div className={`${gridView && "flex-row justify-center   items-center gap-16 "} flex flex-wrap gap-16 py-8`}>
         {currentPageData?.map((product) => (
           <Product gridView={gridView} key={product._id} product={product} />
         ))}

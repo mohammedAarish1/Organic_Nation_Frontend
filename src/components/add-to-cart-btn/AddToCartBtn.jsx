@@ -1,19 +1,34 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addToCart, getAllCartItems } from '../../features/cart/cart';
 import { toast } from 'react-toastify';
+import { Tooltip } from 'react-tooltip';
 // react icons 
 import { BsCart4 } from 'react-icons/bs'
-import { FaCheck } from "react-icons/fa";
 
 
 
 
 const AddToCartBtn = ({ item, qty = 1 }) => {
   const dispatch = useDispatch();
-  const [itemAdded, setItemAdded] = useState(false);
+  // const [itemAdded, setItemAdded] = useState(false);
+
+  const { cartItemsList } = useSelector((state) => state.cart);
+
+  // Get the current quantity of this item in the cart
+  const currentQtyInCart = cartItemsList.find(cartItem => cartItem._id === item._id)?.quantity || 0;
+
+
 
   const handleAddingItemsToCart = () => {
+
+
+    // Check if adding the new quantity would exceed the available stock
+    if (currentQtyInCart + qty > item.availability) {
+      toast.error(`No Quanity left in stock.`);
+      return;
+    }
+
 
     dispatch(addToCart({ productId: item._id, quantity: qty, productName: item['name-url'] }))
       .then(() => {
@@ -24,20 +39,60 @@ const AddToCartBtn = ({ item, qty = 1 }) => {
 
   }
 
+
+  const isOutOfStock = item.availability === 0;
+  // const stockExceededLimit = currentQtyInCart + qty > item.availability;
+
+
   return (
     <div>
       <button
         type='button'
+        disabled={isOutOfStock}
+        data-tooltip-id={isOutOfStock && "addToCart-tooltip"}
+        data-tooltip-content="Out of Stock"
+        data-tooltip-place="top"
         onClick={() => {
+
           handleAddingItemsToCart();
-          setItemAdded(true)
-          setTimeout(() => {
-            setItemAdded(false)
-          }, 2000)
+          // if (stockExceededLimit) {
+          //   setItemAdded(true)
+          //   setTimeout(() => {
+          //     setItemAdded(false)
+          //   }, 2000)
+          // }
+
         }}
-        className={` ${itemAdded ? 'bg-green-700 gap-2' : 'bg-[#712522] hover:scale-90  transition-all duration-500 gap-1 '} flex justify-center items-center mt-2  w-max text-white py-2 px-4 hover:scal-110  `}>
-        {!itemAdded && <BsCart4 className='text-white animate-bounce ' />} {itemAdded ? 'Addded' : 'Add to Cart'}{itemAdded && <FaCheck />}
+        className={`${isOutOfStock ? 'opacity-60' : 'hover:scale-90'}  flex justify-center items-center mt-2  w-max text-white py-2 px-4 bg-[#712522]   transition-all duration-500 gap-1 `}>
+
+        <BsCart4 className={`text-white  ${!isOutOfStock && 'animate-bounce'}`} />
+
+
+        Add to cart
       </button>
+
+      {/* tooltip */}
+      {isOutOfStock && (
+        <Tooltip
+          id="addToCart-tooltip"
+          style={{
+            backgroundColor: "red",
+            color: "#ffffff",
+            borderRadius: "10px",
+            padding: "20px"
+          }}
+          place="top"
+          animation="fade"
+          delayShow={200} // delay before showing in ms
+          delayHide={300} // delay before hiding in ms
+        // offset={10} // distance in pixels
+        // arrow={true}
+        // arrowColor="#25D366"
+        >
+
+        </Tooltip >
+      )}
+
     </div>
   )
 }

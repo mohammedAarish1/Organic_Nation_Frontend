@@ -14,6 +14,7 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { calculateShippingFee, checkDeliveryAvailability, setIsAvailable } from '../../features/check-delivery/checkDelivery';
 import { resetCheckoutStatus } from '../../features/manageOrders/manageOrders';
+import { toast } from 'react-toastify';
 
 
 
@@ -26,7 +27,7 @@ const Cart = () => {
   const { isAvailable, message, checking } = useSelector(state => state.delivery);
   const dispatch = useDispatch()
 
- 
+
 
   const pincodeRegExp = /^(\+\d{1,3}[- ]?)?\d{6}$/;
 
@@ -141,11 +142,17 @@ const Cart = () => {
                   <div className=" text-gray-900 flex justify-center items-center ">
                     <ProductQty
                       qty={curItem.quantity}
-                      increaseQty={() =>
+                      increaseQty={() => {
+                        if (curItem.quantity === curItem.availability) {
+                          toast.error(`No Quanity left in stock.`);
+                          return;
+
+                        }
                         dispatch(updateQty({ productId: curItem._id, type: 'increase' }))
                           .then(() => {
                             dispatch(getAllCartItems());
                           })
+                      }
                       }
                       decreaseQty={() =>
                         dispatch(updateQty({ productId: curItem._id, type: 'decrease' }))

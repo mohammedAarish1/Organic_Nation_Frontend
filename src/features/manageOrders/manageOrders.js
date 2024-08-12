@@ -10,6 +10,7 @@ export const addOrders = createAsyncThunk(
     async (checkoutData, { rejectWithValue }) => {
         const token = JSON.parse(sessionStorage.getItem('token'));
         try {
+            
             const response = await axios.post(`${apiUrl}/api/orders`, checkoutData, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
