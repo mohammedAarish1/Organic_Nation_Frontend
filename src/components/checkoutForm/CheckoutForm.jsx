@@ -38,6 +38,7 @@ const CheckoutForm = () => {
         receiverPhone: '',
         shippingAddress: {
             address: '',
+            optionalAddress: '',
             city: '',
             state: '',
             zipCode: '',
@@ -45,6 +46,7 @@ const CheckoutForm = () => {
         },
         billingAddress: {
             address: '',
+            optionalAddress: '',
             city: '',
             state: '',
             zipCode: '',
@@ -61,20 +63,7 @@ const CheckoutForm = () => {
 
 
         const merchantTransactionId = generateTransactionID();
-        // function address(obj) {
-        //     let result = '';
-        //     for (const key in obj) {
-        //         if (obj.hasOwnProperty(key)) {
-        //             const value = obj[key];
-        //             if (Array.isArray(value)) {
-        //                 result += value.flat().join(' ') + ' ';
-        //             } else {
-        //                 result += value + ' ';
-        //             }
-        //         }
-        //     }
-        //     return result.trim();
-        // }
+       
 
         // below orderDetails will contain each item id and qty in 2D array
         const orderDetails = cartItemsList.map(item => [item['name-url'], item._id, item.quantity]);
@@ -96,6 +85,9 @@ const CheckoutForm = () => {
             },
             merchantTransactionId: merchantTransactionId,
         }
+
+
+
         if (user && cartItemsList.length > 0) {
             if (values.paymentMethod === 'cash_on_delivery') {
                 dispatch(addOrders(checkoutData))
@@ -114,7 +106,7 @@ const CheckoutForm = () => {
                             dispatch(initiatePayment(
                                 {
                                     number: values.receiverPhone ? values.receiverPhone : values.phone.slice(3),
-                                    amount: 1,
+                                    amount: totalCartAmount + shippingFee,
                                     merchantTransactionId: merchantTransactionId,
                                 }
                             ))
@@ -136,7 +128,6 @@ const CheckoutForm = () => {
                 // navigate('/payment-gateway', { state: { totalCartAmount, shippingFee, } })
             }
 
-        } else {
         }
 
         action.resetForm();
@@ -387,6 +378,30 @@ const CheckoutForm = () => {
                                             null
                                         )}
                                     </div>
+                                    {/* Optional Address   */}
+                                    <div className="relative z-0 w-full">
+                                        <Field
+                                            type="text"
+                                            name="shippingAddress.optionalAddress"
+                                            id="shippingAddress.optionalAddress"
+                                            className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
+                                            placeholder=" "
+                                            autoComplete="off"
+                                        />
+
+                                        <label
+                                            htmlFor="shippingAddress.optionalAddress"
+                                            className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto "
+                                        >
+                                            Address Line 2 (Landmark)
+                                        </label>
+                                        <MdLocationCity className='absolute top-4 right-4 text-xl' />
+                                        {/* {errors?.shippingAddress?.optionalAddress && touched?.shippingAddress?.optionalAddress ? (
+                                            <p className='text-red-600'>*{errors?.shippingAddress?.optionalAddress}</p>
+                                        ) : (
+                                            null
+                                        )} */}
+                                    </div>
                                     {/* City   */}
                                     <div className="relative z-0">
                                         <Field
@@ -446,7 +461,7 @@ const CheckoutForm = () => {
                                         )}
                                     </div>
                                     {/* country  */}
-                                    <div className='w-full relative  sm:col-span-2'>
+                                    <div className='w-full relative '>
                                         <Field
                                             as="select"
                                             name="shippingAddress.country"
@@ -509,6 +524,30 @@ const CheckoutForm = () => {
                                                 null
                                             )}
                                         </div>
+                                        {/* Optional Address   */}
+                                        <div className="relative z-0">
+                                            <Field
+                                                type="text"
+                                                name="billingAddress.optionalAddress"
+                                                id="billingAddress.optionalAddress"
+                                                className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
+                                                placeholder=" "
+                                                autoComplete="off"
+                                            />
+
+                                            <label
+                                                htmlFor="billingAddress.optionalAddress"
+                                                className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto "
+                                            >
+                                                Address Line 2 (Landmark)
+                                            </label>
+                                            <MdLocationCity className='absolute top-4 right-4 text-xl' />
+                                            {/* {errors?.billingAddress?.optionalAddress && touched?.billingAddress?.optionalAddress ? (
+                                                <p className='text-red-600'>*{errors?.billingAddress?.optionalAddress}</p>
+                                            ) : (
+                                                null
+                                            )} */}
+                                        </div>
                                         {/* City   */}
                                         <div className="relative z-0">
                                             <Field
@@ -569,7 +608,7 @@ const CheckoutForm = () => {
                                             )}
                                         </div>
                                         {/* country  */}
-                                        <div className='w-full relative  sm:col-span-2'>
+                                        <div className='w-full relative'>
                                             <Field
                                                 as="select"
                                                 name="billingAddress.country"

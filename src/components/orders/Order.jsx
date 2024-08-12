@@ -10,6 +10,8 @@ import { GoDotFill } from "react-icons/go";
 import { IoCheckmarkDoneCircleSharp, IoChevronDownOutline } from "react-icons/io5";
 import { BsCartX } from "react-icons/bs";
 import { toast } from 'react-toastify';
+import { FaArrowRight } from 'react-icons/fa';
+
 
 
 
@@ -80,7 +82,7 @@ const Order = ({ order }) => {
                         <div className='flex gap-3 font-mono'>
                             <div className='flex gap-3 text-sm xs:text-[16px]' >
                                 {/* order detail button  */}
-                                <button className='bg-green-700 xs:px-5 px-2 py-2 rounded-md text-white hover:bg-green-800 xs:text-[16px] text-sm' onClick={() => setShowOrderDetails(true)}>Order Details</button>
+                                <button className= ' flex  justify-center items-center gap-2 underline underline-offset-2 bg-green-700 xs:px-5 px-2 py-2 rounded-md text-white hover:bg-green-800 xs:text-[16px] text-sm' onClick={() => setShowOrderDetails(true)}>Order Details <FaArrowRight /> </button>
                                 {/* download invoice button  */}
                                 {order.orderStatus === "completed" && (
                                     <button className='flex justify-center items-center gap-1 border-green-700 border-2 xs:px-5 px-2 py-2 rounded-md hover:bg-green-800 xs:text-[16px] text-sm'>Download Invoice <MdOutlineFileDownload className='text-xl' /> </button>
@@ -177,7 +179,7 @@ const Order = ({ order }) => {
                                 disabled={order?.orderStatus !== 'active'}
                             >
                                 <span> <BsCartX className={`${order?.orderStatus !== 'active' ? 'text-red-400' : 'text-red-500'} text-xl  `} /></span>
-                                <span className={`${order?.orderStatus !== 'active' ? 'text-gray-400' : ''} xs:block hidden`}>Cancel order</span>
+                                <span className={`${order?.orderStatus !== 'active' ? 'text-gray-400' : ''} `}>Cancel order</span>
                             </button>
                         </div>
                     </div>

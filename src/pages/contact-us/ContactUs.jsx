@@ -53,8 +53,8 @@ const ContactUs = () => {
     <section className='xs:px-10 px-2 pb-20 mt-5 sm:mt-0 font-mono'>
 
       <div className='lg:w-[90%] h-auto py-2 bg-opacity-35 mx-auto'>
-        <h2 className="mb-4 text-2xl text-center font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-5xl"><span className="text-transparent bg-clip-text bg-gradient-to-r to-green-700 from-[var(--themeColor)]">Contact Us</span></h2>
-        <div className='md:w-[95%] py-16 flex md:gap-0 gap-20 md:flex-row flex-col  justify-center h-[100%] mx-auto  my-auto bg-gradient-to-r to-green-700 from-[var(--themeColor)] '>
+        <h2 className="mb-4 text-2xl text-center font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-5xl"><span className=" bg-clip-text text-[var(--themeColor)]">Contact Us</span></h2>
+        <div className='md:w-[95%] py-16 flex md:gap-0 gap-20 md:flex-row flex-col  justify-center h-[100%] mx-auto  my-auto  bg-gradient-to-r from-[#6D613B] to-[#D3BB71] '>
 
           {/* right side  */}
           <div className='md:w-[40%] mt-3 sm:mt-0   '>
@@ -87,8 +87,8 @@ const ContactUs = () => {
           <div className='md:w-[60%] '>
             <div className="sm:w-[90%]  mx-auto">
 
-              <h2 className='px-8 text-[var(--bgColorSecondary)] mb-2  text-2xl'><span className=''>Have Questions?</span> Get in touch with us today</h2>
-              <p className='px-8 text-gray-400'>Please fill in the below details, we'll get back to you! </p>
+              <h2 className='px-8 text-[var(--themeColor)] font-semibold mb-2  text-2xl'><span className=''>Have Questions?</span> Get in touch with us today</h2>
+              <p className='px-8 text-gray-700'>Please fill in the below details, we'll get back to you! </p>
 
 
 
@@ -102,7 +102,7 @@ const ContactUs = () => {
                     <div className="  rounded px-8 pt-6 pb-2 mb-4">
                       {/* name input  */}
                       <div className="mb-4">
-                        <label htmlFor="fullName" className="block text-[var(--bgColorSecondary)] uppercase text-sm font- mb-2" >
+                        <label htmlFor="fullName" className="block text-[var(--themeColor)] font-bold tracking-widest uppercase text-sm font- mb-2" >
                           Your Name
                         </label>
                         <Field
@@ -117,7 +117,7 @@ const ContactUs = () => {
 
                       {/* Email input  */}
                       <div className="mb-4">
-                        <label className="block text-[var(--bgColorSecondary)] uppercase text-sm  mb-2" htmlFor="email">
+                        <label className="block text-[var(--themeColor)] font-bold tracking-widest uppercase text-sm  mb-2" htmlFor="email">
                           Your Email
                         </label>
                         <Field
@@ -130,7 +130,7 @@ const ContactUs = () => {
                       </div>
                       {/* phone no. input  */}
                       <div className="mb-4">
-                        <label className="block text-[var(--bgColorSecondary)] uppercase text-sm  mb-2" htmlFor="phoneNumber">
+                        <label className="block text-[var(--themeColor)] font-bold tracking-widest uppercase text-sm  mb-2" htmlFor="phoneNumber">
                           Phone No.
                         </label>
                         <Field
@@ -144,7 +144,7 @@ const ContactUs = () => {
 
                       {/* city  */}
                       <div className="mb-4">
-                        <label className="block text-[var(--bgColorSecondary)] uppercase text-sm font- mb-2" htmlFor="city">
+                        <label className="block text-[var(--themeColor)] font-bold tracking-widest uppercase text-sm font- mb-2" htmlFor="city">
                           Your City
                         </label>
                         <Field

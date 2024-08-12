@@ -28,6 +28,7 @@ const checkoutSchema = Yup.object().shape({
   }),
   shippingAddress: Yup.object().shape({
     address: Yup.string().required('Address is required'),
+    optionalAddress: Yup.string(),
     city: Yup.string().required('City is required'),
     state: Yup.string().required('State is required'),
     zipCode: Yup.string().matches(zipCodeRegExp, 'zip code  is not valid').required('Zip code is required'),

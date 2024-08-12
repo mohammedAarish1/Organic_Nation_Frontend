@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import { FaUserCircle } from "react-icons/fa";
 import { IoMdLogIn } from "react-icons/io";
 import { BsCart4 } from "react-icons/bs";
+import { BsCart } from "react-icons/bs";
 
 
 
@@ -72,8 +73,8 @@ const OtherNavItems = () => {
             className={({ isActive }) => `flex flex-col justify-center items-center ${isActive ? 'underline underline-offset-4' : null}`}
           >
             <div className='relative'>
-              <BsCart4 className='  text-2xl' />
-              <span className='bg-[var(--bgColorPrimary)] py-1 px-3 text-sm text-white rounded-full absolute top-[-100%] -right-4'>{totalCartItems || 0}</span>
+              <BsCart className='  text-3xl' />
+              <span className=' py-1 px-3 text-sm text-[var(--themeColor)] rounded-full absolute top-[0%] '>{totalCartItems}</span>
             </div>
             <span>Cart</span>
           </NavLink>

@@ -89,16 +89,6 @@ const Auth = () => {
 
   const handleSubmit = (values, action) => {
     if (!userExist) {
-      // dispatch(userSignup(values))
-      //   .then((value) => {
-      //     if (value?.error?.message === 'Rejected') {
-      //       return;
-      //     } else {
-      //       toast.success("Congragulations! signed up succesfully")
-      //       setUserExist(true)
-      //     }
-
-      //   })
 
       if (isAuthenticated) {
         dispatch(userSignup(values))
@@ -195,21 +185,21 @@ const Auth = () => {
         {otpUser ? (
           <p className='text-center'>*Please provide us the following details to complete the signing up process*</p>
         ) : (
-          <h2 className="text-4xl text-center sm:mt-6 mt-10 sm:mb-2 mb-6 text-[var(--bgColorPrimary)] ">{userExist ? 'Welcome Back !' : 'Create Your Account'}</h2>
+          <h2 className="text-4xl text-center sm:mt-6 mt-10 sm:mb-2 mb-6 text-[var(--themeColor)] ">{userExist ? 'Welcome Back !' : 'Create Your Account'}</h2>
         )}
 
 
-        <div className='md:w-[90%] py-10 flex sm:flex-row flex-col sm:gap-0 gap-6 shadow-md shadow-black justify-center h-[100%] mx-auto  my-auto bg-gradient-to-r to-green-700 from-[var(--themeColor)] '>
+        <div className='md:w-[90%] py-10 flex sm:flex-row flex-col sm:gap-0 gap-6 shadow-md shadow-black justify-center h-[100%] mx-auto  my-auto bg-gradient-to-r from-[#6D613B] to-[#D3BB71]  '>
 
           {/* ============== right side ================  */}
 
-          <div className='sm:w-[40%] mt-3 sm:mt-0 flex justify-center items-center'>
+          <div className='sm:w-[40%] mt-3 sm:mt-0 flex justify-center items-center '>
             <div className='flex justify-center items-center sm:flex-col gap-3 '>
               <div>
                 <Logo />
               </div>
               <div className='flex flex-col justify-center items-center'>
-                <span className='sm:text-2xl uppercase text-[var(--bgColorSecondary)]'>Login to</span>
+                <span className='sm:text-2xl uppercase text-[var(--bgColorSecondary)]'>{!userExist ? "Sign up to" : "Log in"}</span>
                 <span className='sm;text-2xl uppercase text-[var(--bgColorSecondary)]'>Organic Nation</span>
               </div>
             </div>
@@ -217,17 +207,13 @@ const Auth = () => {
 
           {/* ============== left side ================  */}
 
-          <div className='sm:w-[60%]'>
+          <div className='sm:w-[60%] text-[var(--themeColor)]'>
             <div className="sm:w-[80%]  mx-auto">
 
-              <h2 className='px-8 text-[var(--bgColorSecondary)] mb-2  text-2xl'>{!userExist ? "Sign up" : "Log in"}</h2>
+              <h2 className='px-8 mb-2  text-3xl'>{!userExist ? "Sign up" : "Log in"}</h2>
 
+              {/* <p>Please fill in the below details and get registered.</p> */}
 
-              {!userExist ? (
-                <p className='px-8 text-gray-400'>Already have an account ? <button className='text-white hover:border-b-2 cursor-pointer' onClick={() => setUserExist(true)}>Log in</button></p>
-              ) : (
-                <p className='px-8 text-gray-400'>Don't have an account ? <button className='text-white hover:border-b-2 cursor-pointer' onClick={() => setUserExist(false)}>Sign up</button></p>
-              )}
 
               {/* === Form ===  */}
               <Formik
@@ -244,11 +230,11 @@ const Auth = () => {
                     {!userExist && (
                       <div className="mb-4">
                         <label
-                          className="uppercase tracking-widest block text-[var(--bgColorSecondary)] text-sm font-bold mb-2" htmlFor="firstName">
+                          className="uppercase tracking-widest block text-[var(--themeColor)] text-sm font-bold mb-2" htmlFor="firstName">
                           First Name
                         </label>
                         <Field
-                          className="shadow appearance-none border bg-[var(--bgColorPrimary)] w-full py-2 px-3 text-white tracking-widest leading-tight focus:outline-none focus:shadow-outline"
+                          className="shadow appearance-none border bg-[var(--bgColorSecondary)] w-full py-2 px-3  tracking-widest leading-tight focus:outline-none focus:shadow-outline"
                           id="firstName"
                           type="text"
                           name="firstName"
@@ -264,11 +250,11 @@ const Auth = () => {
                     {!userExist && (
                       <div className="mb-4">
                         <label
-                          className="uppercase tracking-widest block text-[var(--bgColorSecondary)] text-sm font-bold mb-2" htmlFor="lastName">
+                          className="uppercase tracking-widest block text-[var(--themeColor)] text-sm font-bold mb-2" htmlFor="lastName">
                           Last Name
                         </label>
                         <Field
-                          className="shadow appearance-none border bg-[var(--bgColorPrimary)] w-full py-2 px-3 text-white tracking-widest leading-tight focus:outline-none focus:shadow-outline"
+                          className="shadow appearance-none border bg-[var(--bgColorSecondary)] w-full py-2 px-3 tracking-widest leading-tight focus:outline-none focus:shadow-outline"
                           id="lastName"
                           type="text"
                           name="lastName"
@@ -284,11 +270,11 @@ const Auth = () => {
                     {/* Email input  */}
                     <div className="mb-4">
                       <label
-                        className="uppercase tracking-widest block text-[var(--bgColorSecondary)] text-sm font-bold mb-2" htmlFor="firstName">
+                        className="uppercase tracking-widest block text-[var(--themeColor)] text-sm font-bold mb-2" htmlFor="firstName">
                         Email
                       </label>
                       <Field
-                        className="shadow appearance-none border bg-[var(--bgColorPrimary)] w-full py-2 px-3 text-white tracking-widest leading-tight focus:outline-none focus:shadow-outline"
+                        className="shadow appearance-none border bg-[var(--bgColorSecondary)] w-full py-2 px-3  tracking-widest leading-tight focus:outline-none focus:shadow-outline"
                         id="email"
                         type="text"
                         name="email"
@@ -303,7 +289,7 @@ const Auth = () => {
                     {!userExist && (
                       <div className="mb-4">
                         <label
-                          className="uppercase tracking-widest block text-[var(--bgColorSecondary)] text-sm font-bold mb-2"
+                          className="uppercase tracking-widest block text-[var(--themeColor)] text-sm font-bold mb-2"
                           htmlFor="phoneNumber"
                         >
 
@@ -316,7 +302,7 @@ const Auth = () => {
                             <span>+91</span>
                           </div>
                           <Field
-                            className="shadow appearance-none  bg-[var(--bgColorPrimary)] w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                            className="shadow appearance-none  bg-[var(--bgColorSecondary)] w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline"
                             id="phoneNumber"
                             type="text"
                             maxLength={10}
@@ -333,11 +319,11 @@ const Auth = () => {
                     )}
                     {/* password input  */}
                     <div className="mb-6">
-                      <label className="uppercase tracking-widest block text-[var(--bgColorSecondary)] text-sm font-bold mb-2" htmlFor="password">
+                      <label className="uppercase tracking-widest block text-[var(--themeColor)] text-sm font-bold mb-2" htmlFor="password">
                         Password
                       </label>
                       <Field
-                        className="shadow appearance-none border  bg-[var(--bgColorPrimary)] w-full py-2 px-3 text-white  leading-tight focus:outline-none focus:shadow-outline"
+                        className="shadow appearance-none border  bg-[var(--bgColorSecondary)] w-full py-2 px-3   leading-tight focus:outline-none focus:shadow-outline"
                         id="password"
                         type="password"
                         name="password"
@@ -347,12 +333,16 @@ const Auth = () => {
                       ) : (
                         null
                       )}
-                      <Link
-                        to='/auth/forgot-password'
-                        className='text-end text-[var(--bgColorSecondary)] text-[11px] hover:underline cursor-pointer'
-                      >
-                        Forgot Password
-                      </Link>
+                      {userExist && (
+                        <Link
+                          to='/auth/forgot-password'
+                          className='text-end text-[var(--bgColorSecondary)] text-[11px] hover:underline cursor-pointer'
+                        >
+                          Forgot Password
+                        </Link>
+                      )}
+
+
                     </div>
                     {/* email and password error msg */}
                     {error && (
@@ -365,7 +355,7 @@ const Auth = () => {
                       </div>
                     )}
 
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between ">
                       {!userExist ? (
                         <button
                           type="submit"
@@ -401,6 +391,16 @@ const Auth = () => {
                 )}
 
               </Formik>
+
+
+              <div className='pb-4 text-center'>
+                {!userExist ? (
+                  <p className='px-8 text-gray-700'>Already have an account ? <button className='text-[var(--themeColor)] text-2xl underline underline-offset-8 cursor-pointer' onClick={() => setUserExist(true)}>Log in</button></p>
+                ) : (
+                  <p className='px-8 text-gray-700'>Don't have an account ? <button className='text-[var(--themeColor)] text-2xl underline underline-offset-8 cursor-pointer' onClick={() => setUserExist(false)}>Sign up</button></p>
+                )}
+              </div>
+
               {/* horizontal line */}
               <div className='flex justify-center gap-4 items-center mb-4'>
                 <div className='h-1 md:w-[35%] xs:w-[35%] w-[30%] bg-gradient-to-r from-[#6D613B] to-[#D3BB71]'></div>
@@ -412,16 +412,16 @@ const Auth = () => {
               <div className='flex flex-col  px-8 gap-3'>
                 {/* otp sign up  */}
                 {!otpUser && (
-                  <div className='flex justify-center items-center gap-3 py-1 border text-[var(--bgColorSecondary)] hover:bg-white hover:text-black'>
+                  <div className='flex justify-center items-center gap-3 py-1 border text-[var(--themeColor)] hover:bg-white hover:text-black'>
                     <FcIphone className='text-2xl' />
-                    <Link to="/otp-login" className=''>Log in with OTP</Link>
+                    <Link to="/otp-login" className=''>Log in with Phone Number</Link>
                   </div>
                 )}
 
 
                 {/* google  */}
 
-                <div className='flex justify-center items-center gap-3 py-1 border text-[var(--bgColorSecondary)] hover:bg-white hover:text-black'>
+                <div className='flex justify-center items-center gap-3 py-1 border text-[var(--themeColor)] hover:bg-white hover:text-black'>
                   <FcGoogle className='text-2xl' />
                   <a href={`${apiUrl}/api/auth/google`} className=''>Log in with Google</a>
                 </div>
