@@ -85,12 +85,10 @@ const CheckoutForm = () => {
             billingAddress: address(values.billingAddress),
             shippingAddress: address(values.shippingAddress),
             orderDetails: orderDetails,
-            // subTotal: totalCartAmount,
-            subTotal: 1,
+            subTotal: totalCartAmount,
             paymentStatus: 'pending',
             // taxAmount: totalTax,
-            // shippingFee: shippingFee,
-            shippingFee: 0,
+            shippingFee: shippingFee,
             paymentMethod: values.paymentMethod,
             receiverDetails: {
                 name: !values.sameAsContact ? values.receiverFirstName || '' : '',
@@ -116,7 +114,7 @@ const CheckoutForm = () => {
                             dispatch(initiatePayment(
                                 {
                                     number: values.receiverPhone ? values.receiverPhone : values.phone.slice(3),
-                                    amount: totalCartAmount + shippingFee,
+                                    amount: 1,
                                     merchantTransactionId: merchantTransactionId,
                                 }
                             ))
