@@ -38,9 +38,8 @@ const Product = ({ gridView, product }) => {
   }, [product['name-url']]);
 
 
-
   return (
-    <div className={`${!gridView ? "flex flex-row lg:pl-32 justify-start items-center gap-5  " : "flex  justify-between items-center flex-col gap-2 max-w-[260px] min-h-[460px] "} font-sans`}
+    <div className={`${!gridView ? "flex flex-row lg:pl-32 justify-start items-center gap-5  " : "flex  justify-between items-center flex-col gap-2 max-w-[260px] sm:min-h-[460px] "} font-sans`}
       data-aos="zoom-in-up"
       data-aos-duration="1000"
     >
@@ -57,7 +56,7 @@ const Product = ({ gridView, product }) => {
         </div>
       </NavLink>
       {/* info  */}
-      <div className={`flex flex-col sm:gap-1  justify-between  ${!gridView ? 'items-start' : 'items-center'} flex-1`}>
+      <div className={`flex flex-col sm:gap-1  sm:justify-between  ${!gridView ? 'items-start' : 'items-center'} flex-1 `}>
         <p className={`font-medium sm:text-xl  ${gridView ? 'text-center w-2/3' : ''}    text-[#712522]`}>{product.name}</p>
         <p className='text-gray-500'>Weight: {product.weight}</p>
         {!gridView && <p className='lg:w-[70%] sm:block hidden text-sm font-serif'>{product.description}</p>}

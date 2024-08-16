@@ -11,6 +11,8 @@ import { states } from '../../helper/stateList';
 import { MdEmail, MdOutlinePhoneAndroid, MdLocationCity } from "react-icons/md";
 import { FaUserEdit } from "react-icons/fa";
 import { PiFileZipFill } from "react-icons/pi";
+import { BsBoxArrowUpRight } from "react-icons/bs";
+import { BsArrowRight } from "react-icons/bs";
 import { generateTransactionID, address } from '../../helper/helperFunctions';
 
 // formik
@@ -63,7 +65,7 @@ const CheckoutForm = () => {
 
 
         const merchantTransactionId = generateTransactionID();
-       
+
 
         // below orderDetails will contain each item id and qty in 2D array
         const orderDetails = cartItemsList.map(item => [item['name-url'], item._id, item.quantity]);
@@ -115,7 +117,6 @@ const CheckoutForm = () => {
 
                             // dispatch(clearCart());
                             // localStorage.removeItem('deliveryChargeToken');
-                            // navigate(`/order-confirmed/${value.payload.orderId}`)
                         }
                     })
 
@@ -680,10 +681,15 @@ const CheckoutForm = () => {
                                 </div>
                             </div>
                             {/* cancel and complete btn  */}
-                            <div className="flex gap-10 max-sm:flex-col mt-10">
+                            <div className="flex  gap-10 max-sm:flex-col mt-10">
                                 {/* <button type="button" className="rounded-md px-6 py-3 w-full text-sm font-semibold bg-transparent hover:bg-gray-100 border-2 text-[#333]">Cancel</button> */}
 
-                                <button type="submit" className="rounded-md px-6 py-3 w-full text-sm font-semibold bg-[var(--bgColorPrimary)] text-white hover:tracking-widest transition-all duration-500">Complete Your Order</button>
+                                <button
+                                    type="submit"
+                                    className="flex justify-center items-center gap-2 rounded-md px-6 py-3 w-full text-sm font-semibold bg-[var(--bgColorPrimary)] text-white hover:tracking-widest transition-all duration-500"
+                                >
+                                    Complete Your Order <BsArrowRight className='font-bold' />
+                                </button>
                             </div>
                         </div>
                     </Form>

@@ -77,6 +77,7 @@ const OTPSlice = createSlice({
             return {
                 ...state,
                 isAuthenticated: true,
+                loading: false,
                 otpMessage: action.payload.message
             }
         })

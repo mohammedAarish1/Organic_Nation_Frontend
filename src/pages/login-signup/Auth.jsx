@@ -47,6 +47,7 @@ const Auth = () => {
   const initialValues = {
     firstName: '',
     lastName: '',
+    userId: '',
     email: '',
     phoneNumber: otpUser ? otpUser.phoneNumber : '',
     password: '',
@@ -117,10 +118,10 @@ const Auth = () => {
       }
 
     } else {
-      if (values.email && values.password) {
+      if (values.userId && values.password) {
 
 
-        dispatch(userLogin({ email: values.email, password: values.password }))
+        dispatch(userLogin({ userId: values.userId, password: values.password }))
           .then((value) => {
             if (value.meta.requestStatus === 'fulfilled') {
               const token = value.payload.token;
@@ -169,6 +170,7 @@ const Auth = () => {
             }
 
           })
+
 
       }
     }
@@ -220,6 +222,8 @@ const Auth = () => {
                 initialValues={initialValues}
                 validationSchema={!userExist ? signUpSchema : loginSchema}
                 onSubmit={handleSubmit}
+                validateOnChange={false}   // Disable validation on change
+                validateOnBlur={false}     // Disable validation on blur
               >
                 {({ values, errors, touched, handleChange, handleBlur }) => (
                   <Form className="  rounded px-8 pt-6 pb-2 mb-4">
@@ -267,24 +271,49 @@ const Auth = () => {
                       </div>
                     )}
 
+                    {/* userId--- email or phone  */}
+                    {userExist && (
+                      <div className="mb-4">
+                        <label
+                          className="uppercase tracking-widest block text-[var(--themeColor)] text-sm font-bold mb-2" htmlFor="userId">
+                          User ID
+                        </label>
+                        <Field
+                          className="shadow appearance-none border bg-[var(--bgColorSecondary)] w-full py-2 px-3  tracking-widest leading-tight focus:outline-none focus:shadow-outline"
+                          id="userId"
+                          type="text"
+                          name="userId"
+                          placeholder="Email or Phone Number"
+                        />
+                        {errors.userId && touched.userId ? (
+                          <p className='text-red-600'>*{errors.userId}</p>
+                        ) : (
+                          null
+                        )}
+                      </div>
+                    )}
+
                     {/* Email input  */}
-                    <div className="mb-4">
-                      <label
-                        className="uppercase tracking-widest block text-[var(--themeColor)] text-sm font-bold mb-2" htmlFor="firstName">
-                        Email
-                      </label>
-                      <Field
-                        className="shadow appearance-none border bg-[var(--bgColorSecondary)] w-full py-2 px-3  tracking-widest leading-tight focus:outline-none focus:shadow-outline"
-                        id="email"
-                        type="text"
-                        name="email"
-                      />
-                      {errors.email && touched.email ? (
-                        <p className='text-red-600'>*{errors.email}</p>
-                      ) : (
-                        null
-                      )}
-                    </div>
+                    {!userExist && (
+                      <div className="mb-4">
+                        <label
+                          className="uppercase tracking-widest block text-[var(--themeColor)] text-sm font-bold mb-2" htmlFor="firstName">
+                          Email
+                        </label>
+                        <Field
+                          className="shadow appearance-none border bg-[var(--bgColorSecondary)] w-full py-2 px-3  tracking-widest leading-tight focus:outline-none focus:shadow-outline"
+                          id="email"
+                          type="text"
+                          name="email"
+                        />
+                        {errors.email && touched.email ? (
+                          <p className='text-red-600'>*{errors.email}</p>
+                        ) : (
+                          null
+                        )}
+                      </div>
+                    )}
+
                     {/* phone no.  */}
                     {!userExist && (
                       <div className="mb-4">
@@ -414,7 +443,7 @@ const Auth = () => {
                 {!otpUser && (
                   <div className='flex justify-center items-center gap-3 py-1 border text-[var(--themeColor)] hover:bg-white hover:text-black'>
                     <FcIphone className='text-2xl' />
-                    <Link to="/otp-login" className=''>Log in with Phone Number</Link>
+                    <Link to="/otp-login" className=''>Log in with OTP</Link>
                   </div>
                 )}
 

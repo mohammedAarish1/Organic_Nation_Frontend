@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { PiSealCheckBold } from "react-icons/pi";
 import { RxCrossCircled } from "react-icons/rx";
 import { Link } from 'react-router-dom';
 import { initiatePayment } from '../../features/orderPayment/payment';
 import { useDispatch } from 'react-redux';
+import { clearCart } from '../../features/cart/cart';
 
 const PaymentStatus = () => {
 
@@ -26,6 +27,14 @@ const PaymentStatus = () => {
             ))
         }
     }
+
+
+    useEffect(() => {
+        if (status === 'success') {
+            dispatch(clearCart());
+            localStorage.removeItem('deliveryChargeToken');
+        }
+    }, [status])
 
     return (
         <div>

@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
 import { BsFillGridFill, BsList } from "react-icons/bs";
-import { getSearchedData, getSortData } from '../../features/filter/filterSlice';
+import { fetchCategoryWiseData, getSearchedData, getSortData, setCategoryBtnValue } from '../../features/filter/filterSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { setShowFilters } from '../../features/toggleSidebar/toggleSidebar';
 import { Tooltip } from 'react-tooltip';
 // react icons 
 import { LiaFilterSolid } from "react-icons/lia";
+import { setCurrentPage } from '../../features/pagination/pagination';
+import { useNavigate } from 'react-router-dom';
 
 
 const SortSection = ({ setGridView, gridView }) => {
-  const [sortValue, setSortValue] = useState("sort")
-  const dispatch = useDispatch()
-  const { productData } = useSelector((state) => state.product_data);
-  // const filterProduct = useSelector((state) => state.filterData.data);
-  // const { categoryBtnValue } = useSelector((state) => state.filterData);
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [sortValue, setSortValue] = useState("sort");
+  const { productData, categoryList } = useSelector((state) => state.product_data);
+  const { categoryBtnValue } = useSelector((state) => state.filterData);
 
 
   return (
@@ -101,7 +103,7 @@ const SortSection = ({ setGridView, gridView }) => {
         </div> */}
 
         {/* sort options  */}
-        <div className="relative">
+        <div className="relative md:block hidden">
           <select
             id="sort"
             name="sort"
@@ -127,6 +129,30 @@ const SortSection = ({ setGridView, gridView }) => {
 
           </div>
         </div>
+
+
+        {/* categories options visible in mobile devices  */}
+        <select
+          name="category"
+          id="category"
+          defaultValue={categoryBtnValue}
+          className='md:hidden block w-auto p-2 outline-none'
+          onChange={(e) => {
+            dispatch(setShowFilters('hide'))
+            dispatch(setCurrentPage(1))
+            dispatch(setCategoryBtnValue(e.target.value))
+            dispatch(fetchCategoryWiseData(e.target.value.toLowerCase()))
+            navigate(`/shop/${e.target.value.toLowerCase()}`)
+          }}>
+          {categoryList.map((curItem) => (
+
+            <option value={curItem.categoryUrl} key={curItem.categoryUrl}>{curItem.category}</option>
+
+          ))}
+        </select>
+        {/* categories options visible in mobile devices end */}
+
+
 
 
         {/* fillter button -- for mobile devices  */}

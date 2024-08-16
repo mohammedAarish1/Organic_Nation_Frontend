@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { setFilterInitialValues, getFilterData, getPricerRangeData, getSearchedData, fetchCategoryWiseData, setCategoryBtnValue, clearFilters } from '../../features/filter/filterSlice';
+import { setFilterInitialValues, getFilterData, getPricerRangeData, getSearchedData, fetchCategoryWiseData, setCategoryBtnValue, clearFilters, getSortData } from '../../features/filter/filterSlice';
 import { setCurrentPage } from '../../features/pagination/pagination';
 import { setShowFilters } from '../../features/toggleSidebar/toggleSidebar';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 // react icons 
 import { IoCloseSharp } from 'react-icons/io5';
 
@@ -11,7 +11,7 @@ import { IoCloseSharp } from 'react-icons/io5';
 const FilterSection = () => {
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const [sortValue, setSortValue] = useState("sort")
   const [inputValue, setInputValue] = useState('')
   const { productData, categoryList } = useSelector((state) => state.product_data);
   const { showFilters } = useSelector(state => state.sidebar);
@@ -70,7 +70,7 @@ const FilterSection = () => {
 
       {/* category filter */}
       <div className='md:pl-2'>
-        <h2 className='text-xl mb-2 md:text-black text-[#ffe9a1] md:tracking-normal tracking-widest
+        <h2 className='text-xl mb-2 md:text-black md:block hidden text-[#ffe9a1] md:tracking-normal tracking-widest
         '>Category</h2>
         <div className=' hidden md:flex md:flex-col gap-2'>
           {categoryList.map((curItem, index) => (
@@ -91,28 +91,37 @@ const FilterSection = () => {
 
         </div>
       </div>
-      {/*  category filter showing in mobile devices  */}
+      {/*  sort section showing in mobile devices  */}
 
-      <select
-        name="category"
-        id="category"
-        defaultValue={categoryBtnValue}
-        className='md:hidden block w-[80%] p-2 outline-none'
-        onChange={(e) => {
-          dispatch(setShowFilters('hide'))
-          dispatch(setCurrentPage(1))
-          dispatch(setCategoryBtnValue(e.target.value))
-          dispatch(fetchCategoryWiseData(e.target.value.toLowerCase()))
-          navigate(`/shop/${e.target.value.toLowerCase()}`)
-        }}>
-        {categoryList.map((curItem) => (
+      <div className="relative md:hidden block mt-10">
+        <select
+          id="sort"
+          name="sort"
+          value={sortValue}
+          onChange={(e) => {
+            setSortValue(e.target.value)
+            dispatch(getSortData({ value: e.target.value, productData }))
+            dispatch(setShowFilters('hide'))
+          }}
+          // className="w-auto block border cursor-pointer bg-white border-gray-300 hover:border-gray-500 p-2  leading-tight focus:outline-none"
+          className="outline-none block w-auto p-2.5"
+        >
+          <option defaultValue="sort" >Sort</option>
+          {/* <option value="#" disabled></option> */}
+          <option value="low_to_high">Price: Low to High</option>
+          {/* <option value="#" disabled></option> */}
+          <option value="high_to_low">Price: High to Low</option>
+          {/* <option value="#" disabled></option> */}
+          <option value="a-z">a - z</option>
+          {/* <option value="#" disabled></option> */}
+          <option value="z-a">z - a</option>
+        </select>
+        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
 
-          <option value={curItem.categoryUrl} key={curItem.categoryUrl}>{curItem.category}</option>
+        </div>
+      </div>
 
-        ))}
-      </select>
-
-      {/* for category filter responsive end */}
+      {/* sort sections showing in mobile devices end */}
 
       {/* price  */}
       <div className="filter_price md:pt-16 pt-8 pl-2">

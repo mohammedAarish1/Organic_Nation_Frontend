@@ -15,6 +15,7 @@ import * as Yup from 'yup';
 import { calculateShippingFee, checkDeliveryAvailability, setIsAvailable } from '../../features/check-delivery/checkDelivery';
 import { resetCheckoutStatus } from '../../features/manageOrders/manageOrders';
 import { toast } from 'react-toastify';
+import { Tooltip } from 'react-tooltip';
 
 
 
@@ -25,7 +26,8 @@ const Cart = () => {
   const { user } = useSelector(state => state.user);
   const { cartItemsList, loading, totalCartAmount, totalWeight } = useSelector((state) => state.cart);
   const { isAvailable, message, checking } = useSelector(state => state.delivery);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  
 
 
 
@@ -283,7 +285,12 @@ const Cart = () => {
             to={user ? '/cart/checkout' : '/register'}
             onClick={() => dispatch(resetCheckoutStatus(true))}
           >
-            <div className={`${cartItemsList?.length === 0 || !isAvailable ? 'bg-green-400' : 'hover:scale-90 bg-green-500 hover:bg-green-700'} flex justify-center items-center gap-2    transition-all duration-700 text-white rounded-md`}>
+            <div
+              className={`${cartItemsList?.length === 0 || !isAvailable ? 'bg-green-400' : 'hover:scale-90 bg-green-500 hover:bg-green-700'} flex justify-center items-center gap-2    transition-all duration-700 text-white rounded-md`}
+              data-tooltip-id="checkout-tooltip"
+              data-tooltip-content="Please check the Pin code availabilty"
+              data-tooltip-place="bottom"
+            >
               <button
                 type='button'
                 className='py-3'
@@ -293,6 +300,32 @@ const Cart = () => {
               </button>
               <IoIosArrowRoundForward className='text-3xl' />
             </div>
+
+            {/* tooltip  */}
+
+            {cartItemsList?.length === 0 || !isAvailable && (
+              <Tooltip
+                id="checkout-tooltip"
+                style={{
+                  backgroundColor: "gray",
+                  color: "#ffffff",
+                  borderRadius: "10px",
+                  padding: "20px"
+                }}
+                place="bottom"
+                animation="fade"
+                delayShow={200} // delay before showing in ms
+                delayHide={300} // delay before hiding in ms
+              // offset={10} // distance in pixels
+              // arrow={true}
+              // arrowColor="#25D366"
+              >
+
+              </Tooltip >
+            )}
+
+            {/* tooltip end */}
+
           </Link>
         </div>
       </div>
