@@ -3,4 +3,4 @@ Disallow: /admin/
 Disallow: /private/
 Allow: /
 
-Sitemap: https://organicnation.co.in/sitemap_index.xml
+Sitemap: https://organicnation.co.in/sitemap.xml
