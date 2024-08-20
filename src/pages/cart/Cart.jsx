@@ -24,7 +24,7 @@ const Cart = () => {
 
 
   const { user } = useSelector(state => state.user);
-  const { cartItemsList, loading, totalCartAmount, totalWeight } = useSelector((state) => state.cart);
+  const { cartItemsList, loading, totalCartAmount, totalWeight,totalTax } = useSelector((state) => state.cart);
   const { isAvailable, message, checking } = useSelector(state => state.delivery);
   const dispatch = useDispatch();
   
@@ -221,13 +221,13 @@ const Cart = () => {
         <div className='bg-[var(--hoverEffect)] flex flex-col  gap-4 p-5 md:w-[35%] '>
           <div className='flex justify-between items-center gap-10'>
             <span>Subtotal:</span>
-            <span>₹ {Math.round(totalCartAmount || 0)}</span>
+            <span>₹ {Math.round(totalCartAmount-totalTax || 0)}</span>
           </div>
           {/* tax  */}
-          {/* <div className='flex justify-between items-center gap-10'>
+          <div className='flex justify-between items-center gap-10'>
             <span>Total tax: (+)</span>
             <span>₹ {cartItemsList?.length > 0 ? totalTax : 0}</span>
-          </div> */}
+          </div>
           {/* coupon  */}
           {/* <div className="flex  items-center">
             <input type="text" placeholder="Enter coupon code" className="border border-gray-300 p-1 rounded-l-md focus:outline-none   focus:border-transparent w-full" />

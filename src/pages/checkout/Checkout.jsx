@@ -60,7 +60,7 @@ const Checkout = () => {
                                                 <ul className="text-xs text-white xs:space-y-3 xs:mt-4">
                                                     <li className="flex flex-wrap gap-4">Weight <span className="ml-auto">{product.weight}</span></li>
                                                     <li className="flex flex-wrap gap-4">Quantity <span className="ml-auto">{product.quantity} Pcs.</span></li>
-                                                    <li className="flex flex-wrap gap-4">Total Price <span className="ml-auto font-bold">₹ {Math.round((product.price - (product.price * product.discount / 100)) * product.quantity)}</span></li>
+                                                    <li className="flex flex-wrap gap-4">Total Price (including taxes) <span className="ml-auto font-bold">₹ {Math.round((product.price - (product.price * product.discount / 100)) * product.quantity)}</span></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -71,8 +71,8 @@ const Checkout = () => {
                             </div>
                             <div className="lg:absolute left-0 bottom-0 bg-[var(--bgColorPrimary)] w-full p-4">
                                 {/* <h4 className="flex flex-wrap gap-4 text-base text-white">Total taxes (+) <span className="ml-auto">₹ {totalTax}</span></h4> */}
-                                <h4 className="flex flex-wrap gap-4 text-base text-white">Shipping Fee (+) <span className="ml-auto">₹ {shippingFee}</span></h4>
-                                <h4 className="flex flex-wrap gap-4 text-xl font-bold text-white">Total <span className="ml-auto text-xl">₹{Math.round(totalCartAmount + shippingFee ) || 0}</span></h4>
+                                <h4 className="flex flex-wrap gap-4 text-base text-white">Shipping Fee (+) <span className="ml-auto">₹ {totalCartAmount < 999 ? shippingFee : 'FREE'}</span></h4>
+                                <h4 className="flex flex-wrap gap-4 text-xl font-bold text-white">Total <span className="ml-auto text-xl">₹{Math.round(totalCartAmount + (totalCartAmount < 999 ? shippingFee : 0)) || 0}</span></h4>
                             </div>
                         </div>
                     </div>

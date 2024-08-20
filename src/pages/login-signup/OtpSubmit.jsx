@@ -43,7 +43,9 @@ const OtpSubmit = () => {
                                 toast.success(value.payload.message)
                             })
 
-                        } else if (signingUpUser.otherDetails && !signingUpUser.googleSignup) {
+                        }
+                        // below function will run when user try to sign up by filling the details and verifies the otp
+                        else if (signingUpUser.otherDetails && !signingUpUser.googleSignup) {
                             dispatch(userSignup(signingUpUser.otherDetails))
                                 .then((value) => {
                                     if (value?.error?.message === 'Rejected') {
@@ -62,7 +64,6 @@ const OtpSubmit = () => {
                                 })
                         }
                         else {
-
                             navigate('/register', { state: { phoneNumber: signingUpUser.phoneNumber } })
                         }
                     } else {

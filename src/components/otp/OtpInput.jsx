@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-const OtpInput = ({ length = 6, handleOtpSubmit = () => {} }) => {
+const OtpInput = ({ length = 6, handleOtpSubmit = () => { } }) => {
     const [otp, setOtp] = useState(new Array(length).fill(''));
     const inputRefs = useRef([]);
 
@@ -82,7 +82,7 @@ const OtpInput = ({ length = 6, handleOtpSubmit = () => {} }) => {
     }, []);
 
     return (
-        <div className='flex gap-4'>
+        <form className='flex gap-4' onSubmit={(e) => e.preventDefault()}>
             {otp.map((value, index) => (
                 <input
                     key={index}
@@ -92,14 +92,15 @@ const OtpInput = ({ length = 6, handleOtpSubmit = () => {} }) => {
                     onChange={(e) => handleOnChange(index, e)}
                     onKeyDown={(e) => handleOnKeyDown(index, e)}
                     onPaste={(e) => handleOnPaste(index, e)}
-                    autoComplete="one-time-code"
+                    // autoComplete="one-time-code"
+                    autoComplete={index === 0 ? "one-time-code" : "off"}
                     inputMode="numeric"
-                    name="otp"
+                    name={`otp-${index}`}
                     maxLength="1"
                     className='w-10 h-10 text-center rounded-md bg-[var(--bgColorSecondary)] text-[#712522]'
                 />
             ))}
-        </div>
+        </form>
     );
 };
 

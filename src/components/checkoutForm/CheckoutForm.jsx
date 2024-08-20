@@ -26,7 +26,7 @@ const CheckoutForm = () => {
 
     const { user } = useSelector((state) => state.user);
 
-    const { cartItemsList, totalCartAmount } = useSelector((state) => state.cart);
+    const { cartItemsList, totalCartAmount, totalTax } = useSelector((state) => state.cart);
     const { shippingFee } = useSelector(state => state.delivery)
 
     const initialValues = {
@@ -60,6 +60,7 @@ const CheckoutForm = () => {
     };
 
 
+
     // checkout form submission
     const handleSubmit = (values, action) => {
 
@@ -68,7 +69,7 @@ const CheckoutForm = () => {
 
 
         // below orderDetails will contain each item id and qty in 2D array
-        const orderDetails = cartItemsList.map(item => [item['name-url'], item._id, item.quantity]);
+        const orderDetails = cartItemsList.map(item => [item['name-url'], item._id, item.quantity, item.weight]);
         let checkoutData = {
             orderNo: 'ON' + Date.now(),
             orderStatus: 'active',
@@ -78,8 +79,8 @@ const CheckoutForm = () => {
             orderDetails: orderDetails,
             subTotal: totalCartAmount,
             paymentStatus: 'pending',
-            // taxAmount: totalTax,
-            shippingFee: shippingFee,
+            taxAmount: totalTax,
+            shippingFee: totalCartAmount < 999 ? shippingFee : 0,
             paymentMethod: values.paymentMethod,
             receiverDetails: {
                 name: !values.sameAsContact ? values.receiverFirstName || '' : '',
@@ -108,7 +109,7 @@ const CheckoutForm = () => {
                             dispatch(initiatePayment(
                                 {
                                     number: values.receiverPhone ? values.receiverPhone : values.phone.slice(3),
-                                    amount: totalCartAmount + shippingFee,
+                                    amount: totalCartAmount + (totalCartAmount < 999 ? shippingFee : 0),
                                     merchantTransactionId: merchantTransactionId,
                                 }
                             ))

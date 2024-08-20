@@ -111,7 +111,7 @@ const Auth = () => {
             if (value.meta.requestStatus === 'fulfilled') {
               toast.success(value.payload.message)
               // setShowOtpInput(true);
-              navigate('/otp-submit', { state: { phoneNumber, otherDetails: values, googleSignup: false } })
+              navigate('/otp-submit', { state: { phoneNumber, otherDetails: { ...values, phoneNumber: phoneNumber }, googleSignup: false } })
             }
 
           })
