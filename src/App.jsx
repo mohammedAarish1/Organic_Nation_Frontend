@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import React, { Suspense, useEffect } from 'react';
 import './App.css';
 //======== tostify =======
@@ -12,17 +12,27 @@ import 'aos/dist/aos.css';
 import {
   Header, Footer, Info, Breadcrumbs, WhatsApp, ScrollToTop, getProductsData, getAllCartItems, getAllBlogs, getAllRecipes, fetchUserData, getAllOrders,
 } from './imports';
+
+
 import getRoutes from './routes/routes';
+import AdminRoutes from './routes/AdminRoutes';
+import AdminLogin from './pages/admin/AdminLogin';
+import { fetchAdminData } from './features/admin/adminSlice';
+
 
 
 
 function App() {
 
 
+  const { isAdminLoggedIn } = useSelector(state => state.admin)
+
   // animation initialization 
   AOS.init();
 
   const token = JSON.parse(sessionStorage.getItem('token'));
+  const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
+
   const dispatch = useDispatch();
 
 
@@ -36,6 +46,7 @@ function App() {
       if (token) {
         await Promise.all([
           dispatch(fetchUserData(token)),
+          dispatch(fetchAdminData(adminToken)),
           dispatch(getAllOrders(token))
         ]);
       }
@@ -46,34 +57,43 @@ function App() {
 
 
   return (
-    <>
-      <BrowserRouter>
-        <ScrollToTop />
-        <div className={`bg-[var(--bgColorSecondary)] relative`}>
-          <Info text="Buy products worth Rs. 3500 & get 30% off by using our code: ON30MAR" />
-          <ToastContainer position='bottom-right' autoClose={1000} />
-          <Header />
-          <div >
-            <Breadcrumbs />
-            <Suspense fallback={
-              <div className='py-52 flex justify-center items-center'>
-                <div className="loader"></div>
+    <BrowserRouter>
+      <Routes>
+        {/* Admin routes */}
+        <Route path="/admin/*" element={
+          isAdminLoggedIn || adminToken ? <AdminRoutes /> : <AdminLogin />
+        } />
+
+        {/* Normal routes */}
+        <Route path="*" element={
+          <>
+            <ScrollToTop />
+            <div className={`bg-[var(--bgColorSecondary)] relative`}>
+              <Info text="Buy products worth Rs. 3500 & get 30% off by using our code: ON30MAR" />
+              <ToastContainer position='bottom-right' autoClose={1000} />
+              <Header />
+              <div>
+                <Breadcrumbs />
+                <Suspense fallback={
+                  <div className='py-52 flex justify-center items-center'>
+                    <div className="loader"></div>
+                  </div>
+                }>
+                  <Routes>
+                    {getRoutes()}
+                  </Routes>
+                </Suspense>
+                <Footer />
+                <div className='max-w-max fixed xs:bottom-10 bottom-5 xs:right-10 right-5 z-50'>
+                  <WhatsApp />
+                </div>
               </div>
-            }>
-              <Routes>
-                {getRoutes()}
-              </Routes>
-            </Suspense>
-            <Footer />
-            {/* whatsApp feature */}
-            <div className=' max-w-max fixed xs:bottom-10 bottom-5  xs:right-10 right-5 z-50'>
-              <WhatsApp />
+              <Info text="Organic Nation © All rights reserved." />
             </div>
-          </div>
-          <Info text="Organic Nation © All rights reserved." />
-        </div>
-      </BrowserRouter>
-    </>
+          </>
+        } />
+      </Routes>
+    </BrowserRouter>
   )
 }
 

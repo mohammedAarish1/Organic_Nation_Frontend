@@ -14,6 +14,9 @@ import forgotPasswordReducer from '../features/forgotPassword/forgotPassword';
 import blogReducer from '../features/blogs/blogs';
 import contactedUserReducer from '../features/contactedUser/contactedUser';
 import paymentReducer from '../features/orderPayment/payment';
+import adminReducer from '../features/admin/adminSlice';
+import adminDataReducer from '../features/admin/adminData';
+
 
 
 
@@ -34,5 +37,7 @@ export const store = configureStore({
         blog: blogReducer,
         contactedUser: contactedUserReducer,
         payment: paymentReducer,
+        admin: adminReducer,
+        adminData: adminDataReducer,
     },
 })

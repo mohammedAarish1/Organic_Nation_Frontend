@@ -563,6 +563,21 @@ input[type="range"]::-moz-range-thumb {
 }
 
 
+/* admin sidebar responsiveness  */
 
+@media screen and (max-width: 640px) {
+  .adminSidebar {
+    position: fixed;
+    transform: translateX(-100%);
+    z-index: 999;
+
+  }
+
+  .adminSidebar .active {
+    transform: translateX(100%);
+    transition: all;
+    transition-duration: 1s;
+  }
+}
 
 /* ==============================  **** end **** ==================================================  */

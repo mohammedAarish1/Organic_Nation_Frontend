@@ -94,7 +94,7 @@ const OtpInput = ({ length = 6, handleOtpSubmit = () => { } }) => {
                     onPaste={(e) => handleOnPaste(index, e)}
                     // autoComplete="one-time-code"
                     autoComplete={index === 0 ? "one-time-code" : "off"}
-                    inputMode="numeric"
+                    inputmode="numeric"
                     name={`otp-${index}`}
                     maxLength="1"
                     className='w-10 h-10 text-center rounded-md bg-[var(--bgColorSecondary)] text-[#712522]'

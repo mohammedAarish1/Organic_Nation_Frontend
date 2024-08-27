@@ -60,7 +60,6 @@ const CheckoutForm = () => {
     };
 
 
-
     // checkout form submission
     const handleSubmit = (values, action) => {
 
@@ -69,7 +68,24 @@ const CheckoutForm = () => {
 
 
         // below orderDetails will contain each item id and qty in 2D array
-        const orderDetails = cartItemsList.map(item => [item['name-url'], item._id, item.quantity, item.weight]);
+        // const orderDetails = cartItemsList.map(item => [item['name-url'], item._id, item.quantity, item.weight]);
+
+
+        const orderDetails = cartItemsList.map(item => {
+            // Calculate the discounted price
+            const discountedPrice = item.price - (item.price * (item.discount / 100));
+
+            return {
+                id: item._id,
+                "name-url": item["name-url"],
+                quantity: item.quantity,
+                weight: item.weight,
+                tax: item.tax,
+                unitPrice: discountedPrice // Update price with the discounted value
+            };
+        });
+
+
         let checkoutData = {
             orderNo: 'ON' + Date.now(),
             orderStatus: 'active',
@@ -80,7 +96,7 @@ const CheckoutForm = () => {
             subTotal: totalCartAmount,
             paymentStatus: 'pending',
             taxAmount: totalTax,
-            shippingFee: totalCartAmount < 999 ? shippingFee : 0,
+            shippingFee: totalCartAmount < 399 ? shippingFee : 0,
             paymentMethod: values.paymentMethod,
             receiverDetails: {
                 name: !values.sameAsContact ? values.receiverFirstName || '' : '',
@@ -109,7 +125,8 @@ const CheckoutForm = () => {
                             dispatch(initiatePayment(
                                 {
                                     number: values.receiverPhone ? values.receiverPhone : values.phone.slice(3),
-                                    amount: totalCartAmount + (totalCartAmount < 999 ? shippingFee : 0),
+                                    // amount: totalCartAmount + (totalCartAmount < 399 ? shippingFee : 0),
+                                    amount: 1,
                                     merchantTransactionId: merchantTransactionId,
                                 }
                             ))
