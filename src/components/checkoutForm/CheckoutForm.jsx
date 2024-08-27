@@ -125,8 +125,7 @@ const CheckoutForm = () => {
                             dispatch(initiatePayment(
                                 {
                                     number: values.receiverPhone ? values.receiverPhone : values.phone.slice(3),
-                                    // amount: totalCartAmount + (totalCartAmount < 399 ? shippingFee : 0),
-                                    amount: 1,
+                                    amount: totalCartAmount + (totalCartAmount < 399 ? shippingFee : 0),
                                     merchantTransactionId: merchantTransactionId,
                                 }
                             ))
