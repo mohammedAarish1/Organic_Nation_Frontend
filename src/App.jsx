@@ -18,6 +18,7 @@ import getRoutes from './routes/routes';
 import AdminRoutes from './routes/AdminRoutes';
 import AdminLogin from './pages/admin/AdminLogin';
 import { fetchAdminData } from './features/admin/adminSlice';
+import PopupBanner from './components/popup-banner/PopupBanner';
 
 
 
@@ -67,9 +68,10 @@ function App() {
         {/* Normal routes */}
         <Route path="*" element={
           <>
+            <PopupBanner />
             <ScrollToTop />
             <div className={`bg-[var(--bgColorSecondary)] relative`}>
-              <Info text="Buy products worth Rs. 3500 & get 30% off by using our code: ON30MAR" />
+              <Info text="Enjoy FREE SHIPPING on orders of Rs. 399 or more — Shop now and save!" />
               <ToastContainer position='bottom-right' autoClose={1000} />
               <Header />
               <div>

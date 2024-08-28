@@ -27,7 +27,7 @@ const Header = () => {
 
   return (
     <header
-      className={`sticky top-0 w-full z-50 ${isScrolled ? 'bg-[var(--bgColorSecondary)] shadow-xl' : 'bg-transparent'}`}
+      className={`sticky top-0 w-full z-40 ${isScrolled ? 'bg-[var(--bgColorSecondary)] shadow-xl' : 'bg-transparent'}`}
     >
       <div className={`flex justify-between gap-2  items-center sm:px-10 px-3 relative py-4 xs:py-2 z-30`}>
         <Logo />

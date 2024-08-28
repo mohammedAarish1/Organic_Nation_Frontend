@@ -12,6 +12,7 @@ import SpotlightSection from '../../components/spotlightSection/SpotlightSection
 import ProductCategories from '../../components/productCategories/ProductCategories'
 import { addReviews } from '../../features/reviews/reviews'
 import BlogSection from '../../components/blog-section/BlogSection';
+import SEO from '../../helper/SEO'
 
 
 
@@ -90,6 +91,23 @@ const Home = () => {
     }
     return (
         <>
+            {/* for SEO purpose  */}
+            <SEO
+                title="Buy Organic and Healthy Products Online| Organic Nation"
+                description="Organic Nation - We take pride in offering you a delightful culinary journey, showcasing the finest and most authentic flavors sourced from the heart of nature Explore our range of wholesome and sustainable food products, thoughtfully crafted to bring the essence of the Himalayas to your plate in Delhi-NCR & PAN India. ✓Organic products  ✓500+ Products"
+                canonicalUrl="https://organicnation.co.in/"
+                ogTitle="Buy Organic and Healthy Products Online| Organic Nation"
+                ogDescription="Organic Nation - We take pride in offering you a delightful culinary journey, showcasing the finest and most authentic flavors sourced from the heart of nature Explore our range of wholesome and sustainable food products, thoughtfully crafted to bring the essence of the Himalayas to your plate in Delhi-NCR & PAN India. ✓Organic products  ✓500+ Products"
+                ogUrl="https://organicnation.co.in/"
+                ogImage="https://organicnationmages.s3.ap-south-1.amazonaws.com/logo/logo.png"
+                ogImageWidth=""
+                ogImageHeight=""
+                twitterTitle="Buy Organic and Healthy Products Online| Organic Nation"
+                twitterDescription="Organic Nation - We take pride in offering you a delightful culinary journey, showcasing the finest and most authentic flavors sourced from the heart of nature Explore our range of wholesome and sustainable food products, thoughtfully crafted to bring the essence of the Himalayas to your plate in Delhi-NCR & PAN India. ✓Organic products  ✓500+ Products"
+                twitterImage="https://organicnationmages.s3.ap-south-1.amazonaws.com/logo/logo.png"
+                twitterSite="Organic Nation"
+                twitterCreator="organicnation_"
+            />
             <Banner />
             {/* spotlight  */}
             <SpotlightSection />
