@@ -5,7 +5,7 @@ import AdminOrders from '../components/admin/AdminOrders';
 import AdminSidebar from '../components/admin/AdminSidebar';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { FaBars, FaHome, FaShoppingCart, FaUserAlt, FaChartLine, FaCog ,FaUserCircle} from 'react-icons/fa';
+import { FaBars, FaHome, FaShoppingCart, FaUserAlt, FaChartLine, FaCog, FaUserCircle } from 'react-icons/fa';
 import { RiMenu3Fill } from "react-icons/ri";
 import { BsSearch } from 'react-icons/bs';
 import { VscAccount } from 'react-icons/vsc';
@@ -18,13 +18,11 @@ import AdminQueries from '../components/admin/AdminQueries';
 
 const AdminRoutes = () => {
 
-
   const dispatch = useDispatch();
 
   const [showSidebar, setShowSidebar] = useState(false);
 
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
-  const { totalOrders, loading, ordersByStatus } = useSelector(state => state.adminData)
 
   const { admin } = useSelector(state => state.admin);
   const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
@@ -40,20 +38,20 @@ const AdminRoutes = () => {
 
       dispatch(fetchAdminData(adminToken))
         .then(res => {
-          dispatch(getTotalOrders(adminToken))
+          dispatch(getTotalOrders())
           dispatch(getAllUsers(adminToken))
           dispatch(getAllUserQueries(adminToken))
           dispatch(getOrdersByStatus("total"))
 
         })
     }
-  }, [adminToken, getOrdersByStatus])
+  }, [adminToken, getOrdersByStatus,])
 
 
 
 
   return (
-   
+
 
 
 

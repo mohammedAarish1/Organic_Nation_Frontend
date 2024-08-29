@@ -6,11 +6,12 @@ const apiUrl = import.meta.env.VITE_BACKEND_URL;
 // get all orders 
 export const getTotalOrders = createAsyncThunk(
     'adminData/getTotalOrders',
-    async (token, { rejectWithValue }) => {
+    async (_, { rejectWithValue }) => {
+        const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
         try {
             const response = await axios.get(`${apiUrl}/api/admin/orders`, {
                 headers: {
-                    'Authorization': `Bearer ${token}`,
+                    'Authorization': `Bearer ${adminToken}`,
                     'Content-Type': 'application/json'
                 }
             })
@@ -106,7 +107,28 @@ export const generateInvoice = createAsyncThunk(
     }
 );
 
+export const updateOrderStatus = createAsyncThunk(
+    'adminData/updateOrderStatus',
+    async (data, { rejectWithValue }) => {
+        const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
+        try {
+            const response = await axios.put(`${apiUrl}/api/admin/orders/update-status`, data, {
+                headers: {
+                    'Authorization': `Bearer ${adminToken}`,
+                    'Content-Type': 'application/json'
+                }
+            })
 
+            // return response.data;
+        } catch (error) {
+            if (error.response && error.response.data) {
+                return rejectWithValue(error.response.data);
+            } else {
+                return rejectWithValue(error.message);
+            }
+        }
+    }
+)
 
 
 
@@ -119,7 +141,7 @@ const initialState = {
     totalUserQueries: [],
     loading: false,
     error: null,
-    generatingInvoice:false,
+    generatingInvoice: false,
     ordersByStatus: {
         orderData: [],
         orderStatusTab: "total"
@@ -172,17 +194,7 @@ const adminData = createSlice({
                         orderStatusTab: action.payload
                     }
                 }
-            } else if (action.payload === "cancelled") {
-                let cancelledOrders = state.totalOrders.filter(order => order.orderStatus === action.payload);
-                return {
-                    ...state,
-                    ordersByStatus: {
-                        ...state.ordersByStatus,
-                        orderData: cancelledOrders,
-                        orderStatusTab: action.payload
-                    }
-                }
-            } else if (action.payload === "dispatch") {
+            } else if (action.payload === "dispatched") {
                 let dispatchOrders = state.totalOrders.filter(order => order.orderStatus === action.payload);
                 return {
                     ...state,
@@ -290,8 +302,8 @@ const adminData = createSlice({
                     error: action.payload,
                 }
             })
-               // ========= invoice generate ==========
-               .addCase(generateInvoice.pending, (state) => {
+            // ========= invoice generate ==========
+            .addCase(generateInvoice.pending, (state) => {
                 return {
                     ...state,
                     generatingInvoice: true,
@@ -309,6 +321,28 @@ const adminData = createSlice({
                 return {
                     ...state,
                     generatingInvoice: false,
+                    error: action.payload,
+                }
+            })
+            // ========= invoice generate ==========
+            .addCase(updateOrderStatus.pending, (state) => {
+                return {
+                    ...state,
+                    loading: true,
+                    error: null,
+                }
+            })
+            .addCase(updateOrderStatus.fulfilled, (state, action) => {
+                return {
+                    ...state,
+                    loading: false,
+
+                }
+            })
+            .addCase(updateOrderStatus.rejected, (state, action) => {
+                return {
+                    ...state,
+                    loading: false,
                     error: action.payload,
                 }
             })

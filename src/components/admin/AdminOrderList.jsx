@@ -1,12 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FaSort, FaSync, FaChevronLeft, FaChevronRight, FaSearch } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { generateInvoice, getTotalOrders } from '../../features/admin/adminData';
+import { generateInvoice, getTotalOrders, updateOrderStatus } from '../../features/admin/adminData';
 import { ImSpinner9 } from 'react-icons/im';
+import Alert from '../alert/Alert';
+import { fetchAdminData } from '../../features/admin/adminSlice';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
+
 
 const AdminOrderList = ({ orders }) => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const navigate = useNavigate()
     const [sortedOrders, setSortedOrders] = useState([]);
+    const [curOrderStatusAndId, setCurOrderStatusAndId] = useState('');
+    const [isAlertOpen, setIsAlertOpen] = useState(false);
+
     const [sortDirection, setSortDirection] = useState('desc');
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
@@ -14,7 +24,7 @@ const AdminOrderList = ({ orders }) => {
     const ordersPerPage = 4;
     const modalRef = useRef();
     const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
-    const { generatingInvoice, loading } = useSelector(state => state.adminData)
+    const { generatingInvoice, loading } = useSelector(state => state.adminData);
 
 
 
@@ -68,11 +78,11 @@ const AdminOrderList = ({ orders }) => {
         setSelectedOrder(order);
     };
 
-    const handleStatusChange = (orderId, newStatus) => {
-        setSortedOrders(sortedOrders.map(order =>
-            order._id === orderId ? { ...order, orderStatus: newStatus } : order
-        ));
-    };
+    // const handleStatusChange = (orderId, newStatus) => {
+    //     setSortedOrders(sortedOrders.map(order =>
+    //         order._id === orderId ? { ...order, orderStatus: newStatus } : order
+    //     ));
+    // };
 
     const handleClickOutside = (event) => {
         if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -100,9 +110,38 @@ const AdminOrderList = ({ orders }) => {
 
 
 
+
+    const hideAlert = () => {
+        setCurOrderStatusAndId('')
+        setIsAlertOpen(false);
+
+    };
+
+
+
+    // for changing order  status locally
+    const handleOrderStatusChange = (orderId, orderStatus) => {
+        setCurOrderStatusAndId({ orderId, orderStatus })
+        setIsAlertOpen(true)
+    }
+
+
+    // for changing order  status in database
+    const updateUserOrderStatus = () => {
+
+        dispatch(updateOrderStatus(curOrderStatusAndId))
+            .then(res => {
+                if (res.meta.requestStatus === 'fulfilled') {
+                    setIsAlertOpen(false)
+                }
+            })
+
+    }
+
+    // for fetching new orders
     const handleRefreshOrders = () => {
         if (adminToken) {
-            dispatch(getTotalOrders(adminToken))
+            dispatch(getTotalOrders())
         }
     }
 
@@ -111,12 +150,12 @@ const AdminOrderList = ({ orders }) => {
 
         dispatch(generateInvoice(orderId))
             .unwrap()
-            // .then(() => {
-            //     console.log('Invoice generated and download initiated');
-            // })
-            // .catch((error) => {
-            //     console.error('Failed to generate invoice:', error);
-            // });
+        // .then(() => {
+        //     console.log('Invoice generated and download initiated');
+        // })
+        // .catch((error) => {
+        //     console.error('Failed to generate invoice:', error);
+        // });
     }
 
     return (
@@ -165,6 +204,7 @@ const AdminOrderList = ({ orders }) => {
                     <tbody>
                         {currentOrders.map((order) => (
                             <tr key={order._id} className="border-b hover:bg-gray-100">
+
                                 <td className="p-3">
                                     <input type="checkbox" className="form-checkbox" />
                                 </td>
@@ -185,15 +225,20 @@ const AdminOrderList = ({ orders }) => {
                                         </button>
                                         <select
                                             value={order.orderStatus}
-                                            onChange={(e) => handleStatusChange(order._id, e.target.value)}
+                                            // onChange={(e) => handleOrderStatusChange(order._id, e.target.value)}
+                                            onChange={(e) => handleOrderStatusChange(order._id, e.target.value)}
                                             className="border rounded p-1"
                                         >
                                             <option value="active">Active</option>
-                                            <option value="dispatch">Dispatch</option>
+                                            <option value="dispatched">Dispatched</option>
+                                            <option value="completed">Completed</option>
                                             <option value="cancelled">Cancelled</option>
                                         </select>
                                     </div>
                                 </td>
+
+
+
                             </tr>
                         ))}
                     </tbody>
@@ -258,6 +303,18 @@ const AdminOrderList = ({ orders }) => {
                     </div>
                 </div>
             )}
+
+
+            {/* alert for cancelling order  */}
+            <Alert
+                isOpen={isAlertOpen}
+                alertMessage={`Do you want to update the order status to ${curOrderStatusAndId.orderStatus}`}
+                actionMessageOne='Yes'
+                actionMessageTwo='No'
+                hideAlert={hideAlert}
+                handleAction1={updateUserOrderStatus}
+            />
+
         </div>
 
     );

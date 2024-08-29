@@ -81,6 +81,7 @@ const CheckoutForm = () => {
                 quantity: item.quantity,
                 weight: item.weight,
                 tax: item.tax,
+                hsnCode:item["hsn-code"],
                 unitPrice: discountedPrice // Update price with the discounted value
             };
         });

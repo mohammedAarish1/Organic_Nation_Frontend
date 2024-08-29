@@ -16,7 +16,7 @@ const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
 const SingleOrder = ({ curOrder }) => {
 
-    let nameUrl = curOrder[0];
+    let nameUrl = curOrder["name-url"];
     const dispatch = useDispatch();
     const [singleOrderItem, setSingleOrderItem] = useState('');
     const [showProductReview, setShowProductReview] = useState(false);
@@ -54,7 +54,7 @@ const SingleOrder = ({ curOrder }) => {
                     </div>
                     <div className='flex flex-col justify-start xs:gap-3 gap-1 text-sm xs:text-[16px] text-white '>
                         <p>{singleOrderItem.name}</p>
-                        <p>Quantity : {curOrder[2]} Pcs.</p>
+                        <p>Quantity : {curOrder.quantity} Pcs.</p>
                         <p>Rate Per Quantity: ₹ {Math.round(singleOrderItem.price - (singleOrderItem.price * singleOrderItem.discount / 100))} <span className='text-green-300 text-sm'>({singleOrderItem.discount}% off)</span></p>
                     </div>
                 </div>

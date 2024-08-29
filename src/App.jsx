@@ -35,6 +35,8 @@ function App() {
   const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
 
   const dispatch = useDispatch();
+  const { totalOrders, loading, ordersByStatus } = useSelector(state => state.adminData)
+
 
 
 
@@ -71,7 +73,7 @@ function App() {
             <PopupBanner />
             <ScrollToTop />
             <div className={`bg-[var(--bgColorSecondary)] relative`}>
-              <Info text="Enjoy FREE SHIPPING on orders of Rs. 399 or more — Shop now and save!" />
+              <Info text="Enjoy FREE SHIPPING on orders of Rs. 399 or more — Shop now and save!" fontSize='xl' />
               <ToastContainer position='bottom-right' autoClose={1000} />
               <Header />
               <div>
@@ -90,7 +92,7 @@ function App() {
                   <WhatsApp />
                 </div>
               </div>
-              <Info text="Organic Nation © All rights reserved." />
+              <Info text="Organic Nation © All rights reserved." fontSize='xs' />
             </div>
           </>
         } />

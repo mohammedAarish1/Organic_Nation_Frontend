@@ -16,9 +16,9 @@ const AdminOrders = () => {
   useEffect(() => {
     dispatch(getOrdersByStatus("total"))
     if (adminToken) {
-      dispatch(getTotalOrders(adminToken))
+      dispatch(getTotalOrders())
     }
-  }, [adminToken,getOrdersByStatus])
+  }, [adminToken, getOrdersByStatus])
 
 
   if (loading) return <div>Loading...</div>
@@ -56,11 +56,11 @@ const AdminOrders = () => {
 
 
           {/* button3 */}
-          <div className={`${ordersByStatus.orderStatusTab === 'dispatch' && 'border-green-500 border-[1px]'} flex justify-start items-center xs:gap-3 rounded-lg  max-w-max sm:pr-6 pr-1 pl-2 xs:py-2 cursor-pointer shadow-sm shadow-[#a54dc8]  transition-all duration-500 hover:bg-[var(--hoverEffect)]`} onClick={() => dispatch(getOrdersByStatus("dispatch"))}>
+          <div className={`${ordersByStatus.orderStatusTab === 'dispatched' && 'border-green-500 border-[1px]'} flex justify-start items-center xs:gap-3 rounded-lg  max-w-max sm:pr-6 pr-1 pl-2 xs:py-2 cursor-pointer shadow-sm shadow-[#a54dc8]  transition-all duration-500 hover:bg-[var(--hoverEffect)]`} onClick={() => dispatch(getOrdersByStatus("dispatched"))}>
             <div className='sm:block hidden bg-[#ECFDF5] md:p-4 p-2 rounded-full'><IoCubeOutline className='text-2xl text-[#a54dc8]' /></div>
             <div>
               <p className='font-semibold lg:text-[22px] xs:text-xl max-w-max'>
-                {totalOrders?.filter(order => order.orderStatus === "dispatch").length || 0}
+                {totalOrders?.filter(order => order.orderStatus === "dispatched").length || 0}
               </p>
               <p className='text-gray-600 tracking-wider lg:text-[16px] xs:text-xs text-[10px]'>Dispatched</p>
             </div>

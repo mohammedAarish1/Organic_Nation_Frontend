@@ -3,7 +3,6 @@ import { FaBars, FaHome, FaShoppingCart, FaUserAlt, FaChartLine, FaCog } from 'r
 import { BsSearch } from 'react-icons/bs';
 import { VscAccount } from 'react-icons/vsc';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-import { useTable } from 'react-table';
 import AdminSidebar from './AdminSidebar';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAdminData } from '../../features/admin/adminSlice';
@@ -41,25 +40,6 @@ const AdminDashboard = () => {
     setSearchTerm(e.target.value);
   };
 
-  // React Table example
-  const columns = React.useMemo(
-    () => [
-      { Header: 'Name', accessor: 'name' },
-      { Header: 'Email', accessor: 'email' },
-      { Header: 'Order Count', accessor: 'orderCount' },
-      { Header: 'Total Spent', accessor: 'totalSpent' },
-    ],
-    []
-  );
-
-  const data2 = [
-    { name: 'John Doe', email: 'john@example.com', orderCount: 15, totalSpent: 1250.00 },
-    { name: 'Jane Smith', email: 'jane@example.com', orderCount: 8, totalSpent: 725.00 },
-    { name: 'Bob Johnson', email: 'bob@example.com', orderCount: 22, totalSpent: 1800.00 },
-    { name: 'Alice Williams', email: 'alice@example.com', orderCount: 9, totalSpent: 580.00 },
-  ];
-
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({ columns, data: data2 });
 
 
   // useEffect(() => {
