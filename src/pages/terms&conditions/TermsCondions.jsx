@@ -5,6 +5,22 @@ import { GoChecklist } from "react-icons/go";
 const TermsAndConditions = () => {
   return (
     <div className=" min-h-screen font-sans ">
+      <SEO
+        title="Terms & Conditions | Organic Nation"
+        description="This page contains important information regarding Organic Nation's terms and conditions. By using this website, you accept these terms and conditions."
+        canonicalUrl="https://organicnation.co.in/terms&conditions"
+        ogTitle="Terms & Conditions | Organic Nation"
+        ogDescription="This page contains important information regarding Organic Nation's terms and conditions. By using this website, you accept these terms and conditions."
+        ogUrl="https://organicnation.co.in/terms&conditions"
+        ogImage="https://organicnationmages.s3.ap-south-1.amazonaws.com/logo/logo.png"
+        ogImageWidth="478"
+        ogImageHeight="446"
+        twitterTitle="Terms & Conditions | Organic Nation"
+        twitterDescription="This page contains important information regarding Organic Nation's terms and conditions. By using this website, you accept these terms and conditions."
+        twitterImage="https://organicnationmages.s3.ap-south-1.amazonaws.com/logo/logo.png"
+        twitterSite="Organic Nation"
+        twitterCreator="organicnation_"
+      />
       {/* ============================= heading ==================== */}
       <div className='relative text-center  leading-10'>
         <h2 className='text-3xl font-medium tracking-widest'>Terms & Conditions</h2>

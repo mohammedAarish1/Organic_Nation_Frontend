@@ -35,6 +35,22 @@ const About = () => {
 
     return (
         <div className="min-h-screen font-sans text-[var(--themeColor)] tracking-wide ">
+            <SEO
+                title="About Us - Organic Products in India | Organic Nation "
+                description="An 'ORGANIC NATION' unit (Partnership Firm ) , a distinguished name in the realm of organic food processing. Established in 2019 Bailparao, Uttarakhand."
+                canonicalUrl="https://organicnation.co.in/about-us"
+                ogTitle="About Us - Organic Products in India | Organic Nation "
+                ogDescription="An 'ORGANIC NATION' unit (Partnership Firm ) , a distinguished name in the realm of organic food processing. Established in 2019 Bailparao, Uttarakhand."
+                ogUrl="https://organicnation.co.in/about-us"
+                ogImage="https://organicnationmages.s3.ap-south-1.amazonaws.com/other_banners/banner_about.png"
+                ogImageWidth=""
+                ogImageHeight=""
+                twitterTitle="About Us - Organic Products in India | Organic Nation "
+                twitterDescription="An 'ORGANIC NATION' unit (Partnership Firm ) , a distinguished name in the realm of organic food processing. Established in 2019 Bailparao, Uttarakhand."
+                twitterImage="https://organicnationmages.s3.ap-south-1.amazonaws.com/other_banners/banner_about.png"
+                twitterSite="Organic Nation"
+                twitterCreator="organicnation_"
+            />
             {/* banner  */}
             <div className='relative'>
                 <div>

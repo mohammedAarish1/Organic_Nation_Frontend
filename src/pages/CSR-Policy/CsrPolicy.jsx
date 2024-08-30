@@ -3,6 +3,22 @@ import React from 'react';
 const CsrPolicy = () => {
     return (
         <section className='relative pb-20 font-sans'>
+            <SEO
+                title="Shipping & Return Policy | Organic Nation"
+                description="Organic Nation offers free shipping across India for Orders greater than Rs. 999, and we have a 30-day return policy. Visit us to Learn More "
+                canonicalUrl="https://organicnation.co.in/csr-policy"
+                ogTitle="Shipping & Return Policy | Organic Nation"
+                ogDescription="Organic Nation offers free shipping across India for Orders greater than Rs. 999, and we have a 30-day return policy. Visit us to Learn More "
+                ogUrl="https://organicnation.co.in/csr-policy"
+                ogImage="https://organicnationmages.s3.ap-south-1.amazonaws.com/logo/logo.png"
+                ogImageWidth="478"
+                ogImageHeight="446"
+                twitterTitle="Shipping & Return Policy | Organic Nation"
+                twitterDescription="Organic Nation offers free shipping across India for Orders greater than Rs. 999, and we have a 30-day return policy. Visit us to Learn More "
+                twitterImage="https://organicnationmages.s3.ap-south-1.amazonaws.com/logo/logo.png"
+                twitterSite="Organic Nation"
+                twitterCreator="organicnation_"
+            />
             <div className="container mx-auto lg:px-40 md:px-20 px-10 py-8">
                 {/* heading  */}
                 <div className='py-10'>

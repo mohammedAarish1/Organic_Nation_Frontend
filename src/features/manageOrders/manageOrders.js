@@ -10,7 +10,7 @@ export const addOrders = createAsyncThunk(
     async (checkoutData, { rejectWithValue }) => {
         const token = JSON.parse(sessionStorage.getItem('token'));
         try {
-            
+
             const response = await axios.post(`${apiUrl}/api/orders`, checkoutData, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -101,6 +101,16 @@ const manageOrders = createSlice({
                     }
                 }
             } else if (action.payload === "active") {
+                let activeOrders = state.orders.filter(order => order.orderStatus === action.payload);
+                return {
+                    ...state,
+                    ordersByStatus: {
+                        ...state.ordersByStatus,
+                        orderData: activeOrders,
+                        orderStatusTab: action.payload
+                    }
+                }
+            } else if (action.payload === "dispatched") {
                 let activeOrders = state.orders.filter(order => order.orderStatus === action.payload);
                 return {
                     ...state,

@@ -68,7 +68,7 @@ const PopupBanner = () => {
                         <div className='font-serif text-center'>
 
                             <h2 className="text-2xl font-bold mb-4">Welcome to Our Store!</h2>
-                            <p className="mb-4 lg:text-2xl  tracking-widest ">Enjoy FREE SHIPPING on orders of Rs. 399 or more — Shop now and save!</p>
+                            <p className="mb-4 lg:text-2xl  tracking-widest ">Enjoy FREE SHIPPING on orders of Rs. 499 or more — Shop now and save!</p>
                         </div>
                     </div>
                     <div>

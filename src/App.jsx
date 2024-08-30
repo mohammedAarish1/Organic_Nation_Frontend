@@ -73,7 +73,7 @@ function App() {
             <PopupBanner />
             <ScrollToTop />
             <div className={`bg-[var(--bgColorSecondary)] relative`}>
-              <Info text="Enjoy FREE SHIPPING on orders of Rs. 399 or more — Shop now and save!" fontSize='xl' />
+              <Info text="Enjoy FREE SHIPPING on orders of Rs. 499 or more — Shop now and save!" fontSize='xl' />
               <ToastContainer position='bottom-right' autoClose={1000} />
               <Header />
               <div>

@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react'
+import React, { useEffect } from 'react'
 // react icons 
 import { FaAngleDown, FaArrowLeftLong } from "react-icons/fa6";
 import { IoCubeOutline } from "react-icons/io5";
@@ -37,7 +37,7 @@ const ManageOrders = () => {
             </div>
             {/* buttons */}
             <div className='py-5 font-serif'>
-                <div className='flex sm:gap-10 gap-2   '>
+                <div className='flex flex-wrap sm:gap-10 gap-2   '>
 
                     {/* button1 */}
                     <div className={`${ordersByStatus.orderStatusTab === 'total' && 'border-blue-500 border-[1px]'} flex justify-start items-center xs:gap-3 rounded-lg  max-w-max sm:pr-6 pr-1 pl-2 xs:py-2 cursor-pointer shadow-sm shadow-blue-400  transition-all duration-500 hover:bg-[var(--hoverEffect)]`} onClick={() => dispatch(getOrdersByStatus("total"))}>
@@ -60,8 +60,19 @@ const ManageOrders = () => {
                         </div>
                         <div className='sm:hidden block bg-[#ECFDF5] md:p-5 xs:p-2 rounded-full'><FaAngleDown /></div>
                     </div>
-
                     {/* button3 */}
+                    <div className={`${ordersByStatus.orderStatusTab === 'dispatched' && 'border-purple-500 border-[1px]'} flex justify-start items-center xs:gap-3 rounded-lg  max-w-max sm:pr-6 pr-1 pl-2 xs:py-2 cursor-pointer shadow-sm shadow-purple-400  transition-all duration-500 hover:bg-[var(--hoverEffect)]`} onClick={() => dispatch(getOrdersByStatus("dispatched"))}>
+                        <div className='sm:block hidden bg-[#ECFDF5] md:p-4 p-2 rounded-full'><IoCubeOutline className='text-2xl text-[green]' /></div>
+                        <div>
+                            <p className='font-semibold lg:text-[22px] xs:text-xl max-w-max'>
+                                {orders?.filter(order => order.orderStatus === "dispatched").length || 0}
+                            </p>
+                            <p className='text-gray-600 tracking-wider lg:text-[16px] xs:text-xs text-[10px]'>Dispatched</p>
+                        </div>
+                        <div className='sm:hidden block bg-[#ECFDF5] md:p-5 xs:p-2 rounded-full'><FaAngleDown /></div>
+                    </div>
+
+                    {/* button4 */}
                     <div className={`${ordersByStatus.orderStatusTab === 'completed' && 'border-orange-500 border-[1px]'} flex justify-start items-center xs:gap-3 rounded-lg  max-w-max sm:pr-6 pr-1 pl-2 xs:py-2 cursor-pointer shadow-sm shadow-orange-400  transition-all duration-500 hover:bg-[var(--hoverEffect)]`} onClick={() => dispatch(getOrdersByStatus("completed"))}>
                         <div className='sm:block hidden bg-[#FFFBEB] md:p-4 p-2 rounded-full'><IoCubeOutline className='text-2xl text-[orange]' /></div>
                         <div>
@@ -73,7 +84,7 @@ const ManageOrders = () => {
                         <div className='sm:hidden block bg-[#FFFBEB] md:p-5 xs:p-2 rounded-full'><FaAngleDown /></div>
                     </div>
 
-                    {/* button4 */}
+                    {/* button5 */}
                     <div className={`${ordersByStatus.orderStatusTab === 'cancelled' && 'border-red-500 border-[1px]'} flex justify-start items-center xs:gap-3 rounded-lg  max-w-max sm:pr-6 pr-1 pl-2 xs:py-2 cursor-pointer shadow-sm shadow-red-500  transition-all duration-500 hover:bg-[var(--hoverEffect)]`} onClick={() => dispatch(getOrdersByStatus("cancelled"))}>
                         <div className='sm:block hidden bg-[#FEF2F2] md:p-4 p-2 rounded-full'><IoCubeOutline className='text-2xl text-[red]' /></div>
                         <div>

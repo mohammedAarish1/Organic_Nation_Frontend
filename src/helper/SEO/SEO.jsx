@@ -31,7 +31,7 @@ const SEO = ({
             <meta property="og:url" content={ogUrl} />
             <meta property="og:type" content="website" />
             <meta property="og:site_name" content="Organic Nation" />
-            <meta property="og:locale" content="India" />
+            <meta property="og:locale" content="en_India" />
             <meta property="og:image" content={ogImage} />
             <meta property="og:image:width" content={ogImageWidth} />
             <meta property="og:image:height" content={ogImageHeight} />

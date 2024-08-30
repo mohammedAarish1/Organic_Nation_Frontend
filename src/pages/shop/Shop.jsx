@@ -6,6 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchCategoryWiseData, setCategoryBtnValue } from '../../features/filter/filterSlice';
 import { setCurrentPage } from '../../features/pagination/pagination';
+import { productCategoriesData } from '../../helper/SEO/SEOdata';
+import SEO from '../../helper/SEO/SEO';
+
+
 
 const Shop = () => {
 
@@ -15,6 +19,8 @@ const Shop = () => {
   const { showFilters } = useSelector(state => state.sidebar);
   const { isLoading } = useSelector((state) => state.product_data);
   const { searchInputValue } = useSelector(state => state.filterData);
+
+  const [curCategorySeoData, setCategorySeoData] = useState(productCategoriesData.all);
 
 
   const filterProduct = useSelector((state) => state.filterData.data);
@@ -32,6 +38,11 @@ const Shop = () => {
   }, [])
 
 
+  useEffect(() => {
+    setCategorySeoData(productCategoriesData[categoryBtnValue] || productCategoriesData.all);
+  }, [categoryBtnValue])
+
+
   if (isLoading) return (
     <div className='py-52 flex justify-center items-center'>
       <div className="loader"></div>
@@ -40,6 +51,25 @@ const Shop = () => {
 
   return (
     <div>
+      <SEO
+        title={curCategorySeoData.title}
+        description={curCategorySeoData.description}
+        canonicalUrl={curCategorySeoData.canonicalUrl}
+        ogTitle={curCategorySeoData.title}
+        ogDescription={curCategorySeoData.description}
+        ogUrl={curCategorySeoData.canonicalUrl}
+        ogImage="https://organicnationmages.s3.ap-south-1.amazonaws.com/logo/logo.png"
+        ogImageWidth="478"
+        ogImageHeight="446"
+        twitterTitle={curCategorySeoData.title}
+        twitterDescription={curCategorySeoData.description}
+        twitterImage="https://organicnationmages.s3.ap-south-1.amazonaws.com/logo/logo.png"
+        twitterSite="Organic Nation"
+        twitterCreator="organicnation_"
+      />
+
+
+
       {/* <h1 className='text-5xl max-w-[90%] mx-auto px-4 py-4'>All Products</h1> */}
       {/* number of products available  */}
       {categoryBtnValue !== 'all' && (

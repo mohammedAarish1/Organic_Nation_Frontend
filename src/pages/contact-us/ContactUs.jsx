@@ -51,6 +51,22 @@ const ContactUs = () => {
 
   return (
     <section className='xs:px-10 px-2 pb-20 mt-5 sm:mt-0 font-mono'>
+      <SEO
+        title="Contact Us | Organic Nation "
+        description="Our commitment to quality extends beyond honey and preserves. As a prominent trader and supplier, we offer a diverse range of organic & Natural products."
+        canonicalUrl="https://organicnation.co.in/contact-us"
+        ogTitle="Contact Us | Organic Nation"
+        ogDescription="Our commitment to quality extends beyond honey and preserves. As a prominent trader and supplier, we offer a diverse range of organic & Natural products."
+        ogUrl="https://organicnation.co.in/contact-us"
+        ogImage="https://organicnationmages.s3.ap-south-1.amazonaws.com/logo/logo.png"
+        ogImageWidth="478"
+        ogImageHeight="446"
+        twitterTitle="Contact Us | Organic Nation "
+        twitterDescription="Our commitment to quality extends beyond honey and preserves. As a prominent trader and supplier, we offer a diverse range of organic & Natural products including Honey, oats, soya cheap, and muesli."
+        twitterImage="https://organicnationmages.s3.ap-south-1.amazonaws.com/logo/logo.png"
+        twitterSite="Organic Nation"
+        twitterCreator="organicnation_"
+      />
 
       <div className='lg:w-[90%] h-auto py-2 bg-opacity-35 mx-auto'>
         <h2 className="mb-4 text-2xl text-center font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-5xl"><span className=" bg-clip-text text-[var(--themeColor)]">Contact Us</span></h2>

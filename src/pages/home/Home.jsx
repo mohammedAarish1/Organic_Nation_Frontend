@@ -12,7 +12,7 @@ import SpotlightSection from '../../components/spotlightSection/SpotlightSection
 import ProductCategories from '../../components/productCategories/ProductCategories'
 import { addReviews } from '../../features/reviews/reviews'
 import BlogSection from '../../components/blog-section/BlogSection';
-import SEO from '../../helper/SEO'
+import SEO from '../../helper/SEO/SEO'
 
 
 
@@ -100,8 +100,8 @@ const Home = () => {
                 ogDescription="Organic Nation - We take pride in offering you a delightful culinary journey, showcasing the finest and most authentic flavors sourced from the heart of nature Explore our range of wholesome and sustainable food products, thoughtfully crafted to bring the essence of the Himalayas to your plate in Delhi-NCR & PAN India. ✓Organic products  ✓500+ Products"
                 ogUrl="https://organicnation.co.in/"
                 ogImage="https://organicnationmages.s3.ap-south-1.amazonaws.com/logo/logo.png"
-                ogImageWidth=""
-                ogImageHeight=""
+                ogImageWidth="478"
+                ogImageHeight="446"
                 twitterTitle="Buy Organic and Healthy Products Online| Organic Nation"
                 twitterDescription="Organic Nation - We take pride in offering you a delightful culinary journey, showcasing the finest and most authentic flavors sourced from the heart of nature Explore our range of wholesome and sustainable food products, thoughtfully crafted to bring the essence of the Himalayas to your plate in Delhi-NCR & PAN India. ✓Organic products  ✓500+ Products"
                 twitterImage="https://organicnationmages.s3.ap-south-1.amazonaws.com/logo/logo.png"
