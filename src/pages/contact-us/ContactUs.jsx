@@ -12,6 +12,7 @@ import { BiSolidPhoneCall } from "react-icons/bi";
 import { GrLinkedin } from "react-icons/gr";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { FaArrowRight, FaInstagramSquare, FaYoutube } from "react-icons/fa";
+import SEO from '../../helper/SEO/SEO';
 
 
 const ContactUs = () => {

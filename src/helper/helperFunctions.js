@@ -24,4 +24,30 @@ const address = (obj) => {
     return result.trim();
 }
 
-export { generateTransactionID ,address}
+
+// for calculating additional 5% discount on MRP and tax include in that discount
+const calculateDiscountAndTaxIncluded = (cart) => {
+    const totalCartValue = cart.reduce((total, item) => {
+        const subtotal = item.price * item.quantity;
+        return total + subtotal;
+    }, 0);
+
+    const discountAmount = totalCartValue * 0.05;
+
+    const totalCartValueExcludingTax = cart.reduce((total, item) => {
+        const priceExcludingTax = item.price / (1 + item.tax / 100);
+        const subtotalExcludingTax = priceExcludingTax * item.quantity;
+        return total + subtotalExcludingTax;
+    }, 0);
+
+    const discountAmountExcludingTax = totalCartValueExcludingTax * 0.05;
+
+    const taxIncludedInDiscountAmount = discountAmount - discountAmountExcludingTax;
+
+    return {
+        discountAmount: Math.round(discountAmount),
+        taxIncludedInDiscountAmount: Math.round(taxIncludedInDiscountAmount)
+    };
+}
+
+export { generateTransactionID, address, calculateDiscountAndTaxIncluded }

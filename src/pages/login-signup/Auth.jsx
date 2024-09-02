@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Logo from '../../components/logo/Logo';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -65,13 +65,14 @@ const Auth = () => {
     } else {
 
       navigate('/')
+
     }
   };
 
   const handleCartMerge = (action) => {
     const localCart = JSON.parse(localStorage.getItem('cart'))
     // setIsAlertOpen(false);
-    dispatch(mergeCart({ localCart, replaceCart: action.replaceCart }))
+    dispatch(mergeCart({ localCart }))
       .then(() => {
         setIsAlertOpen(false);
         localStorage.removeItem('cart');
@@ -79,7 +80,6 @@ const Auth = () => {
         if (checkoutStatus) {
           navigate('/cart/checkout')
         } else {
-
           navigate('/')
         }
       })
@@ -131,27 +131,26 @@ const Auth = () => {
               dispatch(getAllCartItems())
                 .then(res => {
                   const localCart = JSON.parse(localStorage.getItem('cart') || '[]');
-
-                  if (localCart.length > 0 && res.payload.length > 0) {
+                  if (localCart.length > 0 && res.payload.productDetails.length > 0) {
                     setIsAlertOpen(true)
-                  } else if (localCart.length > 0 && res.payload.length === 0) {
-                    dispatch(mergeCart({ localCart, replaceCart: true }))
+                  } else if (localCart.length > 0 && res.payload.productDetails.length === 0) {
+                    dispatch(mergeCart({ localCart }))
                       .then(() => {
                         localStorage.removeItem('cart');
                         dispatch(getAllCartItems());
                         if (checkoutStatus) {
                           navigate('/cart/checkout')
                         } else {
-
                           navigate('/')
+
                         }
                       }
                       )
                   } else {
+
                     if (checkoutStatus) {
                       navigate('/cart/checkout')
                     } else {
-
                       navigate('/');
                     }
 

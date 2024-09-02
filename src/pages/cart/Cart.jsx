@@ -9,7 +9,7 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import { ImSpinner9 } from "react-icons/im";
 // product image tempoeary 
 import { Link } from 'react-router-dom';
-import { getAllCartItems, clearCart, removeFromCart, updateQty } from '../../features/cart/cart';
+import { getAllCartItems, clearCart, removeFromCart, updateQty, getCouponCodeValidate } from '../../features/cart/cart';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { calculateShippingFee, checkDeliveryAvailability, setIsAvailable } from '../../features/check-delivery/checkDelivery';
@@ -24,10 +24,10 @@ const Cart = () => {
 
 
   const { user } = useSelector(state => state.user);
-  const { cartItemsList, loading, totalCartAmount, totalWeight,totalTax } = useSelector((state) => state.cart);
+  const { cartItemsList, loading, validatingCouponCode, totalCartAmount, totalWeight, totalTax, error, } = useSelector((state) => state.cart);
   const { isAvailable, message, checking } = useSelector(state => state.delivery);
   const dispatch = useDispatch();
-  
+  const ccToken = JSON.parse(sessionStorage.getItem('ccToken'));
 
 
 
@@ -37,6 +37,8 @@ const Cart = () => {
     pincode: Yup.string().required('Please enter your pin code').matches(pincodeRegExp, 'Pin Code is not valid'),
   })
 
+
+  // for checking pin code availability 
   const handleSubmit = (values, errros) => {
     if (values) {
       if (localStorage.getItem('deliveryChargeToken')) {
@@ -58,6 +60,37 @@ const Cart = () => {
         })
     }
   }
+
+
+
+
+  // coupon code validation  
+  const handleCouponCodeValidation = (values,action) => {
+    // const items = cartItemsList.map(item => ({ id: item._id, quantity: item.quantity }));
+    const payload = { userEmail: user.email, couponCode: values.couponCode };
+
+    dispatch(getCouponCodeValidate(payload))
+      .unwrap()
+      .then((result) => {
+        dispatch(getAllCartItems());
+
+    
+        // sessionStorage.setItem('ccToken', JSON.stringify(result.validationToken))
+        toast.success('Coupon Code successfully applied !')
+        action.resetForm()
+        // Handle successful validation here
+      })
+      .catch((error) => {
+        toast.error('Coupon Code is not valid !')
+        // Handle validation error here
+      });
+
+
+  }
+
+
+  
+
 
 
   useEffect(() => {
@@ -221,18 +254,47 @@ const Cart = () => {
         <div className='bg-[var(--hoverEffect)] flex flex-col  gap-4 p-5 md:w-[35%] '>
           <div className='flex justify-between items-center gap-10'>
             <span>Subtotal:</span>
-            <span>₹ {Math.round(totalCartAmount-totalTax || 0)}</span>
+            <span>₹ {Math.round(totalCartAmount - totalTax || 0)}</span>
           </div>
           {/* tax  */}
           <div className='flex justify-between items-center gap-10'>
             <span>Total tax: (+)</span>
             <span>₹ {cartItemsList?.length > 0 ? totalTax : 0}</span>
           </div>
-          {/* coupon  */}
-          {/* <div className="flex  items-center">
-            <input type="text" placeholder="Enter coupon code" className="border border-gray-300 p-1 rounded-l-md focus:outline-none   focus:border-transparent w-full" />
-            <button className="bg-green-500 text-white px-4 py-1 rounded-r-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">Apply</button>
-          </div> */}
+          {/* coupon  code implementation */}
+          <div className="flex  items-center">
+            <Formik
+              initialValues={{ couponCode: "" }}
+              // validationSchema={handleCouponCodeValidation}
+              onSubmit={handleCouponCodeValidation}
+            >
+              {() => (
+                <Form>
+                  <div className='flex items-center '>
+                    <Field
+                      type="text"
+                      name="couponCode"
+                      placeholder="Enter Coupon code"
+                      className="border border-gray-300 rounded-tl-md rounded-bl-md px-2 py-1 outline-none tracking-wide w-full "
+                    />
+                    <button
+                      type='submit'
+                      className={`px-4 py-1 rounded-tr-md rounded-br-md ${user && totalCartAmount > 1000 ? 'bg-green-400 hover:bg-green-500' : 'bg-green-200'} `}
+                      disabled={!user || totalCartAmount < 1000}
+                    >
+                      {validatingCouponCode ? (<ImSpinner9 className='animate-spin' />) : "Validate"}
+
+                    </button>
+                  </div>
+                  {/* <div className='text-center mt-1 text-green-700 font-bold text-xs'>
+                    <p>{isCouponCodeApplied && 'Coupon Code Applied !'}</p>
+                  </div> */}
+                </Form>
+              )}
+            </Formik>
+            {/* <input type="text" placeholder="Enter coupon code" className="border border-gray-300 p-1 rounded-l-md focus:outline-none   focus:border-transparent w-full" />
+            <button className="bg-green-500 text-white px-4 py-1 rounded-r-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">Apply</button> */}
+          </div>
           {/* coupon  */}
           <hr />
           <div className='flex justify-between items-center gap-10'>
@@ -248,7 +310,7 @@ const Cart = () => {
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
               >
-                {({ values, errors, handleChange, touched }) => (
+                {({ }) => (
                   <Form>
                     <div className='flex items-center '>
                       <Field

@@ -16,7 +16,7 @@ const AddToCartBtn = ({ item, qty = 1 }) => {
   const { cartItemsList } = useSelector((state) => state.cart);
 
   // Get the current quantity of this item in the cart
-  const currentQtyInCart = cartItemsList.find(cartItem => cartItem._id === item._id)?.quantity || 0;
+  const currentQtyInCart = cartItemsList?.find(cartItem => cartItem._id === item._id)?.quantity || 0;
 
 
 

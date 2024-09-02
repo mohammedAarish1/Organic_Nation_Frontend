@@ -13,7 +13,7 @@ import { FaUserEdit } from "react-icons/fa";
 import { PiFileZipFill } from "react-icons/pi";
 import { BsBoxArrowUpRight } from "react-icons/bs";
 import { BsArrowRight } from "react-icons/bs";
-import { generateTransactionID, address } from '../../helper/helperFunctions';
+import { generateTransactionID, address, calculateDiscountAndTaxIncluded } from '../../helper/helperFunctions';
 
 // formik
 import { Formik, Form, Field, } from 'formik';
@@ -65,10 +65,8 @@ const CheckoutForm = () => {
 
 
         const merchantTransactionId = generateTransactionID();
-
-
-        // below orderDetails will contain each item id and qty in 2D array
-        // const orderDetails = cartItemsList.map(item => [item['name-url'], item._id, item.quantity, item.weight]);
+        // calutaing additional 5% discount for online payment and tax inlcuded in this discounted amount
+        const { discountAmount, taxIncludedInDiscountAmount } = calculateDiscountAndTaxIncluded(cartItemsList);
 
 
         const orderDetails = cartItemsList.map(item => {
@@ -81,7 +79,7 @@ const CheckoutForm = () => {
                 quantity: item.quantity,
                 weight: item.weight,
                 tax: item.tax,
-                hsnCode:item["hsn-code"],
+                hsnCode: item["hsn-code"],
                 unitPrice: discountedPrice // Update price with the discounted value
             };
         });
@@ -94,9 +92,9 @@ const CheckoutForm = () => {
             billingAddress: address(values.billingAddress),
             shippingAddress: address(values.shippingAddress),
             orderDetails: orderDetails,
-            subTotal: totalCartAmount,
+            subTotal: values.paymentMethod === 'cash_on_delivery' ? totalCartAmount : totalCartAmount - discountAmount,
             paymentStatus: 'pending',
-            taxAmount: totalTax,
+            taxAmount: values.paymentMethod === 'cash_on_delivery' ? totalTax : totalTax - taxIncludedInDiscountAmount,
             shippingFee: totalCartAmount < 499 ? shippingFee : 0,
             paymentMethod: values.paymentMethod,
             receiverDetails: {
@@ -118,7 +116,10 @@ const CheckoutForm = () => {
                             navigate(`/order-confirmed/${value.payload.orderId}`)
                         }
                     })
+
             } else {
+
+
 
                 dispatch(addOrders(checkoutData))
                     .then((value) => {
@@ -126,15 +127,15 @@ const CheckoutForm = () => {
                             dispatch(initiatePayment(
                                 {
                                     number: values.receiverPhone ? values.receiverPhone : values.phone.slice(3),
-                                    amount: totalCartAmount + (totalCartAmount < 499 ? shippingFee : 0),
+                                    amount: (totalCartAmount - discountAmount) + (totalCartAmount < 499 ? shippingFee : 0),
                                     merchantTransactionId: merchantTransactionId,
                                 }
                             ))
 
 
 
-                            // dispatch(clearCart());
-                            // localStorage.removeItem('deliveryChargeToken');
+                            dispatch(clearCart());
+                            localStorage.removeItem('deliveryChargeToken');
                         }
                     })
 
@@ -149,7 +150,7 @@ const CheckoutForm = () => {
 
         }
 
-        action.resetForm();
+        // action.resetForm();
 
     };
 
@@ -651,26 +652,7 @@ const CheckoutForm = () => {
                             <div>
                                 <h3 className="text-lg font-bold text-[#333]  mt-6">Payment Method</h3>
                                 <div className='flex flex-wrap xs:gap-10 gap-4 mt-2'>
-                                    {/* <div className='flex items-center gap-1'>
-                                        <Field
-                                            type="radio"
-                                            id='credit-card'
-                                            name="paymentMethod"
-                                            value="Credit Card"
-
-                                        />
-                                        <label htmlFor="credit-card">Credit Card</label>
-                                    </div>
-                                    <div className='flex items-center gap-1'>
-                                        <Field
-                                            type="radio"
-                                            id='debit-card'
-                                            name="paymentMethod"
-                                            value="Debit Card"
-
-                                        />
-                                        <label htmlFor="debit-card">Debit Card</label>
-                                    </div> */}
+                                   
                                     <div className='flex items-center gap-1'>
                                         <Field
                                             type="radio"
@@ -690,6 +672,9 @@ const CheckoutForm = () => {
 
                                         />
                                         <label htmlFor="cash_on_delivery">Cash on Delivery</label>
+                                    </div>
+                                    <div className='text-[var(--themeColor)] font-bold'>
+                                        <p>( Pay Online and Get 5% additional discount )</p>
                                     </div>
                                     {errors?.paymentMethod && touched?.paymentMethod ? (
                                         <p className='text-red-600'>*{errors?.paymentMethod}</p>

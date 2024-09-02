@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 
 const AdminOrderList = ({ orders }) => {
     const dispatch = useDispatch();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [sortedOrders, setSortedOrders] = useState([]);
     const [curOrderStatusAndId, setCurOrderStatusAndId] = useState('');
     const [isAlertOpen, setIsAlertOpen] = useState(false);
@@ -135,7 +135,6 @@ const AdminOrderList = ({ orders }) => {
                     setIsAlertOpen(false)
                 }
             })
-
     }
 
     // for fetching new orders
@@ -146,7 +145,6 @@ const AdminOrderList = ({ orders }) => {
     }
 
     const handleInvoiceGeneration = (orderId) => {
-
 
         dispatch(generateInvoice(orderId))
             .unwrap()
@@ -305,7 +303,7 @@ const AdminOrderList = ({ orders }) => {
             )}
 
 
-            {/* alert for cancelling order  */}
+            {/* alert for changing order status  */}
             <Alert
                 isOpen={isAlertOpen}
                 alertMessage={`Do you want to update the order status to ${curOrderStatusAndId.orderStatus}`}

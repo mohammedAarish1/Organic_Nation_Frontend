@@ -3,6 +3,7 @@ import React from 'react';
 const Alert = ({ isOpen, alertMessage, actionMessageOne = '', actionMessageTwo = '', actionMessageThree = '', hideAlert, handleAction1, handleAction2 = () => { } }) => {
 
 
+
   if (!isOpen) return null;
 
   return (

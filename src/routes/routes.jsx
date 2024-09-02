@@ -44,7 +44,8 @@ const getRoutes = () => {
         <Route
             key="register"
             path='/register'
-            element={!token ? <Auth /> : <Home />}
+            // element={!token ? <Auth /> : <Home />}
+            element={<Auth />}
         />,
         <Route
             key="forgot-password"
@@ -119,7 +120,7 @@ const getRoutes = () => {
         <Route
             key="checkout"
             path='/cart/checkout'
-            element={token && cartItemsList.length > 0 ? < Checkout /> : <Auth />}
+            element={token && cartItemsList?.length > 0 ? < Checkout /> : <Auth />}
         />,
         <Route
             key="google-signup"
