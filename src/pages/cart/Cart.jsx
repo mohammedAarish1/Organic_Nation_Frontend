@@ -7,6 +7,7 @@ import { BsEmojiAstonished } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { ImSpinner9 } from "react-icons/im";
+import { PiSealCheckFill } from "react-icons/pi";
 // product image tempoeary 
 import { Link } from 'react-router-dom';
 import { getAllCartItems, clearCart, removeFromCart, updateQty, getCouponCodeValidate } from '../../features/cart/cart';
@@ -24,10 +25,9 @@ const Cart = () => {
 
 
   const { user } = useSelector(state => state.user);
-  const { cartItemsList, loading, validatingCouponCode, totalCartAmount, totalWeight, totalTax, error, } = useSelector((state) => state.cart);
+  const { cartItemsList, loading, validatingCouponCode, totalCartAmount, totalWeight, totalTax, error, isCouponCodeApplied } = useSelector((state) => state.cart);
   const { isAvailable, message, checking } = useSelector(state => state.delivery);
   const dispatch = useDispatch();
-  const ccToken = JSON.parse(sessionStorage.getItem('ccToken'));
 
 
 
@@ -65,7 +65,7 @@ const Cart = () => {
 
 
   // coupon code validation  
-  const handleCouponCodeValidation = (values,action) => {
+  const handleCouponCodeValidation = (values, action) => {
     // const items = cartItemsList.map(item => ({ id: item._id, quantity: item.quantity }));
     const payload = { userEmail: user.email, couponCode: values.couponCode };
 
@@ -74,7 +74,7 @@ const Cart = () => {
       .then((result) => {
         dispatch(getAllCartItems());
 
-    
+
         // sessionStorage.setItem('ccToken', JSON.stringify(result.validationToken))
         toast.success('Coupon Code successfully applied !')
         action.resetForm()
@@ -89,7 +89,7 @@ const Cart = () => {
   }
 
 
-  
+
 
 
 
@@ -262,7 +262,7 @@ const Cart = () => {
             <span>₹ {cartItemsList?.length > 0 ? totalTax : 0}</span>
           </div>
           {/* coupon  code implementation */}
-          <div className="flex  items-center">
+          <div className="">
             <Formik
               initialValues={{ couponCode: "" }}
               // validationSchema={handleCouponCodeValidation}
@@ -270,7 +270,12 @@ const Cart = () => {
             >
               {() => (
                 <Form>
-                  <div className='flex items-center '>
+                  <div
+                    className='flex items-center'
+                    data-tooltip-id="couponCode-tooltip"
+                    data-tooltip-content="To use coupon code please log in and have minimum cart value above ₹1000"
+                    data-tooltip-place="top"
+                  >
                     <Field
                       type="text"
                       name="couponCode"
@@ -282,13 +287,40 @@ const Cart = () => {
                       className={`px-4 py-1 rounded-tr-md rounded-br-md ${user && totalCartAmount > 1000 ? 'bg-green-400 hover:bg-green-500' : 'bg-green-200'} `}
                       disabled={!user || totalCartAmount < 1000}
                     >
-                      {validatingCouponCode ? (<ImSpinner9 className='animate-spin' />) : "Validate"}
+                      {validatingCouponCode ? (<ImSpinner9 className='animate-spin' />) : "Apply"}
 
                     </button>
                   </div>
-                  {/* <div className='text-center mt-1 text-green-700 font-bold text-xs'>
-                    <p>{isCouponCodeApplied && 'Coupon Code Applied !'}</p>
-                  </div> */}
+                  <div className='text-center mt-1 text-green-700 font-bold text-xs'>
+                    {isCouponCodeApplied && (
+                      <p className='flex justify-center items-center gap-1'>'Coupon Code Applied < PiSealCheckFill className='text-xl' /></p>
+                    )}
+
+                  </div>
+
+                  {!user || totalCartAmount < 1000 && (
+                    <Tooltip
+                      id="couponCode-tooltip"
+                      style={{
+                        backgroundColor: "gray",
+                        color: "#ffffff",
+                        borderRadius: "10px",
+                        padding: "20px"
+                      }}
+                      place="bottom"
+                      animation="fade"
+                      delayShow={200} // delay before showing in ms
+                      delayHide={300} // delay before hiding in ms
+                    // offset={10} // distance in pixels
+                    // arrow={true}
+                    // arrowColor="#25D366"
+                    >
+
+                    </Tooltip >
+                  )}
+
+
+
                 </Form>
               )}
             </Formik>

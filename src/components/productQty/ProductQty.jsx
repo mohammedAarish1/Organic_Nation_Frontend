@@ -1,9 +1,13 @@
 import React from 'react'
 import { FaMinus, FaPlus } from 'react-icons/fa6';
+import { ImSpinner9 } from 'react-icons/im';
+import { useSelector } from 'react-redux';
 
 
 
 const ProductQty = ({ qty, increaseQty, decreaseQty }) => {
+
+    const { loading } = useSelector(state => state.cart);
 
 
     return (
@@ -16,7 +20,7 @@ const ProductQty = ({ qty, increaseQty, decreaseQty }) => {
                     }}>
                     <FaMinus />
                 </button>
-                <p className="text-xl">{qty}</p>
+                <p className="text-xl">{loading ? (<ImSpinner9 className='animate-spin text-xs' />) : qty}</p>
                 {/* <input
                     type="text"
                     value={qty}
@@ -26,7 +30,7 @@ const ProductQty = ({ qty, increaseQty, decreaseQty }) => {
                 <button
                     className='outline-none p-1 cursor-pointer bg-green-700 hover:bg-green-900 text-white rounded-sm'
                     onClick={() => {
-                       
+
                         increaseQty();
                     }}>
                     <FaPlus />
