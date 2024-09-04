@@ -61,18 +61,19 @@ const PopupBanner = () => {
                         }}><IoCloseSharp className='text-4xl' /></button>
 
                 </div>
+                <h2 className="text-3xl font-bold text-center xs:mb-2 mb-4 lg:mb-0">Welcome to Our Store!</h2>
 
                 <div className='flex md:flex-row flex-col'>
                     <div className= ' flex justify-center items-center md:w-[40%] '>
 
                         <div className='font-serif text-center'>
 
-                            <h2 className="text-2xl font-bold mb-4">Welcome to Our Store!</h2>
-                            <p className="mb-4 lg:text-2xl  tracking-widest ">Enjoy FREE SHIPPING on orders of Rs. 499 or more — Shop now and save!</p>
+                            {/* <h2 className="text-3xl font-bold mb-4">Welcome to Our Store!</h2> */}
+                            <p className="mb-4 lg:text-2xl  tracking-widest ">Enjoy <span className='font-semibold'>FREE SHIPPING</span> on orders of Rs. 499 or more, also get additional <span className='font-semibold'>5% discount</span> on Online Payments — Shop now and save!</p>
                         </div>
                     </div>
                     <div>
-                        <img src="popupBanner.png" alt="" />
+                        <img src="https://organicnationmages.s3.ap-south-1.amazonaws.com/popupBanner.png" alt="" />
                     </div>
                 </div>
             </div>

@@ -1,5 +1,7 @@
 import React from 'react';
 import { GoChecklist } from "react-icons/go";
+import SEO from '../../helper/SEO/SEO';
+
 
 
 const TermsAndConditions = () => {

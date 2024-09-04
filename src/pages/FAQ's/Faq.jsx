@@ -1,5 +1,6 @@
 import React from "react";
 import AccordionItem from "../../components/accordionItem/AccordionItem";
+import SEO from '../../helper/SEO/SEO';
 
 const Faq = () => {
   // faq array 
@@ -83,22 +84,24 @@ const Faq = () => {
 
   return (
     <section className="relative z-20 overflow-hidden pb-12 pt-20 px-10 lg:pb-[90px]">
-      <SEO
-        title="FAQs About Organic Products - Organic Nation"
-        description="Here you will find the answers to the most frequently asked questions about the organic and natural Products range of Organic Nation."
-        canonicalUrl="https://organicnation.co.in/frequently-asked-questions"
-        ogTitle="FAQs About Organic Products - Organic Nation"
-        ogDescription="Here you will find the answers to the most frequently asked questions about the organic and natural Products range of Organic Nation"
-        ogUrl="https://organicnation.co.in/frequently-asked-questions"
-        ogImage="https://organicnationmages.s3.ap-south-1.amazonaws.com/logo/logo.png"
-        ogImageWidth="478"
-        ogImageHeight="446"
-        twitterTitle="FAQs About Organic Products - Organic Nation"
-        twitterDescription="Here you will find the answers to the most frequently asked questions about the organic and natural Products range of Organic Nation"
-        twitterImage="https://organicnationmages.s3.ap-south-1.amazonaws.com/logo/logo.png"
-        twitterSite="Organic Nation"
-        twitterCreator="organicnation_"
-      />
+      <div>
+        <SEO
+          title="FAQs About Organic Products - Organic Nation"
+          description="Here you will find the answers to the most frequently asked questions about the organic and natural Products range of Organic Nation."
+          canonicalUrl="https://organicnation.co.in/frequently-asked-questions"
+          ogTitle="FAQs About Organic Products - Organic Nation"
+          ogDescription="Here you will find the answers to the most frequently asked questions about the organic and natural Products range of Organic Nation"
+          ogUrl="https://organicnation.co.in/frequently-asked-questions"
+          ogImage="https://organicnationmages.s3.ap-south-1.amazonaws.com/logo/logo.png"
+          ogImageWidth="478"
+          ogImageHeight="446"
+          twitterTitle="FAQs About Organic Products - Organic Nation"
+          twitterDescription="Here you will find the answers to the most frequently asked questions about the organic and natural Products range of Organic Nation"
+          twitterImage="https://organicnationmages.s3.ap-south-1.amazonaws.com/logo/logo.png"
+          twitterSite="Organic Nation"
+          twitterCreator="organicnation_"
+        />
+      </div>
       <div className="container mx-auto">
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">

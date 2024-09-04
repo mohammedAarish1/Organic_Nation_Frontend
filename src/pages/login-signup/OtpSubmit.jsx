@@ -103,7 +103,7 @@ const OtpSubmit = () => {
                             <div className='flex flex-col gap-5'>
                                 <header className="">
                                     <h1 className="text-2xl font-bold mb-1 text-[var(--bgColorSecondary)] tracking-wide">OTP Verification</h1>
-                                    <p className="text-[15px] text-slate-400">Enter the 4-digit verification code that was sent to your phone number.</p>
+                                    <p className="text-[15px] text-slate-400">Enter the 6-digit verification code that was sent to your phone number.</p>
                                 </header>
                                 <OtpInput length={6} handleOtpSubmit={handleOtpSubmit} />
                                 <div>

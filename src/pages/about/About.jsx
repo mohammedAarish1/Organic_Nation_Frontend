@@ -1,4 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
+import SEO from '../../helper/SEO/SEO';
+
+
 
 
 const About = () => {
