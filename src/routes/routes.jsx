@@ -99,7 +99,7 @@ const getRoutes = () => {
         />,
         <Route
             key="terms"
-            path='/terms&conditions'
+            path='/termsandconditions'
             element={<TermsAndConditions />}
         />,
         <Route

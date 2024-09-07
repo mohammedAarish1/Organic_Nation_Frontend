@@ -10,10 +10,10 @@ const TermsAndConditions = () => {
       <SEO
         title="Terms & Conditions | Organic Nation"
         description="This page contains important information regarding Organic Nation's terms and conditions. By using this website, you accept these terms and conditions."
-        canonicalUrl="https://organicnation.co.in/terms&conditions"
+        canonicalUrl="https://organicnation.co.in/termsandconditions"
         ogTitle="Terms & Conditions | Organic Nation"
         ogDescription="This page contains important information regarding Organic Nation's terms and conditions. By using this website, you accept these terms and conditions."
-        ogUrl="https://organicnation.co.in/terms&conditions"
+        ogUrl="https://organicnation.co.in/termsandconditions"
         ogImage="https://organicnationmages.s3.ap-south-1.amazonaws.com/logo/logo.png"
         ogImageWidth="478"
         ogImageHeight="446"

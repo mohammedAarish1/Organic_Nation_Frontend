@@ -13,6 +13,8 @@ import AdminUsers from '../components/admin/AdminUsers';
 import { fetchAdminData } from '../features/admin/adminSlice';
 import { getAllUserQueries, getAllUsers, getOrdersByStatus, getTotalOrders } from '../features/admin/adminData';
 import AdminQueries from '../components/admin/AdminQueries';
+import AdminProducts from '../components/admin/AdminProducts';
+import { getProductsData } from '../imports';
 
 // Import other admin components
 
@@ -38,7 +40,8 @@ const AdminRoutes = () => {
 
       dispatch(fetchAdminData(adminToken))
         .then(res => {
-          dispatch(getTotalOrders())
+          dispatch(getTotalOrders());
+          dispatch(getProductsData());
           dispatch(getAllUsers(adminToken))
           dispatch(getAllUserQueries(adminToken))
           dispatch(getOrdersByStatus("total"))
@@ -98,6 +101,7 @@ const AdminRoutes = () => {
             <Route path="/orders" element={<AdminOrders />} />
             <Route path="/users" element={<AdminUsers />} />
             <Route path="/queries" element={<AdminQueries />} />
+            <Route path="/products" element={<AdminProducts />} />
           </Routes>
         </div>
       </div>

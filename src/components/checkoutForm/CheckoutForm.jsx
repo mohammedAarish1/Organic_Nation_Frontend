@@ -59,7 +59,6 @@ const CheckoutForm = () => {
         paymentMethod: '',
     };
 
-
     // checkout form submission
     const handleSubmit = (values, action) => {
 
@@ -80,7 +79,8 @@ const CheckoutForm = () => {
                 weight: item.weight,
                 tax: item.tax,
                 hsnCode: item["hsn-code"],
-                unitPrice: discountedPrice // Update price with the discounted value
+                // unitPrice: discountedPrice // Update price with the discounted value
+                unitPrice: item.price // Update price with the discounted value
             };
         });
 
@@ -102,6 +102,7 @@ const CheckoutForm = () => {
                 phoneNumber: !values.sameAsContact ? values.receiverPhone || '' : '',
             },
             merchantTransactionId: merchantTransactionId,
+            isCouponCodeApplied:user.cart.isCouponCodeApplied,
         }
 
 

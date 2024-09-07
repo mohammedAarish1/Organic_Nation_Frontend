@@ -14,11 +14,11 @@ const AdminOrders = () => {
 
 
   useEffect(() => {
-    dispatch(getOrdersByStatus("total"))
-    if (adminToken) {
+   
       dispatch(getTotalOrders())
-    }
-  }, [adminToken, getOrdersByStatus])
+      dispatch(getOrdersByStatus("total"));
+    
+  }, [adminToken, getOrdersByStatus,dispatch])
 
 
   if (loading) return <div>Loading...</div>

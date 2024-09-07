@@ -5,6 +5,7 @@ import { IoMdLogIn } from "react-icons/io";
 import { PiSignOutBold } from "react-icons/pi";
 import { FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
 import { RiMailUnreadFill } from "react-icons/ri";
+import { FaProductHunt } from "react-icons/fa6";
 
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { IoCloseSharp } from "react-icons/io5";
@@ -89,6 +90,14 @@ const AdminSidebar = ({ setShowSidebar }) => {
                 >
                     <RiMailUnreadFill />
                     <span>Queries</span>
+                </NavLink>
+                <NavLink
+                    to="/admin/products"
+                    className={({ isActive }) => `${isActive ? ' underline underline-offset-4' : null}  flex items-center space-x-4`}
+                    onClick={() => setShowSidebar(false)}
+                >
+                    <FaProductHunt />
+                    <span>Products</span>
                 </NavLink>
                 <NavLink to="#" className={({ isActive }) => ` flex items-center space-x-4`}>
 

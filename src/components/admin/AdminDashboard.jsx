@@ -95,7 +95,10 @@ const AdminDashboard = () => {
           <p className="text-4xl font-bold">{totalUserQueries.length}</p>
           <h3 className="text-2xl font-bold mb-2">Total Queries</h3>
         </div>
-        <div className=" cursor-pointer flex justify-center flex-col text-[var(--themeColor)] hover:scale-90 duration-300 shadow-md rounded-md p-4 lg:w-1/5 md:w-1/3 w-full h-36 hover:opacity-85">
+        <div
+          className=" cursor-pointer flex justify-center flex-col text-[var(--themeColor)] hover:scale-90 duration-300 shadow-md rounded-md p-4 lg:w-1/5 md:w-1/3 w-full h-36 hover:opacity-85"
+          onClick={() => navigate('/admin/products')}
+        >
           <p className="text-4xl font-bold ">{productData.length}</p>
           <h3 className="text-2xl font-bold mb-2">Total Products</h3>
         </div>

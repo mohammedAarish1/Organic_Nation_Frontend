@@ -107,6 +107,7 @@ export const generateInvoice = createAsyncThunk(
     }
 );
 
+// update order status 
 export const updateOrderStatus = createAsyncThunk(
     'adminData/updateOrderStatus',
     async (data, { rejectWithValue }) => {
@@ -130,7 +131,29 @@ export const updateOrderStatus = createAsyncThunk(
     }
 )
 
+// add a new product in the database 
+export const addNewProductInDatabase = createAsyncThunk(
+    'adminData/addNewProductInDatabase',
+    async (data, { rejectWithValue }) => {
+        const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
+        try {
+            const response = await axios.post(`${apiUrl}/api/admin/products/add`, data, {
+                headers: {
+                    'Authorization': `Bearer ${adminToken}`,
+                    'Content-Type': 'multipart/form-data'  // Changed this line
+                }
+            });
 
+            // return response.data;
+        } catch (error) {
+            if (error.response && error.response.data) {
+                return rejectWithValue(error.response.data);
+            } else {
+                return rejectWithValue(error.message);
+            }
+        }
+    }
+);
 
 
 
@@ -214,22 +237,6 @@ const adminData = createSlice({
                 }
             }
         },
-        // clearUserOrders: (state, action) => {
-        //     return {
-        //         ...state,
-        //         orders: [],
-        //         ordersByStatus: {
-        //             ...state.ordersByStatus,
-        //             orderData: [],
-        //         }
-        //     }
-        // },
-        // resetCheckoutStatus: (state, action) => {
-        //     return {
-        //         ...state,
-        //         checkoutStatus: action.payload
-        //     }
-        // }
     },
     extraReducers: (builder) => {
         builder
@@ -246,6 +253,11 @@ const adminData = createSlice({
                     ...state,
                     loading: false,
                     totalOrders: action.payload,
+                    ordersByStatus: {
+                        ...state.ordersByStatus,
+                        orderData: state.totalOrders,
+                        orderStatusTab: action.payload
+                    }
 
                 }
             })
