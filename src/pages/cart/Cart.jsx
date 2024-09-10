@@ -30,7 +30,6 @@ const Cart = () => {
   const dispatch = useDispatch();
 
 
-
   const pincodeRegExp = /^(\+\d{1,3}[- ]?)?\d{6}$/;
 
   const validationSchema = Yup.object({

@@ -70,7 +70,7 @@ const CheckoutForm = () => {
 
         const orderDetails = cartItemsList.map(item => {
             // Calculate the discounted price
-            const discountedPrice = item.price - (item.price * (item.discount / 100));
+            // const discountedPrice = item.price - (item.price * (item.discount / 100));
 
             return {
                 id: item._id,
@@ -119,9 +119,6 @@ const CheckoutForm = () => {
                     })
 
             } else {
-
-
-
                 dispatch(addOrders(checkoutData))
                     .then((value) => {
                         if (value.type === "manageOrders/addOrders/fulfilled") {
@@ -140,18 +137,12 @@ const CheckoutForm = () => {
                         }
                     })
 
-                // dispatch(initiatePayment(
-                //     {
-                //         number: values.receiverPhone ? values.receiverPhone : values.phone.slice(3),
-                //         amount: totalCartAmount + shippingFee,
-                //     }
-                // ))
-                // navigate('/payment-gateway', { state: { totalCartAmount, shippingFee, } })
+                
             }
 
         }
 
-        // action.resetForm();
+        action.resetForm();
 
     };
 
@@ -188,7 +179,7 @@ const CheckoutForm = () => {
 
                                     />
 
-                                    <label htmlFor="firstName" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">First Name</label>
+                                    <label htmlFor="firstName" className="absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">First Name</label>
                                     <FaUserEdit className='absolute top-4 right-4 text-xl' />
                                     {errors?.firstName && touched?.firstName ? (
                                         <p className='text-red-600'>*{errors?.firstName}</p>
@@ -209,7 +200,7 @@ const CheckoutForm = () => {
                                     />
 
 
-                                    <label htmlFor="lastName" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">Last Name</label>
+                                    <label htmlFor="lastName" className="absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 ">Last Name</label>
 
                                     <FaUserEdit className='absolute top-4 right-4 text-xl' />
                                     {errors?.lastName && touched?.lastName ? (
@@ -230,7 +221,7 @@ const CheckoutForm = () => {
                                     />
 
 
-                                    <label htmlFor="email" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">Email</label>
+                                    <label htmlFor="email" className="absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 ">Email</label>
                                     <MdEmail className='absolute top-4 right-4 text-xl' />
                                     {errors.email && touched.email ? (
                                         <p className='text-red-600'>*{errors.email}</p>
@@ -249,7 +240,7 @@ const CheckoutForm = () => {
                                         autoComplete="off"
                                     />
 
-                                    <label htmlFor="phone" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">Phone</label>
+                                    <label htmlFor="phone" className="absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">Phone</label>
 
                                     <MdOutlinePhoneAndroid className='absolute top-4 right-4 text-xl' />
                                     {errors?.phone && touched?.phone ? (
@@ -300,7 +291,7 @@ const CheckoutForm = () => {
                                             autoComplete="off"
                                         />
 
-                                        <label htmlFor="receiverFirstName" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">First Name</label>
+                                        <label htmlFor="receiverFirstName" className="absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">First Name</label>
                                         <FaUserEdit className='absolute top-4 right-4 text-xl' />
                                         {errors.receiverFirstName && touched.receiverFirstName ? (
                                             <p className='text-red-600'>*{errors.receiverFirstName}</p>
@@ -320,7 +311,7 @@ const CheckoutForm = () => {
                                         />
 
 
-                                        <label htmlFor="receiverLastName" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">Last Name</label>
+                                        <label htmlFor="receiverLastName" className="absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">Last Name</label>
 
                                         <FaUserEdit className='absolute top-4 right-4 text-xl' />
                                         {errors.receiverLastName && touched.receiverLastName ? (
@@ -340,7 +331,7 @@ const CheckoutForm = () => {
                                             autoComplete="off"
                                         />
 
-                                        <label htmlFor="receiverEmail" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">Email</label>
+                                        <label htmlFor="receiverEmail" className="absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">Email</label>
                                         <MdEmail className='absolute top-4 right-4 text-xl' />
                                         {errors?.receiverEmail && touched?.receiverEmail ? (
                                             <p className='text-red-600'>*{errors?.receiverEmail}</p>
@@ -359,7 +350,7 @@ const CheckoutForm = () => {
                                             autoComplete="off"
                                         />
 
-                                        <label htmlFor="receiverPhone" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">Phone</label>
+                                        <label htmlFor="receiverPhone" className="absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">Phone</label>
 
                                         <MdOutlinePhoneAndroid className='absolute top-4 right-4 text-xl' />
                                         {errors?.receiverPhone && touched?.receiverPhone ? (
@@ -391,7 +382,7 @@ const CheckoutForm = () => {
                                             autoComplete="off"
                                         />
 
-                                        <label htmlFor="shippingAddress.address" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">Address Line</label>
+                                        <label htmlFor="shippingAddress.address" className="absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">Address Line</label>
                                         <MdLocationCity className='absolute top-4 right-4 text-xl' />
                                         {errors?.shippingAddress?.address && touched?.shippingAddress?.address ? (
                                             <p className='text-red-600'>*{errors?.shippingAddress?.address}</p>
@@ -412,7 +403,7 @@ const CheckoutForm = () => {
 
                                         <label
                                             htmlFor="shippingAddress.optionalAddress"
-                                            className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto "
+                                            className="absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  "
                                         >
                                             Address Line 2 (Landmark)
                                         </label>
@@ -434,7 +425,7 @@ const CheckoutForm = () => {
                                             autoComplete="off"
                                         />
 
-                                        <label htmlFor="shippingAddress.city" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">City</label>
+                                        <label htmlFor="shippingAddress.city" className="absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">City</label>
                                         <MdLocationCity className='absolute top-4 right-4 text-xl' />
                                         {errors?.shippingAddress?.city && touched?.shippingAddress?.city ? (
                                             <p className='text-red-600'>*{errors?.shippingAddress?.city}</p>
@@ -454,7 +445,7 @@ const CheckoutForm = () => {
                                                 <option key={state} value={state} className=''>{state}</option>
                                             ))}
                                         </Field>
-                                        <label htmlFor="shippingAddress.state" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 text-green-700 peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">State</label>
+                                        <label htmlFor="shippingAddress.state" className="absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">State</label>
                                         {errors?.shippingAddress?.state && touched?.shippingAddress?.state ? (
                                             <p className='text-red-600'>*{errors?.shippingAddress?.state}</p>
                                         ) : (
@@ -473,7 +464,7 @@ const CheckoutForm = () => {
                                             autoComplete="off"
                                         />
 
-                                        <label htmlFor="shippingAddress.zipCode" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">Zip Code</label>
+                                        <label htmlFor="shippingAddress.zipCode" className="absolute text-sm text-gray-500   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">Zip Code</label>
                                         <PiFileZipFill className='absolute top-4 right-4 text-xl' />
                                         {errors?.shippingAddress?.zipCode && touched?.shippingAddress?.zipCode ? (
                                             <p className='text-red-600'>*{errors?.shippingAddress?.zipCode}</p>
@@ -491,7 +482,7 @@ const CheckoutForm = () => {
                                         >
                                             <option value="india">India</option>
                                         </Field>
-                                        <label htmlFor="shippingAddress.country" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 text-green-700 peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">Country/Region</label>
+                                        <label htmlFor="shippingAddress.country" className="absolute text-sm text-gray-500   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">Country/Region</label>
                                         {errors?.shippingAddress?.country && touched?.shippingAddress?.country ? (
                                             <p className='text-red-600'>*{errors?.shippingAddress?.country}</p>
                                         ) : (
@@ -537,7 +528,7 @@ const CheckoutForm = () => {
                                                 autoComplete="off"
                                             />
 
-                                            <label htmlFor="billingAddress.address" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">Address Line</label>
+                                            <label htmlFor="billingAddress.address" className="absolute text-sm text-gray-500   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">Address Line</label>
                                             <MdLocationCity className='absolute top-4 right-4 text-xl' />
                                             {errors?.billingAddress?.address && touched?.billingAddress?.address ? (
                                                 <p className='text-red-600'>*{errors?.billingAddress?.address}</p>
@@ -558,7 +549,7 @@ const CheckoutForm = () => {
 
                                             <label
                                                 htmlFor="billingAddress.optionalAddress"
-                                                className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto "
+                                                className="absolute text-sm text-gray-500   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  "
                                             >
                                                 Address Line 2 (Landmark)
                                             </label>
@@ -580,7 +571,7 @@ const CheckoutForm = () => {
                                                 autoComplete="off"
                                             />
 
-                                            <label htmlFor="billingAddress.city" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">City</label>
+                                            <label htmlFor="billingAddress.city" className="absolute text-sm text-gray-500   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">City</label>
                                             <MdLocationCity className='absolute top-4 right-4 text-xl' />
                                             {errors?.billingAddress?.city && touched?.billingAddress?.city ? (
                                                 <p className='text-red-600'>*{errors?.billingAddress?.city}</p>
@@ -601,7 +592,7 @@ const CheckoutForm = () => {
                                                     <option key={state} value={state} className=''>{state}</option>
                                                 ))}
                                             </Field>
-                                            <label htmlFor="billingAddress.state" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 text-green-700 peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">State</label>
+                                            <label htmlFor="billingAddress.state" className="absolute text-sm text-gray-500   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">State</label>
                                             {errors.billingAddress?.state && touched.billingAddress?.state ? (
                                                 <p className='text-red-600'>*{errors.billingAddress?.state}</p>
                                             ) : (
@@ -620,7 +611,7 @@ const CheckoutForm = () => {
                                                 autoComplete="off"
                                             />
 
-                                            <label htmlFor="billingAddress.zipCode" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">Zip Code</label>
+                                            <label htmlFor="billingAddress.zipCode" className="absolute text-sm text-gray-500   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">Zip Code</label>
                                             <PiFileZipFill className='absolute top-4 right-4 text-xl' />
                                             {errors.billingAddress?.zipCode && touched.billingAddress?.zipCode ? (
                                                 <p className='text-red-600'>*{errors.billingAddress?.zipCode}</p>
@@ -638,7 +629,7 @@ const CheckoutForm = () => {
                                             >
                                                 <option value="india">India</option>
                                             </Field>
-                                            <label htmlFor="billingAddress.country" className="absolute text-sm   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 text-green-700 peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto ">Country/Region</label>
+                                            <label htmlFor="billingAddress.country" className="absolute text-sm text-gray-500   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">Country/Region</label>
                                             {errors.billingAddress?.country && touched.billingAddress?.country ? (
                                                 <p className='text-red-600'>*{errors.billingAddress?.country}</p>
                                             ) : (
@@ -660,7 +651,7 @@ const CheckoutForm = () => {
                                             id='online_payment'
                                             name="paymentMethod"
                                             value="online_payment"
-
+                                           
                                         />
                                         <label htmlFor="online_payment">Online Payment</label>
                                     </div>

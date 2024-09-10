@@ -128,6 +128,15 @@ const Footer = ({ moveToTop }) => {
                         </div>
                     </div>
                 </div>
+                <div>
+                    <div className='flex items-center gap-2'>
+                        <img src="/maestro.png" alt="maestro" className='w-12' />
+                        <img src="/visa.png" alt="visa" className='w-14' />
+                        <img src="/rupay.png" alt="rupay" className=' h-16' />
+                        <img src="/mastercard.png" alt="mastercard" className='w-12' />
+                        <img src="/upi.png" alt="upi" className='w-16' />
+                    </div>
+                </div>
                 <div className='pb-5 pt-10'>
                     <div className='flex flex-wrap justify-between items-center pr-10'>
                         {qualities.map(quality => (

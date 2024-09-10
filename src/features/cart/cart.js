@@ -177,7 +177,8 @@ export const clearCart = createAsyncThunk(
                     return response.data;
                 }
             } else {
-                dispatch(clearLocalCart());
+                dispatch(clearLocalCart())
+                
             }
 
         } catch (error) {
@@ -471,7 +472,7 @@ export const cartSlice = createSlice({
                 return {
                     ...state,
                     loading: false,
-                    cartItemsList: action.payload.productDetails,
+                    cartItemsList: action.payload.productDetails || [],
                     totalCartItems: totalQty,
                     totalCartAmount: action.payload.totalCartAmount,
                     totalWeight: JSON.stringify(totalWeight),
@@ -494,6 +495,7 @@ export const cartSlice = createSlice({
                 }
             })
             .addCase(clearCart.fulfilled, (state, action) => {
+
 
                 if (action.payload) {
                     return {
