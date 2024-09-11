@@ -23,6 +23,7 @@ const ContactUs = () => {
     email: '',
     phoneNumber: '',
     city: '',
+    // message:'',
 
   }
 
@@ -172,6 +173,21 @@ const ContactUs = () => {
                         />
                         <ErrorMessage name="city" component="div" className='text-red-600 text-[14px]' />
                       </div>
+                      {/* message  */}
+                      {/* <div className="mb-4">
+                        <label className="block text-[var(--themeColor)] font-bold tracking-widest uppercase text-sm font- mb-2" htmlFor="city">
+                          Message (optional)
+                        </label>
+                        <Field
+                          // type="text"
+                           as="textarea"
+                           placeholder='Type your query message here..'
+                          id="message"
+                          name="message"
+                          className="shadow appearance-none border bg-[var(--bgColorSecondary)] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        />
+                        <ErrorMessage name="message" component="div" className='text-red-600 text-[14px]' />
+                      </div> */}
 
                       {/* submit button  */}
                       <div className="flex items-center justify-end mt-6">
