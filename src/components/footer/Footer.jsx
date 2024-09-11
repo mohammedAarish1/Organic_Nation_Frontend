@@ -130,11 +130,11 @@ const Footer = ({ moveToTop }) => {
                 </div>
                 <div>
                     <div className='flex items-center gap-2'>
-                        <img src="/maestro.png" alt="maestro" className='w-12' />
-                        <img src="/visa.png" alt="visa" className='w-14' />
-                        <img src="/rupay.png" alt="rupay" className=' h-16' />
-                        <img src="/mastercard.png" alt="mastercard" className='w-12' />
-                        <img src="/upi.png" alt="upi" className='w-16' />
+                        <img src="https://organicnationmages.s3.ap-south-1.amazonaws.com/payments/maestro.png" alt="maestro" className='w-12' />
+                        <img src="https://organicnationmages.s3.ap-south-1.amazonaws.com/payments/visa.png" alt="visa" className='w-14' />
+                        <img src="https://organicnationmages.s3.ap-south-1.amazonaws.com/payments/rupay.png" alt="rupay" className=' h-16' />
+                        <img src="https://organicnationmages.s3.ap-south-1.amazonaws.com/payments/mastercard.png" alt="mastercard" className='w-12' />
+                        <img src="https://organicnationmages.s3.ap-south-1.amazonaws.com/payments/upi.png" alt="upi" className='w-16' />
                     </div>
                 </div>
                 <div className='pb-5 pt-10'>

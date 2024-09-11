@@ -119,6 +119,11 @@ const ProductDetails = () => {
   }
   return (
     <div>
+      {/* <section>
+        <div>
+          <img src="/offerBanner.png" alt="" />
+        </div>
+      </section> */}
       <section className='xs:py-20 py-5  '>
         {/* visible in mobile devices  */}
         <h2 className=' md:hidden block font-semibold xs:text-3xl text-2xl xs:px-10 px-4' >{product.name}</h2>

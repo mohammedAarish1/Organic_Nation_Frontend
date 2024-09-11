@@ -86,6 +86,7 @@ export const fetchUserData = createAsyncThunk(
 
 const initialState = {
     user: null,
+    userRegistered: true,  // need this varibale to show UI of log in and sign up 
     user_loading: false,
     error: null,
     token: JSON.parse(sessionStorage.getItem('token')) || '',
@@ -103,6 +104,12 @@ const userSlice = createSlice({
                 token: ''
             }
         },
+        updateUserRegisterStatus(state, action) {
+            return {
+                ...state,
+                userRegistered: action.payload
+            }
+        }
 
     },
     extraReducers: (builder) => {
@@ -203,6 +210,6 @@ const userSlice = createSlice({
 
 })
 
-export const { userLogout, clearLocalCartFlag } = userSlice.actions;
+export const { userLogout, clearLocalCartFlag, updateUserRegisterStatus } = userSlice.actions;
 
 export default userSlice.reducer;

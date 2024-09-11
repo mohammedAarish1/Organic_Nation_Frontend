@@ -1,7 +1,7 @@
 import React from 'react'
 import TestimonialSlider from '../../components/testimonialSlider/TestimonialSlider';
 import TestimonialSection from '../../components/testimonial-section/TestimonialSection';
-
+import SEO from '../../helper/SEO/SEO'
 
 const Testimonials = () => {
 

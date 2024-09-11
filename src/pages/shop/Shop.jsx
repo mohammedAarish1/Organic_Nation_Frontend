@@ -68,8 +68,6 @@ const Shop = () => {
         twitterCreator="organicnation_"
       />
 
-
-
       {/* <h1 className='text-5xl max-w-[90%] mx-auto px-4 py-4'>All Products</h1> */}
       {/* number of products available  */}
       {categoryBtnValue !== 'all' && (

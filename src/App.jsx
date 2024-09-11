@@ -35,7 +35,7 @@ function App() {
   const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
 
   const dispatch = useDispatch();
-  const { totalOrders, loading, ordersByStatus } = useSelector(state => state.adminData)
+  // const { totalOrders, loading, ordersByStatus } = useSelector(state => state.adminData)
 
 
 

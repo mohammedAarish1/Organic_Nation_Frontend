@@ -6,10 +6,13 @@ import { verifyOTP } from '../../features/auth/OTPSlice';
 import { toast } from 'react-toastify';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ImSpinner9 } from 'react-icons/im';
-import { fetchUserData, userGoogleSignup, userSignup } from '../../features/auth/userSlice';
+import { fetchUserData, updateUserRegisterStatus, userGoogleSignup, userLogin, userSignup } from '../../features/auth/userSlice';
 
 // react icons 
 import { FaArrowRight } from "react-icons/fa6";
+import { getAllOrders } from '../../features/manageOrders/manageOrders';
+import { getAllCartItems } from '../../features/cart/cart';
+import { fetchDataAfterSuccessfullLogIn } from '../../helper/helperFunctions';
 
 
 
@@ -51,19 +54,40 @@ const OtpSubmit = () => {
                                     if (value?.error?.message === 'Rejected') {
                                         return;
                                     } else {
-                                        toast.success("Congragulations! signed up succesfully");
-                                        navigate('/register');
+                                        // navigate('/register');
+                                        dispatch(userLogin({ userId: value.meta.arg.email, password: value.meta.arg.password }))
+                                            .then((value) => {
+                                                if (value.meta.requestStatus === 'fulfilled') {
+                                                    const token = value.payload.token;
+                                                    fetchDataAfterSuccessfullLogIn(token, dispatch)
+                                                    navigate('/')
+                                                    toast.success("Congratulations! signed up succesfully");
+
+                                                }
+                                            })
+
+
                                     }
 
                                 })
                         } else if (signingUpUser.otherDetails && signingUpUser.googleSignup) {
                             dispatch(userGoogleSignup({ userData: signingUpUser.otherDetails, token: signingUpUser.token }))
-                                .then(() => {
-                                    toast.success("Congragulations! signed up succesfully");
-                                    navigate('/register')
+                                .then((value) => {
+                                    dispatch(userLogin({ userId: value.meta.arg.userData.phoneNumber, password: value.meta.arg.userData.password }))
+                                        .then((value) => {
+                                            if (value.meta.requestStatus === 'fulfilled') {
+                                                const token = value.payload.token;
+                                                fetchDataAfterSuccessfullLogIn(token, dispatch)
+                                                navigate('/')
+                                                toast.success("Congratulations! signed up succesfully");
+
+                                            }
+                                        })
+
                                 })
                         }
                         else {
+                            dispatch(updateUserRegisterStatus(false));
                             navigate('/register', { state: { phoneNumber: signingUpUser.phoneNumber } })
                         }
                     } else {

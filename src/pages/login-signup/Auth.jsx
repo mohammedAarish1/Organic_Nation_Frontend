@@ -1,25 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Logo from '../../components/logo/Logo';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { userSignup, userLogin, fetchUserData } from '../../features/auth/userSlice';
+import { userSignup, userLogin, fetchUserData, updateUserRegisterStatus } from '../../features/auth/userSlice';
 import { getAllOrders } from '../../features/manageOrders/manageOrders';
 import { Formik, Form, Field } from 'formik';
 import { signUpSchema } from '../../form-validation/signUpSchema';
 import { loginSchema } from '../../form-validation/loginSchema';
 import Alert from '../../components/alert/Alert';
 import { getAllCartItems, mergeCart } from '../../features/cart/cart';
-import OtpInput from '../../components/otp/OtpInput';
+// import OtpInput from '../../components/otp/OtpInput';
 // react icons 
 import { FcGoogle, FcIphone } from "react-icons/fc";
 import { ImSpinner9 } from 'react-icons/im';
 import { FaArrowRight } from 'react-icons/fa';
 import { requestOTP } from '../../features/auth/OTPSlice';
-
-
-
-
+import { fetchDataAfterSuccessfullLogIn } from '../../helper/helperFunctions';
 
 
 const Auth = () => {
@@ -28,17 +25,17 @@ const Auth = () => {
 
   // belo code is for handling the navigation after otp verified by the user (extracting phone number)
   const location = useLocation();
-  const otpUser = location?.state;
+  const otpUser = location?.state;  // we will get this data when user tries to sign up with otp 
   const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [showOtpInput, setShowOtpInput] = useState(true);
-  const [userExist, setUserExist] = useState(otpUser ? false : true);
+  // const [showOtpInput, setShowOtpInput] = useState(true);
+  // const [userRegistered, setuserRegistered] = useState(otpUser && userSignedUpSuccessfully === null ? false : true);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const { checkoutStatus } = useSelector(state => state.orders);
-  const { user, user_loading, error, } = useSelector(state => state.user);
+  const { user, user_loading, error, userRegistered } = useSelector(state => state.user);
   const { isAuthenticated } = useSelector(state => state.OTPSlice);
 
 
@@ -51,6 +48,7 @@ const Auth = () => {
     email: '',
     phoneNumber: otpUser ? otpUser.phoneNumber : '',
     password: '',
+    // password: '',
     // confirm_password: ''
   }
 
@@ -89,7 +87,7 @@ const Auth = () => {
 
 
   const handleSubmit = (values, action) => {
-    if (!userExist) {
+    if (!userRegistered) {
 
       if (isAuthenticated) {
         dispatch(userSignup(values))
@@ -97,8 +95,20 @@ const Auth = () => {
             if (value?.error?.message === 'Rejected') {
               return;
             } else {
-              toast.success("Congragulations! signed up succesfully")
-              setUserExist(true)
+              // toast.success("Congratulations! signed up succesfully");
+              dispatch(updateUserRegisterStatus(true));
+              dispatch(userLogin({ userId: value.meta.arg.email, password: value.meta.arg.password }))
+              .then((value) => {
+                  if (value.meta.requestStatus === 'fulfilled') {
+                      const token = value.payload.token;
+                      fetchDataAfterSuccessfullLogIn(token, dispatch)
+                      navigate('/')
+                      toast.success("Congratulations! signed up succesfully");
+
+                  }
+              })
+
+              // setuserRegistered(true)
             }
 
           })
@@ -111,6 +121,9 @@ const Auth = () => {
             if (value.meta.requestStatus === 'fulfilled') {
               toast.success(value.payload.message)
               // setShowOtpInput(true);
+              dispatch(updateUserRegisterStatus(true));
+              // setuserRegistered(true)
+
               navigate('/otp-submit', { state: { phoneNumber, otherDetails: { ...values, phoneNumber: phoneNumber }, googleSignup: false } })
             }
 
@@ -127,7 +140,7 @@ const Auth = () => {
               const token = value.payload.token;
               sessionStorage.setItem("token", JSON.stringify(token));
               dispatch(fetchUserData(token));
-              dispatch(getAllOrders(token));
+              dispatch(getAllOrders(token))
               dispatch(getAllCartItems())
                 .then(res => {
                   const localCart = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -153,10 +166,7 @@ const Auth = () => {
                     } else {
                       navigate('/');
                     }
-
                   }
-
-
 
                 })
               toast.success("Log in Successfully");
@@ -186,7 +196,7 @@ const Auth = () => {
         {otpUser ? (
           <p className='text-center'>*Please provide us the following details to complete the signing up process*</p>
         ) : (
-          <h2 className="text-4xl text-center sm:mt-6 mt-10 sm:mb-2 mb-6 text-[var(--themeColor)] ">{userExist ? 'Welcome Back !' : 'Create Your Account'}</h2>
+          <h2 className="text-4xl text-center sm:mt-6 mt-10 sm:mb-2 mb-6 text-[var(--themeColor)] ">{userRegistered ? 'Welcome Back !' : 'Create Your Account'}</h2>
         )}
 
 
@@ -200,7 +210,7 @@ const Auth = () => {
                 <Logo />
               </div>
               <div className='flex flex-col justify-center items-center'>
-                <span className='sm:text-2xl uppercase text-[var(--bgColorSecondary)]'>{!userExist ? "Sign up to" : "Log in"}</span>
+                <span className='sm:text-2xl uppercase text-[var(--bgColorSecondary)]'>{!userRegistered ? "Sign up to" : "Log in"}</span>
                 <span className='sm;text-2xl uppercase text-[var(--bgColorSecondary)]'>Organic Nation</span>
               </div>
             </div>
@@ -211,7 +221,7 @@ const Auth = () => {
           <div className='sm:w-[60%] text-[var(--themeColor)]'>
             <div className="sm:w-[80%]  mx-auto">
 
-              <h2 className='px-8 mb-2  text-3xl'>{!userExist ? "Sign up" : "Log in"}</h2>
+              <h2 className='px-8 mb-2  text-3xl'>{!userRegistered ? "Sign up" : "Log in"}</h2>
 
               {/* <p>Please fill in the below details and get registered.</p> */}
 
@@ -219,7 +229,7 @@ const Auth = () => {
               {/* === Form ===  */}
               <Formik
                 initialValues={initialValues}
-                validationSchema={!userExist ? signUpSchema : loginSchema}
+                validationSchema={!userRegistered ? signUpSchema : loginSchema}
                 onSubmit={handleSubmit}
                 validateOnChange={false}   // Disable validation on change
                 validateOnBlur={false}     // Disable validation on blur
@@ -230,7 +240,7 @@ const Auth = () => {
 
 
                     {/* firstName input  */}
-                    {!userExist && (
+                    {!userRegistered && (
                       <div className="mb-4">
                         <label
                           className="uppercase tracking-widest block text-[var(--themeColor)] text-sm font-bold mb-2" htmlFor="firstName">
@@ -250,7 +260,7 @@ const Auth = () => {
                       </div>
                     )}
                     {/* lastName input  */}
-                    {!userExist && (
+                    {!userRegistered && (
                       <div className="mb-4">
                         <label
                           className="uppercase tracking-widest block text-[var(--themeColor)] text-sm font-bold mb-2" htmlFor="lastName">
@@ -271,7 +281,7 @@ const Auth = () => {
                     )}
 
                     {/* userId--- email or phone  */}
-                    {userExist && (
+                    {userRegistered && (
                       <div className="mb-4">
                         <label
                           className="uppercase tracking-widest block text-[var(--themeColor)] text-sm font-bold mb-2" htmlFor="userId">
@@ -293,7 +303,7 @@ const Auth = () => {
                     )}
 
                     {/* Email input  */}
-                    {!userExist && (
+                    {!userRegistered && (
                       <div className="mb-4">
                         <label
                           className="uppercase tracking-widest block text-[var(--themeColor)] text-sm font-bold mb-2" htmlFor="firstName">
@@ -314,7 +324,7 @@ const Auth = () => {
                     )}
 
                     {/* phone no.  */}
-                    {!userExist && (
+                    {!userRegistered && (
                       <div className="mb-4">
                         <label
                           className="uppercase tracking-widest block text-[var(--themeColor)] text-sm font-bold mb-2"
@@ -361,7 +371,7 @@ const Auth = () => {
                       ) : (
                         null
                       )}
-                      {userExist && (
+                      {userRegistered && (
                         <Link
                           to='/auth/forgot-password'
                           className='text-end text-[var(--bgColorSecondary)] text-[11px] hover:underline cursor-pointer'
@@ -375,7 +385,7 @@ const Auth = () => {
                     {/* email and password error msg */}
                     {error && (
                       <div className='text-center pb-4 text-red-600'>
-                        {userExist ? (
+                        {userRegistered ? (
                           <p>{error?.msg}</p>
                         ) : (
                           <p>{error.msg}</p>
@@ -384,7 +394,7 @@ const Auth = () => {
                     )}
 
                     <div className="flex items-center justify-between ">
-                      {!userExist ? (
+                      {!userRegistered ? (
                         <button
                           type="submit"
                           className='p-2 bg-[var(--bgColorSecondary)] hover:bg-green-500 hover:text-white transition-all duration-300 w-full flex justify-center items-center gap-2 rounded-md '
@@ -422,10 +432,10 @@ const Auth = () => {
 
 
               <div className='pb-4 text-center'>
-                {!userExist ? (
-                  <p className='px-8 text-gray-700'>Already have an account ? <button className='text-[var(--themeColor)] text-2xl underline underline-offset-8 cursor-pointer' onClick={() => setUserExist(true)}>Log in</button></p>
+                {!userRegistered ? (
+                  <p className='px-8 text-gray-700'>Already have an account ? <button className='text-[var(--themeColor)] text-2xl underline underline-offset-8 cursor-pointer' onClick={() => dispatch(updateUserRegisterStatus(true))}>Log in</button></p>
                 ) : (
-                  <p className='px-8 text-gray-700'>Don't have an account ? <button className='text-[var(--themeColor)] text-2xl underline underline-offset-8 cursor-pointer' onClick={() => setUserExist(false)}>Sign up</button></p>
+                  <p className='px-8 text-gray-700'>Don't have an account ? <button className='text-[var(--themeColor)] text-2xl underline underline-offset-8 cursor-pointer' onClick={() => dispatch(updateUserRegisterStatus(false))}>Sign up</button></p>
                 )}
               </div>
 

@@ -78,7 +78,7 @@ const TestimonialSlider = () => {
                     className="mySwiper customCss"
                 >
                     {feedbackLists.map(feedback => (
-                        <SwiperSlide>
+                        <SwiperSlide key={feedback.description}>
                             <div className='flex md:flex-row flex-col md:gap-10  xs:p-10 p-4 rounded-lg bg-gradient-to-r from-[#e0d4a9] to-[#D3BB71] font-sans'>
                                 <div className=' flex justify-center items-center '>
                                     {/* <img src={profile} alt="customer_iamge" className=' rounded-full ' /> */}

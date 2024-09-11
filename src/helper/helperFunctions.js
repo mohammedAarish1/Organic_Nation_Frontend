@@ -1,3 +1,15 @@
+import { fetchUserData, getAllCartItems, getAllOrders } from "../imports";
+
+// store token and fetch all the user related data after successful logged in
+const fetchDataAfterSuccessfullLogIn = (token, dispatch) => {
+    sessionStorage.setItem("token", JSON.stringify(token));
+    dispatch(fetchUserData(token));
+    dispatch(getAllOrders(token))
+    dispatch(getAllCartItems())
+}
+
+
+
 // generate random Transaction Id
 const generateTransactionID = () => {
     const timestamp = Date.now();
@@ -50,4 +62,9 @@ const calculateDiscountAndTaxIncluded = (cart) => {
     };
 }
 
-export { generateTransactionID, address, calculateDiscountAndTaxIncluded }
+export {
+    generateTransactionID,
+    address,
+    calculateDiscountAndTaxIncluded,
+    fetchDataAfterSuccessfullLogIn
+}

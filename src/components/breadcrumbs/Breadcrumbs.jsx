@@ -8,6 +8,26 @@ const Breadcrumbs = () => {
 
     const { pathname } = useLocation();
 
+
+
+    // Function to check if the current path should hide breadcrumbs
+    const shouldHideBreadcrumbs = (path) => {
+        // Array of path patterns where breadcrumbs should be hidden
+        const hiddenPathPatterns = [
+            '/shop/all/[\\w-]+', , // Dynamic product pages, e.g., /product/123
+        ];
+
+        // Check if the current path matches any of the hidden patterns
+        return hiddenPathPatterns.some(pattern =>
+            new RegExp(pattern).test(path)
+        );
+    };
+
+    // If the current pathname matches a hidden pattern, don't render anything
+    if (shouldHideBreadcrumbs(pathname)) {
+        return null;
+    }
+
     // from below code we are getting the array that excludes empty string ('') and id's (which is non numeric value)
     const pathSegments = pathname.split('/').filter(segment => segment !== ''); // Remove empty segments
 
