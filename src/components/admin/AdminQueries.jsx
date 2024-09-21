@@ -1,32 +1,26 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FaSort, FaSync, FaChevronLeft, FaChevronRight, FaSearch } from 'react-icons/fa';
+import { FaSort, FaChevronLeft, FaChevronRight, FaSearch } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
+import { getAllUserQueries } from '../../features/admin/adminData';
+import { handleDocumentDeleteFromDatabase } from '../../helper/helperFunctions';
+import Alert from '../alert/Alert';
+
+
 
 const AdminQueries = () => {
-  const dispatch = useDispatch()
+
+  const dispatch = useDispatch();
   const { totalUserQueries, loading } = useSelector(state => state.adminData)
+  const [curItemId, setCurItemId] = useState(''); // used for  deleting the query from the list
   const [sortedOrders, setSortedOrders] = useState([]);
   const [sortDirection, setSortDirection] = useState('desc');
-  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [selectedQuery, setSelectedQuery] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
   const ordersPerPage = 8;
   const modalRef = useRef();
 
-
-
-  // useEffect(() => {
-  //     sortOrders();
-  // }, [order, sortDirection]);
-
-  // const sortOrders = () => {
-  //     const sorted = [...order].sort((a, b) => {
-  //         const dateA = new Date(a.createdAt);
-  //         const dateB = new Date(b.createdAt);
-  //         return sortDirection === 'asc' ? dateA - dateB : dateB - dateA;
-  //     });
-  //     setSortedOrders(sorted);
-  // };
 
   useEffect(() => {
     sortAndFilterOrders();
@@ -62,11 +56,26 @@ const AdminQueries = () => {
 
 
 
+  const handleQueryMessage = (query) => {
+    setSelectedQuery(query);
+  };
+
   const handleClickOutside = (event) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
-      setSelectedOrder(null);
+      setSelectedQuery(null);
     }
   };
+
+  const hideAlert = () => {
+    setCurItemId('')
+    setIsAlertOpen(false);
+
+  };
+
+  const handleDelete = () => {
+    handleDocumentDeleteFromDatabase('queries', curItemId, dispatch, getAllUserQueries)
+    setIsAlertOpen(false);
+  }
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
@@ -118,7 +127,7 @@ const AdminQueries = () => {
                 <th key={header} className="p-3 text-left">
                   <div className="flex items-center">
                     {header}
-                    {header === 'Created At' && (
+                    {header === 'Date' && (
                       <button onClick={handleSort} className="ml-1">
                         <FaSort />
                       </button>
@@ -141,24 +150,26 @@ const AdminQueries = () => {
                 <td className="p-3">{query.city}</td>
                 <td className="p-3">{new Date(query.createdAt).toLocaleDateString()}</td>
                 <td className="p-3">
-                                    <div className="flex flex-col space-y-2">
-                                        <button
-                                            // onClick={() => handleOrderDetails(user)}
-                                            className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
-                                        >
-                                           Delete
-                                        </button>
-                                        {/* <select
-                                            value={user.orderStatus}
-                                            onChange={(e) => handleStatusChange(order._id, e.target.value)}
-                                            className="border rounded p-1"
-                                        >
-                                            <option value="active">Active</option>
-                                            <option value="dispatch">Dispatch</option>
-                                            <option value="cancelled">Cancelled</option>
-                                        </select> */}
-                                    </div>
-                                </td>
+                  <div className="flex flex-col space-y-2">
+
+                    <button
+                      onClick={() => handleQueryMessage(query)}
+                      className="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-800"
+                    >
+                      View Message
+                    </button>
+                    <button
+                      // onClick={() => handleDocumentDeleteFromDatabase('queries', query._id, dispatch, getAllUserQueries)}
+                      onClick={() => {
+                        setCurItemId(query._id)
+                        setIsAlertOpen(true);
+                      }}
+                      className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -192,7 +203,26 @@ const AdminQueries = () => {
         </button>
       </div>
 
+      {selectedQuery && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div ref={modalRef} className="bg-white p-6 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
 
+            <h4 className='font-semibold'>Message:-</h4>
+            <p>{selectedQuery.message}</p>
+          </div>
+        </div>
+      )}
+
+
+      {/* alert for changing order status  */}
+      <Alert
+        isOpen={isAlertOpen}
+        alertMessage={`Are you sure, do you really want to delete this ?`}
+        actionMessageOne='Yes'
+        actionMessageTwo='No'
+        hideAlert={hideAlert}
+        handleAction1={handleDelete}
+      />
     </div>
 
   );

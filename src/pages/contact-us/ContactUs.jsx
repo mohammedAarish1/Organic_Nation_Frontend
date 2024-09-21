@@ -23,7 +23,7 @@ const ContactUs = () => {
     email: '',
     phoneNumber: '',
     city: '',
-    // message:'',
+    message: '',
 
   }
 
@@ -39,6 +39,7 @@ const ContactUs = () => {
     email: Yup.string().email(),
     phoneNumber: Yup.string().matches(phoneRegExp, 'Phone number is not valid').required('Please enter your phone number'),
     city: Yup.string().min(2).required('Please enter city'),
+    message: Yup.string()
     // confirm_password: Yup.string().required().oneOf([Yup.ref('password'), null], 'Password must match')
   })
 
@@ -174,20 +175,20 @@ const ContactUs = () => {
                         <ErrorMessage name="city" component="div" className='text-red-600 text-[14px]' />
                       </div>
                       {/* message  */}
-                      {/* <div className="mb-4">
+                      <div className="mb-4">
                         <label className="block text-[var(--themeColor)] font-bold tracking-widest uppercase text-sm font- mb-2" htmlFor="city">
                           Message (optional)
                         </label>
                         <Field
                           // type="text"
-                           as="textarea"
-                           placeholder='Type your query message here..'
+                          as="textarea"
+                          placeholder='Type your message here..'
                           id="message"
                           name="message"
                           className="shadow appearance-none border bg-[var(--bgColorSecondary)] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         />
                         <ErrorMessage name="message" component="div" className='text-red-600 text-[14px]' />
-                      </div> */}
+                      </div>
 
                       {/* submit button  */}
                       <div className="flex items-center justify-end mt-6">

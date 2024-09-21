@@ -1,26 +1,30 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import ButtonTwo from '../button/ButtonTwo';
 import ReviewsAndRatings from '../../helper/ReviewsAndRatings';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, getAllCartItems } from '../../features/cart/cart';
 import { toast } from 'react-toastify';
 // react icons
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import ReturnItemForm from '../returnItemForm/ReturnItemForm';
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
 
 
 
 
-const SingleOrder = ({ curOrder }) => {
+const SingleOrder = ({ curOrder, paymentMethod, orderNo }) => {
 
     let nameUrl = curOrder["name-url"];
     const dispatch = useDispatch();
     const [singleOrderItem, setSingleOrderItem] = useState('');
+    const [isFormVisible, setIsFormVisible] = useState(false);
     const [showProductReview, setShowProductReview] = useState(false);
+    // const { isLoading, productData } = useSelector((state) => state.product_data);
 
+    const modalRef = useRef();
 
     const getCurOrderItem = async () => {
 
@@ -33,6 +37,35 @@ const SingleOrder = ({ curOrder }) => {
             throw error
         }
     }
+
+
+    const handleClickOutside = (event) => {
+        if (modalRef.current && !modalRef.current.contains(event.target)) {
+            // setSelectedOrder(null);
+            setIsFormVisible(false)
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+
+    const handleFormSubmit = () => {
+        setIsFormVisible(false);
+        // fetchProducts();
+    };
+
+    const handleFormCancel = () => {
+        setIsFormVisible(false);
+    };
+
+
 
     useEffect(() => {
         getCurOrderItem()
@@ -85,9 +118,19 @@ const SingleOrder = ({ curOrder }) => {
                     <div
                         onClick={() => {
                             setShowProductReview(true)
-                        }}>
+                        }}
+                    >
                         <ButtonTwo text="Review Product" />
                     </div>
+                    {/* ====== Return items ==============  */}
+
+                    {/* <div
+                        onClick={() => {
+                            setIsFormVisible(true);
+                        }}
+                    >
+                        <ButtonTwo text="Return Item" />
+                    </div> */}
                 </div>
                 {/* =================== review modal ==========  */}
                 <div className={`product-review-modal-bg ${showProductReview ? 'active' : ''}`} onClick={() => setShowProductReview(false)}>
@@ -106,8 +149,32 @@ const SingleOrder = ({ curOrder }) => {
             <div className='px-10'>
                 <div className='w-full h-[1px] bg-gradient-to-r from-[#bdb7a3] to-[#a28223]'></div>
             </div>
+
+
+            {/* ================ edit product section ===========  */}
+            {isFormVisible && (
+                <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-40">
+                    <div
+                        ref={modalRef}
+                        className="bg-white p-6 mt-20 rounded-lg max-w-3xl w-full max-h-[70vh] overflow-y-auto"
+                    >
+                        <h2 className="text-2xl font-bold mb-4">Product Details</h2>
+
+                        <ReturnItemForm
+                            product={curOrder}
+                            paymentMethod={paymentMethod}
+                            amountPaid={Math.round(singleOrderItem.price - (singleOrderItem.price * singleOrderItem.discount / 100))}
+                            orderNo={orderNo}
+                            onSubmit={handleFormSubmit}
+                            onCancel={handleFormCancel}
+
+                        />
+
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
 
-export default SingleOrder
+export default SingleOrder;

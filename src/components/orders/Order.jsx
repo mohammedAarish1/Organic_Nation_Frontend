@@ -84,9 +84,9 @@ const Order = ({ order }) => {
                                 {/* order detail button  */}
                                 <button className=' flex  justify-center items-center gap-2 underline underline-offset-2 bg-green-700 xs:px-5 px-2 py-2 rounded-md text-white hover:bg-green-800 xs:text-[16px] text-sm' onClick={() => setShowOrderDetails(true)}>Order Details <FaArrowRight /> </button>
                                 {/* download invoice button  */}
-                                {order.orderStatus === "completed" && (
+                                {/* {order.orderStatus === "completed" && (
                                     <button className='flex justify-center items-center gap-1 border-green-700 border-2 xs:px-5 px-2 py-2 rounded-md hover:bg-green-800 xs:text-[16px] text-sm'>Download Invoice <MdOutlineFileDownload className='text-xl' /> </button>
-                                )}
+                                )} */}
                             </div>
 
                             {/* order details modal  */}
@@ -139,7 +139,7 @@ const Order = ({ order }) => {
                         {order.orderDetails.map((curOrder, index) => {
                             return !showAllItems && index !== 0 ? null : (
                                 <div key={curOrder._id} className='flex flex-col gap-10 py-7 xs:px-4 px-2'>
-                                    <SingleOrder curOrder={curOrder} />
+                                    <SingleOrder curOrder={curOrder} paymentMethod={order.paymentMethod} orderNo={order.orderNo} />
                                 </div>
                             )
                         })}

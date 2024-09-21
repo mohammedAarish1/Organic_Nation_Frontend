@@ -51,7 +51,7 @@ const blogSlice = createSlice({
         builder.addCase(getAllBlogs.fulfilled, (state, action) => {
 
             if (action.payload) {
-                const recentBlogs = action.payload.filter(blog => blog.recent)
+                const recentBlogs = action.payload?.filter(blog => blog.recent)
 
                 return {
                     ...state,

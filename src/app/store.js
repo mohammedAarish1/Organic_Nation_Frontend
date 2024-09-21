@@ -16,6 +16,7 @@ import contactedUserReducer from '../features/contactedUser/contactedUser';
 import paymentReducer from '../features/orderPayment/payment';
 import adminReducer from '../features/admin/adminSlice';
 import adminDataReducer from '../features/admin/adminData';
+// import adminFeatureReducer from '../features/admin/adminFeatures'
 
 
 
@@ -39,5 +40,6 @@ export const store = configureStore({
         payment: paymentReducer,
         admin: adminReducer,
         adminData: adminDataReducer,
+        // adminFeatures: adminFeatureReducer,
     },
 })

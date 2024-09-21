@@ -15,6 +15,7 @@ import { getAllUserQueries, getAllUsers, getOrdersByStatus, getTotalOrders } fro
 import AdminQueries from '../components/admin/AdminQueries';
 import AdminProducts from '../components/admin/AdminProducts';
 import { getProductsData } from '../imports';
+import { ToastContainer } from 'react-toastify';
 
 // Import other admin components
 
@@ -42,8 +43,8 @@ const AdminRoutes = () => {
         .then(res => {
           dispatch(getTotalOrders());
           dispatch(getProductsData());
-          dispatch(getAllUsers(adminToken))
-          dispatch(getAllUserQueries(adminToken))
+          dispatch(getAllUsers())
+          dispatch(getAllUserQueries())
           dispatch(getOrdersByStatus("total"))
 
         })
@@ -96,6 +97,7 @@ const AdminRoutes = () => {
               </button>
             </div>
           </div>
+          <ToastContainer position='bottom-right' autoClose={1000} />
           <Routes>
             <Route path="/" element={<AdminDashboard />} />
             <Route path="/orders" element={<AdminOrders />} />

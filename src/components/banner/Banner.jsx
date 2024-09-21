@@ -20,6 +20,10 @@ import { EffectFade, Autoplay, Pagination } from 'swiper/modules';
 
 const images = [
   {
+    image: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/main_banners/8.png',
+    categoryUrl: `all`,
+  },
+  {
     image: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/main_banners/1.png',
     categoryUrl: `authentic-pickles`,
   },

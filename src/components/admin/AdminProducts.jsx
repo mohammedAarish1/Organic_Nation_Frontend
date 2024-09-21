@@ -1,23 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FaSort, FaSync, FaChevronLeft, FaChevronRight, FaSearch } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { generateInvoice, getTotalOrders, updateOrderStatus } from '../../features/admin/adminData';
 import { ImSpinner9 } from 'react-icons/im';
 import { FiPlusSquare } from "react-icons/fi";
-import Alert from '../alert/Alert';
-import { fetchAdminData } from '../../features/admin/adminSlice';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import ProductForm from './ProductForm';
 
 
 
 const AdminProducts = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const [sortedProducts, setSortedProducts] = useState([]);
-    const [curOrderStatusAndId, setCurOrderStatusAndId] = useState('');
-    const [isAlertOpen, setIsAlertOpen] = useState(false);
     const { isLoading, productData } = useSelector((state) => state.product_data);
     const [sortDirection, setSortDirection] = useState('desc');
     const [selectedProduct, setSelectedProduct] = useState(null);
@@ -26,23 +18,7 @@ const AdminProducts = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const productsPerPage = 8;
     const modalRef = useRef();
-    const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
-    const { generatingInvoice, loading } = useSelector(state => state.adminData);
 
-
-
-    // useEffect(() => {
-    //     sortOrders();
-    // }, [order, sortDirection]);
-
-    // const sortOrders = () => {
-    //     const sorted = [...order].sort((a, b) => {
-    //         const dateA = new Date(a.createdAt);
-    //         const dateB = new Date(b.createdAt);
-    //         return sortDirection === 'asc' ? dateA - dateB : dateB - dateA;
-    //     });
-    //     setSortedProducts(sorted);
-    // };
 
     useEffect(() => {
         sortAndFilterOrders();
@@ -76,15 +52,7 @@ const AdminProducts = () => {
         setSortDirection(current => current === 'asc' ? 'desc' : 'asc');
     };
 
-    const handleOrderDetails = (order) => {
-        setSelectedOrder(order);
-    };
 
-    // const handleStatusChange = (orderId, newStatus) => {
-    //     setSortedProducts(sortedProducts.map(order =>
-    //         order._id === orderId ? { ...order, orderStatus: newStatus } : order
-    //     ));
-    // };
 
     const handleClickOutside = (event) => {
         if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -109,55 +77,6 @@ const AdminProducts = () => {
     const totalPages = Math.ceil(sortedProducts.length / productsPerPage);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-
-
-
-
-    const hideAlert = () => {
-        setCurOrderStatusAndId('')
-        setIsAlertOpen(false);
-
-    };
-
-
-
-    // for changing order  status locally
-    const handleOrderStatusChange = (orderId, orderStatus) => {
-        setCurOrderStatusAndId({ orderId, orderStatus })
-        setIsAlertOpen(true)
-    }
-
-
-    // for changing order  status in database
-    const updateUserOrderStatus = () => {
-
-        dispatch(updateOrderStatus(curOrderStatusAndId))
-            .then(res => {
-                if (res.meta.requestStatus === 'fulfilled') {
-                    setIsAlertOpen(false)
-                }
-            })
-    }
-
-    // for fetching new orders
-    const handleRefreshOrders = () => {
-        if (adminToken) {
-            dispatch(getTotalOrders())
-        }
-    }
-
-    const handleInvoiceGeneration = (orderId) => {
-
-        dispatch(generateInvoice(orderId))
-            .unwrap()
-        // .then(() => {
-        //     console.log('Invoice generated and download initiated');
-        // })
-        // .catch((error) => {
-        //     console.error('Failed to generate invoice:', error);
-        // });
-    }
 
 
     // const handleAddClick = () => {
@@ -249,7 +168,7 @@ const AdminProducts = () => {
                                 <td className="p-3">
                                     <div className="flex flex-col space-y-2">
                                         <button
-                                            onClick={() => handleOrderDetails(product)}
+                                            // onClick={() => handleOrderDetails(product)}
                                             className="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-800"
                                         >
                                             Product Details
@@ -363,17 +282,6 @@ const AdminProducts = () => {
                     </div>
                 </div>
             )}
-
-
-            {/* alert for changing order status  */}
-            <Alert
-                isOpen={isAlertOpen}
-                alertMessage={`Do you want to update the order status to ${curOrderStatusAndId.orderStatus}`}
-                actionMessageOne='Yes'
-                actionMessageTwo='No'
-                hideAlert={hideAlert}
-                handleAction1={updateUserOrderStatus}
-            />
 
         </div>
 

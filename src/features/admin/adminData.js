@@ -29,11 +29,12 @@ export const getTotalOrders = createAsyncThunk(
 // get all users
 export const getAllUsers = createAsyncThunk(
     'adminData/getAllUsers',
-    async (token, { rejectWithValue }) => {
+    async (_, { rejectWithValue }) => {
+        const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
         try {
             const response = await axios.get(`${apiUrl}/api/admin/users`, {
                 headers: {
-                    'Authorization': `Bearer ${token}`,
+                    'Authorization': `Bearer ${adminToken}`,
                     'Content-Type': 'application/json'
                 }
             })
@@ -51,11 +52,12 @@ export const getAllUsers = createAsyncThunk(
 // get all users queris
 export const getAllUserQueries = createAsyncThunk(
     'adminData/getAllUserQueries',
-    async (token, { rejectWithValue }) => {
+    async (_, { rejectWithValue }) => {
+        const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
         try {
             const response = await axios.get(`${apiUrl}/api/admin/queries`, {
                 headers: {
-                    'Authorization': `Bearer ${token}`,
+                    'Authorization': `Bearer ${adminToken}`,
                     'Content-Type': 'application/json'
                 }
             })
@@ -131,6 +133,30 @@ export const updateOrderStatus = createAsyncThunk(
     }
 )
 
+
+// update payment status 
+export const updatePaymentStatus = createAsyncThunk(
+    'adminData/updatePaymentStatus',
+    async (data, { rejectWithValue }) => {
+        const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
+        try {
+            const response = await axios.put(`${apiUrl}/api/admin/orders/update/payment-status`, data, {
+                headers: {
+                    'Authorization': `Bearer ${adminToken}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+            // return response.data;
+        } catch (error) {
+            if (error.response && error.response.data) {
+                return rejectWithValue(error.response.data);
+            } else {
+                return rejectWithValue(error.message);
+            }
+        }
+    }
+)
+
 // add a new product in the database 
 export const addNewProductInDatabase = createAsyncThunk(
     'adminData/addNewProductInDatabase',
@@ -156,6 +182,57 @@ export const addNewProductInDatabase = createAsyncThunk(
 );
 
 
+// delete the document fromt the database 
+export const deleteDocumentFromDatabase = createAsyncThunk(
+    'adminData/deleteDocumentFromDatabase',
+    async (data, { rejectWithValue }) => {
+        const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
+        try {
+            if (adminToken) {
+                const response = await axios.delete(`${apiUrl}/api/admin/delete/${data.collection}/${data.id}`, {
+                    headers: {
+                        'Authorization': `Bearer ${adminToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                // return response.data;
+            }
+
+        } catch (error) {
+            if (error.response && error.response.data) {
+                return rejectWithValue(error.response.data);
+            } else {
+                return rejectWithValue(error.message);
+            }
+        }
+    }
+);
+
+
+// to generate the sale report 
+export const generateReport = createAsyncThunk(
+    'report/generate',
+    async ({ startDate, endDate }, { rejectWithValue }) => {
+        try {
+            const response = await axios.post(`${apiUrl}/api/admin/generate-report`, { startDate, endDate }, {
+                responseType: 'blob'
+            });
+            // Instead of returning the blob, we'll handle it here
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'OrderReport.xlsx');
+            document.body.appendChild(link);
+            link.click();
+            link.parentNode.removeChild(link);
+
+            return { success: true };
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
 
 
 const initialState = {
@@ -165,6 +242,7 @@ const initialState = {
     loading: false,
     error: null,
     generatingInvoice: false,
+    generatingSaleReport: false,
     ordersByStatus: {
         orderData: [],
         orderStatusTab: "total"
@@ -358,9 +436,19 @@ const adminData = createSlice({
                     error: action.payload,
                 }
             })
-        // ========= admin data ==========
-
-
+            // ========= admin data ==========
+            // generating sales report
+            .addCase(generateReport.pending, (state) => {
+                state.generatingSaleReport = true;
+                state.error = null;
+            })
+            .addCase(generateReport.fulfilled, (state) => {
+                state.generatingSaleReport = false;
+            })
+            .addCase(generateReport.rejected, (state, action) => {
+                state.generatingSaleReport = false;
+                state.error = action.payload;
+            });
 
     }
 

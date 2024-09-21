@@ -59,8 +59,8 @@ const SingleReview = ({ reviews }) => {
                 <p>{reviews.review}</p>
             </div>
 
-            <div className='flex justify-start items-center gap-2 '>
-                <p className='px-2 py-1  bg-[var(--bgColorPrimary)] rounded-full text-white'>{reviews?.userName[0]}</p>
+            <div className='flex justify-start items-center gap-2'>
+                <p className='  bg-[var(--bgColorPrimary)] p-[8px] py-[1px] rounded-full text-white'>{reviews?.userName[0]}</p>
                 <p className='tracking-wider font-sans xs:text-sm text-xs '>{reviews?.userName}</p>
             </div>
 

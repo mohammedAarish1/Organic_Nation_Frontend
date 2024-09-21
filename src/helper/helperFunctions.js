@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+import { deleteDocumentFromDatabase } from "../features/admin/adminData";
 import { fetchUserData, getAllCartItems, getAllOrders } from "../imports";
 
 // store token and fetch all the user related data after successful logged in
@@ -62,9 +64,22 @@ const calculateDiscountAndTaxIncluded = (cart) => {
     };
 }
 
+
+const handleDocumentDeleteFromDatabase = (collection, id, dispatch,updateLists) => {
+    dispatch(deleteDocumentFromDatabase({ collection, id }))
+        .then(() => {
+            toast.success("Deleted Successfully");
+            dispatch(updateLists());
+        })
+        .catch((error) => {
+            // console.log('error deleting',error)
+        })
+}
+
 export {
     generateTransactionID,
     address,
     calculateDiscountAndTaxIncluded,
-    fetchDataAfterSuccessfullLogIn
+    fetchDataAfterSuccessfullLogIn,
+    handleDocumentDeleteFromDatabase
 }

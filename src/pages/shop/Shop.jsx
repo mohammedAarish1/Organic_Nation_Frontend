@@ -8,6 +8,7 @@ import { fetchCategoryWiseData, setCategoryBtnValue } from '../../features/filte
 import { setCurrentPage } from '../../features/pagination/pagination';
 import { productCategoriesData } from '../../helper/SEO/SEOdata';
 import SEO from '../../helper/SEO/SEO';
+import OfferBanner from '../../components/offerBanner/OfferBanner';
 
 
 
@@ -67,8 +68,9 @@ const Shop = () => {
         twitterSite="Organic Nation"
         twitterCreator="organicnation_"
       />
-
-      {/* <h1 className='text-5xl max-w-[90%] mx-auto px-4 py-4'>All Products</h1> */}
+      <div className='pb-8'>
+        <OfferBanner />
+      </div>
       {/* number of products available  */}
       {categoryBtnValue !== 'all' && (
         <div>

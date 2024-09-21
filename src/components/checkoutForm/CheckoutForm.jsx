@@ -18,6 +18,7 @@ import { generateTransactionID, address, calculateDiscountAndTaxIncluded } from 
 // formik
 import { Formik, Form, Field, } from 'formik';
 import { initiatePayment } from '../../features/orderPayment/payment';
+import { ImSpinner9 } from 'react-icons/im';
 
 
 const CheckoutForm = () => {
@@ -27,6 +28,7 @@ const CheckoutForm = () => {
     const { user } = useSelector((state) => state.user);
 
     const { cartItemsList, totalCartAmount, totalTax } = useSelector((state) => state.cart);
+    const { addingNewOrder } = useSelector(state => state.orders)
     const { shippingFee } = useSelector(state => state.delivery)
 
     const initialValues = {
@@ -57,6 +59,7 @@ const CheckoutForm = () => {
         sameAsContact: false,
         sameAsShipping: false,
         paymentMethod: '',
+        // saveShippingInfo: false,
     };
 
     // checkout form submission
@@ -102,7 +105,7 @@ const CheckoutForm = () => {
                 phoneNumber: !values.sameAsContact ? values.receiverPhone || '' : '',
             },
             merchantTransactionId: merchantTransactionId,
-            isCouponCodeApplied:user.cart.isCouponCodeApplied,
+            isCouponCodeApplied: user.cart.isCouponCodeApplied,
         }
 
 
@@ -137,7 +140,7 @@ const CheckoutForm = () => {
                         }
                     })
 
-                
+
             }
 
         }
@@ -145,6 +148,10 @@ const CheckoutForm = () => {
         action.resetForm();
 
     };
+
+    const lableStyle = 'absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4'
+
+    const inputStyle = 'block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer'
 
 
     return (
@@ -173,13 +180,13 @@ const CheckoutForm = () => {
                                         type="text"
                                         id="firstName"
                                         name="firstName"
-                                        className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer "
+                                        className={inputStyle}
                                         placeholder=" "
                                         autoComplete="off"
 
                                     />
 
-                                    <label htmlFor="firstName" className="absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">First Name</label>
+                                    <label htmlFor="firstName" className={lableStyle}>First Name</label>
                                     <FaUserEdit className='absolute top-4 right-4 text-xl' />
                                     {errors?.firstName && touched?.firstName ? (
                                         <p className='text-red-600'>*{errors?.firstName}</p>
@@ -194,13 +201,13 @@ const CheckoutForm = () => {
                                         type="text"
                                         name="lastName"
                                         id="lastName"
-                                        className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
+                                        className={inputStyle}
                                         placeholder=" "
                                         autoComplete="off"
                                     />
 
 
-                                    <label htmlFor="lastName" className="absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 ">Last Name</label>
+                                    <label htmlFor="lastName" className={lableStyle}>Last Name</label>
 
                                     <FaUserEdit className='absolute top-4 right-4 text-xl' />
                                     {errors?.lastName && touched?.lastName ? (
@@ -215,13 +222,13 @@ const CheckoutForm = () => {
                                         type="text"
                                         name="email"
                                         id="email"
-                                        className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
+                                        className={inputStyle}
                                         placeholder=" "
                                         autoComplete="off"
                                     />
 
 
-                                    <label htmlFor="email" className="absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 ">Email</label>
+                                    <label htmlFor="email" className={lableStyle}>Email</label>
                                     <MdEmail className='absolute top-4 right-4 text-xl' />
                                     {errors.email && touched.email ? (
                                         <p className='text-red-600'>*{errors.email}</p>
@@ -235,12 +242,12 @@ const CheckoutForm = () => {
                                         type="text"
                                         name="phone"
                                         id="phone"
-                                        className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
+                                        className={inputStyle}
                                         placeholder=" "
                                         autoComplete="off"
                                     />
 
-                                    <label htmlFor="phone" className="absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">Phone</label>
+                                    <label htmlFor="phone" className={lableStyle}>Phone</label>
 
                                     <MdOutlinePhoneAndroid className='absolute top-4 right-4 text-xl' />
                                     {errors?.phone && touched?.phone ? (
@@ -286,12 +293,12 @@ const CheckoutForm = () => {
                                             type="text"
                                             name="receiverFirstName"
                                             id="receiverFirstName"
-                                            className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
+                                            className={inputStyle}
                                             placeholder=" "
                                             autoComplete="off"
                                         />
 
-                                        <label htmlFor="receiverFirstName" className="absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">First Name</label>
+                                        <label htmlFor="receiverFirstName" className={lableStyle}>First Name</label>
                                         <FaUserEdit className='absolute top-4 right-4 text-xl' />
                                         {errors.receiverFirstName && touched.receiverFirstName ? (
                                             <p className='text-red-600'>*{errors.receiverFirstName}</p>
@@ -305,13 +312,13 @@ const CheckoutForm = () => {
                                             type="text"
                                             name="receiverLastName"
                                             id="receiverLastName"
-                                            className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
+                                            className={inputStyle}
                                             placeholder=" "
                                             autoComplete="off"
                                         />
 
 
-                                        <label htmlFor="receiverLastName" className="absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">Last Name</label>
+                                        <label htmlFor="receiverLastName" className={lableStyle}>Last Name</label>
 
                                         <FaUserEdit className='absolute top-4 right-4 text-xl' />
                                         {errors.receiverLastName && touched.receiverLastName ? (
@@ -326,12 +333,12 @@ const CheckoutForm = () => {
                                             type="text"
                                             name="receiverEmail"
                                             id="receiverEmail"
-                                            className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
+                                            className={inputStyle}
                                             placeholder=" "
                                             autoComplete="off"
                                         />
 
-                                        <label htmlFor="receiverEmail" className="absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">Email</label>
+                                        <label htmlFor="receiverEmail" className={lableStyle}>Email</label>
                                         <MdEmail className='absolute top-4 right-4 text-xl' />
                                         {errors?.receiverEmail && touched?.receiverEmail ? (
                                             <p className='text-red-600'>*{errors?.receiverEmail}</p>
@@ -345,12 +352,12 @@ const CheckoutForm = () => {
                                             type="text"
                                             name="receiverPhone"
                                             id="receiverPhone"
-                                            className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
+                                            className={inputStyle}
                                             placeholder=" "
                                             autoComplete="off"
                                         />
 
-                                        <label htmlFor="receiverPhone" className="absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">Phone</label>
+                                        <label htmlFor="receiverPhone" className={lableStyle}>Phone</label>
 
                                         <MdOutlinePhoneAndroid className='absolute top-4 right-4 text-xl' />
                                         {errors?.receiverPhone && touched?.receiverPhone ? (
@@ -377,12 +384,12 @@ const CheckoutForm = () => {
                                             type="text"
                                             name="shippingAddress.address"
                                             id="shippingAddress.address"
-                                            className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
+                                            className={inputStyle}
                                             placeholder=" "
                                             autoComplete="off"
                                         />
 
-                                        <label htmlFor="shippingAddress.address" className="absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">Address Line</label>
+                                        <label htmlFor="shippingAddress.address" className={lableStyle}>Address Line</label>
                                         <MdLocationCity className='absolute top-4 right-4 text-xl' />
                                         {errors?.shippingAddress?.address && touched?.shippingAddress?.address ? (
                                             <p className='text-red-600'>*{errors?.shippingAddress?.address}</p>
@@ -396,14 +403,14 @@ const CheckoutForm = () => {
                                             type="text"
                                             name="shippingAddress.optionalAddress"
                                             id="shippingAddress.optionalAddress"
-                                            className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
+                                            className={inputStyle}
                                             placeholder=" "
                                             autoComplete="off"
                                         />
 
                                         <label
                                             htmlFor="shippingAddress.optionalAddress"
-                                            className="absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  "
+                                            className={lableStyle}
                                         >
                                             Address Line 2 (Landmark)
                                         </label>
@@ -420,12 +427,12 @@ const CheckoutForm = () => {
                                             type="text"
                                             name="shippingAddress.city"
                                             id="shippingAddress.city"
-                                            className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
+                                            className={inputStyle}
                                             placeholder=" "
                                             autoComplete="off"
                                         />
 
-                                        <label htmlFor="shippingAddress.city" className="absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">City</label>
+                                        <label htmlFor="shippingAddress.city" className={lableStyle}>City</label>
                                         <MdLocationCity className='absolute top-4 right-4 text-xl' />
                                         {errors?.shippingAddress?.city && touched?.shippingAddress?.city ? (
                                             <p className='text-red-600'>*{errors?.shippingAddress?.city}</p>
@@ -439,13 +446,14 @@ const CheckoutForm = () => {
                                             as="select"
                                             name="shippingAddress.state"
                                             id="shippingAddress.state"
-                                            className='block py-2.5  border-0  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer bg-transparent border-gray-600 text-[#333] w-full text-sm border-b-2  outline-none '>
+                                            className={inputStyle}
+                                        >
                                             <option value="select-state">Select State</option>
                                             {states.map((state) => (
                                                 <option key={state} value={state} className=''>{state}</option>
                                             ))}
                                         </Field>
-                                        <label htmlFor="shippingAddress.state" className="absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">State</label>
+                                        <label htmlFor="shippingAddress.state" className={lableStyle}>State</label>
                                         {errors?.shippingAddress?.state && touched?.shippingAddress?.state ? (
                                             <p className='text-red-600'>*{errors?.shippingAddress?.state}</p>
                                         ) : (
@@ -459,12 +467,12 @@ const CheckoutForm = () => {
                                             type="text"
                                             name="shippingAddress.zipCode"
                                             id="shippingAddress.zipCode"
-                                            className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
+                                            className={inputStyle}
                                             placeholder=" "
                                             autoComplete="off"
                                         />
 
-                                        <label htmlFor="shippingAddress.zipCode" className="absolute text-sm text-gray-500   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">Zip Code</label>
+                                        <label htmlFor="shippingAddress.zipCode" className={lableStyle}>Zip Code</label>
                                         <PiFileZipFill className='absolute top-4 right-4 text-xl' />
                                         {errors?.shippingAddress?.zipCode && touched?.shippingAddress?.zipCode ? (
                                             <p className='text-red-600'>*{errors?.shippingAddress?.zipCode}</p>
@@ -478,17 +486,31 @@ const CheckoutForm = () => {
                                             as="select"
                                             name="shippingAddress.country"
                                             id="shippingAddress.country"
-                                            className='block py-2.5 border-0  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer bg-transparent border-gray-600 text-[#333] w-full text-sm border-b-2  outline-none '
+                                            className={inputStyle}
                                         >
                                             <option value="india">India</option>
                                         </Field>
-                                        <label htmlFor="shippingAddress.country" className="absolute text-sm text-gray-500   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">Country/Region</label>
+                                        <label htmlFor="shippingAddress.country" className={lableStyle}>Country/Region</label>
                                         {errors?.shippingAddress?.country && touched?.shippingAddress?.country ? (
                                             <p className='text-red-600'>*{errors?.shippingAddress?.country}</p>
                                         ) : (
                                             null
                                         )}
                                     </div>
+                                    {/* save shipping info  */}
+                                    {/* <div className='flex items-center justify-center  col-span-2 gap-2 py-4'>
+                                        <Field
+                                            type="checkbox"
+                                            id="saveShippingInfo"
+                                            name="saveShippingInfo"
+                                            onChange={(e) => {
+                                                setFieldValue('saveShippingInfo', e.target.checked);
+                                                // console.log(e.target.checked)
+                                            }
+                                            }
+                                        />
+                                        <label htmlFor='saveShippingInfo'>Save My Shipping Info for future Orders !</label>
+                                    </div> */}
                                 </div>
                             </div>
 
@@ -523,12 +545,12 @@ const CheckoutForm = () => {
                                                 type="text"
                                                 name="billingAddress.address"
                                                 id="billingAddress.address"
-                                                className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
+                                                className={inputStyle}
                                                 placeholder=" "
                                                 autoComplete="off"
                                             />
 
-                                            <label htmlFor="billingAddress.address" className="absolute text-sm text-gray-500   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">Address Line</label>
+                                            <label htmlFor="billingAddress.address" className={lableStyle}>Address Line</label>
                                             <MdLocationCity className='absolute top-4 right-4 text-xl' />
                                             {errors?.billingAddress?.address && touched?.billingAddress?.address ? (
                                                 <p className='text-red-600'>*{errors?.billingAddress?.address}</p>
@@ -542,14 +564,14 @@ const CheckoutForm = () => {
                                                 type="text"
                                                 name="billingAddress.optionalAddress"
                                                 id="billingAddress.optionalAddress"
-                                                className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
+                                                className={inputStyle}
                                                 placeholder=" "
                                                 autoComplete="off"
                                             />
 
                                             <label
                                                 htmlFor="billingAddress.optionalAddress"
-                                                className="absolute text-sm text-gray-500   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  "
+                                                className={lableStyle}
                                             >
                                                 Address Line 2 (Landmark)
                                             </label>
@@ -566,12 +588,12 @@ const CheckoutForm = () => {
                                                 type="text"
                                                 name="billingAddress.city"
                                                 id="billingAddress.city"
-                                                className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
+                                                className={inputStyle}
                                                 placeholder=" "
                                                 autoComplete="off"
                                             />
 
-                                            <label htmlFor="billingAddress.city" className="absolute text-sm text-gray-500   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">City</label>
+                                            <label htmlFor="billingAddress.city" className={lableStyle}>City</label>
                                             <MdLocationCity className='absolute top-4 right-4 text-xl' />
                                             {errors?.billingAddress?.city && touched?.billingAddress?.city ? (
                                                 <p className='text-red-600'>*{errors?.billingAddress?.city}</p>
@@ -585,14 +607,14 @@ const CheckoutForm = () => {
                                                 as="select"
                                                 name="billingAddress.state"
                                                 id="billingAddress.state"
-                                                className='block py-2.5  border-0  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer bg-transparent border-gray-600 text-[#333] w-full text-sm border-b-2  outline-none '
+                                                className={inputStyle}
                                             >
                                                 <option value="select-state">Select State</option>
                                                 {states.map((state) => (
                                                     <option key={state} value={state} className=''>{state}</option>
                                                 ))}
                                             </Field>
-                                            <label htmlFor="billingAddress.state" className="absolute text-sm text-gray-500   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">State</label>
+                                            <label htmlFor="billingAddress.state" className={lableStyle}>State</label>
                                             {errors.billingAddress?.state && touched.billingAddress?.state ? (
                                                 <p className='text-red-600'>*{errors.billingAddress?.state}</p>
                                             ) : (
@@ -606,12 +628,12 @@ const CheckoutForm = () => {
                                                 type="text"
                                                 name="billingAddress.zipCode"
                                                 id="billingAddress.zipCode"
-                                                className="block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
+                                                className={inputStyle}
                                                 placeholder=" "
                                                 autoComplete="off"
                                             />
 
-                                            <label htmlFor="billingAddress.zipCode" className="absolute text-sm text-gray-500   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">Zip Code</label>
+                                            <label htmlFor="billingAddress.zipCode" className={lableStyle}>Zip Code</label>
                                             <PiFileZipFill className='absolute top-4 right-4 text-xl' />
                                             {errors.billingAddress?.zipCode && touched.billingAddress?.zipCode ? (
                                                 <p className='text-red-600'>*{errors.billingAddress?.zipCode}</p>
@@ -625,11 +647,11 @@ const CheckoutForm = () => {
                                                 as="select"
                                                 name="billingAddress.country"
                                                 id="billingAddress.country"
-                                                className='block py-2.5     border-0  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer bg-transparent border-gray-600 text-[#333] w-full text-sm border-b-2  outline-none '
+                                                className={inputStyle}
                                             >
                                                 <option value="india">India</option>
                                             </Field>
-                                            <label htmlFor="billingAddress.country" className="absolute text-sm text-gray-500   duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4  ">Country/Region</label>
+                                            <label htmlFor="billingAddress.country" className={lableStyle}>Country/Region</label>
                                             {errors.billingAddress?.country && touched.billingAddress?.country ? (
                                                 <p className='text-red-600'>*{errors.billingAddress?.country}</p>
                                             ) : (
@@ -644,14 +666,14 @@ const CheckoutForm = () => {
                             <div>
                                 <h3 className="text-lg font-bold text-[#333]  mt-6">Payment Method</h3>
                                 <div className='flex flex-wrap xs:gap-10 gap-4 mt-2'>
-                                   
+
                                     <div className='flex items-center gap-1'>
                                         <Field
                                             type="radio"
                                             id='online_payment'
                                             name="paymentMethod"
                                             value="online_payment"
-                                           
+
                                         />
                                         <label htmlFor="online_payment">Online Payment</label>
                                     </div>
@@ -681,9 +703,11 @@ const CheckoutForm = () => {
 
                                 <button
                                     type="submit"
+                                    disabled={addingNewOrder}
                                     className="flex justify-center items-center gap-2 rounded-md px-6 py-3 w-full text-sm font-semibold bg-[var(--bgColorPrimary)] text-white hover:tracking-widest transition-all duration-500"
                                 >
-                                    Complete Your Order <BsArrowRight className='font-bold' />
+                                    {addingNewOrder ? (<ImSpinner9 className='animate-spin' />) : <span className='flex justify-center items-center gap-2'>Complete Your Order <BsArrowRight className='font-bold' /></span>}
+                                    {/* <BsArrowRight className='font-bold' /> */}
                                 </button>
                             </div>
                         </div>

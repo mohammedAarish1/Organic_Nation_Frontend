@@ -17,48 +17,75 @@ import { FaStarHalfAlt } from 'react-icons/fa';
 import { GoDotFill } from "react-icons/go";
 import { LiaShippingFastSolid } from "react-icons/lia";
 import Accordion from '../../components/accordionItem/Accordion';
+import OfferBanner from '../../components/offerBanner/OfferBanner';
 
 
 
 
-const productInfo = [
-  {
-    title: 'Description',
-    content: ['Accordion components are excellent for organizing and presenting information in a compact, easy-to-navigate format. They help reduce clutter on a page, improve readability, and enhance user experience by allowing users to focus on specific content sections at a time']
-  },
-  {
-    title: 'Benefits',
-    content: [
-      'Easy to use',
-      "Compact and organized",
-      "Improves user experience",
-      "Enhances readability",
-    ]
-  },
-  {
-    title: 'Usage',
-    content: [
-      'Use the accordion component to present information in a compact and organized format.',
-      'lorem ipsum ipsum',
-      'lorem ipsum ipsum'
-    ],
-  }
-];
+// const productInfo = [
+//   {
+//     title: 'Description',
+//     content: [
+//       {
+//         subTitle: '',
+//         subContent: "Organic Nation's Light Flora Honey is a pure, unprocessed honey sourced from the pristine Himalayan region. It is harvested from bees that collect nectar from a variety of wild, organic flora, offering a unique and natural flavor profile. This honey is certified organic and tested for purity, ensuring a high-quality product."
+//       }
+//     ]
+//   },
+//   {
+//     title: 'Benefits',
+//     content: [
+//       {
+//         subTitle: "Natural Sweetener:",
+//         subContent: 'A healthier alternative to refined sugar, honey provides sweetness without the artificial additives.'
+//       },
+//       {
+//         subTitle: "Rich in Nutrients:",
+//         subContent: "Contains essential vitamins, minerals, and antioxidants that support overall health."
+//       },
+//       {
+//         subTitle: "Antibacterial Properties:",
+//         subContent: "Helps fight infections and promote wound healing. Immune System Boost: Can strengthen the immune system and protect against illness."
+//       },
+//       {
+//         subTitle: "Digestive Aid:",
+//         subContent: "May improve digestion and alleviate digestive discomfort."
+//       },
+//     ]
+//   },
+//   {
+//     title: 'Usage',
+//     content: [
+//       {
+//         subTitle: "Sweetener:",
+//         subContent: "Add to tea, coffee, yogurt, or oatmeal."
+//       },
+//       {
+//         subTitle: "Baking:",
+//         subContent: "Use as a natural sweetener in baked goods like cakes, cookies, and bread. Topical Application: Apply to minor cuts, scrapes, or burns for its antibacterial properties."
+//       },
+//       {
+//         subTitle: "Skincare:",
+//         subContent: "Incorporate into homemade face masks or moisturizers for a natural glow. Cough Relief: Mix with warm water and lemon for a soothing cough remedy."
+//       },
+//     ],
+//   }
+// ];
 
-const faq = [
-  {
-    title: 'heading1',
-    content: ['testing testing']
-  },
-  {
-    title: 'heading1',
-    content: ['testing testing']
-  },
-  {
-    title: 'heading1',
-    content: ['testing testing']
-  },
-]
+// const faq = [
+//   {
+//     title: 'heading1',
+//     content: ['testing testing']
+//   },
+//   {
+//     title: 'heading1',
+//     content: ['testing testing']
+//   },
+//   {
+//     title: 'heading1',
+//     content: ['testing testing']
+//   },
+// ]
 
 
 const ProductDetails = () => {
@@ -119,11 +146,10 @@ const ProductDetails = () => {
   }
   return (
     <div>
-      {/* <section>
-        <div>
-          <img src="/offerBanner.png" alt="" />
-        </div>
-      </section> */}
+      <div>
+
+        <OfferBanner />
+      </div>
       <section className='xs:py-20 py-5  '>
         {/* visible in mobile devices  */}
         <h2 className=' md:hidden block font-semibold xs:text-3xl text-2xl xs:px-10 px-4' >{product.name}</h2>
@@ -218,7 +244,7 @@ const ProductDetails = () => {
 
           <h3 className='text-center text-[var(--themeColor)] text-xl font-semibold pb-10'>Reviews and Ratings</h3>
         </div>
-        <div className=' w-[80%]   mx-auto flex flex-col gap-7'>
+        <div className=' w-[80%]   mx-auto flex flex-col gap-16'>
           {/* {loading && (<div>loading.....</div>)} */}
           {allReviews?.length > 0 && (
             allReviews.map((reviews) => (
@@ -249,15 +275,15 @@ const ProductDetails = () => {
 
           {filterProduct?.map((product) => (
             <Link to={`/shop/${categoryBtnValue}/${product['name-url']}`} key={product._id} >
-              <div className='flex flex-col justify-center items-center gap-5 shadow-xl px-8 py-4 cursor-pointer hover:scale-90 hover:bg-[#dcd3b9] transition-all duration-500  min-h-[350px] max-w-64 rounded-2xl'>
+              <div className='flex flex-col justify-center items-center gap-5 shadow-xl px-8 py-4 cursor-pointer hover:scale-90 hover:bg-[#dcd3b9] transition-all duration-500  min-h-[350px] w-80'>
                 {/* image  */}
 
                 <div className=''>
-                  <img src={Array.isArray(product.img) ? product.img.filter(path => path.toLowerCase().includes('front'))[0] : null} alt="product-image" className='min-w-32 w-32 h-32 object-contain max-h-[240px] rounded-xl' />
+                  <img src={Array.isArray(product.img) ? product.img.filter(path => path.toLowerCase().includes('front'))[0] : null} alt="product-image" className='min-w-32 w-32 h-40 object-contain max-h-[240px] rounded-xl' />
                 </div>
                 {/* info  */}
                 <div className='flex flex-col justify-center items-center gap-2 '>
-                  <p className=' tracking-widest text-[var(--themeColor)] text-center font-medium w-2/3'>{product.name}</p>
+                  <p className=' tracking-widest text-[var(--themeColor)] text-center font-medium '>{product.name}</p>
                   <p className='text-[14px] text-gray-500 tracking-widest'>Weight: <span className='text-gray-600'>{product.weight}</span></p>
 
                   <p className='text-[14px] tracking-widest'>₹ <span className='font-semibold'>{Math.round(product.price - (product.price * product.discount / 100))}</span>/- &nbsp; <span>{product.discount}% off</span></p>

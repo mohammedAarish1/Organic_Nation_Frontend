@@ -191,7 +191,7 @@ const Auth = () => {
 
 
   return (
-    <section className='xs:px-10 px-2 pb-20 mt-5 sm:mt-0 font-mono'>
+    <section className='xs:px-10 px-2 pb-20 mt-5 sm:mt-0 font-serif'>
       <div className='lg:w-[80%] h-auto py-2 bg-opacity-35 mx-auto'>
         {otpUser ? (
           <p className='text-center'>*Please provide us the following details to complete the signing up process*</p>

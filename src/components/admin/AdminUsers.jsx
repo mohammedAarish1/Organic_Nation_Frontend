@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FaSort, FaSync, FaChevronLeft, FaChevronRight, FaSearch } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
+import { handleDocumentDeleteFromDatabase } from '../../helper/helperFunctions';
+import { getAllUsers } from '../../features/admin/adminData';
+import Alert from '../alert/Alert';
+
 
 const AdminUsers = () => {
     const dispatch = useDispatch()
@@ -8,26 +12,14 @@ const AdminUsers = () => {
     const [sortedOrders, setSortedOrders] = useState([]);
     const [sortDirection, setSortDirection] = useState('desc');
     const [selectedOrder, setSelectedOrder] = useState(null);
+    const [isAlertOpen, setIsAlertOpen] = useState(false);
+    const [curItemId, setCurItemId] = useState('');
+
     const [currentPage, setCurrentPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState('');
     const ordersPerPage = 8;
     const modalRef = useRef();
 
-
-
-
-    // useEffect(() => {
-    //     sortOrders();
-    // }, [order, sortDirection]);
-
-    // const sortOrders = () => {
-    //     const sorted = [...order].sort((a, b) => {
-    //         const dateA = new Date(a.createdAt);
-    //         const dateB = new Date(b.createdAt);
-    //         return sortDirection === 'asc' ? dateA - dateB : dateB - dateA;
-    //     });
-    //     setSortedOrders(sorted);
-    // };
 
     useEffect(() => {
         sortAndFilterOrders();
@@ -61,13 +53,25 @@ const AdminUsers = () => {
         setSortDirection(current => current === 'asc' ? 'desc' : 'asc');
     };
 
-   
+
 
     const handleClickOutside = (event) => {
         if (modalRef.current && !modalRef.current.contains(event.target)) {
             setSelectedOrder(null);
         }
     };
+
+
+    const hideAlert = () => {
+        setCurItemId('')
+        setIsAlertOpen(false);
+
+    };
+
+    const handleDelete = () => {
+        handleDocumentDeleteFromDatabase('users', curItemId, dispatch, getAllUsers)
+        setIsAlertOpen(false);
+    }
 
     useEffect(() => {
         document.addEventListener('mousedown', handleClickOutside);
@@ -119,7 +123,7 @@ const AdminUsers = () => {
                                 <th key={header} className="p-3 text-left">
                                     <div className="flex items-center">
                                         {header}
-                                        {header === 'Created At' && (
+                                        {header === 'Date' && (
                                             <button onClick={handleSort} className="ml-1">
                                                 <FaSort />
                                             </button>
@@ -144,10 +148,14 @@ const AdminUsers = () => {
                                 <td className="p-3">
                                     <div className="flex flex-col space-y-2">
                                         <button
-                                            // onClick={() => handleOrderDetails(user)}
+                                            // onClick={() => handleDocumentDeleteFromDatabase("users", user._id, dispatch, getAllUsers)}
+                                            onClick={() => {
+                                                setCurItemId(user._id)
+                                                setIsAlertOpen(true);
+                                              }}
                                             className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700"
                                         >
-                                           Delete
+                                            Delete
                                         </button>
                                         {/* <select
                                             value={user.orderStatus}
@@ -193,7 +201,15 @@ const AdminUsers = () => {
                 </button>
             </div>
 
-           
+            {/* alert for changing order status  */}
+            <Alert
+                isOpen={isAlertOpen}
+                alertMessage={`Are you sure, do you really want to delete this ?`}
+                actionMessageOne='Yes'
+                actionMessageTwo='No'
+                hideAlert={hideAlert}
+                handleAction1={handleDelete}
+            />
         </div>
 
     );

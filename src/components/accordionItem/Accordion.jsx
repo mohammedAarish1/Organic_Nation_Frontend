@@ -2,7 +2,7 @@ import { useState } from "react";
 import { GoPlus } from "react-icons/go";
 import { LiaMinusSolid } from "react-icons/lia";
 
-const Accordion = ({data}) => {
+const Accordion = ({ data }) => {
 
 
     const [openIndex, setOpenIndex] = useState(null);
@@ -40,8 +40,8 @@ const Accordion = ({data}) => {
                     >
                         <div className="py-6 px-10 text-gray-600 bg-[var(--hoverEffect)]">
                             {item.content.map(item => (
-                                <ul key={item} className="list-disc">
-                                    <li>{item}</li>
+                                <ul key={item.subContent} className="list-disc">
+                                    <li><span className="font-semibold">{item.subTitle}</span> {item.subContent}</li>
                                 </ul>
                             ))}
                         </div>
