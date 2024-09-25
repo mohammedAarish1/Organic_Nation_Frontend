@@ -62,7 +62,8 @@ const Footer = ({ moveToTop }) => {
                     {/* First Column: About us*/}
                     <div className='flex flex-col gap-3  md:pb-0 pb-4'>
                         <h2 className="text-lg font-semibold uppercase ">About Us</h2>
-                        <p className='tracking-widest md:w-[90%] text-justify'>ORGANIC NATION All products are made with care, minimally processed, and chemical-free. In a small way, when we make a choice for products for our consumers that are relevant for well-being in today's stressful and urban lifestyle, we also bring prosperity to the lives of the people who make the products.  </p>
+                        {/* <p className='tracking-widest md:w-[90%] text-justify'>ORGANIC NATION (A Unit of <span className='font-semibold'>Foodsbay India</span>) All products are made with care, minimally processed, and chemical-free. In a small way, when we make a choice for products for our consumers that are relevant for well-being in today's stressful and urban lifestyle, we also bring prosperity to the lives of the people who make the products.  </p> */}
+                        <p className='tracking-widest md:w-[90%] text-justify'>Welcome to ORGANIC NATION (A Unit of <span className='font-semibold'>Foodsbay India</span>) , we pride ourselves on producing 100% natural and homestyle pickles, chutneys, and murrabbas. Our products are crafted with traditional recipes and the finest organic ingredients, ensuring a delightful and authentic taste experience in every jar.</p>
                     </div>
 
                     {/* Second Column: Company Information */}

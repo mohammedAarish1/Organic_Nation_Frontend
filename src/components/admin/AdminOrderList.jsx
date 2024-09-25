@@ -339,9 +339,9 @@ const AdminOrderList = ({ orders }) => {
             <Alert
                 isOpen={isAlertOpen}
                 alertMessage={
-                    curStatusAndId.orderStatus === '' ?
+                    curStatusAndId.status === '' ?
                         `Are you sure, do you really want to delete this ?` :
-                        `Do you want to update the order status to ${curStatusAndId.orderStatus}`
+                        `Do you want to update the order status to ${curStatusAndId.status}`
                 }
                 actionMessageOne='Yes'
                 actionMessageTwo='No'

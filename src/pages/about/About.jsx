@@ -69,7 +69,7 @@ const About = () => {
                     </div>
                     {/* content  */}
                     <div className='flex flex-col gap-2'>
-                        <p>Welcome to <span className='font-medium'>ORGANIC NATION -  A "ORGANIC NATION" unit (Partnership Firm ) </span>, a distinguished name in the realm of organic food processing. Established in 2019 and situated in the serene landscapes of Bailparao, Uttarakhand, we have swiftly emerged as the largest supplier of organic honey in North India.</p>
+                        <p>Welcome to <span className='font-medium'>ORGANIC NATION -  A "FOODSBAY INDIA" unit (Partnership Firm ) </span>, a distinguished name in the realm of organic food processing. Established in 2019 and situated in the serene landscapes of Bailparao, Uttarakhand, we have swiftly emerged as the largest supplier of organic honey in North India.</p>
                         <p>At <span className='font-medium'>ORGANIC NATION</span>, we pride ourselves on producing 100% natural and homestyle pickles, chutneys, and murrabbas. Our products are crafted with traditional recipes and the finest organic ingredients, ensuring a delightful and authentic taste experience in every jar.</p>
                     </div>
                 </div>
