@@ -12,8 +12,7 @@ import AdminDashboard from '../components/admin/AdminDashboard';
 const getRoutes = () => {
     const token = JSON.parse(sessionStorage.getItem('token'));
 
-    const { cartItemsList } = useSelector((state) => state.cart);
-
+    const { cartItemsList ,cartItems} = useSelector((state) => state.cart);
 
     return [
         <Route
@@ -120,7 +119,7 @@ const getRoutes = () => {
         <Route
             key="checkout"
             path='/cart/checkout'
-            element={token && cartItemsList?.length > 0 ? < Checkout /> : <Auth />}
+            element={token && cartItemsList?.length > 0 ? < Checkout /> : <Cart />}
         />,
         <Route
             key="google-signup"

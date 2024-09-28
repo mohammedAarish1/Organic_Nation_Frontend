@@ -29,9 +29,9 @@ const AddToCartBtn = ({ item, qty = 1 }) => {
       return;
     }
 
-
     dispatch(addToCart({ productId: item._id, quantity: qty, productName: item['name-url'] }))
       .then(() => {
+       
         dispatch(getAllCartItems());
         toast.info('Item Added to the Cart')
       })
@@ -63,7 +63,7 @@ const AddToCartBtn = ({ item, qty = 1 }) => {
           // }
 
         }}
-        className={`${isOutOfStock ? 'opacity-60' : 'hover:scale-90'}  flex justify-center items-center mt-2  w-max text-white py-2 px-4 bg-[#712522]   transition-all duration-500 gap-1 `}>
+        className={`${isOutOfStock ? 'opacity-60' : 'hover:scale-90'}  flex justify-center items-center sm:mt-1  w-max text-white sm:py-2 py-1 sm:px-4 px-2 bg-[#712522]   transition-all duration-500 gap-1 `}>
 
         <BsCart4 className={`text-white  ${!isOutOfStock && 'animate-bounce'}`} />
 

@@ -16,7 +16,7 @@ import { FcGoogle, FcIphone } from "react-icons/fc";
 import { ImSpinner9 } from 'react-icons/im';
 import { FaArrowRight } from 'react-icons/fa';
 import { requestOTP } from '../../features/auth/OTPSlice';
-import { fetchDataAfterSuccessfullLogIn } from '../../helper/helperFunctions';
+import { fetchDataAfterLogin } from '../../helper/helperFunctions';
 
 
 const Auth = () => {
@@ -37,7 +37,6 @@ const Auth = () => {
   const { checkoutStatus } = useSelector(state => state.orders);
   const { user, user_loading, error, userRegistered } = useSelector(state => state.user);
   const { isAuthenticated } = useSelector(state => state.OTPSlice);
-
 
 
 
@@ -99,76 +98,64 @@ const Auth = () => {
               dispatch(updateUserRegisterStatus(true));
               dispatch(userLogin({ userId: value.meta.arg.email, password: value.meta.arg.password }))
               .then((value) => {
-                  if (value.meta.requestStatus === 'fulfilled') {
-                      const token = value.payload.token;
-                      fetchDataAfterSuccessfullLogIn(token, dispatch)
-                      navigate('/')
-                      toast.success("Congratulations! signed up succesfully");
-
-                  }
+                if (value.meta.requestStatus === 'fulfilled') {
+                  const token = value.payload.token;
+                  fetchDataAfterLogin(token,dispatch,navigate,setIsAlertOpen,checkoutStatus)
+                  toast.success("Sign up Successfully");
+    
+    
+                } else if (value.payload === 'Request failed with status code 400') {
+                  toast.error('Invalid Credentials')
+                } else if (value.meta.requestStatus === 'rejected') {
+                  toast.error(error)
+                }
+    
               })
-
               // setuserRegistered(true)
             }
 
           })
 
-      } else {
-        let phoneNumber = '+91' + values.phoneNumber;
-        // dispatch the api call function 
-        dispatch(requestOTP(phoneNumber))
-          .then((value) => {
-            if (value.meta.requestStatus === 'fulfilled') {
-              toast.success(value.payload.message)
-              // setShowOtpInput(true);
-              dispatch(updateUserRegisterStatus(true));
-              // setuserRegistered(true)
-
-              navigate('/otp-submit', { state: { phoneNumber, otherDetails: { ...values, phoneNumber: phoneNumber }, googleSignup: false } })
-            }
-
-          })
-      }
+      } 
 
     } else {
       if (values.userId && values.password) {
-
-
         dispatch(userLogin({ userId: values.userId, password: values.password }))
           .then((value) => {
             if (value.meta.requestStatus === 'fulfilled') {
               const token = value.payload.token;
-              sessionStorage.setItem("token", JSON.stringify(token));
-              dispatch(fetchUserData(token));
-              dispatch(getAllOrders(token))
-              dispatch(getAllCartItems())
-                .then(res => {
-                  const localCart = JSON.parse(localStorage.getItem('cart') || '[]');
-                  if (localCart.length > 0 && res.payload.productDetails.length > 0) {
-                    setIsAlertOpen(true)
-                  } else if (localCart.length > 0 && res.payload.productDetails.length === 0) {
-                    dispatch(mergeCart({ localCart }))
-                      .then(() => {
-                        localStorage.removeItem('cart');
-                        dispatch(getAllCartItems());
-                        if (checkoutStatus) {
-                          navigate('/cart/checkout')
-                        } else {
-                          navigate('/')
+              // sessionStorage.setItem("token", JSON.stringify(token));
+              // dispatch(fetchUserData(token));
+              // dispatch(getAllOrders(token))
+              // dispatch(getAllCartItems())
+              //   .then(res => {
+              //     const localCart = JSON.parse(localStorage.getItem('cart') || '[]');
+              //     if (localCart.length > 0 && res.payload.productDetails.length > 0) {
+              //       setIsAlertOpen(true)
+              //     } else if (localCart.length > 0 && res.payload.productDetails.length === 0) {
+              //       dispatch(mergeCart({ localCart }))
+              //         .then(() => {
+              //           localStorage.removeItem('cart');
+              //           dispatch(getAllCartItems());
+              //           if (checkoutStatus) {
+              //             navigate('/cart/checkout')
+              //           } else {
+              //             navigate('/')
 
-                        }
-                      }
-                      )
-                  } else {
+              //           }
+              //         }
+              //         )
+              //     } else {
 
-                    if (checkoutStatus) {
-                      navigate('/cart/checkout')
-                    } else {
-                      navigate('/');
-                    }
-                  }
+              //       if (checkoutStatus) {
+              //         navigate('/cart/checkout')
+              //       } else {
+              //         navigate('/');
+              //       }
+              //     }
 
-                })
+              //   })
+              fetchDataAfterLogin(token, dispatch,navigate,setIsAlertOpen,checkoutStatus)
               toast.success("Log in Successfully");
 
 
@@ -432,19 +419,16 @@ const Auth = () => {
 
 
               <div className='pb-4 text-center'>
-                {!userRegistered ? (
-                  <p className='px-8 text-gray-700'>Already have an account ? <button className='text-[var(--themeColor)] text-2xl underline underline-offset-8 cursor-pointer' onClick={() => dispatch(updateUserRegisterStatus(true))}>Log in</button></p>
-                ) : (
-                  <p className='px-8 text-gray-700'>Don't have an account ? <button className='text-[var(--themeColor)] text-2xl underline underline-offset-8 cursor-pointer' onClick={() => dispatch(updateUserRegisterStatus(false))}>Sign up</button></p>
-                )}
+               
+                <p className='px-8 text-gray-700'>Don't have an account ? </p>
               </div>
 
               {/* horizontal line */}
-              <div className='flex justify-center gap-4 items-center mb-4'>
+              {/* <div className='flex justify-center gap-4 items-center mb-4'>
                 <div className='h-1 md:w-[35%] xs:w-[35%] w-[30%] bg-gradient-to-r from-[#6D613B] to-[#D3BB71]'></div>
                 <span className='text-[var(--bgColorSecondary)]'>or</span>
                 <div className='h-1 md:w-[35%] xs:w-[35%] w-[30%] bg-gradient-to-r from-[#D3BB71] to-[#6D613B]'></div>
-              </div>
+              </div> */}
               {/* other login options */}
 
               <div className='flex flex-col  px-8 gap-3'>

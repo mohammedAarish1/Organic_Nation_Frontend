@@ -279,7 +279,7 @@ const ProductDetails = () => {
                 {/* image  */}
 
                 <div className=''>
-                  <img src={Array.isArray(product.img) ? product.img.filter(path => path.toLowerCase().includes('front'))[0] : null} alt="product-image" className='min-w-32 w-32 h-40 object-contain max-h-[240px] rounded-xl' />
+                  <img src={Array.isArray(product.img) ? product.img.filter(path => path.toLowerCase().includes('front'))[0] : null} alt="product-image" className='min-w-32 h-40 object-contain max-h-[240px] rounded-xl' />
                 </div>
                 {/* info  */}
                 <div className='flex flex-col justify-center items-center gap-2 '>

@@ -46,9 +46,16 @@ export const calculateShippingFee = createAsyncThunk(
 const initialState = {
     isAvailable: null,
     message: '',
+    userCity:'',
+    userPincode:'',
+    locallySavedAddress:{
+        add1:'',
+        add2:''
+    },
+    userState:'',
     checking: false,
     error: null,
-    shippingFee: 50
+    shippingFee: 0
 }
 
 const checkDelivery = createSlice({
@@ -60,6 +67,33 @@ const checkDelivery = createSlice({
                 ...state,
                 isAvailable: null,
             }
+        },
+        updateShippingFee:(state)=>{
+            return {
+                ...state,
+                shippingFee:0
+            }
+        },
+        handleSavingLocalAdd:(state,action)=>{
+
+            if(action.payload.mainAdd){
+                return{
+                    ...state,
+                    locallySavedAddress:{
+                        ...state.locallySavedAddress,
+                        add1:action.payload.mainAdd ||'',
+                    }
+                }
+            }else{
+                return{
+                    ...state,
+                    locallySavedAddress:{
+                        ...state.locallySavedAddress,
+                        add2:action.payload.optionalAdd||''
+                    }
+                }
+            }
+           
         }
     },
     extraReducers: (builder) => {
@@ -75,6 +109,9 @@ const checkDelivery = createSlice({
                 isAvailable: action.payload?.available,
                 message: action.payload.message,
                 checking: false,
+                userCity:action.payload?.data?.city,
+                userState:action.payload?.data?.state,
+                userPincode:action.payload?.data?.pinCode
             }
         })
         builder.addCase(checkDeliveryAvailability.rejected, (state, action) => {
@@ -114,6 +151,6 @@ const checkDelivery = createSlice({
     }
 })
 
-export const { setIsAvailable } = checkDelivery.actions;
+export const { setIsAvailable,updateShippingFee,handleSavingLocalAdd } = checkDelivery.actions;
 
 export default checkDelivery.reducer;

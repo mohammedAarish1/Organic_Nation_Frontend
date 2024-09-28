@@ -19,9 +19,14 @@ import { EffectFade, Autoplay, Pagination } from 'swiper/modules';
 
 
 const images = [
+ 
   {
     image: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/main_banners/8.png',
     categoryUrl: `all`,
+  },
+  {
+    image: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/main_banners/diwali_pickle.png',
+    categoryUrl: `authentic-pickles`,
   },
   {
     image: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/main_banners/1.png',
@@ -31,10 +36,10 @@ const images = [
     image: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/main_banners/2.png',
     categoryUrl: `organic-honey`,
   },
-  {
-    image: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/main_banners/3.png',
-    categoryUrl: `authentic-pickles`,
-  },
+  // {
+  //   image: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/main_banners/3.png',
+  //   categoryUrl: `authentic-pickles`,
+  // },
   {
     image: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/main_banners/4.png',
     categoryUrl: `about-us`,

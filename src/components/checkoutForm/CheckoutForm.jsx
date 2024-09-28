@@ -11,14 +11,14 @@ import { states } from '../../helper/stateList';
 import { MdEmail, MdOutlinePhoneAndroid, MdLocationCity } from "react-icons/md";
 import { FaUserEdit } from "react-icons/fa";
 import { PiFileZipFill } from "react-icons/pi";
-import { BsBoxArrowUpRight } from "react-icons/bs";
 import { BsArrowRight } from "react-icons/bs";
-import { generateTransactionID, address, calculateDiscountAndTaxIncluded } from '../../helper/helperFunctions';
+import { generateTransactionID, address, calculateDiscountAndTaxIncluded, checkDeliveryAndCalculateShippingFee } from '../../helper/helperFunctions';
 
 // formik
 import { Formik, Form, Field, } from 'formik';
 import { initiatePayment } from '../../features/orderPayment/payment';
 import { ImSpinner9 } from 'react-icons/im';
+import { handleSavingLocalAdd } from '../../features/check-delivery/checkDelivery';
 
 
 const CheckoutForm = () => {
@@ -27,9 +27,10 @@ const CheckoutForm = () => {
 
     const { user } = useSelector((state) => state.user);
 
-    const { cartItemsList, totalCartAmount, totalTax } = useSelector((state) => state.cart);
+    const { cartItemsList, totalCartAmount, totalTax,totalWeight,isPickleCouponApplied ,isCouponCodeApplied} = useSelector((state) => state.cart);
     const { addingNewOrder } = useSelector(state => state.orders)
-    const { shippingFee } = useSelector(state => state.delivery)
+    const { shippingFee ,userCity, userPincode, userState,message,locallySavedAddress} = useSelector(state => state.delivery)
+
 
     const initialValues = {
         firstName: user?.firstName || '',
@@ -41,12 +42,12 @@ const CheckoutForm = () => {
         receiverEmail: '',
         receiverPhone: '',
         shippingAddress: {
-            address: '',
-            optionalAddress: '',
-            city: '',
-            state: '',
-            zipCode: '',
-            country: 'India',
+            address:locallySavedAddress.add1 || "",
+      optionalAddress: locallySavedAddress.add2 || "",
+      city: userCity ? userCity : "",
+      state: userState ? userState : "",
+      zipCode: userPincode ? userPincode : "",
+      country: "India",
         },
         billingAddress: {
             address: '',
@@ -56,8 +57,8 @@ const CheckoutForm = () => {
             zipCode: '',
             country: 'India',
         },
-        sameAsContact: false,
-        sameAsShipping: false,
+        sameAsContact: true,
+        sameAsShipping: true,
         paymentMethod: '',
         // saveShippingInfo: false,
     };
@@ -72,9 +73,6 @@ const CheckoutForm = () => {
 
 
         const orderDetails = cartItemsList.map(item => {
-            // Calculate the discounted price
-            // const discountedPrice = item.price - (item.price * (item.discount / 100));
-
             return {
                 id: item._id,
                 "name-url": item["name-url"],
@@ -106,6 +104,7 @@ const CheckoutForm = () => {
             },
             merchantTransactionId: merchantTransactionId,
             isCouponCodeApplied: user.cart.isCouponCodeApplied,
+            isPickleCouponApplied:isPickleCouponApplied  // temporary field will be romved once the pickle offer over
         }
 
 
@@ -149,9 +148,9 @@ const CheckoutForm = () => {
 
     };
 
-    const lableStyle = 'absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4'
+    const lableStyle = 'absolute tracking-widest text-sm text-gray-400  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4'
 
-    const inputStyle = 'block py-2.5  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer'
+    const inputStyle = 'block py-2.5 tracking-widest  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer'
 
 
     return (
@@ -167,8 +166,8 @@ const CheckoutForm = () => {
                     <Form className="mt-10">
                         {/*============== contact details ================= */}
                         <div>
-                            <div className='flex justify-between items-center py-3 '>
-                                <h3 className="text-lg font-bold text-[#333] ">Contact Details</h3>
+                            <div className='flex justify-between items-center mb-8 '>
+                                <h3 className=" font-bold text-[var(--themeColor)] uppercase tracking-widest italic ">Contact Details:</h3>
                                 <Link to='/register' className='hover:underline underline-offset-4  cursor-pointer'>{!user ? 'Login' : null}</Link>
 
                             </div>
@@ -260,8 +259,8 @@ const CheckoutForm = () => {
                         </div>
                         {/*============== receiver's details ================= */}
                         <div className='mt-6'>
-                            <h3 className="text-lg font-bold text-[#333]  mt-6">Receiver Details</h3>
-                            <div className='flex items-center gap-2 py-4'>
+                            <h3 className=" font-bold text-[var(--themeColor)] uppercase tracking-widest my-8 italic ">Receiver Details:</h3>
+                            <div className='flex items-center gap-2'>
                                 <Field
                                     type="checkbox"
                                     id="sameAsContact"
@@ -375,7 +374,7 @@ const CheckoutForm = () => {
                         <div className="mt-6">
                             {/*=========== shipping address ============  */}
                             <div>
-                                <h3 className="text-lg font-bold text-[#333] mb-6">Shipping Address</h3>
+                                <h3 className=" font-bold text-[var(--themeColor)] uppercase tracking-widest my-8 italic ">Shipping Address:</h3>
                                 <div className="grid sm:grid-cols-2 gap-10">
 
                                     {/* Address   */}
@@ -387,6 +386,9 @@ const CheckoutForm = () => {
                                             className={inputStyle}
                                             placeholder=" "
                                             autoComplete="off"
+                                            onBlur={(e)=>{
+                                                dispatch(handleSavingLocalAdd({mainAdd:e.target.value}))
+                                              }}
                                         />
 
                                         <label htmlFor="shippingAddress.address" className={lableStyle}>Address Line</label>
@@ -406,6 +408,9 @@ const CheckoutForm = () => {
                                             className={inputStyle}
                                             placeholder=" "
                                             autoComplete="off"
+                                            onBlur={(e)=>{
+                                                dispatch(handleSavingLocalAdd({optionalAdd:e.target.value}))
+                                              }}
                                         />
 
                                         <label
@@ -470,6 +475,20 @@ const CheckoutForm = () => {
                                             className={inputStyle}
                                             placeholder=" "
                                             autoComplete="off"
+                                            onChange={(e) => {
+                                                setFieldValue(
+                                                  "shippingAddress.zipCode",
+                                                  e.target.value
+                                                );
+                        
+                                                if (e.target.value.length === 6) {
+                                                  checkDeliveryAndCalculateShippingFee(
+                                                    e.target.value,
+                                                    totalWeight,
+                                                    dispatch
+                                                  );
+                                                }
+                                              }}
                                         />
 
                                         <label htmlFor="shippingAddress.zipCode" className={lableStyle}>Zip Code</label>
@@ -517,7 +536,7 @@ const CheckoutForm = () => {
 
                             {/* billing address  */}
                             <div>
-                                <h3 className="text-lg font-bold text-[#333]  mt-6">Billing Address</h3>
+                                <h3 className=" font-bold text-[var(--themeColor)] uppercase tracking-widest my-8 italic">Billing Address:</h3>
                                 <div className='flex items-center gap-2 py-4'>
                                     <Field
                                         type="checkbox"
@@ -664,7 +683,7 @@ const CheckoutForm = () => {
                             </div>
                             {/* payment method  */}
                             <div>
-                                <h3 className="text-lg font-bold text-[#333]  mt-6">Payment Method</h3>
+                                <h3 className=" font-bold text-[var(--themeColor)] uppercase tracking-widest my-8 italic">Payment Method:</h3>
                                 <div className='flex flex-wrap xs:gap-10 gap-4 mt-2'>
 
                                     <div className='flex items-center gap-1'>

@@ -280,9 +280,6 @@ export const mergeCart = createAsyncThunk(
 
 
 // coupon code validation logic
-
-
-
 export const getCouponCodeValidate = createAsyncThunk(
     'cart/getCouponCodeValidate',
     async (data, { rejectWithValue, getState }) => {
@@ -306,6 +303,18 @@ export const getCouponCodeValidate = createAsyncThunk(
 )
 
 
+export const applyPickleCouponCode = createAsyncThunk(
+    'cart/applyPickleCouponCode',
+    async ({ userEmail, couponCode }, { rejectWithValue }) => {
+      try {
+        const response = await axios.post(`${apiUrl}/api/validate/pickle/coupon-code`, { userEmail, couponCode });
+        return response.data;
+      } catch (error) {
+        return rejectWithValue(error.response.data);
+      }
+    }
+  );
+
 
 
 const initialState = {
@@ -314,6 +323,7 @@ const initialState = {
     loading: false,
     validatingCouponCode: false,
     isCouponCodeApplied: false,
+    isPickleCouponApplied: false,
     error: null,
     totalCartItems: 0,
     totalCartAmount: 0,
@@ -408,13 +418,13 @@ export const cartSlice = createSlice({
                 }
             })
             .addCase(addToCart.fulfilled, (state, action) => {
-
-                if (action.payload && action.payload.length > 0) {
+                if (action.payload && action.payload.items.length > 0) {
                     return {
                         ...state,
                         loading: false,
                         cartItems: action.payload.items,
-                        isCouponCodeApplied: action.payload.isCouponCodeApplied
+                        isCouponCodeApplied: action.payload.isCouponCodeApplied,
+                        isPickleCouponApplied:false
                     }
                 }
 
@@ -435,7 +445,6 @@ export const cartSlice = createSlice({
             })
             .addCase(getAllCartItems.fulfilled, (state, action) => {
 
-
                 // let totalPrice;
                 let totalWeight;
                 let totalQty;
@@ -444,29 +453,11 @@ export const cartSlice = createSlice({
                 if (action.payload.productDetails?.length > 0) {
 
                     totalQty = action.payload.productDetails.reduce((total, product) => total + product.quantity, 0);
-
-                    // totalPrice = action.payload.reduce((total, product) => {
-                    //     const discountedPrice = product.price * (1 - product.discount / 100);
-                    //     return Math.round(total + discountedPrice * product.quantity);
-                    // }, 0);
-
                     totalWeight = action.payload.productDetails.reduce((total, product) => {
-                        const weight = extractWeight(product.weight);
+                        const weight = extractWeight(product.weight)*product.quantity;
                         return total + (isNaN(weight) ? 0 : weight);
                     }, 0);
 
-                    // totalTax = action.payload.reduce((total, product) => {
-                    //     const discountedPrice = product.price * (1 - product.discount / 100);
-                    //     const totalAmountWithTax = discountedPrice * product.quantity;
-
-                    //     // Calculate the amount without tax
-                    //     const amountWithoutTax = totalAmountWithTax / (1 + product.tax / 100);
-
-                    //     // Calculate the tax amount
-                    //     const taxAmount = totalAmountWithTax - amountWithoutTax;
-
-                    //     return Math.round(total + taxAmount);
-                    // }, 0);
                 }
 
                 return {
@@ -477,7 +468,8 @@ export const cartSlice = createSlice({
                     totalCartAmount: action.payload.totalCartAmount,
                     totalWeight: JSON.stringify(totalWeight),
                     totalTax: action.payload.totalTax,
-                    isCouponCodeApplied: action.payload.isCouponCodeApplied
+                    isCouponCodeApplied: action.payload.isCouponCodeApplied,
+                    
                 }
             })
             .addCase(getAllCartItems.rejected, (state, action) => {
@@ -506,7 +498,8 @@ export const cartSlice = createSlice({
                         totalCartAmount: action.payload.totalCartAmount,
                         totalTax: action.payload.totalTax,
                         totalCartItems: 0,
-                        isCouponCodeApplied: action.payload.isCouponCodeApplied
+                        isCouponCodeApplied: action.payload.isCouponCodeApplied,
+                        isPickleCouponApplied:false
                     }
                 }
             })
@@ -531,7 +524,8 @@ export const cartSlice = createSlice({
                         ...state,
                         loading: false,
                         cartItems: action.payload.items,
-                        isCouponCodeApplied: action.payload.isCouponCodeApplied
+                        isCouponCodeApplied: action.payload.isCouponCodeApplied,
+                        isPickleCouponApplied:false
                     }
                 }
 
@@ -557,7 +551,8 @@ export const cartSlice = createSlice({
                         ...state,
                         loading: false,
                         cartItems: action.payload.items,
-                        isCouponCodeApplied: action.payload.isCouponCodeApplied
+                        isCouponCodeApplied: action.payload.isCouponCodeApplied,
+                        isPickleCouponApplied:false
 
                     }
                 }
@@ -604,7 +599,6 @@ export const cartSlice = createSlice({
                 }
             })
             .addCase(getCouponCodeValidate.fulfilled, (state, action) => {
-
                 if (action.payload) {
                     return {
                         ...state,
@@ -615,6 +609,30 @@ export const cartSlice = createSlice({
 
             })
             .addCase(getCouponCodeValidate.rejected, (state, action) => {
+                return {
+                    ...state,
+                    validatingCouponCode: false,
+                    error: action.payload,
+                }
+            })
+            //  ======================= pickle coupon code validation ===============
+            .addCase(applyPickleCouponCode.pending, (state) => {
+                return {
+                    ...state,
+                    validatingCouponCode: true,
+                }
+            })
+            .addCase(applyPickleCouponCode.fulfilled, (state, action) => {
+                if (action.payload) {
+                    return {
+                        ...state,
+                        validatingCouponCode: false,
+                        isPickleCouponApplied: action.payload.isCouponCodeApplied
+                    }
+                }
+
+            })
+            .addCase(applyPickleCouponCode.rejected, (state, action) => {
                 return {
                     ...state,
                     validatingCouponCode: false,

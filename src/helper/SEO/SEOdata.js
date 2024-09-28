@@ -66,6 +66,30 @@ const productCategoriesData = {
     },
 }
 
+const individualProductData = {
+    'Organic-Light-Flora-Honey': {
+        title: "Organic Light Flora Honey | Organic Honey – Organic Nation",
+        description: "Experience the purity of nature with Organic Nation's Light Flora Honey. Crafted by bees foraging on a diverse range of organic wildflowers, this honey offers a delicate and subtly sweet flavor.",
+        canonicalUrl: "https://organicnation.co.in/shop/organic-honey/Organic-Light-Flora-Honey",
+        image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Organic-Light-Flora-Honey/front.png"
+    },
+    'Organic-Wild-Forest-Honey': {
+        title: "Pure Wild Forest Honey | Buy Honey Online | Organic Nation",
+        description: "Experience the pure essence of nature with our Organic Wild Forest Honey. Sourced from pristine, untouched forests, our honey is Unprocessed and Pure.",
+        canonicalUrl: "https://organicnation.co.in/shop/organic-honey/Organic-Wild-Forest-Honey",
+        image:""
+    },
+    all: {
+        title: "",
+        description: "",
+        canonicalUrl: "",
+    },
+   
+}
+
+
+
+
 export { productCategoriesData };
 
 

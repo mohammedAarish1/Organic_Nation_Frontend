@@ -22,12 +22,12 @@ const Product = ({ gridView, product }) => {
 
   const containerClasses = `
   relative overflow-hidden
-  ${gridView ? 'w-60 h-60' : 'xs:w-60 xs:h-60 w-28 h-40'}
+  ${gridView ? 'sm:w-60 w-32 sm:h-60 h-32' : 'xs:w-60 xs:h-60 w-28 h-40'}
   group hover:shadow-xl transition-shadow rounded-lg duration-500
 `;
 
   const imageClasses = `
-  absolute inset-0 w-full h-full
+  absolute inset-0 w-full h-full 
   object-contain transition-opacity duration-1000 py-2
 `;
 
@@ -55,7 +55,7 @@ const Product = ({ gridView, product }) => {
 
 
   return (
-    <div className={`${!gridView ? "flex flex-row lg:pl-32 justify-start items-center gap-5  " : "flex justify-between items-center flex-col gap-2 max-w-[260px] "} font-sans`}
+    <div className={`${!gridView ? "flex flex-row lg:pl-32 justify-start items-center gap-5 " : "flex justify-between items-center flex-col xs:gap-2 xs:max-w-[150px] max-w-[120px] sm:max-w-[260px] "} font-sans`}
       data-aos="zoom-in-up"
       data-aos-duration="700"
     >
@@ -82,11 +82,11 @@ const Product = ({ gridView, product }) => {
       <div className={`flex flex-col justify-between  ${!gridView ? 'items-start' : 'items-center w-full'} flex-1 `}>
       <NavLink to={`/shop/${categoryBtnValue}/${product['name-url']}`}>
         <div className={`flex flex-col justify-center sm:gap-1  sm:justify-between ${!gridView ? 'items-start' : 'items-center h-32'}`}>
-          <p className={`font-medium sm:text-xl  ${gridView ? 'text-center w-[90%]' : ''}    text-[#712522]`}>{product.name}</p>
-          <p className='text-gray-500'>Weight: {product.weight}</p>
+          <p className={`font-medium sm:text-xl text-sm  ${gridView ? 'text-center xs:w-[70%]' : ''}    text-[#712522]`}>{product.name}</p>
+          <p className='text-gray-500 sm:text- text-sm'>Weight: {product.weight}</p>
           {!gridView && <p className='lg:w-[70%] sm:block hidden text-sm font-serif'>{product.description}</p>}
           {/* <p>{error ? 'No reviews yet' : averageRating}</p> */}
-          <div className='flex justify-start items-center gap-2'>
+          <div className='flex justify-start items-center gap-2 sm:text-xl text-sm'>
             {[...Array(5)].map((star, index) => {
               const ratingValue = index + 0.5;
               return (
@@ -111,7 +111,7 @@ const Product = ({ gridView, product }) => {
           </div>
 
 
-          <p className=''>₹ <span className='font-semibold'>{Math.round(product.price - (product.price * product.discount / 100))}</span>/- &nbsp; <span className='text-green-700'>{product.discount}% off</span></p>
+          <p className=''>₹ <span className='font-semibold sm:text-[16px] text-sm' >{Math.round(product.price - (product.price * product.discount / 100))}</span>/- &nbsp; <span className='text-green-700'>{product.discount}% off</span></p>
         </div>
         </NavLink>
         <AddToCartBtn item={product} />

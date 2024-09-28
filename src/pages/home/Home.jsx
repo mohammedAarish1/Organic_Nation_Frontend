@@ -5,7 +5,7 @@ import Title from '../../components/title/Title'
 import { useDispatch, useSelector } from 'react-redux'
 import RecipeSection from '../../components/recipe-section/RecipeSection'
 import TestimonialSection from '../../components/testimonial-section/TestimonialSection'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { fetchUserData } from '../../features/auth/userSlice'
 import { toast } from 'react-toastify'
 import SpotlightSection from '../../components/spotlightSection/SpotlightSection'
@@ -13,6 +13,8 @@ import ProductCategories from '../../components/productCategories/ProductCategor
 import { addReviews } from '../../features/reviews/reviews'
 import BlogSection from '../../components/blog-section/BlogSection';
 import SEO from '../../helper/SEO/SEO'
+import { getAllCartItems, getAllOrders } from '../../imports'
+import { mergeCart } from '../../features/cart/cart'
 
 
 
@@ -47,7 +49,7 @@ const betterImages = [
 const certificates = [
     'https://organicnationmages.s3.ap-south-1.amazonaws.com/certificates/usoca.png',
     'https://organicnationmages.s3.ap-south-1.amazonaws.com/certificates/fssi.webp',
-    'https://organicnationmages.s3.ap-south-1.amazonaws.com/certificates/haccp.webp',
+    // 'https://organicnationmages.s3.ap-south-1.amazonaws.com/certificates/haccp.webp',
     'https://organicnationmages.s3.ap-south-1.amazonaws.com/certificates/jaivik.webp',
     'https://organicnationmages.s3.ap-south-1.amazonaws.com/certificates/organic.webp',
     'https://organicnationmages.s3.ap-south-1.amazonaws.com/certificates/usda.webp',
@@ -56,7 +58,9 @@ const certificates = [
 
 const Home = () => {
     const dispatch = useDispatch();
+    const navigate=useNavigate();
     const { isLoading, productData } = useSelector((state) => state.product_data);
+  const { checkoutStatus } = useSelector(state => state.orders);
     const reviewsAndRating = JSON.parse(sessionStorage.getItem('reviews&rating'))
 
     // below code is for log in the user strightaway if they are already registered with the same email id
@@ -67,11 +71,23 @@ const Home = () => {
 
     useEffect(() => {
         if (token) {
-            dispatch(fetchUserData(token))
-                .then(() => {
-                    sessionStorage.setItem("token", JSON.stringify(token));
-                    toast.success("Logged in successfully")
-                })
+
+            sessionStorage.setItem("token", JSON.stringify(token));
+            dispatch(fetchUserData(token));
+            dispatch(getAllOrders(token));
+            dispatch(getAllCartItems()).then((res) => {
+              const localCart = JSON.parse(localStorage.getItem("cart") || "[]");
+              dispatch(mergeCart({ localCart }))
+              .then(() => {
+                localStorage.removeItem("cart");
+                dispatch(getAllCartItems());
+                if (checkoutStatus) {
+                  navigate("/cart/checkout");
+                } else {
+                  navigate("/");
+                }
+              });
+            });
         }
 
         if (reviewsAndRating) {

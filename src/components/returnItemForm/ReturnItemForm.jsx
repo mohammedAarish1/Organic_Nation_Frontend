@@ -93,53 +93,6 @@ const ReturnItemForm = ({ product, paymentMethod, amountPaid, orderNo, onSubmit,
         // setImageError('');
     };
 
-    // const removeImage = (index) => {
-    //     setImages(images.filter((_, i) => i !== index));
-    //     setImageWarning('');
-    // };
-
-
-
-    // const handleSubmit = async (values, { setSubmitting }) => {
-
-
-    //     // const data = new FormData();
-
-    //     // Object.keys(values).forEach(key => {
-    //     //     data.append(key, values[key]);
-    //     // });
-    //     // images.forEach(image => {
-    //     //     data.append('images', image);
-    //     // });
-
-    //     // console.log('Form values:', values);
-    //     // console.log('Images:', images);
-
-    //     // console.log('FormData contents:');
-    //     // for (let [key, value] of data.entries()) {
-    //     //     console.log(key, value);
-    //     // }
-
-    //     console.log('data')
-    //     try {
-    //         // let response;
-    //         // if (product) {
-    //         //     response = await axios.put(`/api/products/edit/${product._id}`, data);
-
-
-    //         // } else {
-    //         //     // response = await axios.post(`${apiUrl}/api/admin/products/add`, data);
-    //         //     dispatch(addNewProductInDatabase(data)).unwrap();
-    //         //     // .then((res) => {
-    //         //     //     console.log('res', res)
-    //         //     // })
-    //         // }
-    //         // onSubmit();
-    //     } catch (error) {
-    //         console.error('Error submitting form:', error);
-    //     }
-    //     setSubmitting(false);
-    // };
 
 
 

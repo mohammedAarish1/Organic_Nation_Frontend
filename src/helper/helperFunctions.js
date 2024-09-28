@@ -1,16 +1,43 @@
 import { toast } from "react-toastify";
 import { deleteDocumentFromDatabase } from "../features/admin/adminData";
 import { fetchUserData, getAllCartItems, getAllOrders } from "../imports";
+import { calculateShippingFee, checkDeliveryAvailability, updateShippingFee } from "../features/check-delivery/checkDelivery";
+import { mergeCart } from "../features/cart/cart";
 
-// store token and fetch all the user related data after successful logged in
-const fetchDataAfterSuccessfullLogIn = (token, dispatch) => {
-    sessionStorage.setItem("token", JSON.stringify(token));
-    dispatch(fetchUserData(token));
-    dispatch(getAllOrders(token))
-    dispatch(getAllCartItems())
+
+const fetchDataAfterLogin=(token,dispatch,navigate,setIsAlertOpen,checkoutStatus)=>{
+  sessionStorage.setItem("token", JSON.stringify(token));
+  dispatch(fetchUserData(token));
+  dispatch(getAllOrders(token))
+  dispatch(getAllCartItems())
+    .then(res => {
+      const localCart = JSON.parse(localStorage.getItem('cart') || '[]');
+      if (localCart.length > 0 && res.payload.productDetails.length > 0) {
+        setIsAlertOpen(true)
+      } else if (localCart.length > 0 && res.payload.productDetails.length === 0) {
+        dispatch(mergeCart({ localCart }))
+          .then(() => {
+            localStorage.removeItem('cart');
+            dispatch(getAllCartItems());
+            if (checkoutStatus) {
+              navigate('/cart/checkout')
+            } else {
+              navigate('/')
+
+            }
+          }
+          )
+      } else {
+
+        if (checkoutStatus) {
+          navigate('/cart/checkout')
+        } else {
+          navigate('/');
+        }
+      }
+
+    })
 }
-
-
 
 // generate random Transaction Id
 const generateTransactionID = () => {
@@ -76,10 +103,40 @@ const handleDocumentDeleteFromDatabase = (collection, id, dispatch,updateLists) 
         })
 }
 
+
+// for checking delivery availability and calculating shipping fee
+const checkDeliveryAndCalculateShippingFee = (
+    pinCode,
+    totalWeight,
+    dispatch
+  ) => {
+    if (pinCode) {
+      if (localStorage.getItem("deliveryChargeToken")) {
+        localStorage.removeItem("deliveryChargeToken");
+      }
+      dispatch(checkDeliveryAvailability(pinCode)).then((res) => {
+        if (res.payload.available) {
+          dispatch(
+            calculateShippingFee({ pinCode: res.meta.arg, weight: totalWeight })
+          ).then((res) => {
+            if (res.meta.requestStatus === "fulfilled") {
+              localStorage.setItem("deliveryChargeToken", res?.payload?.token);
+            }
+          });
+        } else {
+          toast.error(`Delivery is not available for pin code ${pinCode}`);
+          dispatch(updateShippingFee());
+        }
+      });
+    }
+  };
+
+
 export {
     generateTransactionID,
     address,
     calculateDiscountAndTaxIncluded,
-    fetchDataAfterSuccessfullLogIn,
-    handleDocumentDeleteFromDatabase
+    fetchDataAfterLogin,
+    handleDocumentDeleteFromDatabase,
+    checkDeliveryAndCalculateShippingFee
 }
