@@ -19,7 +19,6 @@ import AdminRoutes from './routes/AdminRoutes';
 import AdminLogin from './pages/admin/AdminLogin';
 import { fetchAdminData } from './features/admin/adminSlice';
 import PopupBanner from './components/popup-banner/PopupBanner';
-import { getAllReturnItems } from './features/manageOrders/manageOrders';
 
 
 

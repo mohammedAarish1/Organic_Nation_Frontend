@@ -235,8 +235,59 @@ export const generateReport = createAsyncThunk(
 );
 
 
+// update return status 
+export const updateReturnStatus = createAsyncThunk(
+    'adminData/updateReturnStatus',
+    async (data, { rejectWithValue }) => {
+        const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
+        try {
+            const response = await axios.put(`${apiUrl}/api/admin/returns/update/return-status`, data, {
+                headers: {
+                    'Authorization': `Bearer ${adminToken}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+
+            // return response.data;
+        } catch (error) {
+            if (error.response && error.response.data) {
+                return rejectWithValue(error.response.data);
+            } else {
+                return rejectWithValue(error.message);
+            }
+        }
+    }
+)
+
+// get all returns 
+export const getTotalReturns = createAsyncThunk(
+    'adminData/getTotalReturns',
+    async (_, { rejectWithValue }) => {
+        const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
+        try {
+            const response = await axios.get(`${apiUrl}/api/admin/returns`, {
+                headers: {
+                    'Authorization': `Bearer ${adminToken}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+
+            return response.data;
+        } catch (error) {
+            if (error.response && error.response.data) {
+                return rejectWithValue(error.response.data);
+            } else {
+                return rejectWithValue(error.message);
+            }
+        }
+    }
+)
+
+
+
 const initialState = {
     totalOrders: [],
+    totalReturns: [],
     totalUsers: [],
     totalUserQueries: [],
     loading: false,
@@ -246,6 +297,10 @@ const initialState = {
     ordersByStatus: {
         orderData: [],
         orderStatusTab: "total"
+    },
+    returnsByStatus: {
+        returnData: [],
+        returnStatusTab: "requested"
     },
     // token: JSON.parse(sessionStorage.getItem('token')) || '',
     // hasLocalCart: false,
@@ -311,6 +366,61 @@ const adminData = createSlice({
                     ordersByStatus: {
                         ...state.ordersByStatus,
                         orderData: state.cancelledOrders,
+                    }
+                }
+            }
+        },
+        getReturnsByStatus: (state, action) => {
+            if (action.payload === "requested") {
+                let activeReturns = state.totalReturns.filter(curReturn => curReturn.returnStatus === action.payload);
+
+                return {
+                    ...state,
+                    returnsByStatus: {
+                        ...state.returnsByStatus,
+                        returnData: activeReturns,
+                        returnStatusTab: action.payload
+                    }
+                }
+            } else if (action.payload === "rejected") {
+                let activeReturns = state.totalReturns.filter(curReturn => curReturn.returnStatus === action.payload);
+
+                return {
+                    ...state,
+                    returnsByStatus: {
+                        ...state.returnsByStatus,
+                        returnData: activeReturns,
+                        returnStatusTab: action.payload
+                    }
+                }
+            } else if (action.payload === "inProgress") {
+                let activeReturns = state.totalReturns.filter(curReturn => curReturn.returnStatus === action.payload);
+
+                return {
+                    ...state,
+                    returnsByStatus: {
+                        ...state.returnsByStatus,
+                        returnData: activeReturns,
+                        returnStatusTab: action.payload
+                    }
+                }
+            } else if (action.payload === "completed") {
+                let activeReturns = state.totalReturns.filter(curReturn => curReturn.returnStatus === action.payload);
+
+                return {
+                    ...state,
+                    returnsByStatus: {
+                        ...state.returnsByStatus,
+                        returnData: activeReturns,
+                        returnStatusTab: action.payload
+                    }
+                }
+            }  else {
+                return {
+                    ...state,
+                    returnsByStatus: {
+                        ...state.returnsByStatus,
+                        returnData: state.totalReturns,
                     }
                 }
             }
@@ -448,7 +558,36 @@ const adminData = createSlice({
             .addCase(generateReport.rejected, (state, action) => {
                 state.generatingSaleReport = false;
                 state.error = action.payload;
-            });
+            })
+
+             // ========= totla orders ==========
+             .addCase(getTotalReturns.pending, (state) => {
+                return {
+                    ...state,
+                    loading: true,
+                    error: null,
+                }
+            })
+            .addCase(getTotalReturns.fulfilled, (state, action) => {
+                return {
+                    ...state,
+                    loading: false,
+                    totalReturns: action.payload,
+                    returnsByStatus: {
+                        ...state.returnsByStatus,
+                        returnData: state.totalReturns,
+                        // orderStatusTab: action.payload
+                    }
+
+                }
+            })
+            .addCase(getTotalReturns.rejected, (state, action) => {
+                return {
+                    ...state,
+                    loading: false,
+                    error: action.payload,
+                }
+            })
 
     }
 
@@ -456,7 +595,7 @@ const adminData = createSlice({
 })
 
 // export const { userLogout, clearLocalCartFlag } = userSlice.actions;
-export const { getOrdersByStatus } = adminData.actions;
+export const { getOrdersByStatus,getReturnsByStatus } = adminData.actions;
 
 
 export default adminData.reducer;

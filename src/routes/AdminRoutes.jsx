@@ -11,11 +11,12 @@ import { BsSearch } from 'react-icons/bs';
 import { VscAccount } from 'react-icons/vsc';
 import AdminUsers from '../components/admin/AdminUsers';
 import { fetchAdminData } from '../features/admin/adminSlice';
-import { getAllUserQueries, getAllUsers, getOrdersByStatus, getTotalOrders } from '../features/admin/adminData';
+import { getAllUserQueries, getAllUsers, getOrdersByStatus, getTotalOrders, getTotalReturns } from '../features/admin/adminData';
 import AdminQueries from '../components/admin/AdminQueries';
 import AdminProducts from '../components/admin/AdminProducts';
 import { getProductsData } from '../imports';
 import { ToastContainer } from 'react-toastify';
+import AdminReturnItems from '../components/admin/AdminReturnItems';
 
 // Import other admin components
 
@@ -42,6 +43,7 @@ const AdminRoutes = () => {
       dispatch(fetchAdminData(adminToken))
         .then(res => {
           dispatch(getTotalOrders());
+          dispatch(getTotalReturns());
           dispatch(getProductsData());
           dispatch(getAllUsers())
           dispatch(getAllUserQueries())
@@ -104,6 +106,7 @@ const AdminRoutes = () => {
             <Route path="/users" element={<AdminUsers />} />
             <Route path="/queries" element={<AdminQueries />} />
             <Route path="/products" element={<AdminProducts />} />
+            <Route path="/returns" element={<AdminReturnItems />} />
           </Routes>
         </div>
       </div>

@@ -130,7 +130,7 @@ const Footer = ({ moveToTop }) => {
                     </div>
                 </div>
                 <div>
-                    <div className='flex items-center gap-2'>
+                    <div className='flex flex-wrap items-center gap-2'>
                         <img src="https://organicnationmages.s3.ap-south-1.amazonaws.com/payments/maestro.png" alt="maestro" className='w-12' />
                         <img src="https://organicnationmages.s3.ap-south-1.amazonaws.com/payments/visa.png" alt="visa" className='w-14' />
                         <img src="https://organicnationmages.s3.ap-south-1.amazonaws.com/payments/rupay.png" alt="rupay" className=' h-16' />

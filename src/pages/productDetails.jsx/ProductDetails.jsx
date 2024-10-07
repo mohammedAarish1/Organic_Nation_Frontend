@@ -18,6 +18,8 @@ import { GoDotFill } from "react-icons/go";
 import { LiaShippingFastSolid } from "react-icons/lia";
 import Accordion from '../../components/accordionItem/Accordion';
 import OfferBanner from '../../components/offerBanner/OfferBanner';
+import { individualProductData } from '../../helper/SEO/SEOdata';
+import SEO from '../../helper/SEO/SEO';
 
 
 
@@ -94,6 +96,8 @@ const ProductDetails = () => {
   const dispatch = useDispatch();
   const [qty, setQty] = useState(1);
   const [product, setProduct] = useState('');
+  const [curProductSeoData, setProductSeoData] = useState(individualProductData.nameUrl||{});
+
 
   const filterProduct = useSelector((state) => state.filterData.data);
   const { allReviews, loading, averageRating } = useSelector((state) => state.reviews);
@@ -122,8 +126,10 @@ const ProductDetails = () => {
 
   useEffect(() => {
     getProductDetail(nameUrl)
-  }, [nameUrl])
+    setProductSeoData(individualProductData[nameUrl] || individualProductData.nameUrl);
 
+  }, [nameUrl])
+  
 
   // for qty increase and decrease 
 
@@ -146,6 +152,22 @@ const ProductDetails = () => {
   }
   return (
     <div>
+        <SEO
+        title={curProductSeoData?.title ||''}
+        description={curProductSeoData?.description||''}
+        canonicalUrl={curProductSeoData?.canonicalUrl||''}
+        ogTitle={curProductSeoData?.title||''}
+        ogDescription={curProductSeoData?.description||''}
+        ogUrl={curProductSeoData?.canonicalUrl||''}
+        ogImage={curProductSeoData?.image||''}
+        ogImageWidth="478"
+        ogImageHeight="446"
+        twitterTitle={curProductSeoData?.title||''}
+        twitterDescription={curProductSeoData?.description||''}
+        twitterImage={curProductSeoData?.image||''}
+        twitterSite="Organic Nation"
+        twitterCreator="organicnation_"
+      />
       <div>
 
         <OfferBanner />

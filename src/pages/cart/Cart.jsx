@@ -382,6 +382,7 @@ useEffect(() => {
                             color: "#ffffff",
                             borderRadius: "10px",
                             padding: "20px",
+                            maxWidth:"200px"
                           }}
                           place="bottom"
                           animation="fade"

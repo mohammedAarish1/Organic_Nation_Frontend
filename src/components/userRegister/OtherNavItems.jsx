@@ -97,12 +97,18 @@ const OtherNavItems = () => {
                 <p className='lowercase text-sm px-2'>{user.email}</p>
                 <div className='h-[2px] w-full bg-[var(--bgColorSecondary)] mt-1'></div>
               </li>
+              {/* manage order link  */}
               <li className='hover:bg-[var(--bgColorSecondary)] hover:text-[var(--bgColorPrimary)]  cursor-pointer pl-4   py-1' onClick={() => setShowUserMenu(false)}>
                 <Link to="/manage-orders">
                   Manage Orders
                 </Link>
               </li>
-              {/* <li className='hover:bg-[var(--bgColorSecondary)] text-[var(--bgColorPrimary)] cursor-pointer pl-4  py-1'>Help</li> */}
+              {/* manage return link  */}
+              <li className='hover:bg-[var(--bgColorSecondary)] hover:text-[var(--bgColorPrimary)]  cursor-pointer pl-4   py-1' onClick={() => setShowUserMenu(false)}>
+                <Link to="/manage-returns">
+                  Manage Returns
+                </Link>
+              </li>
               <li className='hover:bg-[var(--bgColorSecondary)] hover:text-[var(--bgColorPrimary)] cursor-pointer pl-4  py-1' onClick={() => handleLogout()}>Sign out</li>
             </ul>
 

@@ -4,7 +4,7 @@ import { FaAngleDown, FaArrowLeftLong } from "react-icons/fa6";
 import { IoCubeOutline } from "react-icons/io5";
 // product image 
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllOrders,  getAllReturnItems,  getOrdersByStatus } from '../../features/manageOrders/manageOrders';
+import { getAllOrders,  getOrdersByStatus } from '../../features/manageOrders/manageOrders';
 import Order from '../../components/orders/Order';
 import { Link } from 'react-router-dom';
 
@@ -33,7 +33,7 @@ const ManageOrders = () => {
             <div className='mb-5'>
                 <div className=''>
                     <h3 className='md:text-3xl text-2xl font-serif'>Manage Your Orders</h3>
-                    <p className='md:text-[16px] text-sm mt-1 font-sans'>Check the status of recent orders, manage returns, and download invoices.</p>
+                    <p className='md:text-[16px] text-sm mt-1 font-sans'>Check and track the status of your recent orders.</p>
                 </div>
             </div>
             {/* buttons */}

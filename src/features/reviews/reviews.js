@@ -71,6 +71,33 @@ export const getAverageRating = createAsyncThunk(
     }
 )
 
+// for delivery feedback 
+export const addDeliveryFeedback = createAsyncThunk(
+    'reviews/addDeliveryFeedback',
+    async (payload, { rejectWithValue }) => {
+        try {
+            const token = JSON.parse(sessionStorage.getItem('token'));
+            if (token) {
+                const response = await axios.post(`${apiUrl}/api/delivery/feedback`, payload,
+                    {
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        }
+                    }
+                );
+                // return response.data;
+            }
+
+
+        } catch (error) {
+            return rejectWithValue({
+                message: err.message,
+                status: err.response?.status
+            });
+        }
+    }
+)
 
 
 const initialState = {

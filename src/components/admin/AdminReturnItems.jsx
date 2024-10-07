@@ -2,22 +2,25 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getOrdersByStatus,
+  getReturnsByStatus,
   getTotalOrders,
+  getTotalReturns,
 } from "../../features/admin/adminData";
 import AdminOrderList from "./AdminOrderList";
 import StatusButton from "../statusButton/StatusButton";
+import AdminReturnItemList from "./AdminReturnItemList";
 
-const AdminOrders = () => {
+const AdminReturnItems = () => {
   const dispatch = useDispatch();
-  const { totalOrders, loading, ordersByStatus } = useSelector(
+  const { totalReturns, loading, returnsByStatus } = useSelector(
     (state) => state.adminData
   );
   const adminToken = JSON.parse(sessionStorage.getItem("adminToken"));
 
   useEffect(() => {
-    dispatch(getTotalOrders());
-    dispatch(getOrdersByStatus("total"));
-  }, [adminToken, getOrdersByStatus, dispatch]);
+    dispatch(getTotalReturns());
+    dispatch(getReturnsByStatus("requested"));
+  }, [adminToken, getReturnsByStatus, dispatch]);
 
   if (loading) return <div>Loading...</div>;
 
@@ -30,36 +33,41 @@ const AdminOrders = () => {
           {/* button1 */}
           
           <StatusButton
-            title="Total Order"
+            title="Requested"
             color="blue-500"
-            curStatus="total"
-            length={totalOrders?.length || 0}
-            action={getOrdersByStatus}
-          />
+            curStatus="requested"
+            length={
+                totalReturns?.filter((curReturn) => curReturn.returnStatus === "requested")
+                  .length || 0
+
+              }
+            action={getReturnsByStatus}
+
+              />
           {/* button2 */}
           <StatusButton
-            title=" Active Order"
+            title="Rejected"
             color="green-500"
-            curStatus="active"
+            curStatus="rejected"
             length={
-              totalOrders?.filter((order) => order.orderStatus === "active")
+              totalReturns?.filter((curReturn) => curReturn.returnStatus === "rejected")
                 .length || 0
             }
-            action={getOrdersByStatus}
+            action={getReturnsByStatus}
 
           />
        
 
           {/* button3 */}
           <StatusButton
-            title="Dispatched"
+            title="In Progress"
             color="orange-400"
-            curStatus="dispatched"
+            curStatus="inProgress"
             length={
-              totalOrders?.filter((order) => order.orderStatus === "dispatched")
+              totalReturns?.filter((curReturn) => curReturn.returnStatus === "inProgress")
                 .length || 0
             }
-            action={getOrdersByStatus}
+            action={getReturnsByStatus}
 
           />
          
@@ -70,23 +78,10 @@ const AdminOrders = () => {
             color="gray-500"
             curStatus="completed"
             length={
-              totalOrders?.filter((order) => order.orderStatus === "completed")
+              totalReturns?.filter((curReturn) => curReturn.returnStatus === "completed")
                 .length || 0
             }
-            action={getOrdersByStatus}
-
-          />
-
-          {/* button5 */}
-          <StatusButton
-            title="Cancelled"
-            color="red-500"
-            curStatus="cancelled"
-            length={
-              totalOrders?.filter((order) => order.orderStatus === "cancelled")
-                .length || 0
-            }
-            action={getOrdersByStatus}
+            action={getReturnsByStatus}
 
           />
        
@@ -105,10 +100,10 @@ const AdminOrders = () => {
           </div>
         )} */}
 
-        <AdminOrderList orders={ordersByStatus.orderData} />
+        <AdminReturnItemList returns={returnsByStatus.returnData} />
       </div>
     </div>
   );
 };
 
-export default AdminOrders;
+export default AdminReturnItems;

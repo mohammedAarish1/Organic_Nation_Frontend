@@ -6,6 +6,7 @@ import {
     VerifyEmail, ResetPassword, SearchedProduct, Home, About, Shop, ContactUs, Cart, Auth, Recipes, Testimonials, Faq, PrivacyPolicy, TermsAndConditions, CsrPolicy, BulkOrder, ProductDetails, Checkout, BlogDetail, OtpLogin, Blogs, RecipeDetails, GoogleSignup, ManageOrders, OrderConfirm, NoPageFound, OtpSubmit, PaymentStatus
 } from '../imports';
 import AdminDashboard from '../components/admin/AdminDashboard';
+import ManageReturns from '../pages/manage-returns/ManageReturns';
 
 
 
@@ -130,6 +131,11 @@ const getRoutes = () => {
             key="manage-orders"
             path='/manage-orders'
             element={<ManageOrders />}
+        />,
+        <Route
+            key="manage-returns"
+            path='/manage-returns'
+            element={<ManageReturns />}
         />,
         <Route
             key="otp-login"

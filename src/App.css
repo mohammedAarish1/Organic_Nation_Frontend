@@ -357,6 +357,53 @@ input[type="range"]::-moz-range-thumb {
   transform: translateY(0);
 }
 
+
+
+
+/* ============================ 
+   css for delivery review modal
+   ============================
+*/
+
+.delivery-feedback-modal-bg {
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(0px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.delivery-feedback-modal-bg.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.delivery-feedback-modal {
+  background-color: var(--bgColorPrimary);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  position: relative;
+  opacity: 0;
+  transform: translateY(-50px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.delivery-feedback-modal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* ============================ 
    css for mobile menu
    ============================

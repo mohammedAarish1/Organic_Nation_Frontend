@@ -92,6 +92,14 @@ const AdminSidebar = ({ setShowSidebar }) => {
                     <span>Queries</span>
                 </NavLink>
                 <NavLink
+                    to="/admin/returns"
+                    className={({ isActive }) => `${isActive ? ' underline underline-offset-4' : null}  flex items-center space-x-4`}
+                    onClick={() => setShowSidebar(false)}
+                >
+                    <RiMailUnreadFill />
+                    <span>Returns</span>
+                </NavLink>
+                <NavLink
                     to="/admin/products"
                     className={({ isActive }) => `${isActive ? ' underline underline-offset-4' : null}  flex items-center space-x-4`}
                     onClick={() => setShowSidebar(false)}

@@ -73,78 +73,6 @@ export const cancelOrder = createAsyncThunk(
 )
 
 
-
-// api calling for handling return items
-export const addReturnItems = createAsyncThunk(
-    'manageOrders/addReturnItems',
-    async (formData, { rejectWithValue }) => {
-        const token = JSON.parse(sessionStorage.getItem('token'));
-        try {
-
-            const response = await axios.post(`${apiUrl}/api/orders/add-return-item`, formData, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
-
-            // console.log('Response:', response.data);
-            // return response.data;
-        } catch (error) {
-            console.error('Error in addReturnItems:', error.response?.data || error.message);
-            return rejectWithValue(error.response?.data || error.message);
-        }
-    }
-);
-
-
-// get all return items of the user 
-// export const getAllReturnItems = createAsyncThunk(
-//     'manageOrders/getAllReturnItems',
-//     async (_, { rejectWithValue }) => {
-//         const token = JSON.parse(sessionStorage.getItem('token'));
-//         try {
-//             const response = await axios.get(`${apiUrl}/api/orders/return-items`,
-//                 {
-//                     headers: {
-//                         'Authorization': `Bearer ${token}`,
-//                         'Content-Type': 'application/json'
-//                     }
-//                 }
-//             );
-
-//             console.log('resp', response)
-//             // return response.data;
-//         } catch (error) {
-//             return rejectWithValue(error.response.data);
-//         }
-//     }
-// );
-
-
-export const getAllReturnItems = createAsyncThunk(
-    'manageOrders/getAllReturnItems',
-    async (_, { rejectWithValue }) => {
-        const token = JSON.parse(sessionStorage.getItem('token'));
-        try {
-            const response = await axios.get(`${apiUrl}/api/orders/return-items`,
-                {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
-                }
-            );
-
-            // return response.data;
-        } catch (error) {
-            return rejectWithValue(error.response.data);
-        }
-    }
-);
-
-
-
 const initialState = {
     orders: [],
     singleOrder: {},
@@ -288,28 +216,6 @@ const manageOrders = createSlice({
                 return {
                     ...state,
                     loading: false,
-                    error: action.payload || 'Something went wrong'
-                }
-            })
-            // adding returned items
-            .addCase(addReturnItems.pending, (state) => {
-                return {
-                    ...state,
-                    addingReturnedItems: true,
-                }
-            })
-            .addCase(addReturnItems.fulfilled, (state, action) => {
-
-                return {
-                    ...state,
-                    addingReturnedItems: false,
-
-                }
-            })
-            .addCase(addReturnItems.rejected, (state, action) => {
-                return {
-                    ...state,
-                    addingReturnedItems: false,
                     error: action.payload || 'Something went wrong'
                 }
             })
