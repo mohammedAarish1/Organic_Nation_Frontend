@@ -45,7 +45,6 @@ export const NoPageFound = lazy(() => import('./pages/no-page-found/NoPageFound'
 // Redux actions
 export { getProductsData } from '../src/features/productData/productsDataSlice';
 export { getAllCartItems } from './features/cart/cart';
-export { fetchUserData } from './features/auth/userSlice';
 export { getAllOrders } from './features/manageOrders/manageOrders';
 export { getAllBlogs } from './features/blogs/blogs';
 export { getAllRecipes } from './features/blogs/blogs'

@@ -97,7 +97,7 @@ const OtpInput = ({ length = 6, handleOtpSubmit = () => { } }) => {
                     inputMode="numeric"
                     name={`otp-${index}`}
                     maxLength="1"
-                    className='w-10 h-10 text-center rounded-md bg-[var(--bgColorSecondary)] text-[#712522]'
+                    className='xs:w-10 xs:h-10 w-7 h-7 text-center rounded-md bg-[var(--bgColorSecondary)] text-[#712522]'
                 />
             ))}
         </form>

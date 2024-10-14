@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import api from "../../config/axiosConfig";
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -7,17 +8,21 @@ const apiUrl = import.meta.env.VITE_BACKEND_URL;
 // add orders 
 export const addOrders = createAsyncThunk(
     'manageOrders/addOrders',
-    async (checkoutData, { rejectWithValue }) => {
-        const token = JSON.parse(sessionStorage.getItem('token'));
+    async (checkoutData, { rejectWithValue,getState }) => {
+        // const token = JSON.parse(sessionStorage.getItem('token'));
+        const { auth } = getState();
         try {
-
-            const response = await axios.post(`${apiUrl}/api/orders`, checkoutData, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
-            });
-            return response.data;
+if(auth.user){
+    const response = await api.post(`/api/orders`, checkoutData, {
+        // headers: {
+        //     'Authorization': `Bearer ${token}`,
+        //     'Content-Type': 'application/json'
+        // }
+    });
+    return response.data;
+}
+           
+           
         } catch (err) {
             return rejectWithValue(err.response.data);
         }
@@ -29,17 +34,21 @@ export const addOrders = createAsyncThunk(
 // get all orders of the user 
 export const getAllOrders = createAsyncThunk(
     'manageOrders/getAllOrders',
-    async (token, { rejectWithValue }) => {
+    async (_, { rejectWithValue,getState }) => {
+        const { auth } = getState();
         try {
-            const response = await axios.get(`${apiUrl}/api/orders/all`,
-                {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
-                }
-            );
-            return response.data;
+            if(auth.user){
+                const response = await api.get(`/api/orders/all`,
+                    // {
+                    //     headers: {
+                    //         // 'Authorization': `Bearer ${token}`,
+                    //         'Content-Type': 'application/json'
+                    //     }
+                    // }
+                );
+                return response.data;
+            }
+         
         } catch (error) {
             return rejectWithValue(error.response.data);
         }
@@ -51,17 +60,17 @@ export const getAllOrders = createAsyncThunk(
 
 export const cancelOrder = createAsyncThunk(
     'manageOrders/cancelOrder',
-    async (id, { rejectWithValue }) => {
+    async (id, { rejectWithValue ,getState}) => {
+        const { auth } = getState();
         try {
-            const token = JSON.parse(sessionStorage.getItem('token'));
-            if (token) {
-                const response = await axios.delete(`${apiUrl}/api/orders/${id}`,
-                    {
-                        headers: {
-                            'Authorization': `Bearer ${token}`,
-                            'Content-Type': 'application/json'
-                        }
-                    }
+            if (auth.user) {
+                const response = await api.delete(`/api/orders/${id}`,
+                    // {
+                    //     headers: {
+                    //         'Authorization': `Bearer ${token}`,
+                    //         'Content-Type': 'application/json'
+                    //     }
+                    // }
                 )
                 return response.data.msg;
             }

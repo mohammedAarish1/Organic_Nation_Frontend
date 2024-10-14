@@ -302,7 +302,6 @@ const initialState = {
         returnData: [],
         returnStatusTab: "requested"
     },
-    // token: JSON.parse(sessionStorage.getItem('token')) || '',
     // hasLocalCart: false,
 }
 

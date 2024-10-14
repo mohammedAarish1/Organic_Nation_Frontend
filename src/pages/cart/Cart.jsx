@@ -32,10 +32,9 @@ import OfferBanner from "../../components/offerBanner/OfferBanner";
 import CouponList from "../../components/couponCodeList/CouponList";
 
 const Cart = () => {
-  const { user } = useSelector((state) => state.user);
-const [showCouponCodeList,setShowCouponCodelist]=useState(false)
-const modalRef = useRef();
-
+  const { user } = useSelector((state) => state.auth);
+  const [showCouponCodeList, setShowCouponCodelist] = useState(false);
+  const modalRef = useRef();
 
   const {
     cartItemsList,
@@ -46,7 +45,7 @@ const modalRef = useRef();
     totalTax,
     error,
     isCouponCodeApplied,
-    isPickleCouponApplied
+    isPickleCouponApplied,
   } = useSelector((state) => state.cart);
 
   const { isAvailable, message, checking } = useSelector(
@@ -64,10 +63,15 @@ const modalRef = useRef();
   });
 
 
-  const totalPickleQuantity = cartItemsList
-  .filter(item => item.category.includes('Pickles'))
-  .reduce((sum, item) => sum + item.quantity, 0);
+  const MRPTotal = cartItemsList?.reduce((total, product) => {
+    const price = product.price ;
+    return Math.round(total + price * product.quantity);
+}, 0);
 
+
+  const totalPickleQuantity = cartItemsList
+    .filter((item) => item.category.includes("Pickles"))
+    .reduce((sum, item) => sum + item.quantity, 0);
 
   // for checking pin code availability
   const handleSubmit = (values, errros) => {
@@ -91,47 +95,43 @@ const modalRef = useRef();
 
   // coupon code validation
   const handleCouponCodeValidation = (values, action) => {
-   if(values.couponCode!==''){
-     // const items = cartItemsList.map(item => ({ id: item._id, quantity: item.quantity }));
-     const payload = { userEmail: user.email, couponCode: values.couponCode };
+    if (values.couponCode !== "") {
+      // const items = cartItemsList.map(item => ({ id: item._id, quantity: item.quantity }));
+      const payload = { userEmail: user.email, couponCode: values.couponCode };
 
-     dispatch(getCouponCodeValidate(payload))
-       .unwrap()
-       .then((result) => {
-         dispatch(getAllCartItems());
- 
-         // sessionStorage.setItem('ccToken', JSON.stringify(result.validationToken))
-         toast.success("Coupon Code successfully applied !");
-         action.resetForm();
-         // Handle successful validation here
-       })
-       .catch((error) => {
-         toast.error("Coupon Code is not valid !");
-         // Handle validation error here
-       });
-   }else{
-    toast.error('Please provide the valid coupon code')
-   }
+      dispatch(getCouponCodeValidate(payload))
+        .unwrap()
+        .then((result) => {
+          dispatch(getAllCartItems());
+
+          // sessionStorage.setItem('ccToken', JSON.stringify(result.validationToken))
+          toast.success("Coupon Code successfully applied !");
+          action.resetForm();
+          // Handle successful validation here
+        })
+        .catch((error) => {
+          toast.error("Coupon Code is not valid !");
+          // Handle validation error here
+        });
+    } else {
+      toast.error("Please provide the valid coupon code");
+    }
   };
-
 
   const handleClickOutside = (event) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
-        // setSelectedOrder(null);
-        setShowCouponCodelist(false)
+      // setSelectedOrder(null);
+      setShowCouponCodelist(false);
     }
-};
-
-
-
-useEffect(() => {
-  document.addEventListener('mousedown', handleClickOutside);
-
-
-  return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
   };
-}, []);
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     dispatch(setIsAvailable());
@@ -139,9 +139,9 @@ useEffect(() => {
 
   return (
     <div>
-      <div>
+      {/* <div>
         <OfferBanner />
-      </div>
+      </div> */}
       <div className=" py-10">
         {/* shopping btn and clear cart  */}
         <div className="flex justify-between items-center mb-3 lg:w-[80%] w-[90%] mx-auto ">
@@ -326,14 +326,26 @@ useEffect(() => {
         <div className="flex  lg:w-[80%] w-[90%] mx-auto mt-10 sm:justify-end justify-center font-sans uppercase text-sm tracking-widest">
           <div className="bg-[var(--hoverEffect)] flex flex-col  gap-4 p-5 md:w-[35%] ">
             <div className="flex justify-between items-center gap-10">
-              <span>Subtotal:</span>
-              <span>₹ {Math.round(totalCartAmount - totalTax || 0)}</span>
+              <span>Grand Total:</span>
+              <span>₹ {Math.round(MRPTotal || 0)}</span>
             </div>
-            {/* tax  */}
+            <div className="flex justify-between items-center gap-10 font-semibold">
+              <span>Total Discount (-):</span>
+              <span>₹ ({MRPTotal-totalCartAmount|| 0})</span>
+            </div>
             <div className="flex justify-between items-center gap-10">
-              <span>Total tax: (+)</span>
+                <span>Order Total:</span>
+                <span className="font-semibold">₹ {totalCartAmount || 0}</span>
+              </div>
+            {/* <div className="flex justify-between items-center gap-10">
+              <span>Sub Total:</span>
+              <span>₹ {Math.round(totalCartAmount - totalTax || 0)}</span>
+            </div> */}
+            {/* tax  */}
+            {/* <div className="flex justify-between items-center gap-10">
+              <span>Total tax (included): (+)</span>
               <span>₹ {cartItemsList?.length > 0 ? totalTax : 0}</span>
-            </div>
+            </div> */}
             {/* coupon  code implementation */}
             <div className="">
               <Formik
@@ -360,7 +372,7 @@ useEffect(() => {
                         className={`px-4 py-1 rounded-tr-md rounded-br-md ${
                           user && totalCartAmount > 1000
                             ? "bg-green-400 hover:bg-green-500"
-                            : "bg-green-200"
+                            : "bg-green-200 opacity-50"
                         } `}
                         disabled={!user || totalCartAmount < 1000}
                       >
@@ -371,7 +383,6 @@ useEffect(() => {
                         )}
                       </button>
                     </div>
-                    
 
                     {!user ||
                       (totalCartAmount < 1000 && (
@@ -382,7 +393,7 @@ useEffect(() => {
                             color: "#ffffff",
                             borderRadius: "10px",
                             padding: "20px",
-                            maxWidth:"200px"
+                            maxWidth: "200px",
                           }}
                           place="bottom"
                           animation="fade"
@@ -396,51 +407,57 @@ useEffect(() => {
                   </Form>
                 )}
               </Formik>
-              <div className=" flex justify-center items-center gap-1  text-green-700">
-              <FaTags />
-                <button 
-                className="hover:underline underline-offset-2"
-                onClick={() => {
-                  setShowCouponCodelist(true);
-              }}
-                > See  Available Coupons !</button>
+              <div className=" flex justify-center items-center gap-1 mt-3  text-green-700">
+                <FaTags />
+                <button
+                  className="hover:underline underline-offset-2"
+                  onClick={() => {
+                    setShowCouponCodelist(true);
+                  }}
+                >
+                  {" "}
+                  See Available Coupons !
+                </button>
               </div>
               {/* pop up box  */}
               {showCouponCodeList && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-40">
-                    <div
-                        ref={modalRef}
-                        className="bg-white rounded-lg max-w-xl pt-2 pb-6 px-4 w-full max-h-[90vh] overflow-y-auto"
-                    >
-                     <CouponList 
-                     totalCartAmount={totalCartAmount} 
-                     setShowCouponCodelist={setShowCouponCodelist} 
-                     totalPickleQuantity={totalPickleQuantity}
-                     isCouponCodeApplied={isCouponCodeApplied}
-                     isPickleCouponApplied={isPickleCouponApplied}
-                     />
-                    </div>
+                  <div
+                    ref={modalRef}
+                    className="bg-white rounded-lg max-w-xl pt-2 pb-6 px-4 w-full max-h-[90vh] overflow-y-auto"
+                  >
+                    <CouponList
+                      totalCartAmount={totalCartAmount}
+                      setShowCouponCodelist={setShowCouponCodelist}
+                      totalPickleQuantity={totalPickleQuantity}
+                      isCouponCodeApplied={isCouponCodeApplied}
+                      isPickleCouponApplied={isPickleCouponApplied}
+                    />
+                  </div>
                 </div>
-            )}
+              )}
             </div>
 
             {/* coupon  */}
             <hr />
             <div>
-            <div className="flex justify-between items-center gap-10">
-              <span>Order Total:</span>
-              <span className="font-semibold">₹ {totalCartAmount || 0}</span>             
+             
+              {totalCartAmount < 499 && totalCartAmount>0 && (
+                <div className="text-center mt-2 font-bold">
+                  <p className="text-[12px] text-green-700 capitalize">
+                    ( Add  ₹ <span>{499 - totalCartAmount}</span> worth of products more to get FREE SHIPPING !!)
+                  </p>
+                </div>
+              )}
+              <div className=" text-green-700 font-bold text-xs">
+                {isCouponCodeApplied && (
+                  <p className="flex  items-center gap-1">
+                    Coupon Code Applied <PiSealCheckFill className="text-xl" />
+                  </p>
+                )}
+              </div>
             </div>
-            <div className=" text-green-700 font-bold text-xs">
-                      {isCouponCodeApplied && (
-                        <p className="flex  items-center gap-1">
-                          Coupon Code Applied{" "}
-                          <PiSealCheckFill className="text-xl" />
-                        </p>
-                      )}
-             </div>
-            </div>
-           
+
             {/* pin code availability check  */}
             <div className="flex flex-col gap-2">
               <h3>Check Delivery Availability:</h3>
@@ -509,7 +526,7 @@ useEffect(() => {
                 <button
                   type="button"
                   className="py-3"
-                  disabled={cartItemsList?.length === 0 }
+                  disabled={cartItemsList?.length === 0}
                 >
                   Proceed to Checkout
                 </button>
@@ -519,23 +536,23 @@ useEffect(() => {
               {/* tooltip  */}
 
               {cartItemsList?.length === 0 && (
-                  <Tooltip
-                    id="checkout-tooltip"
-                    style={{
-                      backgroundColor: "gray",
-                      color: "#ffffff",
-                      borderRadius: "10px",
-                      padding: "20px",
-                    }}
-                    place="bottom"
-                    animation="fade"
-                    delayShow={200} // delay before showing in ms
-                    delayHide={300} // delay before hiding in ms
-                    // offset={10} // distance in pixels
-                    // arrow={true}
-                    // arrowColor="#25D366"
-                  ></Tooltip>
-                )}
+                <Tooltip
+                  id="checkout-tooltip"
+                  style={{
+                    backgroundColor: "gray",
+                    color: "#ffffff",
+                    borderRadius: "10px",
+                    padding: "20px",
+                  }}
+                  place="bottom"
+                  animation="fade"
+                  delayShow={200} // delay before showing in ms
+                  delayHide={300} // delay before hiding in ms
+                  // offset={10} // distance in pixels
+                  // arrow={true}
+                  // arrowColor="#25D366"
+                ></Tooltip>
+              )}
 
               {/* tooltip end */}
             </Link>

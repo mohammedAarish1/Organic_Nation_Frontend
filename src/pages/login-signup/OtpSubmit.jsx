@@ -2,22 +2,15 @@ import React from "react";
 import Logo from "../../components/logo/Logo";
 import { useDispatch, useSelector } from "react-redux";
 import OtpInput from "../../components/otp/OtpInput";
-import { verifyOTP } from "../../features/auth/OTPSlice";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ImSpinner9 } from "react-icons/im";
-import {
-  fetchUserData,
-  updateUserRegisterStatus,
-  userGoogleSignup,
-  userLogin,
-  userSignup,
-} from "../../features/auth/userSlice";
 
 // react icons
 import { FaArrowRight } from "react-icons/fa6";
 import { getAllOrders } from "../../features/manageOrders/manageOrders";
 import { getAllCartItems, mergeCart } from "../../features/cart/cart";
+import { handleGoogleSignup, login, updateUserRegisterStatus, verifyOTP } from "../../features/auth/auth";
 
 const OtpSubmit = () => {
   // from below code extract the phoneNumber of first time user
@@ -28,20 +21,23 @@ const OtpSubmit = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { loading } = useSelector((state) => state.OTPSlice);
+  const { verifyingOTP } = useSelector((state) => state.auth);
 
   // below function will fetch the data when the existing user logged in via otp
-  const getDataAfterLogin = (token) => {
-    sessionStorage.setItem("token", JSON.stringify(token));
-    dispatch(fetchUserData(token));
-    dispatch(getAllOrders(token));
-    dispatch(getAllCartItems()).then((res) => {
-      const localCart = JSON.parse(localStorage.getItem("cart") || "[]");
-      dispatch(mergeCart({ localCart })).then(() => {
-        localStorage.removeItem("cart");
-        dispatch(getAllCartItems());
-        if (checkoutStatus) {
-          navigate("/cart/checkout");
+  const getDataAfterLogin = () => {
+    dispatch(getAllOrders()).then(() => {
+      dispatch(getAllCartItems()).then((res) => {
+        const localCart = JSON.parse(localStorage.getItem("cart") || "[]");
+        if (localCart.length > 0) {
+          dispatch(mergeCart({ localCart })).then(() => {
+            localStorage.removeItem("cart");
+            dispatch(getAllCartItems());
+            if (checkoutStatus) {
+              navigate("/cart/checkout");
+            } else {
+              navigate("/");
+            }
+          });
         } else {
           navigate("/");
         }
@@ -55,58 +51,24 @@ const OtpSubmit = () => {
       dispatch(verifyOTP({ phoneNumber: signingUpUser.phoneNumber, otp })).then(
         (value) => {
           if (value.meta.requestStatus === "fulfilled") {
-            const token = value.payload.token;
+            const token = value.payload.accessToken;
             if (token) {
-              
-              getDataAfterLogin(token);
-            } else if (
-              signingUpUser.otherDetails &&
-              signingUpUser.googleSignup
-            ) {
-              dispatch(
-                userGoogleSignup({
-                  userData: signingUpUser.otherDetails,
-                  token: signingUpUser.token,
-                })
-              ).then((value) => {
-                dispatch(
-                  userLogin({
-                    userId: value.meta.arg.userData.phoneNumber,
-                    password: value.meta.arg.userData.password,
-                  })
-                ).then((value) => {
-                  if (value.meta.requestStatus === "fulfilled") {
-                    const token = value.payload.token;
-
-                    // sessionStorage.setItem("token", JSON.stringify(token));
-                    // dispatch(fetchUserData(token));
-                    // dispatch(getAllOrders(token))
-                    // dispatch(getAllCartItems())
-                    //   .then(res => {
-                    //     const localCart = JSON.parse(localStorage.getItem('cart') || '[]');
-
-                    //     dispatch(mergeCart({ localCart }))
-                    //     .then(() => {
-                    //       localStorage.removeItem('cart');
-                    //       dispatch(getAllCartItems());
-                    //       if (checkoutStatus) {
-
-                    //         navigate('/cart/checkout')
-                    //       } else {
-                    //         navigate('/')
-
-                    //       }
-                    //     }
-                    //     )
-
-                    //   })
-                    if (token) {
-                      getDataAfterLogin(token);
-                      toast.success("Congratulations! signed up succesfully");
-                    }
+              getDataAfterLogin();
+            } else if (  signingUpUser.otherDetails && signingUpUser.googleSignup ) {
+              dispatch(handleGoogleSignup({  userData: signingUpUser.otherDetails,  }))
+                .unwrap() // This ensures proper error handling
+                .then((result) => {
+                  if (result.accessToken) {
+                    dispatch(updateUserRegisterStatus(true));
+                    getDataAfterLogin();
+                    toast.success("Sign up Successfully");
                   }
+                })
+                .catch((error) => {
+                  console.error('Signup failed:', error);
+                  toast.error(error.message || "Sign up failed");
                 });
-              });
+             
             } else {
               //this block will execute when the user tries to log in with otp for the first time
               dispatch(updateUserRegisterStatus(false));
@@ -168,7 +130,7 @@ const OtpSubmit = () => {
                     className="p-2 bg-[var(--bgColorSecondary)] text-[#712522] hover:bg-green-500 hover:text-white transition-all duration-300 w-full flex justify-center items-center gap-2 rounded-md "
                   >
                     Submit OTP
-                    {loading ? (
+                    {verifyingOTP ? (
                       <ImSpinner9 className="animate-spin" />
                     ) : (
                       <FaArrowRight />

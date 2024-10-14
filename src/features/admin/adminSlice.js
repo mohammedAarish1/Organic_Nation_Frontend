@@ -67,7 +67,6 @@ const initialState = {
     token: '',
     loading: false,
     error: null,
-    // token: JSON.parse(sessionStorage.getItem('token')) || '',
     // hasLocalCart: false,
 }
 

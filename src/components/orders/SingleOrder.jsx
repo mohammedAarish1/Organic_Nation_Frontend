@@ -11,14 +11,19 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 import ReturnItemForm from "../returnItemForm/ReturnItemForm";
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
-const SingleOrder = ({ curOrder, paymentMethod, invoiceNumber,isReturnDisabled,orderStatus }) => {
+const SingleOrder = ({
+  curOrder,
+  paymentMethod,
+  invoiceNumber,
+  isReturnDisabled,
+  orderStatus,
+}) => {
   let nameUrl = curOrder["name-url"];
   const dispatch = useDispatch();
   const [singleOrderItem, setSingleOrderItem] = useState("");
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [showProductReview, setShowProductReview] = useState(false);
   // const { isLoading, productData } = useSelector((state) => state.product_data);
-
 
   const modalRef = useRef();
 
@@ -140,12 +145,16 @@ const SingleOrder = ({ curOrder, paymentMethod, invoiceNumber,isReturnDisabled,o
             <button
               type="submit"
               className={`${
-                curOrder.quantity === curOrder.returnInfo.returnedQuantity || isReturnDisabled || orderStatus !=='completed'
+                curOrder.quantity === curOrder.returnInfo.returnedQuantity ||
+                isReturnDisabled ||
+                orderStatus !== "completed"
                   ? "opacity-50 "
                   : ""
               } btn-97 `}
               disabled={
-                curOrder.quantity === curOrder.returnInfo.returnedQuantity || isReturnDisabled || orderStatus !=='completed'
+                curOrder.quantity === curOrder.returnInfo.returnedQuantity ||
+                isReturnDisabled ||
+                orderStatus !== "completed"
               }
             >
               {curOrder.quantity === curOrder.returnInfo.returnedQuantity
@@ -205,6 +214,23 @@ const SingleOrder = ({ curOrder, paymentMethod, invoiceNumber,isReturnDisabled,o
             ref={modalRef}
             className="bg-[var(--bgColorSecondary)] p-6 mt-20 rounded-lg max-w-3xl w-full max-h-[70vh] overflow-y-auto"
           >
+            <div className="px-6 italic text-gray-500 text-sm pb-4 pt-2">
+              
+              <ul className=" flex flex-col gap-1 list-disc">
+                <li>
+                  We accept returns within 2 days of delivery for unused and
+                  unopened items in their original packaging.
+                </li>
+                <li>
+                  Please attach images and 1 video of the product for
+                  verification during the return process.
+                </li>
+                <li>
+                  Refunds will be processed once the return is received and
+                  inspected.
+                </li>
+              </ul>
+            </div>
             <h2 className="text-2xl font-semibold text-[var(--themeColor)] mb-4">
               Request a return for this Item
             </h2>

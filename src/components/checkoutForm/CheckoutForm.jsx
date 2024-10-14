@@ -55,8 +55,7 @@ const CheckoutForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { user } = useSelector((state) => state.user);
-
+  const { user } = useSelector((state) => state.auth);
   const {
     cartItemsList,
     totalCartAmount,
@@ -580,7 +579,7 @@ const CheckoutForm = () => {
                     {/* Optional Address   */}
                     <InputField
                       name="billingAddress.optionalAddress"
-                      label=" Address Line 2 (Landmark)"
+                      label=" Address Line 2 (optional)"
                       icon={
                         <MdLocationCity className="absolute top-4 right-4 text-xl" />
                       }

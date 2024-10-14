@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import RecipeSection from '../../components/recipe-section/RecipeSection'
 import TestimonialSection from '../../components/testimonial-section/TestimonialSection'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { fetchUserData } from '../../features/auth/userSlice'
 import { toast } from 'react-toastify'
 import SpotlightSection from '../../components/spotlightSection/SpotlightSection'
 import ProductCategories from '../../components/productCategories/ProductCategories'
@@ -70,25 +69,24 @@ const Home = () => {
     const token = params.get('token');
 
     useEffect(() => {
-        if (token) {
+        // if (token) {
 
-            sessionStorage.setItem("token", JSON.stringify(token));
-            dispatch(fetchUserData(token));
-            dispatch(getAllOrders(token));
-            dispatch(getAllCartItems()).then((res) => {
-              const localCart = JSON.parse(localStorage.getItem("cart") || "[]");
-              dispatch(mergeCart({ localCart }))
-              .then(() => {
-                localStorage.removeItem("cart");
-                dispatch(getAllCartItems());
-                if (checkoutStatus) {
-                  navigate("/cart/checkout");
-                } else {
-                  navigate("/");
-                }
-              });
-            });
-        }
+        //     sessionStorage.setItem("token", JSON.stringify(token));
+        //     dispatch(getAllOrders(token));
+        //     dispatch(getAllCartItems()).then((res) => {
+        //       const localCart = JSON.parse(localStorage.getItem("cart") || "[]");
+        //       dispatch(mergeCart({ localCart }))
+        //       .then(() => {
+        //         localStorage.removeItem("cart");
+        //         dispatch(getAllCartItems());
+        //         if (checkoutStatus) {
+        //           navigate("/cart/checkout");
+        //         } else {
+        //           navigate("/");
+        //         }
+        //       });
+        //     });
+        // }
 
         if (reviewsAndRating) {
             dispatch(addReviews(reviewsAndRating)).then(() => {

@@ -21,8 +21,6 @@ import { PiSealCheckFill } from "react-icons/pi";
 import DeliveryFeedbackForm from "../../helper/DeliveryFeedbackForm";
 
 const Order = ({ order }) => {
-
-
   const statusIcons = {
     active: <GoDotFill className="text-xl text-green-500" />,
     completed: (
@@ -35,13 +33,11 @@ const Order = ({ order }) => {
   const [showOrderDetails, setShowOrderDetails] = useState(false);
   const [showAllItems, setShowAllItems] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
-  const [showDeliveryFeedbackForm, setShowDeliveryFeedbackForm] = useState(false);
+  const [showDeliveryFeedbackForm, setShowDeliveryFeedbackForm] =
+    useState(false);
 
-
-
-
-const orderDate = new Date(order.createdAt);
-const isReturnDisabled = (new Date() - orderDate) / (1000 * 60 * 60 * 24) > 2;
+  const orderDate = new Date(order.createdAt);
+  const isReturnDisabled = (new Date() - orderDate) / (1000 * 60 * 60 * 24) > 2;
 
   const showAlert = () => {
     setIsAlertOpen(true);
@@ -55,7 +51,7 @@ const isReturnDisabled = (new Date() - orderDate) / (1000 * 60 * 60 * 24) > 2;
     // below method will be dipatched on the basis of order status
     dispatch(cancelOrder(order._id)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
-        dispatch(getAllOrders(JSON.parse(sessionStorage.getItem("token"))));
+        dispatch(getAllOrders());
         toast.info(res.payload);
       }
     });
@@ -234,19 +230,33 @@ const isReturnDisabled = (new Date() - orderDate) / (1000 * 60 * 60 * 24) > 2;
             <div className="text-white xs:px-5 px-1 py-3 xs:text-[16px] text-[12px]">
               <div className="flex justify-between ">
                 <p className="text-end ">Grand Total:</p>
-                <p className="font-semibold"> ₹ {order?.orderDetails.reduce((total,item)=>total+item.unitPrice,0)}</p>
+                <p className="font-semibold">
+                  {" "}
+                  ₹{" "}
+                  {order?.orderDetails.reduce(
+                    (total, item) => total + item.unitPrice,
+                    0
+                  )}
+                </p>
               </div>
               <div className="flex justify-between ">
-                <p className="text-end ">Less Discount:</p>
-                <p className="font-semibold"> -  (₹ {order?.orderDetails.reduce((total,item)=>total+item.unitPrice,0)-order.subTotal})</p>
+                <p className="text-end "> Discount (-):</p>
+                <p className="font-semibold">
+                  (₹{" "}
+                  {order?.orderDetails.reduce(
+                    (total, item) => total + item.unitPrice,
+                    0
+                  ) - order.subTotal}
+                  )
+                </p>
               </div>
-              <div className="flex justify-between ">
+              {/* <div className="flex justify-between ">
                 <p className="text-end ">Sub Total:</p>
                 <p> ₹ {order?.subTotal}</p>
-              </div>
+              </div> */}
 
               <div className="flex justify-between items-center">
-                <p className="text-end ">Shipping Fee:</p>
+                <p className="text-end ">Shipping Fee (+):</p>
                 <p> ₹ {order?.shippingFee}</p>
               </div>
               <div className="flex justify-between items-center xs:text-[20px]  font-semibold">
@@ -264,48 +274,42 @@ const isReturnDisabled = (new Date() - orderDate) / (1000 * 60 * 60 * 24) > 2;
                 <p> ₹ {order?.subTotal + order?.shippingFee}</p>
               </div>
             </div>
-            {/* delivery feedback buton  */}
-            <div className=" flex justify-end">
-              <button
-              className="flex items-center  gap-1 text-white px-2 pt-2 pb-6 italic underline underline-offset-4 hover:text-green-400"
-              onClick={() => {
-                setShowDeliveryFeedbackForm(true);
-              }}
-              >
-               Provide Delivery Feedback <FaArrowRight />
-              </button>
-            </div>
 
-
-  {/* =================== feedback modal ==========  */}
-  <div
-          className={`delivery-feedback-modal-bg ${
-            showDeliveryFeedbackForm ? "active" : ""
-          }`}
-          onClick={() => setShowDeliveryFeedbackForm(false)}
-        >
-          <div
-            className={`text-white delivery-feedback-modal ${
-              showDeliveryFeedbackForm ? "active" : ""
-            }`}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex justify-end">
-              <button>
-                <IoIosCloseCircleOutline
-                  className="cursor-pointer text-3xl hover:scale-110"
+            {order.orderStatus === "completed" && (
+              <div>
+                {/* =================== feedback modal ==========  */}
+                <div
+                  className={`delivery-feedback-modal-bg ${
+                    showDeliveryFeedbackForm ? "active" : ""
+                  }`}
                   onClick={() => setShowDeliveryFeedbackForm(false)}
-                />
-              </button>
-            </div>
-            <h2 className="text-xl font-serif">
-              How's Your Experience with the Delivery Partner ?
-            </h2>
+                >
+                  <div
+                    className={`text-white delivery-feedback-modal ${
+                      showDeliveryFeedbackForm ? "active" : ""
+                    }`}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <div className="flex justify-end">
+                      <button>
+                        <IoIosCloseCircleOutline
+                          className="cursor-pointer text-3xl hover:scale-110"
+                          onClick={() => setShowDeliveryFeedbackForm(false)}
+                        />
+                      </button>
+                    </div>
+                    <h2 className="text-xl font-serif">
+                      How's Your Experience with the Delivery Partner ?
+                    </h2>
 
-          <DeliveryFeedbackForm invoiceNumber={order.invoiceNumber} setShowDeliveryFeedbackForm={setShowDeliveryFeedbackForm}  />
-          </div>
-        </div>
-
+                    <DeliveryFeedbackForm
+                      invoiceNumber={order.invoiceNumber}
+                      setShowDeliveryFeedbackForm={setShowDeliveryFeedbackForm}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* cancel button  */}
             <div

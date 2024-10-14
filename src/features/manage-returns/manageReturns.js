@@ -1,26 +1,31 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import api from "../../config/axiosConfig";
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
 // api calling for handling return items
 export const addReturnItems = createAsyncThunk(
   "manageReturns/addReturnItems",
-  async (formData, { rejectWithValue }) => {
-    const token = JSON.parse(sessionStorage.getItem("token"));
+  async (formData, { rejectWithValue,getState }) => {
+    // const token = JSON.parse(sessionStorage.getItem("token"));
+    const { auth } = getState();
     try {
-      const response = await axios.post(
-        `${apiUrl}/api/orders/add-return-item`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      // return response.data;
+      if(auth.user){
+        const response = await api.post(
+          `/api/orders/add-return-item`,
+          formData,
+          {
+            headers: {
+              // Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+  
+        // return response.data;
+      }
+     
     } catch (error) {
       console.error(
         "Error in addReturnItems:",
@@ -34,20 +39,24 @@ export const addReturnItems = createAsyncThunk(
 // get all return items for single user
 export const getAllReturnItems = createAsyncThunk(
   "manageReturns/getAllReturnItems",
-  async (_, { rejectWithValue }) => {
-    const token = JSON.parse(sessionStorage.getItem("token"));
+  async (_, { rejectWithValue,getState }) => {
+    // const token = JSON.parse(sessionStorage.getItem("token"));
+    const { auth } = getState();
     try {
-      const response = await axios.get(
-        `${apiUrl}/api/orders/all/return-items`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      return response.data;
+      if(auth.user){
+        const response = await api.get(
+          `/api/orders/all/return-items`,
+          {
+            headers: {
+              // Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+  
+        return response.data;
+      }
+    
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -57,20 +66,24 @@ export const getAllReturnItems = createAsyncThunk(
 // cance return request
 export const cancelReturnRequest = createAsyncThunk(
   "manageReturns/cancelReturnRequest",
-  async (returnId, { rejectWithValue }) => {
-    const token = JSON.parse(sessionStorage.getItem("token"));
+  async (returnId, { rejectWithValue,getState }) => {
+    // const token = JSON.parse(sessionStorage.getItem("token"));
+    const { auth } = getState();
     try {
-      const response = await axios.delete(
-        `${apiUrl}/api/orders/cancel-return/${returnId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      return response.data;
+      if(auth.user){
+        const response = await api.delete(
+          `/api/orders/cancel-return/${returnId}`,
+          {
+            headers: {
+              // Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+  
+        return response.data;
+      }
+     
     } catch (error) {
       console.error(
         "Error in addReturnItems:",

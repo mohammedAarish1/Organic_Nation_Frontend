@@ -7,13 +7,14 @@ import {
 } from '../imports';
 import AdminDashboard from '../components/admin/AdminDashboard';
 import ManageReturns from '../pages/manage-returns/ManageReturns';
+import GoogleLoginHandler from '../pages/login-signup/GoogleLoginHandler';
 
 
 
 const getRoutes = () => {
-    const token = JSON.parse(sessionStorage.getItem('token'));
 
     const { cartItemsList ,cartItems} = useSelector((state) => state.cart);
+    const {user}=useSelector(state=>state.auth);
 
     return [
         <Route
@@ -45,7 +46,7 @@ const getRoutes = () => {
             key="register"
             path='/register'
             // element={!token ? <Auth /> : <Home />}
-            element={<Auth />}
+            element={user?<Home/>: <Auth />}
         />,
         <Route
             key="forgot-password"
@@ -108,11 +109,6 @@ const getRoutes = () => {
             element={<CsrPolicy />}
         />,
         <Route
-            key="bulk-order"
-            path='/bulk-order'
-            element={<BulkOrder />}
-        />,
-        <Route
             key="product-details"
             path='/shop/:category/:nameUrl'
             element={<ProductDetails />}
@@ -120,32 +116,37 @@ const getRoutes = () => {
         <Route
             key="checkout"
             path='/cart/checkout'
-            element={token && cartItemsList?.length > 0 ? < Checkout /> : <Cart />}
+            element={user && cartItemsList?.length > 0 ? < Checkout /> : <Cart />}
         />,
         <Route
             key="google-signup"
             path='/collect-phone-number'
-            element={<GoogleSignup />}
+            element={ <GoogleSignup />}
+        />,
+        <Route
+            key="google-login"
+            path='/auth/google/login'
+            element={ <GoogleLoginHandler />}
         />,
         <Route
             key="manage-orders"
             path='/manage-orders'
-            element={<ManageOrders />}
+            element={user ? <ManageOrders />:<Auth/>}
         />,
         <Route
             key="manage-returns"
             path='/manage-returns'
-            element={<ManageReturns />}
+            element={user ?<ManageReturns />:<Auth/>}
         />,
         <Route
             key="otp-login"
             path='/otp-login'
-            element={<OtpLogin />}
+            element={!user && <OtpLogin />}
         />,
         <Route
             key="otp-submit"
             path='/otp-submit'
-            element={<OtpSubmit />}
+            element={!user && <OtpSubmit />}
         />,
         <Route
             key="order-confirmed"

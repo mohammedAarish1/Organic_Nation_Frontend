@@ -17,15 +17,15 @@ const ManageReturns = () => {
 
     const dispatch = useDispatch();
     const {returns,returnsByStatus}=useSelector(state=>state.returns)
-    const token = JSON.parse(sessionStorage.getItem('token'))
+    const {user}=useSelector(state=>state.auth)
 
 
     useEffect(() => {
-        if (token) {
+        if (user) {
             dispatch(getAllReturnItems())
            
         }
-    }, [token])
+    }, [user])
 
 
     return (

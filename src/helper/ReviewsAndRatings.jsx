@@ -26,14 +26,13 @@ const ReviewsAndRatings = ({ productName, insideProductDetails = false }) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { user } = useSelector(state => state.user);
-    const token = JSON.parse(sessionStorage.getItem('token'));
+    const { user } = useSelector(state => state.auth);
 
 
 
 
     const handleSubmit = (values, { resetForm }) => {
-        if (user, token) {
+        if (user) {
             dispatch(addReviews({ productName, ...values }))
             toast.success("Review submitted successfully");
 

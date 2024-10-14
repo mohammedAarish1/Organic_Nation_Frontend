@@ -168,10 +168,10 @@ const ProductDetails = () => {
         twitterSite="Organic Nation"
         twitterCreator="organicnation_"
       />
-      <div>
+      {/* <div>
 
         <OfferBanner />
-      </div>
+      </div> */}
       <section className='xs:py-20 py-5  '>
         {/* visible in mobile devices  */}
         <h2 className=' md:hidden block font-semibold xs:text-3xl text-2xl xs:px-10 px-4' >{product.name}</h2>

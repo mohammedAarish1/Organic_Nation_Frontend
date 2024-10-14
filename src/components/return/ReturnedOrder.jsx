@@ -59,9 +59,8 @@ const ReturnedOrder = ({ singleReturn }) => {
       dispatch(cancelReturnRequest(singleReturn._id))
           .then(res => {
               if (res.meta.requestStatus === 'fulfilled') {
-                const token = JSON.parse(sessionStorage.getItem("token"));
                 dispatch(getAllReturnItems())
-                  dispatch(getAllOrders(token))
+                  dispatch(getAllOrders())
                   toast.info('Cancelled Successfully')
               }
           })

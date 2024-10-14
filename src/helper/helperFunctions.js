@@ -1,20 +1,20 @@
 import { toast } from "react-toastify";
 import { deleteDocumentFromDatabase } from "../features/admin/adminData";
-import { fetchUserData, getAllCartItems, getAllOrders } from "../imports";
+import {  getAllCartItems, getAllOrders } from "../imports";
 import { calculateShippingFee, checkDeliveryAvailability, updateShippingFee } from "../features/check-delivery/checkDelivery";
 import { mergeCart } from "../features/cart/cart";
 
 
 const fetchDataAfterLogin=(token,dispatch,navigate,setIsAlertOpen,checkoutStatus)=>{
-  sessionStorage.setItem("token", JSON.stringify(token));
-  dispatch(fetchUserData(token));
-  dispatch(getAllOrders(token))
+  // sessionStorage.setItem("token", JSON.stringify(token));
+  dispatch(getAllOrders())
   dispatch(getAllCartItems())
     .then(res => {
       const localCart = JSON.parse(localStorage.getItem('cart') || '[]');
       if (localCart.length > 0 && res.payload.productDetails.length > 0) {
         setIsAlertOpen(true)
       } else if (localCart.length > 0 && res.payload.productDetails.length === 0) {
+
         dispatch(mergeCart({ localCart }))
           .then(() => {
             localStorage.removeItem('cart');
@@ -32,6 +32,7 @@ const fetchDataAfterLogin=(token,dispatch,navigate,setIsAlertOpen,checkoutStatus
         if (checkoutStatus) {
           navigate('/cart/checkout')
         } else {
+
           navigate('/');
         }
       }

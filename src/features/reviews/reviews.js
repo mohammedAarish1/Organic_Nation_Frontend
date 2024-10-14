@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import api from "../../config/axiosConfig";
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -7,17 +8,18 @@ const apiUrl = import.meta.env.VITE_BACKEND_URL;
 // for adding reviews 
 export const addReviews = createAsyncThunk(
     'reviews/addReviews',
-    async (reviews, { rejectWithValue }) => {
+    async (reviews, { rejectWithValue,getState }) => {
+        const {auth}=getState()
         try {
-            const token = JSON.parse(sessionStorage.getItem('token'));
-            if (token) {
-                const response = await axios.post(`${apiUrl}/api/reviews`, reviews,
-                    {
-                        headers: {
-                            'Authorization': `Bearer ${token}`,
-                            'Content-Type': 'application/json'
-                        }
-                    }
+            // const token = JSON.parse(sessionStorage.getItem('token'));
+            if (auth.user) {
+                const response = await api.post(`/api/reviews`, reviews,
+                    // {
+                    //     headers: {
+                    //         // 'Authorization': `Bearer ${token}`,
+                    //         'Content-Type': 'application/json'
+                    //     }
+                    // }
                 );
                 // return response.data;
             }
@@ -74,17 +76,17 @@ export const getAverageRating = createAsyncThunk(
 // for delivery feedback 
 export const addDeliveryFeedback = createAsyncThunk(
     'reviews/addDeliveryFeedback',
-    async (payload, { rejectWithValue }) => {
+    async (payload, { rejectWithValue,getState }) => {
+        const {auth}=getState()
         try {
-            const token = JSON.parse(sessionStorage.getItem('token'));
-            if (token) {
-                const response = await axios.post(`${apiUrl}/api/delivery/feedback`, payload,
-                    {
-                        headers: {
-                            'Authorization': `Bearer ${token}`,
-                            'Content-Type': 'application/json'
-                        }
-                    }
+            if (auth.user) {
+                const response = await api.post(`/api/delivery/feedback`, payload,
+                    // {
+                    //     headers: {
+                    //         'Authorization': `Bearer ${token}`,
+                    //         'Content-Type': 'application/json'
+                    //     }
+                    // }
                 );
                 // return response.data;
             }

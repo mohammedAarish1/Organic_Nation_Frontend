@@ -13,8 +13,8 @@ const Button = ({ title, basis }) => {
     <button
       className={`${productsType == basis && 'bg-[var(--bgColorPrimary)] text-white'} text-[var(--themeColor)] btn`}
       onClick={() => dispatch(spotlighProducts({ type: basis, productData }))}
-      data-aos="zoom-in"  //for animation
-      data-aos-duration="500"
+      // data-aos="zoom-in"  //for animation
+      // data-aos-duration="500"
     >
 
       {title}

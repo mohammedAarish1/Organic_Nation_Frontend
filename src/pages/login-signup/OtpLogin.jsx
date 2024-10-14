@@ -3,7 +3,6 @@ import Logo from '../../components/logo/Logo';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { requestOTP } from '../../features/auth/OTPSlice';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { ImSpinner9 } from 'react-icons/im';
@@ -11,6 +10,7 @@ import ResendOTP from '../../components/otp/ResendOTP';
 
 // react icons 
 import { FaArrowRight } from "react-icons/fa6";
+import { requestOTP } from '../../features/auth/auth';
 
 
 
@@ -25,7 +25,7 @@ const OtpLogin = () => {
     const navigate = useNavigate();
     const [submittedPhoneNumber, setSubmittedPhoneNumber] = useState('')
 
-    const { loading, } = useSelector(state => state.OTPSlice);
+    const { sendingOTP, } = useSelector(state => state.auth);
 
 
     const initialValues = {
@@ -60,14 +60,14 @@ const OtpLogin = () => {
 
                     {/* ============== right side ================  */}
 
-                    <div className='sm:w-[40%] mt-3 sm:mt-0 flex justify-center items-center'>
-                        <div className='flex justify-center items-center sm:flex-col gap-3 '>
+                    <div className='sm:w-[40%] mt-3 sm:mt-0 flex flex-wrap justify-center items-center sm:mb-0 mb-5'>
+                        <div className='flex  justify-center items-center flex-col gap-3 '>
                             <div>
                                 <Logo />
                             </div>
                             <div className='flex flex-col justify-center items-center'>
                                 <span className='sm:text-2xl uppercase text-[var(--bgColorSecondary)]'>Login to</span>
-                                <span className='sm;text-2xl uppercase text-[var(--bgColorSecondary)]'>Organic Nation</span>
+                                <span className='sm;ztext-2xl uppercase text-[var(--bgColorSecondary)]'>Organic Nation</span>
                             </div>
                         </div>
                     </div>
@@ -116,7 +116,7 @@ const OtpLogin = () => {
                                                     className='p-2 text-[#712522] bg-[var(--bgColorSecondary)] hover:bg-green-500 hover:text-white transition-all duration-300 w-full flex justify-center items-center gap-2 rounded-md '
                                                 >
                                                     Send OTP
-                                                    {loading ? (
+                                                    {sendingOTP ? (
                                                         <ImSpinner9 className='animate-spin' />
                                                     ) : (
                                                         <FaArrowRight />

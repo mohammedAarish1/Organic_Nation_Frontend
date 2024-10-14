@@ -176,7 +176,7 @@ const ReturnItemForm = ({
     // setImageError('');
   };
 
-  const handleSubmit = (values, { setSubmitting }, action) => {
+  const handleSubmit = (values, { setSubmitting,resetForm }) => {
     const data = new FormData();
 
     const formValues = {
@@ -223,8 +223,7 @@ const ReturnItemForm = ({
       dispatch(addReturnItems(data))
         .unwrap()
         .then(() => {
-          const token = JSON.parse(sessionStorage.getItem("token"));
-          dispatch(getAllOrders(token));
+          dispatch(getAllOrders());
           onSubmit();
           toast.success("Request Submitted Succefully");
         })
@@ -234,7 +233,7 @@ const ReturnItemForm = ({
     }
 
     setSubmitting(false);
-    action.resetForm();
+    resetForm();
   };
 
   return (
@@ -432,11 +431,11 @@ const ReturnItemForm = ({
               />
             </div>
 
-            <div className="flex items-center justify-between">
+            <div className="flex items-center  gap-2 justify-between">
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 xs:px-4 px-1 xs:text-[16px] text-[12px] rounded focus:outline-none focus:shadow-outline"
               >
                 Submit Request
               </button>

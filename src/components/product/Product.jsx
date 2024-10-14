@@ -22,7 +22,7 @@ const Product = ({ gridView, product }) => {
 
   const containerClasses = `
   relative overflow-hidden
-  ${gridView ? 'sm:w-60 w-32 sm:h-60 h-32' : 'xs:w-60 xs:h-60 w-28 h-40'}
+  ${gridView ? 'sm:w-60 w-32 sm:h-60 h-32' : 'xs:w-48 xs:h-48 w-28 h-32'}
   group hover:shadow-xl transition-shadow rounded-lg duration-500
 `;
 
@@ -55,9 +55,9 @@ const Product = ({ gridView, product }) => {
 
 
   return (
-    <div className={`${!gridView ? "flex flex-row lg:pl-32 justify-start items-center gap-5 " : "flex justify-between items-center flex-col xs:gap-2 xs:max-w-[150px] max-w-[120px] sm:max-w-[260px] "} font-sans`}
-      data-aos="zoom-in-up"
-      data-aos-duration="700"
+    <div className={`${!gridView ? "flex flex-row lg:pl-32 justify-start items-center gap-5  " : "flex justify-between items-center flex-col xs:gap-2  xs:max-w-[150px] max-w-[120px] sm:max-w-[260px] "} font-sans `}
+      // data-aos="zoom-in-up"
+      // data-aos-duration="700"
     >
       {/* image  */}
       <NavLink to={`/shop/${categoryBtnValue}/${product['name-url']}`}>
@@ -79,9 +79,9 @@ const Product = ({ gridView, product }) => {
         </div>
       </NavLink>
       {/* info  */}
-      <div className={`flex flex-col justify-between  ${!gridView ? 'items-start' : 'items-center w-full'} flex-1 `}>
+      <div className={`flex flex-col justify-between  ${!gridView ? 'items-start' : 'items-center w-full'} flex-1`}>
       <NavLink to={`/shop/${categoryBtnValue}/${product['name-url']}`}>
-        <div className={`flex flex-col justify-center sm:gap-1  sm:justify-between ${!gridView ? 'items-start' : 'items-center h-32'}`}>
+        <div className={`flex flex-col justify-center sm:gap-1  sm:justify-between ${!gridView ? 'items-start' : 'items-center sm:h-32'}`}>
           <p className={`font-medium sm:text-xl text-sm  ${gridView ? 'text-center xs:w-[70%]' : ''}    text-[#712522]`}>{product.name}</p>
           <p className='text-gray-500 sm:text- text-sm'>Weight: {product.weight}</p>
           {!gridView && <p className='lg:w-[70%] sm:block hidden text-sm font-serif'>{product.description}</p>}

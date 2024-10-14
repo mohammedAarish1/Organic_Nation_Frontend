@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { userLogout } from '../../features/auth/userSlice';
 import { clearUserOrders, resetCheckoutStatus } from '../../features/manageOrders/manageOrders';
 import { clearLocalCart, getAllCartItems } from '../../features/cart/cart';
 import { toast } from 'react-toastify';
@@ -10,6 +9,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { IoMdLogIn } from "react-icons/io";
 import { BsCart4 } from "react-icons/bs";
 import { BsCart } from "react-icons/bs";
+import { logout } from '../../features/auth/auth';
 
 
 
@@ -20,13 +20,16 @@ const OtherNavItems = () => {
   const navigate = useNavigate()
   const [showUserMenu, setShowUserMenu] = useState(false);
   const { totalCartItems } = useSelector((state) => state.cart)
-  const { user, user_loading } = useSelector(state => state.user);
+  const { user, user_loading } = useSelector(state => state.auth);
+  const location = useLocation();
+
 
 
 
 
   // for closing the user menu when click outside the box 
   const userMenuRef = useRef(null);
+
   useEffect(() => {
     function handleClickOutside(event) {
       if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
@@ -41,19 +44,20 @@ const OtherNavItems = () => {
   }, [userMenuRef]);
 
 
-
+  useEffect(() => {
+    setShowUserMenu(false);
+  }, [location]);
 
   // handle log out of the user
   const handleLogout = () => {
     if (user && !user_loading) {
       // localStorage.removeItem('cart');
-      dispatch(userLogout());
+      dispatch(logout());
       dispatch(clearUserOrders());
       dispatch(clearLocalCart());
-      dispatch(getAllCartItems());
+      // dispatch(getAllCartItems());
       dispatch(resetCheckoutStatus(false));
       setShowUserMenu(false);
-      sessionStorage.removeItem('token');
       localStorage.removeItem('deliveryChargeToken');
       toast.success("You've been successfully logged out !! ");
       navigate('/register')

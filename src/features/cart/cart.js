@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import api from "../../config/axiosConfig";
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -40,18 +41,18 @@ function extractWeight(description) {
 export const addToCart = createAsyncThunk(
     'cart/addToCart',
     async ({ productId, quantity, productName }, { rejectWithValue, getState, dispatch }) => {
-        const { user } = getState();
+        const { auth } = getState();
         try {
-            if (user.token) {
+            if (auth.user) {
                 // const token = JSON.parse(sessionStorage.getItem('token'));
 
-                const response = await axios.post(`${apiUrl}/api/cart`, { productId, quantity, productName },
-                    {
-                        headers: {
-                            'Authorization': `Bearer ${user.token}`,
-                            'Content-Type': 'application/json'
-                        }
-                    }
+                const response = await api.post(`/api/cart`, { productId, quantity, productName }
+                    // {
+                    //     headers: {
+                    //         'Authorization': `Bearer ${user.token}`,
+                    //         'Content-Type': 'application/json'
+                    //     }
+                    // }
                 )
                 if (response.status === 200) {
                     return response.data;
@@ -77,19 +78,17 @@ export const addToCart = createAsyncThunk(
 export const getAllCartItems = createAsyncThunk(
     'cart/getAllCartItems',
     async (_, { rejectWithValue, getState, dispatch }) => {
-        const { user } = getState();
+        const { auth } = getState();
         try {
-            if (user.token) {
-                // const token = JSON.parse(sessionStorage.getItem('token'));
-                const response = await axios.get(`${apiUrl}/api/cart`,
-                    {
-                        headers: {
-                            'Authorization': `Bearer ${user.token}`,
-                            'Content-Type': 'application/json'
-                        }
-                    }
+            if (auth.user) {
+                const response = await api.get(`/api/cart`,
+                    // {
+                    //     headers: {
+                    //         // 'Authorization': `Bearer ${user.token}`,
+                    //         'Content-Type': 'application/json'
+                    //     }
+                    // }
                 );
-
                 if (response.status === 200) {
                     const products = response.data.items.map(product => {
                         return {
@@ -160,18 +159,18 @@ export const getAllCartItems = createAsyncThunk(
 export const clearCart = createAsyncThunk(
     'cart/clearCart',
     async (_, { rejectWithValue, getState, dispatch }) => {
-        const { user } = getState();
+        const { auth } = getState();
 
         try {
             // const token = JSON.parse(sessionStorage.getItem('token'));
-            if (user.token) {
-                const response = await axios.delete(`${apiUrl}/api/cart`,
-                    {
-                        headers: {
-                            'Authorization': `Bearer ${user.token}`,
-                            'Content-Type': 'application/json'
-                        }
-                    }
+            if (auth.user) {
+                const response = await api.delete(`/api/cart`,
+                    // {
+                    //     headers: {
+                    //         'Authorization': `Bearer ${user.token}`,
+                    //         'Content-Type': 'application/json'
+                    //     }
+                    // }
                 )
                 if (response.status === 200) {
                     return response.data;
@@ -192,17 +191,17 @@ export const clearCart = createAsyncThunk(
 export const removeFromCart = createAsyncThunk(
     'cart/removeFromCart',
     async (id, { rejectWithValue, getState, dispatch }) => {
-        const { user } = getState();
+        const { auth } = getState();
         try {
             // const token = JSON.parse(sessionStorage.getItem('token'));
-            if (user.token) {
-                const response = await axios.delete(`${apiUrl}/api/cart/${id}`,
-                    {
-                        headers: {
-                            'Authorization': `Bearer ${user.token}`,
-                            'Content-Type': 'application/json'
-                        }
-                    }
+            if (auth.user) {
+                const response = await api.delete(`/api/cart/${id}`,
+                    // {
+                    //     headers: {
+                    //         // 'Authorization': `Bearer ${user.token}`,
+                    //         'Content-Type': 'application/json'
+                    //     }
+                    // }
                 )
                 if (response.status === 200) {
                     return response.data;
@@ -224,17 +223,17 @@ export const removeFromCart = createAsyncThunk(
 export const updateQty = createAsyncThunk(
     'cart/updateQty',
     async (product, { rejectWithValue, getState, dispatch }) => {
-        const { user } = getState();
+        const { auth } = getState();
         try {
             // const token = JSON.parse(sessionStorage.getItem('token'));
-            if (user.token) {
-                const response = await axios.put(`${apiUrl}/api/cart/updateQuantity/${product.productId}`, { action: product.type },
-                    {
-                        headers: {
-                            'Authorization': `Bearer ${user.token}`,
-                            'Content-Type': 'application/json'
-                        }
-                    }
+            if (auth.user) {
+                const response = await api.put(`/api/cart/updateQuantity/${product.productId}`, { action: product.type },
+                    // {
+                    //     headers: {
+                    //         'Authorization': `Bearer ${user.token}`,
+                    //         'Content-Type': 'application/json'
+                    //     }
+                    // }
                 )
                 if (response.status === 200) {
                     return response.data;
@@ -256,16 +255,16 @@ export const updateQty = createAsyncThunk(
 export const mergeCart = createAsyncThunk(
     'cart/mergeCart',
     async (localData, { rejectWithValue, getState, dispatch }) => {
-        const { user } = getState();
+        const { auth } = getState();
         try {
-            if (user.token) {
-                const response = await axios.post(`${apiUrl}/api/cart/merge`, localData,
-                    {
-                        headers: {
-                            'Authorization': `Bearer ${user.token}`,
-                            'Content-Type': 'application/json'
-                        }
-                    }
+            if (auth.user) {
+                const response = await api.post(`/api/cart/merge`, localData,
+                    // {
+                    //     headers: {
+                    //         // 'Authorization': `Bearer ${user.token}`,
+                    //         'Content-Type': 'application/json'
+                    //     }
+                    // }
                 )
                 return response.data;
             }
@@ -283,16 +282,16 @@ export const mergeCart = createAsyncThunk(
 export const getCouponCodeValidate = createAsyncThunk(
     'cart/getCouponCodeValidate',
     async (data, { rejectWithValue, getState }) => {
-        const { user } = getState();
+        const { auth } = getState();
         try {
-            if (user.token) {
-                const response = await axios.post(`${apiUrl}/api/validate/coupon-code`, data,
-                    {
-                        headers: {
-                            'Authorization': `Bearer ${user.token}`,
-                            'Content-Type': 'application/json'
-                        }
-                    }
+            if (auth.user) {
+                const response = await api.post(`/api/validate/coupon-code`, data,
+                    // {
+                    //     headers: {
+                    //         'Authorization': `Bearer ${user.token}`,
+                    //         'Content-Type': 'application/json'
+                    //     }
+                    // }
                 )
                 return response.data;
             }
@@ -444,7 +443,6 @@ export const cartSlice = createSlice({
                 }
             })
             .addCase(getAllCartItems.fulfilled, (state, action) => {
-
                 // let totalPrice;
                 let totalWeight;
                 let totalQty;

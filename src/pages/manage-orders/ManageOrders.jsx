@@ -16,15 +16,15 @@ const ManageOrders = () => {
 
     const dispatch = useDispatch()
     const { orders, ordersByStatus } = useSelector(state => state.orders)
-    const token = JSON.parse(sessionStorage.getItem('token'))
+    const {user}=useSelector(state=>state.auth)
 
 
     useEffect(() => {
-        if (token) {
-            dispatch(getAllOrders(token))
+        if (user) {
+            dispatch(getAllOrders())
            
         }
-    }, [token])
+    }, [user])
 
 
     return (

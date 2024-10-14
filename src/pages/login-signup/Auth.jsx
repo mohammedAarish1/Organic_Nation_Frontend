@@ -1,236 +1,187 @@
-import React, { useState } from 'react';
-import Logo from '../../components/logo/Logo';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { userSignup, userLogin, fetchUserData, updateUserRegisterStatus } from '../../features/auth/userSlice';
-import { getAllOrders } from '../../features/manageOrders/manageOrders';
-import { Formik, Form, Field } from 'formik';
-import { signUpSchema } from '../../form-validation/signUpSchema';
-import { loginSchema } from '../../form-validation/loginSchema';
-import Alert from '../../components/alert/Alert';
-import { getAllCartItems, mergeCart } from '../../features/cart/cart';
+import React, { useState } from "react";
+import Logo from "../../components/logo/Logo";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { getAllOrders } from "../../features/manageOrders/manageOrders";
+import { Formik, Form, Field } from "formik";
+import { signUpSchema } from "../../form-validation/signUpSchema";
+import { loginSchema } from "../../form-validation/loginSchema";
+import Alert from "../../components/alert/Alert";
+import { getAllCartItems, mergeCart } from "../../features/cart/cart";
 // import OtpInput from '../../components/otp/OtpInput';
-// react icons 
+// react icons
 import { FcGoogle, FcIphone } from "react-icons/fc";
-import { ImSpinner9 } from 'react-icons/im';
-import { FaArrowRight } from 'react-icons/fa';
-import { requestOTP } from '../../features/auth/OTPSlice';
-import { fetchDataAfterLogin } from '../../helper/helperFunctions';
-
+import { ImSpinner9 } from "react-icons/im";
+import { FaArrowRight } from "react-icons/fa";
+import { fetchDataAfterLogin } from "../../helper/helperFunctions";
+import {  login, signup, updateUserRegisterStatus } from "../../features/auth/auth";
 
 const Auth = () => {
-
-
-
   // belo code is for handling the navigation after otp verified by the user (extracting phone number)
   const location = useLocation();
-  const otpUser = location?.state;  // we will get this data when user tries to sign up with otp 
+  const otpUser = location?.state; // we will get this data when user tries to sign up with otp
   const apiUrl = import.meta.env.VITE_BACKEND_URL;
-
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // const [showOtpInput, setShowOtpInput] = useState(true);
   // const [userRegistered, setuserRegistered] = useState(otpUser && userSignedUpSuccessfully === null ? false : true);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
-  const { checkoutStatus } = useSelector(state => state.orders);
-  const { user, user_loading, error, userRegistered } = useSelector(state => state.user);
-  const { isAuthenticated } = useSelector(state => state.OTPSlice);
-
-
+  const { checkoutStatus } = useSelector((state) => state.orders);
+  const { user, user_loading, error, userRegistered } = useSelector(
+    (state) => state.auth
+  );
 
   const initialValues = {
-    firstName: '',
-    lastName: '',
-    userId: '',
-    email: '',
-    phoneNumber: otpUser ? otpUser.phoneNumber : '',
-    password: '',
+    firstName: "",
+    lastName: "",
+    userId: "",
+    email: "",
+    phoneNumber: otpUser ? otpUser.phoneNumber : "",
+    password: "",
     // password: '',
     // confirm_password: ''
-  }
-
-
-
+  };
 
   const hideAlert = () => {
     setIsAlertOpen(false);
-    localStorage.removeItem('cart');
+    localStorage.removeItem("cart");
     if (checkoutStatus) {
-      navigate('/cart/checkout')
+      navigate("/cart/checkout");
     } else {
-
-      navigate('/')
-
+      navigate("/");
     }
   };
 
   const handleCartMerge = (action) => {
-    const localCart = JSON.parse(localStorage.getItem('cart'))
+    const localCart = JSON.parse(localStorage.getItem("cart"));
     // setIsAlertOpen(false);
-    dispatch(mergeCart({ localCart }))
-      .then(() => {
-        setIsAlertOpen(false);
-        localStorage.removeItem('cart');
-        dispatch(getAllCartItems());
-        if (checkoutStatus) {
-          navigate('/cart/checkout')
-        } else {
-          navigate('/')
-        }
-      })
-  }
-
-
-
+    dispatch(mergeCart({ localCart })).then(() => {
+      setIsAlertOpen(false);
+      localStorage.removeItem("cart");
+      dispatch(getAllCartItems());
+      if (checkoutStatus) {
+        navigate("/cart/checkout");
+      } else {
+        navigate("/");
+      }
+    });
+  };
 
   const handleSubmit = (values, action) => {
     if (!userRegistered) {
-
-      if (isAuthenticated) {
-        dispatch(userSignup(values))
-          .then((value) => {
-            if (value?.error?.message === 'Rejected') {
-              return;
-            } else {
-              // toast.success("Congratulations! signed up succesfully");
-              dispatch(updateUserRegisterStatus(true));
-              dispatch(userLogin({ userId: value.meta.arg.email, password: value.meta.arg.password }))
-              .then((value) => {
-                if (value.meta.requestStatus === 'fulfilled') {
-                  const token = value.payload.token;
-                  fetchDataAfterLogin(token,dispatch,navigate,setIsAlertOpen,checkoutStatus)
-                  toast.success("Sign up Successfully");
-    
-    
-                } else if (value.payload === 'Request failed with status code 400') {
-                  toast.error('Invalid Credentials')
-                } else if (value.meta.requestStatus === 'rejected') {
-                  toast.error(error)
-                }
-    
-              })
-              // setuserRegistered(true)
-            }
-
-          })
-
-      } 
-
+      dispatch(signup(values))
+      .unwrap() 
+      .then((res) => {
+        if (res.accessToken) {
+          // dispatch(updateUserRegisterStatus(true));
+          const token = res.accessToken;
+          fetchDataAfterLogin(
+            token,
+            dispatch,
+            navigate,
+            setIsAlertOpen,
+            checkoutStatus
+          );
+          toast.success("Sign up Successfully");
+        }
+      });
     } else {
       if (values.userId && values.password) {
-        dispatch(userLogin({ userId: values.userId, password: values.password }))
-          .then((value) => {
-            if (value.meta.requestStatus === 'fulfilled') {
-              const token = value.payload.token;
-              // sessionStorage.setItem("token", JSON.stringify(token));
-              // dispatch(fetchUserData(token));
-              // dispatch(getAllOrders(token))
-              // dispatch(getAllCartItems())
-              //   .then(res => {
-              //     const localCart = JSON.parse(localStorage.getItem('cart') || '[]');
-              //     if (localCart.length > 0 && res.payload.productDetails.length > 0) {
-              //       setIsAlertOpen(true)
-              //     } else if (localCart.length > 0 && res.payload.productDetails.length === 0) {
-              //       dispatch(mergeCart({ localCart }))
-              //         .then(() => {
-              //           localStorage.removeItem('cart');
-              //           dispatch(getAllCartItems());
-              //           if (checkoutStatus) {
-              //             navigate('/cart/checkout')
-              //           } else {
-              //             navigate('/')
+        const credentials = {
+          userId: values.userId,
+          password: values.password,
+        };
+        dispatch(login(credentials))
+        .unwrap() 
+        .then((res) => {
+          if (res.accessToken) {
+            const token = res.accessToken;
 
-              //           }
-              //         }
-              //         )
-              //     } else {
-
-              //       if (checkoutStatus) {
-              //         navigate('/cart/checkout')
-              //       } else {
-              //         navigate('/');
-              //       }
-              //     }
-
-              //   })
-              fetchDataAfterLogin(token, dispatch,navigate,setIsAlertOpen,checkoutStatus)
-              toast.success("Log in Successfully");
-
-
-            } else if (value.payload === 'Request failed with status code 400') {
-              toast.error('Invalid Credentials')
-            } else if (value.meta.requestStatus === 'rejected') {
-              toast.error(error)
-            }
-
-          })
-
-
+            fetchDataAfterLogin(
+              token,
+              dispatch,
+              navigate,
+              setIsAlertOpen,
+              checkoutStatus
+            );
+            toast.success("Log in Successfully");
+          }  else {
+            toast.error('User Not Found');
+          }
+        })
+        .catch(()=>{
+          toast.error('Invalid Credentials')
+        })
       }
     }
 
-    action.resetForm()
-  }
+    action.resetForm();
+  };
 
-
-
+ 
 
   return (
-    <section className='xs:px-10 px-2 pb-20 mt-5 sm:mt-0 font-serif'>
-      <div className='lg:w-[80%] h-auto py-2 bg-opacity-35 mx-auto'>
+    <section className="xs:px-10 px-2 pb-20 mt-5 sm:mt-0 font-serif">
+      <div className="lg:w-[80%] h-auto py-2 bg-opacity-35 mx-auto">
         {otpUser ? (
-          <p className='text-center'>*Please provide us the following details to complete the signing up process*</p>
+          <p className="text-center">
+            *Please provide us the following details to complete the signing up
+            process*
+          </p>
         ) : (
-          <h2 className="text-4xl text-center sm:mt-6 mt-10 sm:mb-2 mb-6 text-[var(--themeColor)] ">{userRegistered ? 'Welcome Back !' : 'Create Your Account'}</h2>
+          <h2 className="text-4xl text-center sm:mt-6 mt-10 sm:mb-2 mb-6 text-[var(--themeColor)] ">
+            {userRegistered ? "Welcome Back !" : "Create Your Account"}
+          </h2>
         )}
 
-
-        <div className='md:w-[90%] py-10 flex sm:flex-row flex-col sm:gap-0 gap-6 shadow-md shadow-black justify-center h-[100%] mx-auto  my-auto bg-gradient-to-r from-[#6D613B] to-[#D3BB71]  '>
-
+        <div className="md:w-[90%] py-10 flex sm:flex-row flex-col sm:gap-0 gap-6 shadow-md shadow-black justify-center h-[100%] mx-auto  my-auto bg-gradient-to-r from-[#6D613B] to-[#D3BB71]  ">
           {/* ============== right side ================  */}
 
-          <div className='sm:w-[40%] mt-3 sm:mt-0 flex justify-center items-center '>
-            <div className='flex justify-center items-center sm:flex-col gap-3 '>
+          <div className="sm:w-[40%] mt-3 sm:mt-0 flex justify-center items-center ">
+            <div className="flex justify-center items-center sm:flex-col gap-3 ">
               <div>
                 <Logo />
               </div>
-              <div className='flex flex-col justify-center items-center'>
-                <span className='sm:text-2xl uppercase text-[var(--bgColorSecondary)]'>{!userRegistered ? "Sign up to" : "Log in"}</span>
-                <span className='sm;text-2xl uppercase text-[var(--bgColorSecondary)]'>Organic Nation</span>
+              <div className="flex flex-col justify-center items-center">
+                <span className="sm:text-2xl uppercase text-[var(--bgColorSecondary)]">
+                  {!userRegistered ? "Sign up to" : "Log in"}
+                </span>
+                <span className="sm;text-2xl uppercase text-[var(--bgColorSecondary)]">
+                  Organic Nation
+                </span>
               </div>
             </div>
           </div>
 
           {/* ============== left side ================  */}
 
-          <div className='sm:w-[60%] text-[var(--themeColor)]'>
+          <div className="sm:w-[60%] text-[var(--themeColor)]">
             <div className="sm:w-[80%]  mx-auto">
-
-              <h2 className='px-8 mb-2  text-3xl'>{!userRegistered ? "Sign up" : "Log in"}</h2>
+              <h2 className="px-8 mb-2  text-3xl">
+                {!userRegistered ? "Sign up" : "Log in"}
+              </h2>
 
               {/* <p>Please fill in the below details and get registered.</p> */}
-
 
               {/* === Form ===  */}
               <Formik
                 initialValues={initialValues}
                 validationSchema={!userRegistered ? signUpSchema : loginSchema}
                 onSubmit={handleSubmit}
-                validateOnChange={false}   // Disable validation on change
-                validateOnBlur={false}     // Disable validation on blur
+                validateOnChange={false} // Disable validation on change
+                validateOnBlur={false} // Disable validation on blur
               >
                 {({ values, errors, touched, handleChange, handleBlur }) => (
                   <Form className="  rounded px-8 pt-6 pb-2 mb-4">
-
-
-
                     {/* firstName input  */}
                     {!userRegistered && (
                       <div className="mb-4">
                         <label
-                          className="uppercase tracking-widest block text-[var(--themeColor)] text-sm font-bold mb-2" htmlFor="firstName">
+                          className="uppercase tracking-widest block text-[var(--themeColor)] text-sm font-bold mb-2"
+                          htmlFor="firstName"
+                        >
                           First Name
                         </label>
                         <Field
@@ -240,17 +191,17 @@ const Auth = () => {
                           name="firstName"
                         />
                         {errors.firstName && touched.firstName ? (
-                          <p className='text-red-600'>*{errors.firstName}</p>
-                        ) : (
-                          null
-                        )}
+                          <p className="text-red-600">*{errors.firstName}</p>
+                        ) : null}
                       </div>
                     )}
                     {/* lastName input  */}
                     {!userRegistered && (
                       <div className="mb-4">
                         <label
-                          className="uppercase tracking-widest block text-[var(--themeColor)] text-sm font-bold mb-2" htmlFor="lastName">
+                          className="uppercase tracking-widest block text-[var(--themeColor)] text-sm font-bold mb-2"
+                          htmlFor="lastName"
+                        >
                           Last Name
                         </label>
                         <Field
@@ -260,10 +211,8 @@ const Auth = () => {
                           name="lastName"
                         />
                         {errors.lastName && touched.lastName ? (
-                          <p className='text-red-600'>*{errors.lastName}</p>
-                        ) : (
-                          null
-                        )}
+                          <p className="text-red-600">*{errors.lastName}</p>
+                        ) : null}
                       </div>
                     )}
 
@@ -271,7 +220,9 @@ const Auth = () => {
                     {userRegistered && (
                       <div className="mb-4">
                         <label
-                          className="uppercase tracking-widest block text-[var(--themeColor)] text-sm font-bold mb-2" htmlFor="userId">
+                          className="uppercase tracking-widest block text-[var(--themeColor)] text-sm font-bold mb-2"
+                          htmlFor="userId"
+                        >
                           User ID
                         </label>
                         <Field
@@ -282,10 +233,8 @@ const Auth = () => {
                           placeholder="Email or Phone Number"
                         />
                         {errors.userId && touched.userId ? (
-                          <p className='text-red-600'>*{errors.userId}</p>
-                        ) : (
-                          null
-                        )}
+                          <p className="text-red-600">*{errors.userId}</p>
+                        ) : null}
                       </div>
                     )}
 
@@ -293,7 +242,9 @@ const Auth = () => {
                     {!userRegistered && (
                       <div className="mb-4">
                         <label
-                          className="uppercase tracking-widest block text-[var(--themeColor)] text-sm font-bold mb-2" htmlFor="firstName">
+                          className="uppercase tracking-widest block text-[var(--themeColor)] text-sm font-bold mb-2"
+                          htmlFor="firstName"
+                        >
                           Email
                         </label>
                         <Field
@@ -303,10 +254,8 @@ const Auth = () => {
                           name="email"
                         />
                         {errors.email && touched.email ? (
-                          <p className='text-red-600'>*{errors.email}</p>
-                        ) : (
-                          null
-                        )}
+                          <p className="text-red-600">*{errors.email}</p>
+                        ) : null}
                       </div>
                     )}
 
@@ -317,13 +266,16 @@ const Auth = () => {
                           className="uppercase tracking-widest block text-[var(--themeColor)] text-sm font-bold mb-2"
                           htmlFor="phoneNumber"
                         >
-
                           Phone No.
                         </label>
-                        <div className='flex  items-center gap-2 border border-[var(--bgColorSecondary)] '>
-                          <div className='flex justify-center items-center pl-2 pr-1 gap-1 text-[var(--bgColorSecondary)]'>
+                        <div className="flex  items-center gap-2 border border-[var(--bgColorSecondary)] ">
+                          <div className="flex justify-center items-center pl-2 pr-1 gap-1 text-[var(--bgColorSecondary)]">
                             {/* <FaFlag /> */}
-                            <img src='https://organicnationmages.s3.ap-south-1.amazonaws.com/other_images/flag.png' alt="country_flag" className='w-8' />
+                            <img
+                              src="https://organicnationmages.s3.ap-south-1.amazonaws.com/other_images/flag.png"
+                              alt="country_flag"
+                              className="w-8"
+                            />
                             <span>+91</span>
                           </div>
                           <Field
@@ -336,15 +288,16 @@ const Auth = () => {
                           />
                         </div>
                         {errors.phoneNumber && touched.phoneNumber ? (
-                          <p className='text-red-600'>*{errors.phoneNumber}</p>
-                        ) : (
-                          null
-                        )}
+                          <p className="text-red-600">*{errors.phoneNumber}</p>
+                        ) : null}
                       </div>
                     )}
                     {/* password input  */}
                     <div className="mb-6">
-                      <label className="uppercase tracking-widest block text-[var(--themeColor)] text-sm font-bold mb-2" htmlFor="password">
+                      <label
+                        className="uppercase tracking-widest block text-[var(--themeColor)] text-sm font-bold mb-2"
+                        htmlFor="password"
+                      >
                         Password
                       </label>
                       <Field
@@ -354,24 +307,20 @@ const Auth = () => {
                         name="password"
                       />
                       {errors.password && touched.password ? (
-                        <p className='text-red-600'>*{errors.password}</p>
-                      ) : (
-                        null
-                      )}
+                        <p className="text-red-600">*{errors.password}</p>
+                      ) : null}
                       {userRegistered && (
                         <Link
-                          to='/auth/forgot-password'
-                          className='text-end text-[var(--bgColorSecondary)] text-[11px] hover:underline cursor-pointer'
+                          to="/auth/forgot-password"
+                          className="text-end text-[var(--bgColorSecondary)] text-[11px] hover:underline cursor-pointer"
                         >
                           Forgot Password
                         </Link>
                       )}
-
-
                     </div>
                     {/* email and password error msg */}
                     {error && (
-                      <div className='text-center pb-4 text-red-600'>
+                      <div className="text-center pb-4 text-red-600">
                         {userRegistered ? (
                           <p>{error?.msg}</p>
                         ) : (
@@ -384,43 +333,35 @@ const Auth = () => {
                       {!userRegistered ? (
                         <button
                           type="submit"
-                          className='p-2 bg-[var(--bgColorSecondary)] hover:bg-green-500 hover:text-white transition-all duration-300 w-full flex justify-center items-center gap-2 rounded-md '
+                          className="p-2 bg-[var(--bgColorSecondary)] hover:bg-green-500 hover:text-white transition-all duration-300 w-full flex justify-center items-center gap-2 rounded-md "
                         >
                           Sign up
                           {user_loading ? (
-                            <ImSpinner9 className='animate-spin' />
+                            <ImSpinner9 className="animate-spin" />
                           ) : (
                             <FaArrowRight />
                           )}
-
-
                         </button>
                       ) : (
                         <button
                           type="submit"
-                          className='p-2 bg-[var(--bgColorSecondary)] hover:bg-green-500 hover:text-white transition-all duration-300 w-full flex justify-center items-center gap-2 rounded-md '
+                          className="p-2 bg-[var(--bgColorSecondary)] hover:bg-green-500 hover:text-white transition-all duration-300 w-full flex justify-center items-center gap-2 rounded-md "
                         >
                           Log in
                           {user_loading ? (
-                            <ImSpinner9 className='animate-spin' />
+                            <ImSpinner9 className="animate-spin" />
                           ) : (
                             <FaArrowRight />
                           )}
-
-
                         </button>
                       )}
-
                     </div>
                   </Form>
                 )}
-
               </Formik>
 
-
-              <div className='pb-4 text-center'>
-               
-                <p className='px-8 text-gray-700'>Don't have an account ? </p>
+              <div className="pb-4 text-center">
+                <p className="px-8 text-gray-700">Don't have an account ? </p>
               </div>
 
               {/* horizontal line */}
@@ -431,23 +372,45 @@ const Auth = () => {
               </div> */}
               {/* other login options */}
 
-              <div className='flex flex-col  px-8 gap-3'>
+              <div className="flex flex-col  px-8 gap-3">
                 {/* otp sign up  */}
                 {!otpUser && (
-                  <div className='flex justify-center items-center gap-3 py-1 border text-[var(--themeColor)] hover:bg-white hover:text-black'>
-                    <FcIphone className='text-2xl' />
-                    <Link to="/otp-login" className=''>Log in with OTP</Link>
+                  <div className="flex justify-center items-center gap-3  border text-[var(--themeColor)] hover:bg-white hover:text-black">
+                   
+                    <Link to="/otp-login" className="w-full">
+                    <button className="flex justify-center items-center w-full py-1">
+                    <FcIphone className="text-2xl" />
+                    Log in with OTP
+                    </button>
+                    
+                    </Link>
                   </div>
                 )}
 
-
                 {/* google  */}
 
-                <div className='flex justify-center items-center gap-3 py-1 border text-[var(--themeColor)] hover:bg-white hover:text-black'>
-                  <FcGoogle className='text-2xl' />
-                  <a href={`${apiUrl}/api/auth/google`} className=''>Log in with Google</a>
+                <div className="flex justify-center items-center gap-3 border text-[var(--themeColor)] hover:bg-white hover:text-black">
+                  {/* <FcGoogle className="text-2xl" /> */}
+                  <a
+                    // type="submit"
+                    className="w-full"
+                    // onClick={handleGoogleLogin}
+                    href={`${apiUrl}/api/auth/google`}
+                  >
+                     <button className="flex justify-center items-center w-full py-1 gap-1">
+                     <FcGoogle className="text-xl" />
+                     Log in with Google
+                    </button>
+                   
+                  </a>
+                  {/* <button
+                    type="submit"
+                    className=""
+                    onClick={handleGoogleLogin}
+                  >
+                    Log in with Google
+                  </button> */}
                 </div>
-
               </div>
             </div>
           </div>
@@ -456,10 +419,10 @@ const Auth = () => {
       {/* alert for cart merge  */}
       <Alert
         isOpen={isAlertOpen}
-        alertMessage='You have items in your cart from a previous session. Would you like to merge them with your current cart?'
-        actionMessageOne='Yes, merge the Cart'
-        actionMessageTwo='No, Keep the Previous Session cart'
-        actionMessageThree='No, Keep the Current Session cart'
+        alertMessage="You have items in your cart from a previous session. Would you like to merge them with your current cart?"
+        actionMessageOne="Yes, merge the Cart"
+        actionMessageTwo="No, Keep the Previous Session cart"
+        actionMessageThree="No, Keep the Current Session cart"
         hideAlert={hideAlert}
         handleAction1={() => handleCartMerge({ replaceCart: false })}
         handleAction2={() => handleCartMerge({ replaceCart: true })}

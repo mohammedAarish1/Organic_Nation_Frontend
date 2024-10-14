@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 const CouponList = ({ totalCartAmount ,setShowCouponCodelist,totalPickleQuantity,isCouponCodeApplied,isPickleCouponApplied}) => {
 
     const dispatch=useDispatch()
-    const { user } = useSelector((state) => state.user);
+    const { user } = useSelector((state) => state.auth);
     
 
     const handleCouponCodeValidation = () => {

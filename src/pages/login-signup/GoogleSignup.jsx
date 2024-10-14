@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Logo from "../../components/logo/Logo";
 import { useDispatch, useSelector } from "react-redux";
-import { userGoogleSignup } from "../../features/auth/userSlice";
 import { Field, Form, Formik } from "formik";
 import * as Yup from 'yup';
 
 
 import { useNavigate } from "react-router-dom";
-import { requestOTP } from "../../features/auth/OTPSlice";
 import { toast } from "react-toastify";
+import { requestOTP } from "../../features/auth/auth";
+import api from "../../config/axiosConfig";
 // import { useHistory } from 'react-router-dom';
 
 const initialValues = {
@@ -29,14 +29,15 @@ const GoogleSignup = () => {
   const navigate = useNavigate();
   const [token, setToken] = useState("");
 
-  const { user, user_loading, error } = useSelector((state) => state.user);
+  const { user, user_loading, error } = useSelector((state) => state.auth);
   const { checkoutStatus } = useSelector((state) => state.orders);
 
   useEffect(() => {
     // Extract token from URL
     const query = new URLSearchParams(window.location.search);
     const token = query.get("token");
-    setToken(token);
+    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    // setToken(token);
   }, []);
 
   const handleSubmit = (values, action) => {
@@ -52,7 +53,7 @@ const GoogleSignup = () => {
               phoneNumber,
               otherDetails: values,
               googleSignup: true,
-              token: token,
+              // token: token,
             },
           });
         }

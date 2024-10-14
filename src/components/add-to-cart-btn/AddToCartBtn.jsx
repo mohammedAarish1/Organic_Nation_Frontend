@@ -21,8 +21,6 @@ const AddToCartBtn = ({ item, qty = 1 }) => {
 
 
   const handleAddingItemsToCart = () => {
-
-
     // Check if adding the new quantity would exceed the available stock
     if (currentQtyInCart + qty > item.availability) {
       toast.error(`No Quanity left in stock.`);

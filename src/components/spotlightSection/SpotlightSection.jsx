@@ -10,7 +10,6 @@ const SpotlightSection = () => {
 
 
     const dispatch = useDispatch();
-    const { cartItems } = useSelector((state) => state.cart);
     const { productData } = useSelector((state) => state.product_data);
     const { products, productsType } = useSelector((state) => state.spotlight);
 
@@ -18,7 +17,7 @@ const SpotlightSection = () => {
 
     useEffect(() => {
         dispatch((spotlighProducts({ type: "new_arrivals", productData: productData })));
-    }, [productData, cartItems])
+    }, [productData])
 
 
     return (
