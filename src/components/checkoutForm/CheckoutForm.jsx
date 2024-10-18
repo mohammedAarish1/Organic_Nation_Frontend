@@ -139,7 +139,7 @@ const CheckoutForm = () => {
         name: !values.sameAsContact ? values.receiverFirstName || "" : "",
         phoneNumber: !values.sameAsContact ? values.receiverPhone || "" : "",
       },
-      merchantTransactionId: values.paymentMethod === "cash_on_delivery" ? '' : merchantTransactionId,
+      merchantTransactionId: merchantTransactionId,
       couponCodeApplied: user.cart.couponCodeApplied,
     };
 
