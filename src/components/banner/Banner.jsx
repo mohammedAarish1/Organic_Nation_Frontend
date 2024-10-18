@@ -24,6 +24,11 @@ const images = [
     image: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/main_banners/8.png',
     categoryUrl: `all`,
   },
+ 
+  {
+    image: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/main_banners/additionalDiscount.png',
+    categoryUrl: `all`,
+  },
   {
     image: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/main_banners/diwali_pickle.png',
     categoryUrl: `authentic-pickles`,

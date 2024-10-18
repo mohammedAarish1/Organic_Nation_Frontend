@@ -47,12 +47,11 @@ const PopupBanner = () => {
         <div
             className={`fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-center transition-opacity duration-300 ${isAnimated ? 'opacity-100' : 'opacity-0'}`}
         >
-            <div
+            {/* <div
                 ref={bannerRef}
                 className={` text-[var(--themeColor)] px-6 py-2 rounded-lg shadow-lg max-w-[80%] bg-[var(--bgColorSecondary)] mx-auto transition-transform duration-300 ${isAnimated ? 'transform scale-100' : 'transform scale-75'}`}
             >
 
-                {/* close button  */}
                 <div className='px-4 text-end'>
                     <button type='button'
                         className='shadow-md rounded-full shadow-green-700 hover:scale-110 text-[var(--bgColorPrimary)]'
@@ -68,7 +67,6 @@ const PopupBanner = () => {
 
                         <div className='font-serif text-center'>
 
-                            {/* <h2 className="text-3xl font-bold mb-4">Welcome to Our Store!</h2> */}
                             <p className="mb-4 lg:text-2xl  tracking-widest ">Enjoy <span className='font-semibold'>FREE SHIPPING</span> on orders of Rs. 499 or more, also get additional <span className='font-semibold'>5% discount</span> on Online Payments — Shop now and save!</p>
                         </div>
                     </div>
@@ -76,7 +74,22 @@ const PopupBanner = () => {
                         <img src="https://organicnationmages.s3.ap-south-1.amazonaws.com/popupBanner.png" alt="" />
                     </div>
                 </div>
-            </div>
+            </div> */}
+
+          <div
+          ref={bannerRef}
+          className={` rounded-lg shadow-lg max-w-[80%]  mx-auto transition-transform duration-300 ${isAnimated ? 'transform scale-100' : 'transform scale-75'}`} 
+          >
+             <div className='px-4 mb-4 text-end'>
+                    <button type='button'
+                        className='shadow-md rounded-full shadow-green-700 hover:scale-110 text-[var(--bgColorPrimary)] bg-[var(--bgColorSecondary)]'
+                        onClick={() => {
+                            handleClosePopup();
+                        }}><IoCloseSharp className='text-4xl' /></button>
+
+                </div>
+            <img src="https://organicnationmages.s3.ap-south-1.amazonaws.com/main_banners/additionalDiscount.png" alt="pop_up_banner" />
+          </div>
         </div>
     );
 };

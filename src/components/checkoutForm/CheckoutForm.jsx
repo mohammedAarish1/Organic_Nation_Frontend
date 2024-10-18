@@ -113,7 +113,6 @@ const CheckoutForm = () => {
         weight: item.weight,
         tax: item.tax,
         hsnCode: item["hsn-code"],
-        // unitPrice: discountedPrice // Update price with the discounted value
         unitPrice: item.price, // Update price with the discounted value
       };
     });
@@ -140,9 +139,8 @@ const CheckoutForm = () => {
         name: !values.sameAsContact ? values.receiverFirstName || "" : "",
         phoneNumber: !values.sameAsContact ? values.receiverPhone || "" : "",
       },
-      merchantTransactionId: merchantTransactionId,
+      merchantTransactionId: values.paymentMethod === "cash_on_delivery" ? '' : merchantTransactionId,
       couponCodeApplied: user.cart.couponCodeApplied,
-      // isPickleCouponApplied: isPickleCouponApplied, // temporary field will be romved once the pickle offer over
     };
 
     if (user && cartItemsList.length > 0) {
@@ -162,10 +160,7 @@ const CheckoutForm = () => {
                 number: values.receiverPhone
                   ? values.receiverPhone
                   : values.phone.slice(3),
-                amount:
-                  totalCartAmount -
-                  discountAmount +
-                  (totalCartAmount < 499 ? shippingFee : 0),
+                amount: totalCartAmount - discountAmount +  (totalCartAmount < 499 ? shippingFee : 0),
                 merchantTransactionId: merchantTransactionId,
               })
             );
@@ -367,7 +362,7 @@ const CheckoutForm = () => {
                     </label>
                     <MdLocationCity className="absolute top-4 right-4 text-xl" />
                     {errors?.shippingAddress?.address &&
-                    touched?.shippingAddress?.address ? (
+                      touched?.shippingAddress?.address ? (
                       <p className="text-red-600">
                         *{errors?.shippingAddress?.address}
                       </p>
@@ -435,7 +430,7 @@ const CheckoutForm = () => {
                       State
                     </label>
                     {errors?.shippingAddress?.state &&
-                    touched?.shippingAddress?.state ? (
+                      touched?.shippingAddress?.state ? (
                       <p className="text-red-600">
                         *{errors?.shippingAddress?.state}
                       </p>
@@ -475,7 +470,7 @@ const CheckoutForm = () => {
                     </label>
                     <PiFileZipFill className="absolute top-4 right-4 text-xl" />
                     {errors?.shippingAddress?.zipCode &&
-                    touched?.shippingAddress?.zipCode ? (
+                      touched?.shippingAddress?.zipCode ? (
                       <p className="text-red-600">
                         *{errors?.shippingAddress?.zipCode}
                       </p>
@@ -498,7 +493,7 @@ const CheckoutForm = () => {
                       Country/Region
                     </label>
                     {errors?.shippingAddress?.country &&
-                    touched?.shippingAddress?.country ? (
+                      touched?.shippingAddress?.country ? (
                       <p className="text-red-600">
                         *{errors?.shippingAddress?.country}
                       </p>
@@ -615,7 +610,7 @@ const CheckoutForm = () => {
                         State
                       </label>
                       {errors.billingAddress?.state &&
-                      touched.billingAddress?.state ? (
+                        touched.billingAddress?.state ? (
                         <p className="text-red-600">
                           *{errors.billingAddress?.state}
                         </p>
@@ -650,7 +645,7 @@ const CheckoutForm = () => {
                         Country/Region
                       </label>
                       {errors.billingAddress?.country &&
-                      touched.billingAddress?.country ? (
+                        touched.billingAddress?.country ? (
                         <p className="text-red-600">
                           *{errors.billingAddress?.country}
                         </p>
