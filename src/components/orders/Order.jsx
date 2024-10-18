@@ -60,6 +60,7 @@ const Order = ({ order }) => {
     setIsAlertOpen(false);
   };
 
+
   return (
     <>
       {/* order 1 start */}
@@ -234,7 +235,7 @@ const Order = ({ order }) => {
                   {" "}
                   ₹{" "}
                   {order?.orderDetails.reduce(
-                    (total, item) => total + item.unitPrice,
+                    (total, item) => total + item.unitPrice *item.quantity,
                     0
                   )}
                 </p>
@@ -244,7 +245,7 @@ const Order = ({ order }) => {
                 <p className="font-semibold">
                   (₹{" "}
                   {order?.orderDetails.reduce(
-                    (total, item) => total + item.unitPrice,
+                    (total, item) => total + item.unitPrice *item.quantity,
                     0
                   ) - order.subTotal}
                   )
@@ -263,7 +264,7 @@ const Order = ({ order }) => {
                 <div className="flex items-end gap-2">
                   <p className="text-end ">Total Amount Payable:</p>
                   <div className=" text-green-200 font-bold text-xs">
-                    {order.isPickleCouponApplied && (
+                    {order.couponCodeApplied.length>0 && (
                       <p className="flex  items-center gap-1">
                         (Coupon Code Applied){" "}
                         <PiSealCheckFill className="text-xl" />

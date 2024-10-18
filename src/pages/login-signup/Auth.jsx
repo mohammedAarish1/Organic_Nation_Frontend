@@ -20,54 +20,65 @@ import {  login, signup, updateUserRegisterStatus } from "../../features/auth/au
 const Auth = () => {
   // belo code is for handling the navigation after otp verified by the user (extracting phone number)
   const location = useLocation();
-  const otpUser = location?.state; // we will get this data when user tries to sign up with otp
+  const signingUpUser = location?.state; // we will get this data when user tries to sign up with otp
   const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // const [showOtpInput, setShowOtpInput] = useState(true);
   // const [userRegistered, setuserRegistered] = useState(otpUser && userSignedUpSuccessfully === null ? false : true);
-  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  // const [isAlertOpen, setIsAlertOpen] = useState(false);
   const { checkoutStatus } = useSelector((state) => state.orders);
-  const { user, user_loading, error, userRegistered } = useSelector(
-    (state) => state.auth
-  );
+  const { user, user_loading, error, userRegistered } = useSelector( (state) => state.auth );
+
+  const {totalCartAmount,totalTax,couponCodeApplied}=useSelector(state=>state.cart);
+  const localCart=JSON.parse(localStorage.getItem('cart'))
+
+
+
+  
 
   const initialValues = {
     firstName: "",
     lastName: "",
     userId: "",
     email: "",
-    phoneNumber: otpUser ? otpUser.phoneNumber : "",
+    phoneNumber: signingUpUser ? signingUpUser?.phoneNumber : "",
     password: "",
     // password: '',
     // confirm_password: ''
   };
 
-  const hideAlert = () => {
-    setIsAlertOpen(false);
-    localStorage.removeItem("cart");
-    if (checkoutStatus) {
-      navigate("/cart/checkout");
-    } else {
-      navigate("/");
-    }
-  };
+  // const hideAlert = () => {
+  //   setIsAlertOpen(false);
+  //   localStorage.removeItem("cart");
+  //   if (checkoutStatus) {
+  //     navigate("/cart/checkout");
+  //   } else {
+  //     navigate("/");
+  //   }
+  // };
 
-  const handleCartMerge = (action) => {
-    const localCart = JSON.parse(localStorage.getItem("cart"));
-    // setIsAlertOpen(false);
-    dispatch(mergeCart({ localCart })).then(() => {
-      setIsAlertOpen(false);
-      localStorage.removeItem("cart");
-      dispatch(getAllCartItems());
-      if (checkoutStatus) {
-        navigate("/cart/checkout");
-      } else {
-        navigate("/");
-      }
-    });
-  };
+  // const handleCartMerge = (action) => {
+  //   const localCart = JSON.parse(localStorage.getItem("cart"));
+  //   // setIsAlertOpen(false);
+  //   dispatch(mergeCart({ localCart })).then(() => {
+  //     setIsAlertOpen(false);
+  //     localStorage.removeItem("cart");
+  //     dispatch(getAllCartItems());
+  //     if (checkoutStatus) {
+  //       navigate("/cart/checkout");
+  //     } else {
+  //       navigate("/");
+  //     }
+  //   });
+  // };
+
+  const handleOtpLogin=()=>{
+    navigate('/otp-login', {
+      state: { totalCartAmount,totalTax,couponCodeApplied },
+    })
+  }
 
   const handleSubmit = (values, action) => {
     if (!userRegistered) {
@@ -76,12 +87,19 @@ const Auth = () => {
       .then((res) => {
         if (res.accessToken) {
           // dispatch(updateUserRegisterStatus(true));
-          const token = res.accessToken;
+          let cart;
+          if(localCart.length>0){
+             cart={
+              items:localCart,
+              totalCartAmount:signingUpUser?.totalCartAmount,
+              totalTaxex:signingUpUser?.totalTax,
+              couponCodeApplied,
+            }
+          }
           fetchDataAfterLogin(
-            token,
             dispatch,
             navigate,
-            setIsAlertOpen,
+            cart,
             checkoutStatus
           );
           toast.success("Sign up Successfully");
@@ -89,21 +107,25 @@ const Auth = () => {
       });
     } else {
       if (values.userId && values.password) {
-        const credentials = {
-          userId: values.userId,
-          password: values.password,
-        };
+        const credentials = { userId: values.userId, password: values.password };
         dispatch(login(credentials))
         .unwrap() 
         .then((res) => {
           if (res.accessToken) {
-            const token = res.accessToken;
+            let cart;
+            if(localCart?.length>0){
+               cart={
+                items:localCart,
+                totalCartAmount,
+                totalTaxex:totalTax,
+                couponCodeApplied,
+              }
+            }
 
             fetchDataAfterLogin(
-              token,
               dispatch,
               navigate,
-              setIsAlertOpen,
+              cart,
               checkoutStatus
             );
             toast.success("Log in Successfully");
@@ -111,9 +133,9 @@ const Auth = () => {
             toast.error('User Not Found');
           }
         })
-        .catch(()=>{
-          toast.error('Invalid Credentials')
-        })
+        // .catch(()=>{
+        //   toast.error('Invalid Credentials')
+        // })
       }
     }
 
@@ -125,7 +147,7 @@ const Auth = () => {
   return (
     <section className="xs:px-10 px-2 pb-20 mt-5 sm:mt-0 font-serif">
       <div className="lg:w-[80%] h-auto py-2 bg-opacity-35 mx-auto">
-        {otpUser ? (
+        {signingUpUser ? (
           <p className="text-center">
             *Please provide us the following details to complete the signing up
             process*
@@ -374,27 +396,27 @@ const Auth = () => {
 
               <div className="flex flex-col  px-8 gap-3">
                 {/* otp sign up  */}
-                {!otpUser && (
+                {!signingUpUser && (
                   <div className="flex justify-center items-center gap-3  border text-[var(--themeColor)] hover:bg-white hover:text-black">
                    
-                    <Link to="/otp-login" className="w-full">
-                    <button className="flex justify-center items-center w-full py-1">
+                    {/* <Link to="/otp-login" className="w-full"> */}
+                    <button 
+                    className="flex justify-center items-center w-full py-1"
+                    onClick={handleOtpLogin}
+                    >
                     <FcIphone className="text-2xl" />
                     Log in with OTP
                     </button>
                     
-                    </Link>
+                    {/* </Link> */}
                   </div>
                 )}
 
                 {/* google  */}
 
-                <div className="flex justify-center items-center gap-3 border text-[var(--themeColor)] hover:bg-white hover:text-black">
-                  {/* <FcGoogle className="text-2xl" /> */}
+                {/* <div className="flex justify-center items-center gap-3 border text-[var(--themeColor)] hover:bg-white hover:text-black">
                   <a
-                    // type="submit"
                     className="w-full"
-                    // onClick={handleGoogleLogin}
                     href={`${apiUrl}/api/auth/google`}
                   >
                      <button className="flex justify-center items-center w-full py-1 gap-1">
@@ -403,21 +425,14 @@ const Auth = () => {
                     </button>
                    
                   </a>
-                  {/* <button
-                    type="submit"
-                    className=""
-                    onClick={handleGoogleLogin}
-                  >
-                    Log in with Google
-                  </button> */}
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
         </div>
       </div>
       {/* alert for cart merge  */}
-      <Alert
+      {/* <Alert
         isOpen={isAlertOpen}
         alertMessage="You have items in your cart from a previous session. Would you like to merge them with your current cart?"
         actionMessageOne="Yes, merge the Cart"
@@ -426,7 +441,7 @@ const Auth = () => {
         hideAlert={hideAlert}
         handleAction1={() => handleCartMerge({ replaceCart: false })}
         handleAction2={() => handleCartMerge({ replaceCart: true })}
-      />
+      /> */}
     </section>
   );
 };

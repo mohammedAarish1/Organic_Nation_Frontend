@@ -83,7 +83,6 @@ export const checkAuthStatus = createAsyncThunk(
       const response = await api.post("/api/auth/user/refresh");
       const { accessToken, user } = response.data;
 
-      //   console.log('accessToken',accessToken)
       // Update axios headers
       api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
       return { user, accessToken };

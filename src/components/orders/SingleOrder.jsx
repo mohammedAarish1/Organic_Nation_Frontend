@@ -88,14 +88,11 @@ const SingleOrder = ({
             <p>{singleOrderItem.name}</p>
             <p>Quantity : {curOrder.quantity} Pcs.</p>
             <p>
-              Rate Per Quantity: ₹{" "}
-              {Math.round(
-                singleOrderItem.price -
-                  (singleOrderItem.price * singleOrderItem.discount) / 100
-              )}{" "}
-              <span className="text-green-300 text-sm">
+              Rate Per Quantity: ₹
+              {Math.round( singleOrderItem.price )}
+              {/* <span className="text-green-300 text-sm">
                 ({singleOrderItem.discount}% off)
-              </span>
+              </span> */}
             </p>
           </div>
         </div>

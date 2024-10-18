@@ -75,7 +75,6 @@
 //             }
 //         })
 //         builder.addCase(verifyOTP.fulfilled, (state, action) => {
-//             console.log(act.payload,'verify')
 //             return {
 //                 ...state,
 //                 isAuthenticated: true,

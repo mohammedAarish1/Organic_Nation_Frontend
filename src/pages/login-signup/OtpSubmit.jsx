@@ -17,32 +17,50 @@ const OtpSubmit = () => {
   const location = useLocation();
   const signingUpUser = location?.state;
   const { checkoutStatus } = useSelector((state) => state.orders);
+  const {totalCartAmount,totalTax,couponCodeApplied}=useSelector(state=>state.cart)
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { verifyingOTP } = useSelector((state) => state.auth);
 
+  
+
+
+
   // below function will fetch the data when the existing user logged in via otp
   const getDataAfterLogin = () => {
-    dispatch(getAllOrders()).then(() => {
-      dispatch(getAllCartItems()).then((res) => {
-        const localCart = JSON.parse(localStorage.getItem("cart") || "[]");
-        if (localCart.length > 0) {
-          dispatch(mergeCart({ localCart })).then(() => {
-            localStorage.removeItem("cart");
-            dispatch(getAllCartItems());
-            if (checkoutStatus) {
-              navigate("/cart/checkout");
-            } else {
-              navigate("/");
-            }
-          });
+    dispatch(getAllOrders())
+    const localCart = JSON.parse(localStorage.getItem("cart") || "[]");
+    if (localCart.length > 0) {
+      const cart = {
+        items: localCart,
+        totalCartAmount: signingUpUser.totalCartAmount || totalCartAmount,
+        totalTaxes: signingUpUser.totalTax || totalTax,
+        couponCodeApplied: signingUpUser.couponCodeApplied || couponCodeApplied
+      }
+
+
+      dispatch(mergeCart({ cart })).then(() => {
+        // localStorage.removeItem("cart");
+        dispatch(getAllCartItems());
+        if (checkoutStatus) {
+          navigate("/cart/checkout");
         } else {
           navigate("/");
         }
       });
-    });
+    } else {
+      navigate("/");
+    }
+
+
+    // .then(() => {
+    //   dispatch(getAllCartItems())
+    //   .then((res) => {
+
+    //   });
+    // });
   };
 
   //otp submission
@@ -54,8 +72,8 @@ const OtpSubmit = () => {
             const token = value.payload.accessToken;
             if (token) {
               getDataAfterLogin();
-            } else if (  signingUpUser.otherDetails && signingUpUser.googleSignup ) {
-              dispatch(handleGoogleSignup({  userData: signingUpUser.otherDetails,  }))
+            } else if (signingUpUser.otherDetails && signingUpUser.googleSignup) {
+              dispatch(handleGoogleSignup({ userData: signingUpUser.otherDetails, }))
                 .unwrap() // This ensures proper error handling
                 .then((result) => {
                   if (result.accessToken) {
@@ -68,12 +86,12 @@ const OtpSubmit = () => {
                   console.error('Signup failed:', error);
                   toast.error(error.message || "Sign up failed");
                 });
-             
+
             } else {
-              //this block will execute when the user tries to log in with otp for the first time
+              //this block will execute when the user tries to sign up with otp for the first time
               dispatch(updateUserRegisterStatus(false));
               navigate("/register", {
-                state: { phoneNumber: signingUpUser.phoneNumber },
+                state: { ...signingUpUser },
               });
             }
           } else {

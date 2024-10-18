@@ -14,7 +14,7 @@ const Checkout = () => {
 
     const dispatch = useDispatch()
     const { checking, shippingFee } = useSelector(state => state.delivery)
-    const { cartItemsList, totalCartAmount, totalWeight, isCouponCodeApplied } = useSelector((state) => state.cart);
+    const { cartItemsList, totalCartAmount, totalWeight, couponCodeApplied } = useSelector((state) => state.cart);
     const [showSummary, setShowSummary] = useState(false);
     
 
@@ -86,7 +86,7 @@ const Checkout = () => {
                 </h4>
                                 <h4 className="flex flex-wrap gap-4 text-xl font-bold text-white"
                                 >
-                                    Total{isCouponCodeApplied && <span className='flex text-sm justify-center items-center gap-1'>( Coupon Code Applied <PiSealCheckFill className='text-xl' />)</span>} <span className="ml-auto text-xl">₹{Math.round(totalCartAmount + (totalCartAmount < 499 ? shippingFee : 0)) || 0}</span></h4>
+                                    Total{couponCodeApplied.length>0 && <span className='flex text-sm justify-center items-center gap-1'>( Coupon Code Applied <PiSealCheckFill className='text-xl' />)</span>} <span className="ml-auto text-xl">₹{Math.round(totalCartAmount + (totalCartAmount < 499 ? shippingFee : 0)) || 0}</span></h4>
                             </div>
                         </div>
                     </div>

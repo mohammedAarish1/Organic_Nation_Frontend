@@ -4,7 +4,7 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ImSpinner9 } from 'react-icons/im';
 import ResendOTP from '../../components/otp/ResendOTP';
 
@@ -22,8 +22,12 @@ import { requestOTP } from '../../features/auth/auth';
 const OtpLogin = () => {
 
     const dispatch = useDispatch();
+  const location = useLocation();
+
     const navigate = useNavigate();
     const [submittedPhoneNumber, setSubmittedPhoneNumber] = useState('')
+  const signingUpUser = location?.state;
+
 
     const { sendingOTP, } = useSelector(state => state.auth);
 
@@ -46,7 +50,7 @@ const OtpLogin = () => {
             if (value.meta.requestStatus === 'fulfilled') {
                 toast.success(value.payload.message)
                 // setShowOtpInput(true);
-                navigate('/otp-submit', { state: { phoneNumber } })
+                navigate('/otp-submit', { state: signingUpUser? {...signingUpUser, phoneNumber }:{phoneNumber} })
             }
 
         })

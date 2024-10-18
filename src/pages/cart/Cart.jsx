@@ -44,8 +44,7 @@ const Cart = () => {
     totalWeight,
     totalTax,
     error,
-    isCouponCodeApplied,
-    isPickleCouponApplied,
+    couponCodeApplied,
   } = useSelector((state) => state.cart);
 
   const { isAvailable, message, checking } = useSelector(
@@ -62,11 +61,10 @@ const Cart = () => {
       .matches(pincodeRegExp, "Pin Code is not valid"),
   });
 
-
   const MRPTotal = cartItemsList?.reduce((total, product) => {
-    const price = product.price ;
+    const price = product.price;
     return Math.round(total + price * product.quantity);
-}, 0);
+  }, 0);
 
 
   const totalPickleQuantity = cartItemsList
@@ -214,8 +212,8 @@ const Cart = () => {
                         src={
                           Array.isArray(curItem.img)
                             ? curItem.img.filter((path) =>
-                                path.includes("front")
-                              )[0]
+                              path.includes("front")
+                            )[0]
                             : null
                         }
                         className="w-20 max-h-24 object-contain"
@@ -274,7 +272,7 @@ const Cart = () => {
                       {Math.round(
                         (curItem.price -
                           (curItem.price * curItem.discount) / 100) *
-                          curItem.quantity
+                        curItem.quantity
                       )}
                     </div>
                   </td>
@@ -331,12 +329,12 @@ const Cart = () => {
             </div>
             <div className="flex justify-between items-center gap-10 font-semibold">
               <span>Total Discount (-):</span>
-              <span>₹ ({MRPTotal-totalCartAmount|| 0})</span>
+              <span>₹ ({Math.round(MRPTotal - totalCartAmount || 0)})</span>
             </div>
             <div className="flex justify-between items-center gap-10">
-                <span>Order Total:</span>
-                <span className="font-semibold">₹ {totalCartAmount || 0}</span>
-              </div>
+              <span>Order Total:</span>
+              <span className="font-semibold">₹ {Math.round(totalCartAmount || 0)}</span>
+            </div>
             {/* <div className="flex justify-between items-center gap-10">
               <span>Sub Total:</span>
               <span>₹ {Math.round(totalCartAmount - totalTax || 0)}</span>
@@ -369,11 +367,10 @@ const Cart = () => {
                       />
                       <button
                         type="submit"
-                        className={`px-4 py-1 rounded-tr-md rounded-br-md ${
-                          user && totalCartAmount > 1000
+                        className={`px-4 py-1 rounded-tr-md rounded-br-md ${user && totalCartAmount > 1000
                             ? "bg-green-400 hover:bg-green-500"
                             : "bg-green-200 opacity-50"
-                        } `}
+                          } `}
                         disabled={!user || totalCartAmount < 1000}
                       >
                         {validatingCouponCode ? (
@@ -399,9 +396,9 @@ const Cart = () => {
                           animation="fade"
                           delayShow={200} // delay before showing in ms
                           delayHide={300} // delay before hiding in ms
-                          // offset={10} // distance in pixels
-                          // arrow={true}
-                          // arrowColor="#25D366"
+                        // offset={10} // distance in pixels
+                        // arrow={true}
+                        // arrowColor="#25D366"
                         ></Tooltip>
                       ))}
                   </Form>
@@ -428,10 +425,10 @@ const Cart = () => {
                   >
                     <CouponList
                       totalCartAmount={totalCartAmount}
+                      totalTax={totalTax}
                       setShowCouponCodelist={setShowCouponCodelist}
                       totalPickleQuantity={totalPickleQuantity}
-                      isCouponCodeApplied={isCouponCodeApplied}
-                      isPickleCouponApplied={isPickleCouponApplied}
+                      couponCodeApplied={couponCodeApplied}
                     />
                   </div>
                 </div>
@@ -441,8 +438,8 @@ const Cart = () => {
             {/* coupon  */}
             <hr />
             <div>
-             
-              {totalCartAmount < 499 && totalCartAmount>0 && (
+
+              {totalCartAmount < 499 && totalCartAmount > 0 && (
                 <div className="text-center mt-2 font-bold">
                   <p className="text-[12px] text-green-700 capitalize">
                     ( Add  ₹ <span>{499 - totalCartAmount}</span> worth of products more to get FREE SHIPPING !!)
@@ -450,7 +447,7 @@ const Cart = () => {
                 </div>
               )}
               <div className=" text-green-700 font-bold text-xs">
-                {isCouponCodeApplied && (
+                {couponCodeApplied?.length > 0 && (
                   <p className="flex  items-center gap-1">
                     Coupon Code Applied <PiSealCheckFill className="text-xl" />
                   </p>
@@ -467,7 +464,7 @@ const Cart = () => {
                   validationSchema={validationSchema}
                   onSubmit={handleSubmit}
                 >
-                  {({}) => (
+                  {({ }) => (
                     <Form>
                       <div className="flex items-center ">
                         <Field
@@ -514,11 +511,10 @@ const Cart = () => {
               onClick={() => dispatch(resetCheckoutStatus(true))}
             >
               <div
-                className={`${
-                  cartItemsList?.length === 0
+                className={`${cartItemsList?.length === 0
                     ? "bg-green-400"
                     : "hover:scale-90 bg-green-500 hover:bg-green-700"
-                } flex justify-center items-center gap-2    transition-all duration-700 text-white rounded-md`}
+                  } flex justify-center items-center gap-2    transition-all duration-700 text-white rounded-md`}
                 data-tooltip-id="checkout-tooltip"
                 data-tooltip-content="Your cart is Empty !"
                 data-tooltip-place="bottom"
@@ -548,9 +544,9 @@ const Cart = () => {
                   animation="fade"
                   delayShow={200} // delay before showing in ms
                   delayHide={300} // delay before hiding in ms
-                  // offset={10} // distance in pixels
-                  // arrow={true}
-                  // arrowColor="#25D366"
+                // offset={10} // distance in pixels
+                // arrow={true}
+                // arrowColor="#25D366"
                 ></Tooltip>
               )}
 

@@ -31,6 +31,8 @@ const GoogleSignup = () => {
 
   const { user, user_loading, error } = useSelector((state) => state.auth);
   const { checkoutStatus } = useSelector((state) => state.orders);
+  const {totalCartAmount,totalTax,couponCodeApplied}=useSelector(state=>state.cart)
+
 
   useEffect(() => {
     // Extract token from URL

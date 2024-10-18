@@ -61,8 +61,6 @@ const CheckoutForm = () => {
     totalCartAmount,
     totalTax,
     totalWeight,
-    isPickleCouponApplied,
-    isCouponCodeApplied,
   } = useSelector((state) => state.cart);
   const { addingNewOrder } = useSelector((state) => state.orders);
   const {
@@ -143,8 +141,8 @@ const CheckoutForm = () => {
         phoneNumber: !values.sameAsContact ? values.receiverPhone || "" : "",
       },
       merchantTransactionId: merchantTransactionId,
-      isCouponCodeApplied: user.cart.isCouponCodeApplied,
-      isPickleCouponApplied: isPickleCouponApplied, // temporary field will be romved once the pickle offer over
+      couponCodeApplied: user.cart.couponCodeApplied,
+      // isPickleCouponApplied: isPickleCouponApplied, // temporary field will be romved once the pickle offer over
     };
 
     if (user && cartItemsList.length > 0) {
@@ -514,7 +512,6 @@ const CheckoutForm = () => {
                                             name="saveShippingInfo"
                                             onChange={(e) => {
                                                 setFieldValue('saveShippingInfo', e.target.checked);
-                                                // console.log(e.target.checked)
                                             }
                                             }
                                         />
