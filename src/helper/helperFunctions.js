@@ -61,28 +61,45 @@ const address = (obj) => {
 
 
 // for calculating additional 5% discount on MRP and tax include in that discount
-const calculateDiscountAndTaxIncluded = (cart) => {
-  const totalCartValue = cart.reduce((total, item) => {
-    const subtotal = item.price * item.quantity;
-    return total + subtotal;
-  }, 0);
+// const calculateDiscountAndTaxIncluded = (cart) => {
+//   const totalCartValue = cart.reduce((total, item) => {
+//     const subtotal = item.price * item.quantity;
+//     return total + subtotal;
+//   }, 0);
 
-  const discountAmount = totalCartValue * 0.05;
+//   const discountAmount = totalCartValue * 0.05;
 
-  const totalCartValueExcludingTax = cart.reduce((total, item) => {
-    const priceExcludingTax = item.price / (1 + item.tax / 100);
-    const subtotalExcludingTax = priceExcludingTax * item.quantity;
-    return total + subtotalExcludingTax;
-  }, 0);
+//   const totalCartValueExcludingTax = cart.reduce((total, item) => {
+//     const priceExcludingTax = item.price / (1 + item.tax / 100);
+//     const subtotalExcludingTax = priceExcludingTax * item.quantity;
+//     return total + subtotalExcludingTax;
+//   }, 0);
 
-  const discountAmountExcludingTax = totalCartValueExcludingTax * 0.05;
+//   const discountAmountExcludingTax = totalCartValueExcludingTax * 0.05;
 
-  const taxIncludedInDiscountAmount = discountAmount - discountAmountExcludingTax;
+//   const taxIncludedInDiscountAmount = discountAmount - discountAmountExcludingTax;
 
-  return {
-    discountAmount: Math.round(discountAmount),
-    taxIncludedInDiscountAmount: Math.round(taxIncludedInDiscountAmount)
-  };
+//   return {
+//     discountAmount: Math.round(discountAmount),
+//     taxIncludedInDiscountAmount: Math.round(taxIncludedInDiscountAmount)
+//   };
+// }
+
+// for calculating additional 5% discount on MRP and tax include in that discount
+const additionalDiscountforOnlinePayment = (totalCartAmount,totalTax) => {
+
+
+      const DISCOUNT_PERCENTAGE = 5
+
+      //calculate additional 5% discount
+      const additionalDiscount = totalCartAmount * DISCOUNT_PERCENTAGE / 100
+      const additionalTaxDiscount = totalTax * DISCOUNT_PERCENTAGE / 100
+
+      return {
+        discountAmount: Math.round(additionalDiscount),
+        taxDiscount: Math.round(additionalTaxDiscount)
+      };
+
 }
 
 
@@ -129,8 +146,9 @@ const checkDeliveryAndCalculateShippingFee = (
 export {
   generateTransactionID,
   address,
-  calculateDiscountAndTaxIncluded,
+  // calculateDiscountAndTaxIncluded,
   fetchDataAfterLogin,
   handleDocumentDeleteFromDatabase,
-  checkDeliveryAndCalculateShippingFee
+  checkDeliveryAndCalculateShippingFee,
+  additionalDiscountforOnlinePayment
 }

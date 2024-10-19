@@ -599,6 +599,13 @@ input[type="range"]::-moz-range-thumb {
   border: 1px solid;
 }
 
+.btn-97:disabled:hover {
+  box-shadow: none; /* Remove box-shadow */
+  transform: none; /* Remove transform */
+  border: none; /* Remove border */
+  /* background: var(--disabledBackgroundColor); Optional: use a different background */
+}
+
 @media screen and (max-width: 450px) {
   .btn-97 {
     font-size: 8px;

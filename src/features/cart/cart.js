@@ -328,6 +328,9 @@ export const applyAdditionalCouponDiscount = createAsyncThunk(
 
 
 
+
+
+
 const initialState = {
     cartItems: [],  // it will contain only product id, qty and name-url
     cartItemsList: [], // it will contain all the product detail + qty
@@ -697,6 +700,7 @@ export const cartSlice = createSlice({
                     error: action.payload,
                 }
             })
+        
     }
 })
 

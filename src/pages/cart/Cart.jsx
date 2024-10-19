@@ -140,6 +140,12 @@ const Cart = () => {
       {/* <div>
         <OfferBanner />
       </div> */}
+      {totalCartAmount<399 && totalCartAmount>0 && (
+         <div className="md:mt-0 mt-5 sm:px-0 px-5 text-center italic text-orange-500 md:text-xl font-sans font-bold">
+         <span>*CASH ON DELIVERY (COD) is available on all orders above  ₹ 399 !</span>
+       </div>
+      )}
+     
       <div className=" py-10">
         {/* shopping btn and clear cart  */}
         <div className="flex justify-between items-center mb-3 lg:w-[80%] w-[90%] mx-auto ">

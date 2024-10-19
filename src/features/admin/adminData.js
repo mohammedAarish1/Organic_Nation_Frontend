@@ -214,10 +214,17 @@ export const deleteDocumentFromDatabase = createAsyncThunk(
 export const generateReport = createAsyncThunk(
     'report/generate',
     async ({ startDate, endDate }, { rejectWithValue }) => {
+        const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
         try {
-            const response = await axios.post(`${apiUrl}/api/admin/generate-report`, { startDate, endDate }, {
-                responseType: 'blob'
-            });
+            const response = await axios.post(`${apiUrl}/api/admin/generate-report`, { startDate, endDate },
+                {
+                    responseType: 'blob',
+                    headers: {
+                        'Authorization': `Bearer ${adminToken}`,
+                        'Content-Type': 'application/json'  // You can change this based on your API requirements
+                    }
+                }
+            );
             // Instead of returning the blob, we'll handle it here
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const link = document.createElement('a');
@@ -414,7 +421,7 @@ const adminData = createSlice({
                         returnStatusTab: action.payload
                     }
                 }
-            }  else {
+            } else {
                 return {
                     ...state,
                     returnsByStatus: {
@@ -559,8 +566,8 @@ const adminData = createSlice({
                 state.error = action.payload;
             })
 
-             // ========= totla orders ==========
-             .addCase(getTotalReturns.pending, (state) => {
+            // ========= totla orders ==========
+            .addCase(getTotalReturns.pending, (state) => {
                 return {
                     ...state,
                     loading: true,
@@ -594,7 +601,7 @@ const adminData = createSlice({
 })
 
 // export const { userLogout, clearLocalCartFlag } = userSlice.actions;
-export const { getOrdersByStatus,getReturnsByStatus } = adminData.actions;
+export const { getOrdersByStatus, getReturnsByStatus } = adminData.actions;
 
 
 export default adminData.reducer;

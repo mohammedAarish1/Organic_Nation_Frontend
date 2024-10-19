@@ -45,7 +45,7 @@ const PopupBanner = () => {
 
     return (
         <div
-            className={`fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-center transition-opacity duration-300 ${isAnimated ? 'opacity-100' : 'opacity-0'}`}
+            className={`fixed inset-0 z-50 bg-black bg-opacity-80 flex justify-center items-center transition-opacity duration-300 ${isAnimated ? 'opacity-100' : 'opacity-0'}`}
         >
             {/* <div
                 ref={bannerRef}
@@ -76,11 +76,11 @@ const PopupBanner = () => {
                 </div>
             </div> */}
 
-          <div
-          ref={bannerRef}
-          className={` rounded-lg shadow-lg max-w-[80%]  mx-auto transition-transform duration-300 ${isAnimated ? 'transform scale-100' : 'transform scale-75'}`} 
-          >
-             <div className='px-4 mb-4 text-end'>
+            <div
+                ref={bannerRef}
+                className={` rounded-lg shadow-lg max-w-[80%]  mx-auto transition-transform duration-300 ${isAnimated ? 'transform scale-100' : 'transform scale-75'}`}
+            >
+                <div className='px-4 mb-4 text-end'>
                     <button type='button'
                         className='shadow-md rounded-full shadow-green-700 hover:scale-110 text-[var(--bgColorPrimary)] bg-[var(--bgColorSecondary)]'
                         onClick={() => {
@@ -88,8 +88,18 @@ const PopupBanner = () => {
                         }}><IoCloseSharp className='text-4xl' /></button>
 
                 </div>
-            <img src="https://organicnationmages.s3.ap-south-1.amazonaws.com/main_banners/additionalDiscount.png" alt="pop_up_banner" />
-          </div>
+                {/* for desktop  */}
+                <img
+                    src="https://organicnationmages.s3.ap-south-1.amazonaws.com/main_banners/additionalDiscount.png" alt="pop_up_banner"
+                    className='hidden md:block'
+                />
+                {/* for mobile  */}
+                <img
+                    src="https://organicnationmages.s3.ap-south-1.amazonaws.com/popUp_additional_Dis_mobile.png" alt="pop_up_banner"
+                    className='block md:hidden'
+
+                />
+            </div>
         </div>
     );
 };

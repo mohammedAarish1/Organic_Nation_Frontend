@@ -15,8 +15,9 @@ import { BsArrowRight } from "react-icons/bs";
 import {
   generateTransactionID,
   address,
-  calculateDiscountAndTaxIncluded,
+  // calculateDiscountAndTaxIncluded,
   checkDeliveryAndCalculateShippingFee,
+  additionalDiscountforOnlinePayment,
 } from "../../helper/helperFunctions";
 
 // formik
@@ -56,21 +57,10 @@ const CheckoutForm = () => {
   const navigate = useNavigate();
 
   const { user } = useSelector((state) => state.auth);
-  const {
-    cartItemsList,
-    totalCartAmount,
-    totalTax,
-    totalWeight,
-  } = useSelector((state) => state.cart);
+  const {  cartItemsList,  totalCartAmount, totalTax, totalWeight, } = useSelector((state) => state.cart);
   const { addingNewOrder } = useSelector((state) => state.orders);
-  const {
-    shippingFee,
-    userCity,
-    userPincode,
-    userState,
-    message,
-    locallySavedAddress,
-  } = useSelector((state) => state.delivery);
+  const {  shippingFee,  userCity,  userPincode,  userState,  message,  locallySavedAddress,} = useSelector((state) => state.delivery);
+
 
   const shippingAddressInitial = {
     address: locallySavedAddress.add1 || "",
@@ -102,8 +92,7 @@ const CheckoutForm = () => {
   const handleSubmit = (values, action) => {
     const merchantTransactionId = generateTransactionID();
     // calutaing additional 5% discount for online payment and tax inlcuded in this discounted amount
-    const { discountAmount, taxIncludedInDiscountAmount } =
-      calculateDiscountAndTaxIncluded(cartItemsList);
+    const { discountAmount, taxDiscount } =  additionalDiscountforOnlinePayment(totalCartAmount,totalTax);
 
     const orderDetails = cartItemsList.map((item) => {
       return {
@@ -124,15 +113,9 @@ const CheckoutForm = () => {
       billingAddress: address(values.billingAddress),
       shippingAddress: address(values.shippingAddress),
       orderDetails: orderDetails,
-      subTotal:
-        values.paymentMethod === "cash_on_delivery"
-          ? totalCartAmount
-          : totalCartAmount - discountAmount,
+      subTotal: values.paymentMethod === "cash_on_delivery"   ? totalCartAmount : totalCartAmount - discountAmount,
       paymentStatus: "pending",
-      taxAmount:
-        values.paymentMethod === "cash_on_delivery"
-          ? totalTax
-          : totalTax - taxIncludedInDiscountAmount,
+      taxAmount:  values.paymentMethod === "cash_on_delivery"  ? totalTax  : totalTax - taxDiscount,
       shippingFee: totalCartAmount < 499 ? shippingFee : 0,
       paymentMethod: values.paymentMethod,
       receiverDetails: {
@@ -142,6 +125,7 @@ const CheckoutForm = () => {
       merchantTransactionId: merchantTransactionId,
       couponCodeApplied: user.cart.couponCodeApplied,
     };
+
 
     if (user && cartItemsList.length > 0) {
       if (values.paymentMethod === "cash_on_delivery") {
@@ -160,7 +144,7 @@ const CheckoutForm = () => {
                 number: values.receiverPhone
                   ? values.receiverPhone
                   : values.phone.slice(3),
-                amount: totalCartAmount - discountAmount +  (totalCartAmount < 499 ? shippingFee : 0),
+                amount: totalCartAmount - discountAmount + (totalCartAmount < 499 ? shippingFee : 0),
                 merchantTransactionId: merchantTransactionId,
               })
             );
@@ -388,7 +372,7 @@ const CheckoutForm = () => {
                       htmlFor="shippingAddress.optionalAddress"
                       className={lableStyle}
                     >
-                      Address Line 2 (Landmark)
+                      Address Line 2 (Optional)
                     </label>
                     <MdLocationCity className="absolute top-4 right-4 text-xl" />
                     {/* {errors?.shippingAddress?.optionalAddress && touched?.shippingAddress?.optionalAddress ? (
@@ -669,15 +653,18 @@ const CheckoutForm = () => {
                     />
                     <label htmlFor="online_payment">Online Payment</label>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Field
-                      type="radio"
-                      id="cash_on_delivery"
-                      name="paymentMethod"
-                      value="cash_on_delivery"
-                    />
-                    <label htmlFor="cash_on_delivery">Cash on Delivery</label>
-                  </div>
+                  {totalCartAmount > 399 && (
+                    <div className="flex items-center gap-1 ">
+                      <Field
+                        type="radio"
+                        id="cash_on_delivery"
+                        name="paymentMethod"
+                        value="cash_on_delivery"
+                      />
+                      <label htmlFor="cash_on_delivery">Cash on Delivery</label>
+                    </div>
+                  )}
+
                   <div className="text-[var(--themeColor)] font-bold">
                     <p>( Pay Online and Get 5% additional discount )</p>
                   </div>
