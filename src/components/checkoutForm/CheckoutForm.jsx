@@ -45,8 +45,8 @@ const InputField = ({ name, label, icon, errors, touched }) => {
         {label}
       </label>
       {icon}
-      {errors?.name && touched?.name ? (
-        <p className="text-red-600">*{errors?.name}</p>
+      {errors?.[name] && touched?.[name] ? (
+        <p className="text-red-600">*{errors?.[name]}</p>
       ) : null}
     </div>
   );
@@ -57,7 +57,7 @@ const CheckoutForm = () => {
   const navigate = useNavigate();
 
   const { user } = useSelector((state) => state.auth);
-  const {  cartItemsList,  totalCartAmount, totalTax, totalWeight, } = useSelector((state) => state.cart);
+  const {  cartItemsList,  totalCartAmount, totalTax, totalWeight,couponCodeApplied } = useSelector((state) => state.cart);
   const { addingNewOrder } = useSelector((state) => state.orders);
   const {  shippingFee,  userCity,  userPincode,  userState,  message,  locallySavedAddress,} = useSelector((state) => state.delivery);
 
@@ -123,7 +123,7 @@ const CheckoutForm = () => {
         phoneNumber: !values.sameAsContact ? values.receiverPhone || "" : "",
       },
       merchantTransactionId: merchantTransactionId,
-      couponCodeApplied: user.cart.couponCodeApplied,
+      couponCodeApplied: user?.cart?.couponCodeApplied || couponCodeApplied,
     };
 
 
