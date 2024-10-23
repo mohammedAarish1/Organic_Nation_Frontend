@@ -147,6 +147,12 @@ export const verifyOTP = createAsyncThunk(
 
 const initialState = {
   user: null,
+  // localUserInfo: {
+  //   firstName: '',
+  //   lastName: '',
+  //   email: '',
+  //   phoneNumber: '',
+  // }, // the localUserInfo is needed to maintain when user is not logged in and fill the data on checkoutform
   userRegistered: true, // need this varibale to show UI of log in and sign up
   user_loading: false,
   isUserAuthenticated: false,
@@ -167,6 +173,11 @@ const authSlice = createSlice({
         userRegistered: action.payload,
       };
     },
+    // saveLocalUserInfo(state, action) {
+    //   console.log(action.payload)
+    //   const { field, value } = action.payload;
+    //   state.localUserInfo[field] = value;
+    // }
   },
   extraReducers: (builder) => {
     builder
@@ -326,6 +337,7 @@ const authSlice = createSlice({
       })
       .addCase(requestOTP.fulfilled, (state, action) => {
         return {
+          ...state,
           sendingOTP: false,
           message: action.payload.message,
         };
@@ -398,6 +410,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { updateUserRegisterStatus } = authSlice.actions;
+export const { updateUserRegisterStatus, } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -42,9 +42,10 @@ const Footer = ({ moveToTop }) => {
     ]
 
     return (
-        <footer className="bg-[var(--hoverEffect)]  xs:px-10 px-1 py-6 text-sm text-[var(--themeColor)]"
-            data-aos="zoom-in"
-            data-aos-duration="1000"
+        <footer
+            className="bg-[var(--hoverEffect)]  xs:px-10 px-1 py-6 text-sm text-[var(--themeColor)]"
+            // data-aos="zoom-in"
+            // data-aos-duration="1000"
         >
             <div className="lg:container mx-auto px-4">
                 <div className='mb-4 flex  flex-wrap gap-8 justify-between items-center lg:pr-28'>

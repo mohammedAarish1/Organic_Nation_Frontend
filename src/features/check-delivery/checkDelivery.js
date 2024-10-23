@@ -35,8 +35,8 @@ export const calculateShippingFee = createAsyncThunk(
             return response.data;
         } catch (error) {
             return rejectWithValue({
-                message: err.message,
-                status: err.response?.status
+                message: error.message,
+                status: error.response?.status
             });
         }
     }
@@ -48,10 +48,10 @@ const initialState = {
     message: '',
     userCity:'',
     userPincode:'',
-    locallySavedAddress:{
-        add1:'',
-        add2:''
-    },
+    // locallySavedAddress:{
+    //     add1:'',
+    //     add2:''
+    // },
     userState:'',
     checking: false,
     error: null,
@@ -74,27 +74,27 @@ const checkDelivery = createSlice({
                 shippingFee:0
             }
         },
-        handleSavingLocalAdd:(state,action)=>{
+        // handleSavingLocalAdd:(state,action)=>{
 
-            if(action.payload.mainAdd){
-                return{
-                    ...state,
-                    locallySavedAddress:{
-                        ...state.locallySavedAddress,
-                        add1:action.payload.mainAdd ||'',
-                    }
-                }
-            }else{
-                return{
-                    ...state,
-                    locallySavedAddress:{
-                        ...state.locallySavedAddress,
-                        add2:action.payload.optionalAdd||''
-                    }
-                }
-            }
+        //     if(action.payload.mainAdd){
+        //         return{
+        //             ...state,
+        //             locallySavedAddress:{
+        //                 ...state.locallySavedAddress,
+        //                 add1:action.payload.mainAdd ||'',
+        //             }
+        //         }
+        //     }else{
+        //         return{
+        //             ...state,
+        //             locallySavedAddress:{
+        //                 ...state.locallySavedAddress,
+        //                 add2:action.payload.optionalAdd||''
+        //             }
+        //         }
+        //     }
            
-        }
+        // }
     },
     extraReducers: (builder) => {
         builder.addCase(checkDeliveryAvailability.pending, (state) => {
@@ -151,6 +151,6 @@ const checkDelivery = createSlice({
     }
 })
 
-export const { setIsAvailable,updateShippingFee,handleSavingLocalAdd } = checkDelivery.actions;
+export const { setIsAvailable,updateShippingFee } = checkDelivery.actions;
 
 export default checkDelivery.reducer;

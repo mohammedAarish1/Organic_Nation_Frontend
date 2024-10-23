@@ -60,7 +60,7 @@ const OtherNavItems = () => {
       setShowUserMenu(false);
       localStorage.removeItem('deliveryChargeToken');
       toast.success("You've been successfully logged out !! ");
-      navigate('/register')
+      navigate('/')
     }
   }
 
@@ -84,14 +84,14 @@ const OtherNavItems = () => {
           </NavLink>
         </li>
         {/* login  */}
-        {user && !user_loading && user.email ? (
+        {user && !user_loading && user.id ? (
           <li className='relative'>
             <div
               className=' cursor-pointer sm:p-3 p-1 flex flex-col justify-center items-center'
               onClick={() => setShowUserMenu(prev => !prev)}
             >
               <FaUserCircle className='text-2xl' />
-              <span>{user.firstName}</span>
+              <span>{user.firstName || 'You'}</span>
             </div>
 
             {/* ====================== manage order ===================  */}

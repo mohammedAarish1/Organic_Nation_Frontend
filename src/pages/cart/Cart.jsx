@@ -95,7 +95,7 @@ const Cart = () => {
   const handleCouponCodeValidation = (values, action) => {
     if (values.couponCode !== "") {
       // const items = cartItemsList.map(item => ({ id: item._id, quantity: item.quantity }));
-      const payload = { userEmail: user.email, couponCode: values.couponCode };
+      const payload = { phoneNumber: user.phoneNumber, couponCode: values.couponCode };
 
       dispatch(getCouponCodeValidate(payload))
         .unwrap()
@@ -513,7 +513,7 @@ const Cart = () => {
             </div>
             {/* chec button  */}
             <Link
-              to={user ? "/cart/checkout" : "/register"}
+              to={user ? "/cart/checkout" : "/otp-login"}
               onClick={() => dispatch(resetCheckoutStatus(true))}
             >
               <div

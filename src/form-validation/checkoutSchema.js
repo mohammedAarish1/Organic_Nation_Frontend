@@ -1,14 +1,14 @@
 import * as Yup from 'yup';
 
 const phoneRegExp = /^(\+\d{1,3}[- ]?)?\d{10}$/;
-const zipCodeRegExp = /^(\+\d{1,3}[- ]?)?\d{6}$/;
+const pinCodeRegExp = /^(\+\d{1,3}[- ]?)?\d{6}$/;
 
 
 const checkoutSchema = Yup.object().shape({
-  firstName: Yup.string().min(2).max(20),
-  lastName: Yup.string().min(2).max(20),
+  firstName: Yup.string().required('Name is required').min(2).max(20),
+  lastName: Yup.string().max(20),
   email: Yup.string().email('Invalid email address').required('Email is required'),
-  phone: Yup.string().matches(phoneRegExp, 'Phone number is not valid'),
+  phoneNumber: Yup.string().matches(phoneRegExp, 'Phone number is not valid'),
   sameAsContact: Yup.boolean().required(),
   receiverFirstName: Yup.string().min(2).when("sameAsContact", {
     is: false,
@@ -31,7 +31,7 @@ const checkoutSchema = Yup.object().shape({
     optionalAddress: Yup.string(),
     city: Yup.string().required('City is required'),
     state: Yup.string().required('State is required'),
-    zipCode: Yup.string().matches(zipCodeRegExp, 'zip code  is not valid').required('Zip code is required'),
+    pinCode: Yup.string().matches(pinCodeRegExp, 'Pin code  is not valid').required('Pin code is required'),
   }),
   sameAsShipping: Yup.boolean().required(),
   billingAddress: Yup.object({
@@ -51,9 +51,9 @@ const checkoutSchema = Yup.object().shape({
       then: (schema) => schema.required('State is required'),
       otherwise: (schema) => schema,
     }),
-    zipCode: Yup.string().matches(zipCodeRegExp, 'zip code  is not valid').when("$sameAsShipping", {
+    pinCode: Yup.string().matches(pinCodeRegExp, 'pin code  is not valid').when("$sameAsShipping", {
       is: false,
-      then: (schema) => schema.required('zipCode is required'),
+      then: (schema) => schema.required('pinCode is required'),
       otherwise: (schema) => schema,
     }),
     country: Yup.string().required(),

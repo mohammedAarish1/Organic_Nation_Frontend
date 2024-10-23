@@ -49,30 +49,6 @@ const Auth = () => {
     // confirm_password: ''
   };
 
-  // const hideAlert = () => {
-  //   setIsAlertOpen(false);
-  //   localStorage.removeItem("cart");
-  //   if (checkoutStatus) {
-  //     navigate("/cart/checkout");
-  //   } else {
-  //     navigate("/");
-  //   }
-  // };
-
-  // const handleCartMerge = (action) => {
-  //   const localCart = JSON.parse(localStorage.getItem("cart"));
-  //   // setIsAlertOpen(false);
-  //   dispatch(mergeCart({ localCart })).then(() => {
-  //     setIsAlertOpen(false);
-  //     localStorage.removeItem("cart");
-  //     dispatch(getAllCartItems());
-  //     if (checkoutStatus) {
-  //       navigate("/cart/checkout");
-  //     } else {
-  //       navigate("/");
-  //     }
-  //   });
-  // };
 
   const handleOtpLogin=()=>{
     navigate('/otp-login', {
@@ -414,34 +390,12 @@ const Auth = () => {
 
                 {/* google  */}
 
-                {/* <div className="flex justify-center items-center gap-3 border text-[var(--themeColor)] hover:bg-white hover:text-black">
-                  <a
-                    className="w-full"
-                    href={`${apiUrl}/api/auth/google`}
-                  >
-                     <button className="flex justify-center items-center w-full py-1 gap-1">
-                     <FcGoogle className="text-xl" />
-                     Log in with Google
-                    </button>
-                   
-                  </a>
-                </div> */}
               </div>
             </div>
           </div>
         </div>
       </div>
-      {/* alert for cart merge  */}
-      {/* <Alert
-        isOpen={isAlertOpen}
-        alertMessage="You have items in your cart from a previous session. Would you like to merge them with your current cart?"
-        actionMessageOne="Yes, merge the Cart"
-        actionMessageTwo="No, Keep the Previous Session cart"
-        actionMessageThree="No, Keep the Current Session cart"
-        hideAlert={hideAlert}
-        handleAction1={() => handleCartMerge({ replaceCart: false })}
-        handleAction2={() => handleCartMerge({ replaceCart: true })}
-      /> */}
+   
     </section>
   );
 };

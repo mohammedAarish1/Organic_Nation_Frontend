@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { checkoutSchema } from "../../form-validation/checkoutSchema";
@@ -14,7 +14,7 @@ import { PiFileZipFill } from "react-icons/pi";
 import { BsArrowRight } from "react-icons/bs";
 import {
   generateTransactionID,
-  address,
+  // address,
   // calculateDiscountAndTaxIncluded,
   checkDeliveryAndCalculateShippingFee,
   additionalDiscountforOnlinePayment,
@@ -24,18 +24,21 @@ import {
 import { Formik, Form, Field } from "formik";
 import { initiatePayment } from "../../features/orderPayment/payment";
 import { ImSpinner9 } from "react-icons/im";
-import { handleSavingLocalAdd } from "../../features/check-delivery/checkDelivery";
+// import { handleSavingLocalAdd } from "../../features/check-delivery/checkDelivery";
+// import { saveLocalUserInfo } from "../../features/auth/auth";
 
 const InputField = ({ name, label, icon, errors, touched }) => {
+  const { user } = useSelector((state) => state.auth);
   return (
     <div className="relative z-0">
       <Field
         type="text"
         id={name}
         name={name}
-        className="block py-2.5 tracking-widest  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer"
+        className={`block py-2.5 tracking-widest  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer ${user && user[name] && 'opacity-70'}`}
         placeholder=" "
         autoComplete="off"
+        disabled={user && user[name]}
       />
 
       <label
@@ -57,17 +60,21 @@ const CheckoutForm = () => {
   const navigate = useNavigate();
 
   const { user } = useSelector((state) => state.auth);
-  const {  cartItemsList,  totalCartAmount, totalTax, totalWeight,couponCodeApplied } = useSelector((state) => state.cart);
+  const { cartItemsList, totalCartAmount, totalTax, totalWeight, couponCodeApplied } = useSelector((state) => state.cart);
   const { addingNewOrder } = useSelector((state) => state.orders);
-  const {  shippingFee,  userCity,  userPincode,  userState,  message,  locallySavedAddress,} = useSelector((state) => state.delivery);
+  const { shippingFee, userCity, userPincode, userState, } = useSelector((state) => state.delivery);
+
+
+
+  const addresses = user?.addresses || [];
 
 
   const shippingAddressInitial = {
-    address: locallySavedAddress.add1 || "",
-    optionalAddress: locallySavedAddress.add2 || "",
-    city: userCity ? userCity : "",
-    state: userState ? userState : "",
-    zipCode: userPincode ? userPincode : "",
+    address: addresses.length > 0 ? addresses[0].mainAddress : "",
+    optionalAddress: addresses.length > 0 ? addresses[0].optionalAddress : "",
+    city: addresses.length > 0 ? addresses[0].city : "",
+    state: addresses.length > 0 ? addresses[0].state : "",
+    pinCode: addresses.length > 0 ? addresses[0].pinCode : "",
     country: "India",
   };
 
@@ -75,11 +82,12 @@ const CheckoutForm = () => {
     firstName: user?.firstName || "",
     lastName: user?.lastName || "",
     email: user?.email || "",
-    phone: user?.phoneNumber || "",
+    phoneNumber: user?.phoneNumber || "",
     receiverFirstName: "",
     receiverLastName: "",
     receiverEmail: "",
     receiverPhone: "",
+    addressType: addresses.length > 0 ? addresses[0].addressType : 'Home',
     shippingAddress: shippingAddressInitial,
     billingAddress: shippingAddressInitial,
     sameAsContact: true,
@@ -92,7 +100,12 @@ const CheckoutForm = () => {
   const handleSubmit = (values, action) => {
     const merchantTransactionId = generateTransactionID();
     // calutaing additional 5% discount for online payment and tax inlcuded in this discounted amount
-    const { discountAmount, taxDiscount } =  additionalDiscountforOnlinePayment(totalCartAmount,totalTax);
+    const { discountAmount, taxDiscount } = additionalDiscountforOnlinePayment(totalCartAmount, totalTax);
+
+    const receiverDetails = {
+      name: !values.sameAsContact ? values.receiverFirstName + ' ' + values.receiverLastName : values.firstName + ' ' + values.lastName || " ",
+      phoneNumber: !values.sameAsContact ? values.receiverPhone : values.phoneNumber || "",
+    }
 
     const orderDetails = cartItemsList.map((item) => {
       return {
@@ -107,22 +120,22 @@ const CheckoutForm = () => {
     });
 
     let checkoutData = {
-      orderNo: "ON" + Date.now(),
-      orderStatus: "active",
-      userEmail: user?.email,
-      billingAddress: address(values.billingAddress),
-      shippingAddress: address(values.shippingAddress),
+      firstName: user?.firstName || values?.firstName,
+      lastName: user?.lastName || values?.lastName,
+      userEmail: user?.email || values?.email,
+      phoneNumber: user?.phoneNumber || values?.phoneNumber,
+      // billingAddress: address(values.billingAddress),
+      addressType: values.addressType,
+      billingAddress: values.billingAddress,
+      shippingAddress: values.shippingAddress,
       orderDetails: orderDetails,
-      subTotal: values.paymentMethod === "cash_on_delivery"   ? totalCartAmount : totalCartAmount - discountAmount,
-      paymentStatus: "pending",
-      taxAmount:  values.paymentMethod === "cash_on_delivery"  ? totalTax  : totalTax - taxDiscount,
+      subTotal: values.paymentMethod === "cash_on_delivery" ? totalCartAmount : totalCartAmount - discountAmount,
+      taxAmount: values.paymentMethod === "cash_on_delivery" ? totalTax : totalTax - taxDiscount,
       shippingFee: totalCartAmount < 499 ? shippingFee : 0,
       paymentMethod: values.paymentMethod,
-      receiverDetails: {
-        name: !values.sameAsContact ? values.receiverFirstName || "" : "",
-        phoneNumber: !values.sameAsContact ? values.receiverPhone || "" : "",
-      },
-      merchantTransactionId: merchantTransactionId,
+      paymentStatus: "pending",
+      receiverDetails,
+      merchantTransactionId: values.paymentMethod === "cash_on_delivery" ? '' : merchantTransactionId,
       couponCodeApplied: user?.cart?.couponCodeApplied || couponCodeApplied,
     };
 
@@ -159,6 +172,40 @@ const CheckoutForm = () => {
     action.resetForm();
   };
 
+
+  useEffect(() => {
+    if (shippingAddressInitial.pinCode) {
+      const pinCode = shippingAddressInitial.pinCode
+
+
+      checkDeliveryAndCalculateShippingFee(pinCode, totalWeight, dispatch)
+
+    }
+  }, [shippingAddressInitial.pinCode])
+
+  const handleAddressTypeChange = (e, setFieldValue) => {
+    const selectedType = e.target.value;
+    setFieldValue("addressType", selectedType);
+    const selectedAddress = addresses?.find(add => add.addressType === selectedType)
+
+    if (selectedAddress) {
+      setFieldValue("shippingAddress.address", selectedAddress.mainAddress);
+      setFieldValue("shippingAddress.optionalAddress", selectedAddress.optionalAddress);
+      setFieldValue("shippingAddress.city", selectedAddress.city);
+      setFieldValue("shippingAddress.state", selectedAddress.state);
+      setFieldValue("shippingAddress.pinCode", selectedAddress.pinCode);
+    }
+    else {
+      setFieldValue("shippingAddress.address", "");
+      setFieldValue("shippingAddress.optionalAddress", "");
+      setFieldValue("shippingAddress.city", "");
+      setFieldValue("shippingAddress.state", "");
+      setFieldValue("shippingAddress.pinCode", "");
+    }
+  }
+
+
+
   const lableStyle =
     "absolute tracking-widest text-sm text-gray-400  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]  peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4";
 
@@ -166,7 +213,7 @@ const CheckoutForm = () => {
     "block py-2.5 tracking-widest  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer";
 
   return (
-    <div className="xl:col-span-2 bg-[#d9cb9b]   rounded-md p-8 sticky top-0">
+    <div className="xl:col-span-2 bg-[#f8eecf]   rounded-md p-8 sticky top-0">
       <h2 className="text-2xl font-bold text-[#333]">Complete your order</h2>
       <Formik
         initialValues={initialValues}
@@ -178,7 +225,7 @@ const CheckoutForm = () => {
             {/*============== contact details ================= */}
             <div>
               <div className="flex justify-between items-center mb-8 ">
-                <h3 className=" font-bold text-[var(--themeColor)] uppercase tracking-widest italic ">
+                <h3 className=" font-bold text-[var(--themeColor)] uppercase tracking-widest  ">
                   Contact Details:
                 </h3>
                 <Link
@@ -222,8 +269,8 @@ const CheckoutForm = () => {
 
                 {/* phone number */}
                 <InputField
-                  name="phone"
-                  label="Phone"
+                  name="phoneNumber"
+                  label="Phone Number"
                   icon={
                     <MdOutlinePhoneAndroid className="absolute top-4 right-4 text-xl" />
                   }
@@ -234,10 +281,10 @@ const CheckoutForm = () => {
             </div>
             {/*============== receiver's details ================= */}
             <div className="mt-6">
-              <h3 className=" font-bold text-[var(--themeColor)] uppercase tracking-widest my-8 italic ">
+              <h3 className=" font-bold text-[var(--themeColor)] uppercase tracking-widest my-8  ">
                 Receiver Details:
               </h3>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 mb-6">
                 <Field
                   type="checkbox"
                   id="sameAsContact"
@@ -249,7 +296,7 @@ const CheckoutForm = () => {
                       setFieldValue("receiverFirstName", values.firstName);
                       setFieldValue("receiverLastName", values.lastName);
                       setFieldValue("receiverEmail", values.email);
-                      setFieldValue("receiverPhone", values.phone);
+                      setFieldValue("receiverPhone", values.phoneNumber);
                     } else {
                       setFieldValue(
                         "receiverFirstName",
@@ -318,9 +365,44 @@ const CheckoutForm = () => {
             <div className="mt-6">
               {/*=========== shipping address ============  */}
               <div>
-                <h3 className=" font-bold text-[var(--themeColor)] uppercase tracking-widest my-8 italic ">
+                <h3 className=" font-bold text-[var(--themeColor)] uppercase tracking-widest my-6  ">
                   Shipping Address:
                 </h3>
+
+
+                {/* address type  */}
+                {user?.addresses.length > 0 && (
+
+                  <div className="w-full relative text-sm flex gap-2  items-center mb-10  ">
+                    <label
+                      htmlFor="addressType"
+                      className='text-gray-500'
+                    >
+                      Saved Addresses:
+                    </label>
+                    <Field
+                      as="select"
+                      name="addressType"
+                      id="addressType"
+                      className='px-4 py-1 rounded-none outline-none  border-2'
+                      onChange={(e) => handleAddressTypeChange(e, setFieldValue)}
+
+
+                    >
+                      {user?.addresses.map((addr) => (
+                        <option key={addr.addressType} value={addr.addressType} className="">
+                          {addr.addressType}
+                        </option>
+                      ))}
+                    </Field>
+
+                  </div>
+
+                )}
+                {/* address type end  */}
+
+
+
                 <div className="grid sm:grid-cols-2 gap-10">
                   {/* Address   */}
                   <div className="relative z-0 w-full">
@@ -332,9 +414,8 @@ const CheckoutForm = () => {
                       placeholder=" "
                       autoComplete="off"
                       onBlur={(e) => {
-                        dispatch(
-                          handleSavingLocalAdd({ mainAdd: e.target.value })
-                        );
+                        setFieldValue("billingAddress.address", e.target.value)
+
                       }}
                     />
 
@@ -362,9 +443,7 @@ const CheckoutForm = () => {
                       placeholder=" "
                       autoComplete="off"
                       onBlur={(e) => {
-                        dispatch(
-                          handleSavingLocalAdd({ optionalAdd: e.target.value })
-                        );
+                        setFieldValue("billingAddress.optionalAddress", e.target.value)
                       }}
                     />
 
@@ -382,15 +461,35 @@ const CheckoutForm = () => {
                                         )} */}
                   </div>
                   {/* City   */}
-                  <InputField
-                    name="shippingAddress.city"
-                    label="City"
-                    icon={
-                      <MdLocationCity className="absolute top-4 right-4 text-xl" />
-                    }
-                    errors={errors}
-                    touched={touched}
-                  />
+
+                  <div className="relative z-0 w-full">
+                    <Field
+                      type="text"
+                      name="shippingAddress.city"
+                      id="shippingAddress.city"
+                      className={inputStyle}
+                      placeholder=" "
+                      autoComplete="off"
+                      onBlur={(e) => {
+                        setFieldValue("billingAddress.city", e.target.value)
+                      }}
+                    />
+
+                    <label
+                      htmlFor="shippingAddress.city"
+                      className={lableStyle}
+                    >
+                      City
+                    </label>
+                    <MdLocationCity className="absolute top-4 right-4 text-xl" />
+                    {errors?.shippingAddress?.city &&
+                      touched?.shippingAddress?.city ? (
+                      <p className="text-red-600">
+                        *{errors?.shippingAddress?.city}
+                      </p>
+                    ) : null}
+                  </div>
+
 
                   {/* state  */}
                   <div className="w-full relative">
@@ -399,6 +498,10 @@ const CheckoutForm = () => {
                       name="shippingAddress.state"
                       id="shippingAddress.state"
                       className={inputStyle}
+                      onBlur={(e) => {
+                        setFieldValue("billingAddress.state", e.target.value)
+                      }}
+
                     >
                       <option value="select-state">Select State</option>
                       {states.map((state) => (
@@ -421,22 +524,28 @@ const CheckoutForm = () => {
                     ) : null}
                   </div>
 
-                  {/* Zip code   */}
+                  {/* Pin code   */}
                   <div className="relative z-0">
                     <Field
                       type="text"
-                      name="shippingAddress.zipCode"
-                      id="shippingAddress.zipCode"
+                      name="shippingAddress.pinCode"
+                      id="shippingAddress.pinCode"
                       className={inputStyle}
                       placeholder=" "
                       autoComplete="off"
+                      onBlur={(e)=>{
+                        setFieldValue("shippingAddress.city", userCity)
+                        setFieldValue("billingAddress.city", userCity)
+                        setFieldValue("shippingAddress.state", userState)
+                        setFieldValue("billingAddress.state", userState)
+                        // setFieldValue("shippingAddress.city", userCity)
+                      }}
                       onChange={(e) => {
-                        setFieldValue(
-                          "shippingAddress.zipCode",
-                          e.target.value
-                        );
+                        setFieldValue("billingAddress.pinCode", e.target.value)
+                        setFieldValue( "shippingAddress.pinCode", e.target.value );
 
                         if (e.target.value.length === 6) {
+
                           checkDeliveryAndCalculateShippingFee(
                             e.target.value,
                             totalWeight,
@@ -447,16 +556,16 @@ const CheckoutForm = () => {
                     />
 
                     <label
-                      htmlFor="shippingAddress.zipCode"
+                      htmlFor="shippingAddress.pinCode"
                       className={lableStyle}
                     >
-                      Zip Code
+                      Pin Code
                     </label>
                     <PiFileZipFill className="absolute top-4 right-4 text-xl" />
-                    {errors?.shippingAddress?.zipCode &&
-                      touched?.shippingAddress?.zipCode ? (
+                    {errors?.shippingAddress?.pinCode &&
+                      touched?.shippingAddress?.pinCode ? (
                       <p className="text-red-600">
-                        *{errors?.shippingAddress?.zipCode}
+                        *{errors?.shippingAddress?.pinCode}
                       </p>
                     ) : null}
                   </div>
@@ -497,11 +606,14 @@ const CheckoutForm = () => {
                                         <label htmlFor='saveShippingInfo'>Save My Shipping Info for future Orders !</label>
                                     </div> */}
                 </div>
+
+
+
               </div>
 
-              {/* billing address  */}
+              {/* ===================== billing address  */}
               <div>
-                <h3 className=" font-bold text-[var(--themeColor)] uppercase tracking-widest my-8 italic">
+                <h3 className=" font-bold text-[var(--themeColor)] uppercase tracking-widest my-8 ">
                   Billing Address:
                 </h3>
                 <div className="flex items-center gap-2 py-4">
@@ -529,8 +641,8 @@ const CheckoutForm = () => {
                           values.shippingAddress.state
                         );
                         setFieldValue(
-                          "billingAddress.zipCode",
-                          values.shippingAddress.zipCode
+                          "billingAddress.pinCode",
+                          values.shippingAddress.pinCode
                         );
                       }
                     }}
@@ -601,10 +713,10 @@ const CheckoutForm = () => {
                       ) : null}
                     </div>
 
-                    {/* Zip code   */}
+                    {/* Pin code   */}
                     <InputField
-                      name="billingAddress.zipCode"
-                      label="Zip Code"
+                      name="billingAddress.pinCode"
+                      label="Pin Code"
                       icon={
                         <PiFileZipFill className="absolute top-4 right-4 text-xl" />
                       }
@@ -640,7 +752,7 @@ const CheckoutForm = () => {
               </div>
               {/* payment method  */}
               <div>
-                <h3 className=" font-bold text-[var(--themeColor)] uppercase tracking-widest my-8 italic">
+                <h3 className=" font-bold text-[var(--themeColor)] uppercase tracking-widest my-8 ">
                   Payment Method:
                 </h3>
                 <div className="flex flex-wrap xs:gap-10 gap-4 mt-2">

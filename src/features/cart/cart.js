@@ -473,7 +473,9 @@ export const cartSlice = createSlice({
                 if (action.payload.productDetails?.length > 0) {
 
                     totalQty = action.payload.productDetails.reduce((total, product) => total + product.quantity, 0);
+
                     totalWeight = action.payload.productDetails.reduce((total, product) => {
+                        total=0
                         const weight = extractWeight(product.weight)*product.quantity;
                         return total + (isNaN(weight) ? 0 : weight);
                     }, 0);

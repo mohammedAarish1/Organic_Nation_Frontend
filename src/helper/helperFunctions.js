@@ -43,21 +43,21 @@ const generateTransactionID = () => {
 }
 
 
-// to convert the address object into plain string 
-const address = (obj) => {
-  let result = '';
-  for (const key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      const value = obj[key];
-      if (Array.isArray(value)) {
-        result += value.flat().join(' ') + ' ';
-      } else {
-        result += value + ' ';
-      }
-    }
-  }
-  return result.trim();
-}
+// // to convert the address object into plain string 
+// const address = (obj) => {
+//   let result = '';
+//   for (const key in obj) {
+//     if (obj.hasOwnProperty(key)) {
+//       const value = obj[key];
+//       if (Array.isArray(value)) {
+//         result += value.flat().join(' ') + ' ';
+//       } else {
+//         result += value + ' ';
+//       }
+//     }
+//   }
+//   return result.trim();
+// }
 
 
 // for calculating additional 5% discount on MRP and tax include in that discount
@@ -130,8 +130,9 @@ const checkDeliveryAndCalculateShippingFee = (
         dispatch(
           calculateShippingFee({ pinCode: res.meta.arg, weight: totalWeight })
         ).then((res) => {
+
           if (res.meta.requestStatus === "fulfilled") {
-            localStorage.setItem("deliveryChargeToken", res?.payload?.token);
+            // localStorage.setItem("deliveryChargeToken", res?.payload?.token);
           }
         });
       } else {
@@ -145,7 +146,7 @@ const checkDeliveryAndCalculateShippingFee = (
 
 export {
   generateTransactionID,
-  address,
+  // address,
   // calculateDiscountAndTaxIncluded,
   fetchDataAfterLogin,
   handleDocumentDeleteFromDatabase,

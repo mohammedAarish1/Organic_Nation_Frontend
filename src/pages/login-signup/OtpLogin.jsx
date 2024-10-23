@@ -59,7 +59,7 @@ const OtpLogin = () => {
     return (
         <section className='xs:px-10 px-2 pb-20 mt-5 sm:mt-0 font-mono'>
             <div className='lg:w-[80%] h-auto py-2 bg-opacity-35 mx-auto'>
-                <h2 className="text- text-center sm:mt-6 mt-10 sm:mb-2 mb-6 text-[var(--bgColorPrimary)] text-2xl tracking-widest ">Log in with OTP</h2>
+                <h2 className="text- text-center sm:mt-6 mt-10 sm:mb-2 mb-6 text-gray-500 text-xl  ">Please provide us the Phone Number to continue</h2>
                 <div className='md:w-[90%] py-10 sm:px-0 px-4 flex sm:flex-row flex-col sm:gap-0 gap-6 shadow-md shadow-black justify-center h-[100%] mx-auto  my-auto bg-[var(--bgColorPrimary)] '>
 
                     {/* ============== right side ================  */}

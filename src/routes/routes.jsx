@@ -3,9 +3,8 @@ import { Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import {
-    VerifyEmail, ResetPassword, SearchedProduct, Home, About, Shop, ContactUs, Cart, Auth, Recipes, Testimonials, Faq, PrivacyPolicy, TermsAndConditions, CsrPolicy, BulkOrder, ProductDetails, Checkout, BlogDetail, OtpLogin, Blogs, RecipeDetails, GoogleSignup, ManageOrders, OrderConfirm, NoPageFound, OtpSubmit, PaymentStatus
+    VerifyEmail, ResetPassword, SearchedProduct, Home, About, Shop, ContactUs, Cart,  Recipes, Testimonials, Faq, PrivacyPolicy, TermsAndConditions, CsrPolicy,  ProductDetails, Checkout, BlogDetail, OtpLogin, Blogs, RecipeDetails, GoogleSignup, ManageOrders, OrderConfirm, NoPageFound, OtpSubmit, PaymentStatus
 } from '../imports';
-import AdminDashboard from '../components/admin/AdminDashboard';
 import ManageReturns from '../pages/manage-returns/ManageReturns';
 import GoogleLoginHandler from '../pages/login-signup/GoogleLoginHandler';
 
@@ -13,7 +12,7 @@ import GoogleLoginHandler from '../pages/login-signup/GoogleLoginHandler';
 
 const getRoutes = () => {
 
-    const { cartItemsList ,cartItems} = useSelector((state) => state.cart);
+    const { cartItemsList } = useSelector((state) => state.cart);
     const {user}=useSelector(state=>state.auth);
 
     return [
@@ -46,7 +45,7 @@ const getRoutes = () => {
             key="register"
             path='/register'
             // element={!token ? <Auth /> : <Home />}
-            element={user?<Home/>: <Auth />}
+            element={user? <Home/>: <OtpLogin />}
         />,
         <Route
             key="forgot-password"
@@ -131,12 +130,12 @@ const getRoutes = () => {
         <Route
             key="manage-orders"
             path='/manage-orders'
-            element={user ? <ManageOrders />:<Auth/>}
+            element={user ? <ManageOrders />:<OtpLogin/>}
         />,
         <Route
             key="manage-returns"
             path='/manage-returns'
-            element={user ?<ManageReturns />:<Auth/>}
+            element={user ?<ManageReturns />:<OtpLogin/>}
         />,
         <Route
             key="otp-login"

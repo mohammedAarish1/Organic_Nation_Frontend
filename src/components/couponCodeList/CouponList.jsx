@@ -22,7 +22,7 @@ const CouponList = ({
   const [isAdditionalDiscountCodeApplied, setAdditionalDiscountCodeApplied ] = useState(false);
   const {cartItems}=useSelector(state=>state.cart)
 
-
+// pickle coupon code
   const handleCouponCodeValidation = () => {
     let payload;
     if (user) {
@@ -32,7 +32,7 @@ const CouponList = ({
         totalTaxes: totalTax,
         couponCodeApplied,
       };
-      payload = { cart, userEmail: user.email, couponCode: "BUY4PICKLE" };
+      payload = { cart, phoneNumber: user.phoneNumber, couponCode: "BUY4PICKLE" };
     } else {
       const localCart = JSON.parse(localStorage.getItem("cart"));
       if (localCart.length > 0) {
@@ -42,7 +42,7 @@ const CouponList = ({
           totalTaxes: totalTax,
           couponCodeApplied,
         };
-        payload = { cart, userEmail: null, couponCode: "BUY4PICKLE" };
+        payload = { cart, phoneNumber: null, couponCode: "BUY4PICKLE" };
       }
     }
 
@@ -79,7 +79,7 @@ const CouponList = ({
         totalTaxes: totalTax,
         couponCodeApplied,
       };
-      payload = { cart, userEmail: user.email, couponCode: "FOODSBAY5YEARS" };
+      payload = { cart, phoneNumber: user.phoneNumber, couponCode: "FOODSBAY5YEARS" };
     } else {
       const localCart = JSON.parse(localStorage.getItem("cart"));
       if (localCart.length > 0) {
@@ -89,7 +89,7 @@ const CouponList = ({
           totalTaxes: totalTax,
           couponCodeApplied,
         };
-        payload = { cart, userEmail: null, couponCode: "FOODSBAY5YEARS" };
+        payload = { cart, phoneNumber: null, couponCode: "FOODSBAY5YEARS" };
       }
     }
 

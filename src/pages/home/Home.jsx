@@ -5,15 +5,12 @@ import Title from '../../components/title/Title'
 import { useDispatch, useSelector } from 'react-redux'
 import RecipeSection from '../../components/recipe-section/RecipeSection'
 import TestimonialSection from '../../components/testimonial-section/TestimonialSection'
-import { useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import SpotlightSection from '../../components/spotlightSection/SpotlightSection'
 import ProductCategories from '../../components/productCategories/ProductCategories'
 import { addReviews } from '../../features/reviews/reviews'
 import BlogSection from '../../components/blog-section/BlogSection';
 import SEO from '../../helper/SEO/SEO'
-import { getAllCartItems, getAllOrders } from '../../imports'
-import { mergeCart } from '../../features/cart/cart'
 
 
 
@@ -57,36 +54,11 @@ const certificates = [
 
 const Home = () => {
     const dispatch = useDispatch();
-    const navigate=useNavigate();
     const { isLoading, productData } = useSelector((state) => state.product_data);
-  const { checkoutStatus } = useSelector(state => state.orders);
-    const reviewsAndRating = JSON.parse(sessionStorage.getItem('reviews&rating'))
+    const reviewsAndRating = JSON.parse(sessionStorage.getItem('reviews&rating'));
 
-    // below code is for log in the user strightaway if they are already registered with the same email id
-
-    const location = useLocation();
-    const params = new URLSearchParams(location?.search);
-    const token = params.get('token');
 
     useEffect(() => {
-        // if (token) {
-
-        //     sessionStorage.setItem("token", JSON.stringify(token));
-        //     dispatch(getAllOrders(token));
-        //     dispatch(getAllCartItems()).then((res) => {
-        //       const localCart = JSON.parse(localStorage.getItem("cart") || "[]");
-        //       dispatch(mergeCart({ localCart }))
-        //       .then(() => {
-        //         localStorage.removeItem("cart");
-        //         dispatch(getAllCartItems());
-        //         if (checkoutStatus) {
-        //           navigate("/cart/checkout");
-        //         } else {
-        //           navigate("/");
-        //         }
-        //       });
-        //     });
-        // }
 
         if (reviewsAndRating) {
             dispatch(addReviews(reviewsAndRating)).then(() => {
@@ -96,7 +68,7 @@ const Home = () => {
             })
         }
 
-    }, [token, reviewsAndRating])
+    }, [ ])
 
 
 
