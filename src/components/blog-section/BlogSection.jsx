@@ -7,15 +7,11 @@ import { useSelector } from 'react-redux';
 
 
 
-
-
-
-const BlogSection = ({ showBtn = false }) => {
+const BlogSection = ({ homePage = false }) => {
 
     const { blogs, loading } = useSelector(state => state.blog)
 
     // array for img src is pending
-
     if (loading) return <div>loading...</div>
 
     return (
@@ -26,7 +22,7 @@ const BlogSection = ({ showBtn = false }) => {
             </div>
 
             <div className='flex flex-wrap justify-center gap-10 px-10 py-10 '>
-                {blogs?.map(blog => (
+                {blogs.slice(0,homePage ? 3 : blogs?.length)?.map(blog => (
                     <div
                         key={blog._id}
                         className='flex md:w-1/4  flex-col gap-2 '
@@ -34,8 +30,8 @@ const BlogSection = ({ showBtn = false }) => {
                         data-aos-duration="1000"
                     >
                         <div className='flex flex-col gap-5'>
-                            <div className='md:w-full h-[300px] '>
-                                <img src={blog.image} alt="recipes" className='w-full h-full object-cover rounded-2xl ' />
+                            <div className='md:w-full bg-gray-400'>
+                                <img src={blog.image} alt="recipes" className='w-full h-full object-contain rounded-2xl ' />
                             </div>
                             <p className='text-sm text-gray-800 font-bold font-serif tracking-widest '>{new Date(blog?.date).toDateString()}</p>
 
@@ -58,7 +54,7 @@ const BlogSection = ({ showBtn = false }) => {
 
             </div>
 
-            {showBtn && (
+            {homePage && (
                 <div className='text-center text-white uppercase '>
                     <Link to="/our-blogs" className='bg-[var(--themeColor)] px-5 py-4 uppercase font-semibold transition-all duration-500 hover:tracking-widest' >View More</Link>
                 </div>

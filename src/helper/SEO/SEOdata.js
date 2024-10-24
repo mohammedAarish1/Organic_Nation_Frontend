@@ -352,6 +352,102 @@ const individualProductData = {
         canonicalUrl: "https://organicnation.co.in/shop/chutney-&-dip/Tamarind-Chutney",
         image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Tamarind-Chutney/front.png"
     },
+    'Organic-Green-Tea': {
+        title: "Buy Organic Nation Organic Green Tea online",
+        description: "Organic Nation Green Tea  at best prices with FREE shipping & cash on delivery. Only Genuine Products.  Buy Now",
+        canonicalUrl: "https://organicnation.co.in/shop/organic-tea/Organic-Green-Tea",
+        image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Organic-Green-Tea/front.png"
+    },
+    'Organic-Lemon-Ginger-Green-Tea': {
+        title: "Organic Nation Lemon Ginger  Green Tea- Weight Loss",
+        description: "Experience the perfect fusion of health and flavor with Organic Nation's Lemon Ginger Green Tea. Enjoy it hot for a comforting drink or iced for a cool.",
+        canonicalUrl: "https://organicnation.co.in/shop/organic-tea/Organic-Lemon-Ginger-Green-Tea",
+        image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Organic-Lemon-Ginger-Green-Tea/front.png"
+    },
+    'Organic-Classic-Tulsi-Green-Tea': {
+        title: "Buy Organic Nation Classic Tulsi Green Tea online",
+        description: "Experience the soothing blend of Organic Nation’s Classic Tulsi Green Tea, made with 100% natural ingredients. Combining the health benefits of Tulsi",
+        canonicalUrl: "https://organicnation.co.in/shop/organic-tea/Organic-Classic-Tulsi-Green-Tea",
+        image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Organic-Classic-Tulsi-Green-Tea/front.png"
+    },
+    'Organic-Masala-Tea': {
+        title: "Buy Organic Nation Organic Masala Tea Online. ",
+        description: "Organic Nation  Masala Tea Online.  at best prices with FREE shipping & cash on delivery. Only Genuine Products.  Buy Online at 20% Off ",
+        canonicalUrl: "https://organicnation.co.in/shop/organic-tea/Organic-Masala-Tea",
+        image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Organic-Masala-Tea/front.png"
+    },
+    'Organic-Assam-Tea': {
+        title: "Organic Assam Tea | Organic Nation ",
+        description: "Discover the rich taste and health benefits of premium Organic Assam Tea, crafted for a perfect brew every time. Free Shipping available at 499",
+        canonicalUrl: "https://organicnation.co.in/shop/organic-tea/Organic-Assam-Tea",
+        image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Organic-Assam-Tea/front.png"
+    },
+    'Kashmiri-Kahwa': {
+        title: "Buy Organic Nation Kashmiri Kahwa Online",
+        description: "Indulge in the aromatic and flavorful experience of authentic Kashmiri Kahwa with Organic Nation's online offerings. Organic Nation's Kashmiri Kahwa.",
+        canonicalUrl: "https://organicnation.co.in/shop/organic-tea/Kashmiri-Kahwa",
+        image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Kashmiri-Kahwa/front.png"
+    },
+    'Lemon-Honey-Green-Tea': {
+        title: "Buy Lemon Honey Green Tea - Organic Nation",
+        description: "Whether you're looking to detox, relax, or simply enjoy a flavorful tea, Organic Nation’s Lemon Honey Green Tea is the perfect companion. Buy Online ",
+        canonicalUrl: "https://organicnation.co.in/shop/organic-tea/Lemon-Honey-Green-Tea",
+        image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Lemon-Honey-Green-Tea/front.png"
+    },
+    'Chamomile-Tea': {
+        title: "Buy Organic Nation Chamomile Tea Online. ",
+        description: "Experience tranquility with our Organic Chamomile Tea, sourced from the finest organic chamomile flowers",
+        canonicalUrl: "https://organicnation.co.in/shop/organic-tea/Chamomile-Tea",
+        image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Chamomile-Tea/front.png"
+    },
+    'Himalayan-Pink-Rock-Salt-Powder-small': {
+        title: "Buy Himalayan Pink Rock Salt Powder Online | Organic Nation",
+        description: "You can purchase Himalayan Pink Rock Salt Powder (200 gm) online at Organic Nation. Visit the website to place your order today!",
+        canonicalUrl: "https://organicnation.co.in/shop/salt/Himalayan-Pink-Rock-Salt-Powder-small",
+        image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Himalayan-Pink-Rock-Salt-Powder-small/front.png"
+    },
+    'Black-Salt': {
+        title: "Buy Black Salt Powder (150 gm) Online | Organic Nation",
+        description: "Organic Nation Black Salt Powder Online at best prices with FREE shipping & cash on delivery. Only Genuine Products.  Buy Now",
+        canonicalUrl: "https://organicnation.co.in/shop/salt/Black-Salt",
+        image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Black-Salt/front.png"
+    },
+    'Himalayan-Rock-Salt-Granules': {
+        title: "Buy Himalayan Rock Salt Granules Online | Organic Nation",
+        description: "Discover the natural goodness of Himalayan Rock Salt Granules from Organic Nation. Sourced from the pristine Himalayan mountains",
+        canonicalUrl: "https://organicnation.co.in/shop/salt/Himalayan-Rock-Salt-Granules",
+        image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Himalayan-Rock-Salt-Granules/front.png"
+    },
+    'Himalayan-Pink-Rock-Salt-Powder': {
+        title: "Buy Himalayan Pink Rock Salt Powder Online | Organic Nation",
+        description: "Organic Nation Himalayan Pink Rock Salt Powder Online.  at best prices with FREE shipping & cash on delivery. Only Genuine Products.  Buy Now",
+        canonicalUrl: "https://organicnation.co.in/shop/salt/Himalayan-Pink-Rock-Salt-Powder",
+        image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Himalayan-Pink-Rock-Salt-Powder/front.png"
+    },
+    'Organic-Brown-Sugar-(Desi-khand)': {
+        title: "Buy Organic Brown Sugar (Desi khand) 500 g | Organic Nation",
+        description: "Indulge in the rich, natural sweetness of our Organic Brown Sugar, also known as Desi Khand. Sourced from the finest organic sugarcane & unrefined sugar",
+        canonicalUrl: "https://organicnation.co.in/shop/sweetners/Organic-Brown-Sugar-(Desi-khand)",
+        image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Organic-Brown-Sugar-(Desi-khand)/front.png"
+    },
+    'Organic-Jaggery-Powder-(Shekkar)': {
+        title: "Buy Organic Jaggery Powder (Shekkar) | Organic Nation",
+        description: "Discover the natural sweetness of Organic Jaggery Powder, also known as Shekkar. our jaggery powder is a healthier alternative to refined sugar.",
+        canonicalUrl: "https://organicnation.co.in/shop/sweetners/Organic-Jaggery-Powder-(Shekkar)",
+        image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Organic-Jaggery-Powder-(Shekkar)/front.png"
+    },
+    'Sunflower-Oil': {
+        title: "Buy 100% Natural Sunflower Oil Online at Low Price",
+        description: "Buy 100% natural Sunflower Oil  online in India at best price from Organic Nation. 100% Healthy ✓Fast Shipping ✓Buy Now!",
+        canonicalUrl: "https://organicnation.co.in/shop/organic-oils/Sunflower-Oil",
+        image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Sunflower-Oil/extra.png"
+    },
+    'Mustard-Oil': {
+        title: "Buy 100% Natural Mustard Oil Online at Low Price",
+        description: "Buy 100% natural Mustard Oil Online in India at best price from Organic Nation. Shop now for high quality of natural edible oils | Buy at 20% off ",
+        canonicalUrl: "https://organicnation.co.in/shop/organic-oils/Mustard-Oil",
+        image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Mustard-Oil/extra.png"
+    }
    
 }
 

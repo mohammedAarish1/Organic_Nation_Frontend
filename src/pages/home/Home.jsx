@@ -152,7 +152,7 @@ const Home = () => {
                 </div>
             </div>
             {/* out blogs  */}
-            <BlogSection showBtn={true} />
+            <BlogSection homePage={true} />
             {/* our recipes  */}
             <RecipeSection showBtn={true} />
 

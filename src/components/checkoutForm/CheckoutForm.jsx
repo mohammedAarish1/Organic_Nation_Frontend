@@ -156,7 +156,7 @@ const CheckoutForm = () => {
               initiatePayment({
                 number: values.receiverPhone
                   ? values.receiverPhone
-                  : values.phone.slice(3),
+                  : values.phoneNumber.slice(3),
                 amount: totalCartAmount - discountAmount + (totalCartAmount < 499 ? shippingFee : 0),
                 merchantTransactionId: merchantTransactionId,
               })
