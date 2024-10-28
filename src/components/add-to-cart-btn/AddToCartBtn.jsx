@@ -66,7 +66,7 @@ const AddToCartBtn = ({ item, qty = 1 }) => {
         <BsCart4 className={`text-white  ${!isOutOfStock && 'animate-bounce'}`} />
 
 
-        Add to cart
+        Add to Cart
       </button>
 
       {/* tooltip */}

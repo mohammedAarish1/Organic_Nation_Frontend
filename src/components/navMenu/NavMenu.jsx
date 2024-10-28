@@ -13,6 +13,7 @@ import { TbPhoneCall } from "react-icons/tb";
 import { BsChevronDown } from "react-icons/bs";
 import { IoCloseSharp } from "react-icons/io5";
 import { FaBlog } from "react-icons/fa";
+import { LiaGiftsSolid } from "react-icons/lia";
 
 
 
@@ -43,6 +44,7 @@ const NavMenu = () => {
         { Oats: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Oats.png' },
         { Vegan: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Vegan.png' },
         { 'Breakfast-Cereals': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Breakfast-Cereals.png' },
+        { Combo: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Combo.png' },
     ]
 
 
@@ -134,9 +136,18 @@ const NavMenu = () => {
                     </li>
 
                     <li>
-                        <NavLink to="/our-blogs" className={({ isActive }) => ` cursor-pointer lg:p-4 min-w-[86px] rounded-md hover:underline hover:underline-offset-4 flex flex-col items-center ${isActive ? 'underline underline-offset-4' : null} `}>
-                            <FaBlog className=' text-xl' />
-                            <span className='text-center'>Blogs</span>
+                        <NavLink
+                            to={`/shop/${'combo'}`}
+                            onClick={() => {
+                                dispatch(setCurrentPage(1))
+                                dispatch(setCategoryBtnValue('combo'))
+                                dispatch(fetchCategoryWiseData('combo'))
+                            }}
+                            className={({ isActive }) => ` cursor-pointer lg:p-4 min-w-[86px] rounded-md hover:underline hover:underline-offset-4 flex flex-col items-center ${isActive ? 'underline underline-offset-4' : null} `}
+
+                        >
+                            <LiaGiftsSolid className=' text-2xl' />
+                            <span className='text-center'>Combo</span>
                         </NavLink>
                     </li>
                     <li>

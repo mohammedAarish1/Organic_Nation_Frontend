@@ -16,7 +16,6 @@ import {
   clearCart,
   removeFromCart,
   updateQty,
-  getCouponCodeValidate,
 } from "../../features/cart/cart";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
@@ -91,30 +90,7 @@ const Cart = () => {
     }
   };
 
-  // coupon code validation
-  const handleCouponCodeValidation = (values, action) => {
-    if (values.couponCode !== "") {
-      // const items = cartItemsList.map(item => ({ id: item._id, quantity: item.quantity }));
-      const payload = { phoneNumber: user.phoneNumber, couponCode: values.couponCode };
-
-      dispatch(getCouponCodeValidate(payload))
-        .unwrap()
-        .then((result) => {
-          dispatch(getAllCartItems());
-
-          // sessionStorage.setItem('ccToken', JSON.stringify(result.validationToken))
-          toast.success("Coupon Code successfully applied !");
-          action.resetForm();
-          // Handle successful validation here
-        })
-        .catch((error) => {
-          toast.error("Coupon Code is not valid !");
-          // Handle validation error here
-        });
-    } else {
-      toast.error("Please provide the valid coupon code");
-    }
-  };
+ 
 
   const handleClickOutside = (event) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -252,7 +228,7 @@ const Cart = () => {
                           }
                           dispatch(
                             updateQty({
-                              productId: curItem._id,
+                              productName: curItem['name-url'],
                               type: "increase",
                             })
                           ).then(() => {
@@ -262,7 +238,7 @@ const Cart = () => {
                         decreaseQty={() =>
                           dispatch(
                             updateQty({
-                              productId: curItem._id,
+                              productName: curItem['name-url'],
                               type: "decrease",
                             })
                           ).then(() => {
@@ -285,7 +261,7 @@ const Cart = () => {
                   <td className="px-6 py-4  text-center whitespace-nowrap">
                     <button
                       onClick={() => {
-                        dispatch(removeFromCart(curItem._id)).then(() =>
+                        dispatch(removeFromCart(curItem['name-url'])).then(() =>
                           dispatch(getAllCartItems())
                         );
                       }}
@@ -350,66 +326,9 @@ const Cart = () => {
               <span>Total tax (included): (+)</span>
               <span>₹ {cartItemsList?.length > 0 ? totalTax : 0}</span>
             </div> */}
-            {/* coupon  code implementation */}
+            {/* coupon  code list implementation */}
             <div className="">
-              <Formik
-                initialValues={{ couponCode: "" }}
-                // validationSchema={handleCouponCodeValidation}
-                onSubmit={handleCouponCodeValidation}
-              >
-                {() => (
-                  <Form>
-                    <div
-                      className="flex items-center"
-                      data-tooltip-id="couponCode-tooltip"
-                      data-tooltip-content="To use coupon code please log in and have minimum cart value above ₹1000"
-                      data-tooltip-place="top"
-                    >
-                      <Field
-                        type="text"
-                        name="couponCode"
-                        placeholder="Enter Coupon code"
-                        className="border border-gray-300 rounded-tl-md rounded-bl-md px-2 py-1 outline-none tracking-wide w-full "
-                      />
-                      <button
-                        type="submit"
-                        className={`px-4 py-1 rounded-tr-md rounded-br-md ${user && totalCartAmount > 1000
-                            ? "bg-green-400 hover:bg-green-500"
-                            : "bg-green-200 opacity-50"
-                          } `}
-                        disabled={!user || totalCartAmount < 1000}
-                      >
-                        {validatingCouponCode ? (
-                          <ImSpinner9 className="animate-spin" />
-                        ) : (
-                          "Apply"
-                        )}
-                      </button>
-                    </div>
-
-                    {!user ||
-                      (totalCartAmount < 1000 && (
-                        <Tooltip
-                          id="couponCode-tooltip"
-                          style={{
-                            backgroundColor: "gray",
-                            color: "#ffffff",
-                            borderRadius: "10px",
-                            padding: "20px",
-                            maxWidth: "200px",
-                          }}
-                          place="bottom"
-                          animation="fade"
-                          delayShow={200} // delay before showing in ms
-                          delayHide={300} // delay before hiding in ms
-                        // offset={10} // distance in pixels
-                        // arrow={true}
-                        // arrowColor="#25D366"
-                        ></Tooltip>
-                      ))}
-                  </Form>
-                )}
-              </Formik>
+           
               <div className=" flex justify-center items-center gap-1 mt-3  text-green-700">
                 <FaTags />
                 <button

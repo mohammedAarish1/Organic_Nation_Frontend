@@ -447,8 +447,67 @@ const individualProductData = {
         description: "Buy 100% natural Mustard Oil Online in India at best price from Organic Nation. Shop now for high quality of natural edible oils | Buy at 20% off ",
         canonicalUrl: "https://organicnation.co.in/shop/organic-oils/Mustard-Oil",
         image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Mustard-Oil/extra.png"
+    },
+    'Steel-cut-Oats': {
+        title: "Buy Steel cut Oats Online at Low Price | Organic Nation",
+        description: "Buy Steel cut Oats online in India at best price from Organic Nation. Shop now for high quality of Steel cut Oats online. 100% Healthy ✓Fast Shipping ",
+        canonicalUrl: "https://organicnation.co.in/shop/oats/Steel-cut-Oats",
+        image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Steel-cut-Oats/front.png"
+    },
+    'Rolled-Oats': {
+        title: "Buy Rolled Oats Online at Low Price | Organic Nation",
+        description: "Buy Rolled Oats Online in India at best price from Organic Nation. Shop now for high quality of Oats online. 100% Healthy ✓Fast Shipping ✓Buy Now!",
+        canonicalUrl: "https://organicnation.co.in/shop/oats/Rolled-Oats",
+        image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Rolled-Oats/front.png"
+    },
+    'Instant-Oats': {
+        title: "Buy Instant Oats Online at Low Price | Organic Nation",
+        description: "Buy Instant Oats Online in India at best price from Organic Nation. Shop now for high quality of Oats online. 100% Healthy ✓Fast Shipping ✓Buy Now!",
+        canonicalUrl: "https://organicnation.co.in/shop/oats/Instant-Oats",
+        image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Instant-Oats/Left.png"
+    },
+    'Veg-Soya-Chaap': {
+        title: "Buy Veg Soya Chaap Online at Low Price | Organic Nation",
+        description: "Buy Veg Soya Chaap Online in India at best price from Organic Nation. Shop now for high quality of veg Soya Chaap online. 100% Veg ✓Fast Shipping ✓Buy Now!",
+        canonicalUrl: "https://organicnation.co.in/shop/vegan/Veg-Soya-Chaap",
+        image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Veg-Soya-Chaap/front.png"
+    },
+    'Seeds-&-Cranberry-Muesli': {
+        title: "Buy Seeds & Cranberry Muesli Online | Organic Nation",
+        description: "Buy Seeds & Cranberry Muesli Online in India at best price from Organic Nation. Shop now for high quality seeds Muesli online. 100% Healthy ✓Fast Shipping",
+        canonicalUrl: "https://organicnation.co.in/shop/breakfast-cereals/Seeds-&-Cranberry-Muesli",
+        image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Seeds-&-Cranberry-Muesli/front.png"
+    },
+    'Hazelnut-&-Cocoa-Muesli': {
+        title: "Buy Healthy Muesli | Hazelnut & Cocoa | Organic Nation",
+        description: "Buy Hazelnut & Cocoa Muesli  Online in India at best price from Organic Nation. Shop now for high quality Muesli online. 100% Healthy ✓Fast Shipping ",
+        canonicalUrl: "https://organicnation.co.in/shop/breakfast-cereals/Hazelnut-&-Cocoa-Muesli",
+        image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Hazelnut-&-Cocoa-Muesli/front.png"
+    },
+    'Figs-&-Honey-Muesli': {
+        title: "Buy Healthy Muesli Online | Figs & Honey | Organic Nation",
+        description: "Buy Figs & Honey Muesli Online in India at best price from Organic Nation. Shop now for high quality Muesli online. 100% Healthy ✓Fast Shipping ✓Buy Now!",
+        canonicalUrl: "https://organicnation.co.in/shop/breakfast-cereals/Figs-&-Honey-Muesli",
+        image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Figs-&-Honey-Muesli/front.png"
+    },
+    'Protien-Muesli': {
+        title: "Buy Healthy Muesli Online | Protien Muesli | Organic Nation",
+        description: "Buy Protien Muesli  Online in India at best price from Organic Nation. Shop now for high quality Muesli online. 100% Healthy ✓Fast Shipping ✓Buy Now!",
+        canonicalUrl: "https://organicnation.co.in/shop/breakfast-cereals/Protien-Muesli",
+        image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Protien-Muesli/front.png"
+    },
+    'Seeds-&-Berries-Granola': {
+        title: "> Buy Healthy Granola Online |Seeds & Berries| Organic Nation",
+        description: "Buy Seeds & Berries Granola Online in India at best price from Organic Nation. Shop now for high quality Granola online. 100% Healthy ✓Fast Shipping ✓Buy Now!",
+        canonicalUrl: "https://organicnation.co.in/shop/breakfast-cereals/Seeds-&-Berries-Granola",
+        image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Seeds-&-Berries-Granola/front.png"
+    },
+    'Nuts-&-Berries-Granola': {
+        title: "Buy Healthy Granola Online | Nuts & Berries | Organic Nation",
+        description: "Buy Nuts & Berries Granola Online in India at best price from Organic Nation. Shop now for high quality Nuts & Berries Granola online. 100% Healthy ",
+        canonicalUrl: "https://organicnation.co.in/shop/breakfast-cereals/Nuts-&-Berries-Granola",
+        image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Nuts-&-Berries-Granola/front.png"
     }
-   
 }
 
 

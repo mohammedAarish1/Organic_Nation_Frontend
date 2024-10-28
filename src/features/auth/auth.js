@@ -174,7 +174,6 @@ const authSlice = createSlice({
       };
     },
     // saveLocalUserInfo(state, action) {
-    //   console.log(action.payload)
     //   const { field, value } = action.payload;
     //   state.localUserInfo[field] = value;
     // }

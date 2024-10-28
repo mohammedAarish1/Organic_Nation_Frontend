@@ -17,7 +17,7 @@ import SearchedProduct from './components/searchedProduct/SearchedProduct';
 // pages
 export const Home = lazy(() => import('./pages/home/Home'));
 export const About = lazy(() => import('./pages/about/About'));
-export const Shop = lazy(() => import('./pages/shop/Shop'))
+export const Shop = lazy(() => import('./pages/shop/Shop'));
 export const ContactUs = lazy(() => import('./pages/contact-us/ContactUs'))
 export const Cart = lazy(() => import('./pages/cart/Cart'))
 export const Auth = lazy(() => import('./pages/login-signup/Auth'))

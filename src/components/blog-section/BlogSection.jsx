@@ -10,7 +10,6 @@ import { useSelector } from 'react-redux';
 const BlogSection = ({ homePage = false }) => {
 
     const { blogs, loading } = useSelector(state => state.blog)
-console.log('hello')
     // array for img src is pending
     if (loading) return <div>loading...</div>
 

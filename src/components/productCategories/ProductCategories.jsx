@@ -2,13 +2,12 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setCurrentPage } from '../../features/pagination/pagination';
 import { fetchCategoryWiseData, setCategoryBtnValue } from '../../features/filter/filterSlice';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Title from '../title/Title';
 
 const ProductCategories = () => {
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const { categoryList } = useSelector((state) => state.product_data);
 
 
@@ -25,6 +24,7 @@ const ProductCategories = () => {
         { Oats: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories/oats.png' },
         { Vegan: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories/vegan.png' },
         { 'Breakfast-Cereals': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories/cereals.png' },
+        { Combo: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories/combo.png' },
     ]
 
 

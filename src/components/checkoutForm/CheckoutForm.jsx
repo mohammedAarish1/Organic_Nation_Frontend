@@ -154,9 +154,7 @@ const CheckoutForm = () => {
           if (value.type === "manageOrders/addOrders/fulfilled") {
             dispatch(
               initiatePayment({
-                number: values.receiverPhone
-                  ? values.receiverPhone
-                  : values.phoneNumber.slice(3),
+                number:values?.phoneNumber.slice(3),
                 amount: totalCartAmount - discountAmount + (totalCartAmount < 499 ? shippingFee : 0),
                 merchantTransactionId: merchantTransactionId,
               })

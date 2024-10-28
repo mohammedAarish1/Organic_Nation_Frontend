@@ -47,12 +47,7 @@ export const addToCart = createAsyncThunk(
                 // const token = JSON.parse(sessionStorage.getItem('token'));
 
                 const response = await api.post(`/api/cart`, { productId, quantity, productName }
-                    // {
-                    //     headers: {
-                    //         'Authorization': `Bearer ${user.token}`,
-                    //         'Content-Type': 'application/json'
-                    //     }
-                    // }
+                   
                 )
                 if (response.status === 200) {
                     return response.data;
@@ -82,12 +77,7 @@ export const getAllCartItems = createAsyncThunk(
         try {
             if (auth.user) {
                 const response = await api.get(`/api/cart`,
-                    // {
-                    //     headers: {
-                    //         // 'Authorization': `Bearer ${user.token}`,
-                    //         'Content-Type': 'application/json'
-                    //     }
-                    // }
+                   
                 );
                 if (response.status === 200) {
                     const products = response.data.items.map(product => {
@@ -104,7 +94,6 @@ export const getAllCartItems = createAsyncThunk(
                         })
                     );
                     return { productDetails, totalCartAmount: response.data.totalCartAmount, totalTax: response.data.totalTaxes, couponCodeApplied: response.data.couponCodeApplied }
-                    // return productDetails;
 
                 }
             } else {
@@ -165,12 +154,7 @@ export const clearCart = createAsyncThunk(
             // const token = JSON.parse(sessionStorage.getItem('token'));
             if (auth.user) {
                 const response = await api.delete(`/api/cart`,
-                    // {
-                    //     headers: {
-                    //         'Authorization': `Bearer ${user.token}`,
-                    //         'Content-Type': 'application/json'
-                    //     }
-                    // }
+                   
                 )
                 if (response.status === 200) {
                     return response.data;
@@ -190,24 +174,19 @@ export const clearCart = createAsyncThunk(
 //  for removing the single item from the cart 
 export const removeFromCart = createAsyncThunk(
     'cart/removeFromCart',
-    async (id, { rejectWithValue, getState, dispatch }) => {
+    async (productName, { rejectWithValue, getState, dispatch }) => {
         const { auth } = getState();
         try {
             // const token = JSON.parse(sessionStorage.getItem('token'));
             if (auth.user) {
-                const response = await api.delete(`/api/cart/${id}`,
-                    // {
-                    //     headers: {
-                    //         // 'Authorization': `Bearer ${user.token}`,
-                    //         'Content-Type': 'application/json'
-                    //     }
-                    // }
+                const response = await api.delete(`/api/cart/${productName}`,
+                   
                 )
                 if (response.status === 200) {
                     return response.data;
                 }
             } else {
-                dispatch(removeFromLocalCart(id));
+                dispatch(removeFromLocalCart(productName));
             }
 
         } catch (error) {
@@ -226,14 +205,10 @@ export const updateQty = createAsyncThunk(
         const { auth } = getState();
         try {
             // const token = JSON.parse(sessionStorage.getItem('token'));
+
             if (auth.user) {
-                const response = await api.put(`/api/cart/updateQuantity/${product.productId}`, { action: product.type },
-                    // {
-                    //     headers: {
-                    //         'Authorization': `Bearer ${user.token}`,
-                    //         'Content-Type': 'application/json'
-                    //     }
-                    // }
+                const response = await api.put(`/api/cart/updateQuantity/${product.productName}`, { action: product.type },
+                  
                 )
                 if (response.status === 200) {
                     return response.data;
@@ -259,12 +234,7 @@ export const mergeCart = createAsyncThunk(
         try {
             if (auth.user) {
                 const response = await api.post(`/api/cart/merge`, cart,
-                    // {
-                    //     headers: {
-                    //         // 'Authorization': `Bearer ${user.token}`,
-                    //         'Content-Type': 'application/json'
-                    //     }
-                    // }
+                  
                 )
                 return response.data;
                 
@@ -287,12 +257,7 @@ export const getCouponCodeValidate = createAsyncThunk(
         try {
             if (auth.user) {
                 const response = await api.post(`/api/validate/coupon-code`, data,
-                    // {
-                    //     headers: {
-                    //         'Authorization': `Bearer ${user.token}`,
-                    //         'Content-Type': 'application/json'
-                    //     }
-                    // }
+                   
                 )
                 return response.data;
             }
@@ -321,7 +286,7 @@ export const applyAdditionalCouponDiscount = createAsyncThunk(
         const response = await axios.post(`${apiUrl}/api/validate/additional/coupon/discount`,payload);
         return response.data;
       } catch (error) {
-        return rejectWithValue(error.response.data);
+        return rejectWithValue(error.response.data.error);
       }
     }
   );
@@ -336,8 +301,6 @@ const initialState = {
     cartItemsList: [], // it will contain all the product detail + qty
     loading: false,
     validatingCouponCode: false,
-    // isCouponCodeApplied: false,
-    // isPickleCouponApplied: false,
     couponCodeApplied:[],
     error: null,
     totalCartItems: 0,
@@ -357,7 +320,7 @@ export const cartSlice = createSlice({
             }
             const { productId, quantity, productName } = action.payload;
 
-            const existingItem = state.cartItems?.find(item => item.productId === productId);
+            const existingItem = state.cartItems?.find(item => item.productName === productName);
 
             if (existingItem) {
                 existingItem.quantity += quantity;
@@ -374,10 +337,10 @@ export const cartSlice = createSlice({
         updateLocalCartQty: (state, action) => {
 
             const localCart = JSON.parse(localStorage.getItem('cart'));
-            const { productId, type } = action.payload;
+            const { productName, type } = action.payload;
 
             const newCartItems = localCart.map((curItem) => {
-                if (curItem.productId === productId) {
+                if (curItem.productName === productName) {
                     let newQty;
                     if (type === 'increase') {
                         newQty = curItem.quantity + 1;
@@ -405,7 +368,7 @@ export const cartSlice = createSlice({
         },
         removeFromLocalCart: (state, action) => {
             const localCart = JSON.parse(localStorage.getItem('cart'));
-            const updatedCart = localCart.filter((curItem) => curItem.productId !== action.payload);
+            const updatedCart = localCart.filter((curItem) => curItem.productName !== action.payload);
             localStorage.setItem('cart', JSON.stringify(updatedCart));
             return {
                 ...state,
@@ -713,3 +676,6 @@ export const { addToLocalCart, updateLocalCartQty, removeFromLocalCart, clearLoc
 
 
 export default cartSlice.reducer;
+
+
+

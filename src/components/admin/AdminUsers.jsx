@@ -31,9 +31,9 @@ const AdminUsers = () => {
         // Filter orders based on search term
         if (searchTerm) {
             filtered = filtered.filter(user =>
-                user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                user.lastName.includes(searchTerm) ||
-                user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                user?.firstName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                user?.lastName?.includes(searchTerm) ||
+                user?.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 user.phoneNumber.toLowerCase().includes(searchTerm.toLowerCase())
             );
         }

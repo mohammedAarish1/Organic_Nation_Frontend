@@ -84,7 +84,7 @@ const Product = ({ gridView, product }) => {
         <div className={`flex flex-col justify-center sm:gap-1  sm:justify-between ${!gridView ? 'items-start' : 'items-center sm:h-32'}`}>
           <p className={`font-medium sm:text-xl text-sm  ${gridView ? 'text-center xs:w-[70%]' : ''}    text-[#712522]`}>{product.name}</p>
           <p className='text-gray-500 sm:text- text-sm'>Weight: {product.weight}</p>
-          {!gridView && <p className='lg:w-[70%] sm:block hidden text-sm font-serif'>{product.description}</p>}
+          {!gridView && <p className='lg:w-[70%] sm:block hidden text-sm font-serif'>{product.description.slice(0,80)}...</p>}
           {/* <p>{error ? 'No reviews yet' : averageRating}</p> */}
           <div className='flex justify-start items-center gap-2 sm:text-xl text-sm'>
             {[...Array(5)].map((star, index) => {
