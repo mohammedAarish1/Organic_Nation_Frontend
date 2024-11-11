@@ -53,13 +53,6 @@ const OtpSubmit = () => {
       navigate("/");
     }
 
-
-    // .then(() => {
-    //   dispatch(getAllCartItems())
-    //   .then((res) => {
-
-    //   });
-    // });
   };
 
   //otp submission
@@ -82,7 +75,6 @@ const OtpSubmit = () => {
                     }
                   })
                   .catch((error) => {
-                    console.error('Signup failed:', error);
                     toast.error(error.message || "Sign up failed");
                   });
 

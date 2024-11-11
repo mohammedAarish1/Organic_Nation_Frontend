@@ -24,7 +24,8 @@ const RecipeSection = ({ showBtn = false }) => {
             </div>
             <div className='flex flex-wrap justify-center items-center gap-10 px-10 py-10'>
                 {recipes?.map(recipe => (
-                    <div
+                    <Link
+                        to={`/recipes/${recipe._id}`}
                         key={recipe._id}
                         className='flex md:w-1/4  flex-col gap-2 '
                         data-aos="flip-up"
@@ -42,12 +43,12 @@ const RecipeSection = ({ showBtn = false }) => {
                             <p className=' text-[var(--bgColorPrimary)] font-semibold  text-[18px]'>{recipe.title}</p>
 
                             <div className='place-self-end'>
-                                <Link to={`/recipes/${recipe._id}`} className=" flex  text-[var(--themeColor)] hover:text-orange-500 justify-end items-center gap-2 py-1   font-semibold rounded-lg  uppercase "><span className='underline-hover text-sm'>Continue Reading</span> <FaArrowRightLong /></Link>
+                                <div className=" flex  text-[var(--themeColor)] hover:text-orange-500 justify-end items-center gap-2 py-1   font-semibold rounded-lg  uppercase "><span className='underline-hover text-sm'>Continue Reading</span> <FaArrowRightLong /></div>
                             </div>
 
                         </div>
 
-                    </div>
+                    </Link>
                 ))}
 
 

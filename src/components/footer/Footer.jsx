@@ -43,10 +43,17 @@ const Footer = ({ moveToTop }) => {
 
     return (
         <footer
-            className="bg-[var(--hoverEffect)]  xs:px-10 px-1 py-6 text-sm text-[var(--themeColor)]"
-            // data-aos="zoom-in"
-            // data-aos-duration="1000"
+            className="relative bg-[var(--hoverEffect)]  xs:px-10 px-1 py-6 text-sm text-[var(--themeColor)]"
+        // data-aos="zoom-in"
+        // data-aos-duration="1000"
         >
+
+            {/* Background wrapper div with reduced opacity */}
+            {/* <div 
+                className="absolute inset-0 bg-[url('/footerImage.png')] bg-[var(--hoverEffect)] opacity-30"
+                aria-hidden="true"
+            /> */}
+
             <div className="lg:container mx-auto px-4">
                 <div className='mb-4 flex  flex-wrap gap-8 justify-between items-center lg:pr-28'>
                     <Logo />

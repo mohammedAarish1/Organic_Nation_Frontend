@@ -3,10 +3,12 @@ import { Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import {
-    VerifyEmail, ResetPassword, SearchedProduct, Home, About, Shop, ContactUs, Cart,  Recipes, Testimonials, Faq, PrivacyPolicy, TermsAndConditions, CsrPolicy,  ProductDetails, Checkout, BlogDetail, OtpLogin, Blogs, RecipeDetails, GoogleSignup, ManageOrders, OrderConfirm, NoPageFound, OtpSubmit, PaymentStatus
+    VerifyEmail, ResetPassword, SearchedProduct, Home, About, Shop, ContactUs, Cart,  Recipes, Testimonials, Faq, PrivacyPolicy, TermsAndConditions, CsrPolicy,  ProductDetails, Checkout, BlogDetail, OtpLogin, Blogs, RecipeDetails, GoogleSignup, ManageOrders, OrderConfirm, NoPageFound, OtpSubmit, PaymentStatus, UserProfile
 } from '../imports';
 import ManageReturns from '../pages/manage-returns/ManageReturns';
 import GoogleLoginHandler from '../pages/login-signup/GoogleLoginHandler';
+import UserAddresses from '../components/user-profile-comp/UserAddresses';
+import ProfileMainSection from '../components/user-profile-comp/ProfileMainSection';
 
 
 
@@ -136,6 +138,16 @@ const getRoutes = () => {
             key="manage-returns"
             path='/manage-returns'
             element={user ?<ManageReturns />:<OtpLogin/>}
+        />,
+        <Route
+            key="user-profile"
+            path='/profile'
+            element={user ?<UserProfile />:<OtpLogin/>}
+        />,
+        <Route
+            key="user-profile"
+            path='/profile/:id'
+            element={user ?<UserProfile />:<OtpLogin/>}
         />,
         <Route
             key="otp-login"

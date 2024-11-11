@@ -36,8 +36,8 @@ const Order = ({ order }) => {
   const [showDeliveryFeedbackForm, setShowDeliveryFeedbackForm] =
     useState(false);
 
-  const orderDate = new Date(order.createdAt);
-  const isReturnDisabled = (new Date() - orderDate) / (1000 * 60 * 60 * 24) > 2;
+  const deliveryDate = new Date(order?.deliveryDate);
+  const isReturnDisabled = deliveryDate &&  (new Date() - deliveryDate) / (1000 * 60 * 60 * 24) > 3;
 
   const showAlert = () => {
     setIsAlertOpen(true);
@@ -350,10 +350,8 @@ const Order = ({ order }) => {
         <Alert
           isOpen={isAlertOpen}
           alertMessage="Are you sure you want to cancel this order? This action cannot be undone."
-          actionMessageOne="Yes, Cancel Order"
-          actionMessageTwo="No, Keep Order"
           hideAlert={hideAlert}
-          handleAction1={handleOrderCancel}
+          handleAction={handleOrderCancel}
         />
       </div>
       {/* order 1 end */}

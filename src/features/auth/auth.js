@@ -27,11 +27,11 @@ export const handleGoogleSignup = createAsyncThunk(
   async ({ userData }, { rejectWithValue }) => {
     try {
       if (userData) {
-        const response = await api.post(`/api/auth/google/phone`, userData, { withCredentials: true } );
+        const response = await api.post(`/api/auth/google/phone`, userData, { withCredentials: true });
 
         const { accessToken, user } = response.data;
-          // Set access token in axios headers
-      api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+        // Set access token in axios headers
+        api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
         // return response.data;
         return { user, accessToken };
       }
@@ -49,7 +49,7 @@ export const handleGoogleLogin = createAsyncThunk(
     try {
       const encodedData = new URLSearchParams(searchParams).get('data');
       if (!encodedData) return null;
-      
+
       const decodedData = JSON.parse(decodeURIComponent(encodedData));
       return decodedData;
     } catch (error) {
@@ -138,6 +138,21 @@ export const verifyOTP = createAsyncThunk(
         ] = `Bearer ${response.data.accessToken}`;
       }
 
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
+
+
+export const getUserData = createAsyncThunk(
+  'auth/getUserData',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await api.get(`/api/auth/user`,
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data.message);
@@ -379,33 +394,55 @@ const authSlice = createSlice({
           error: action.payload,
         };
       })
-        // ============ handle google log in ===========
-        .addCase(handleGoogleLogin.pending, (state) => {
-          return {
-            ...state,
-            user_loading: true,
-            error: null,
-          };
-        })
-        .addCase(handleGoogleLogin.fulfilled, (state, action) => {
-          return {
-            ...state,
-            user_loading: false,
-            token: action.payload.accessToken,
-            user: action.payload.user,
-            isUserAuthenticated: true,
-          };
-        })
-        .addCase(handleGoogleLogin.rejected, (state, action) => {
-          return {
-            ...state,
-  
-            user_loading: false,
-            user: null,
-            token: "",
-            error: action.payload,
-          };
-        })
+      // ============ handle google log in ===========
+      .addCase(handleGoogleLogin.pending, (state) => {
+        return {
+          ...state,
+          user_loading: true,
+          error: null,
+        };
+      })
+      .addCase(handleGoogleLogin.fulfilled, (state, action) => {
+        return {
+          ...state,
+          user_loading: false,
+          token: action.payload.accessToken,
+          user: action.payload.user,
+          isUserAuthenticated: true,
+        };
+      })
+      .addCase(handleGoogleLogin.rejected, (state, action) => {
+        return {
+          ...state,
+
+          user_loading: false,
+          user: null,
+          token: "",
+          error: action.payload,
+        };
+      })
+       // ============ get user data  ===========
+       .addCase(getUserData.pending, (state) => {
+        return {
+          ...state,
+          user_loading: true,
+          error: null,
+        };
+      })
+      .addCase(getUserData.fulfilled, (state, action) => {
+        return {
+          ...state,
+          user_loading: false,
+          user: action.payload.user,
+        };
+      })
+      .addCase(getUserData.rejected, (state, action) => {
+        return {
+          ...state,
+          user_loading: false,
+          error: action.payload,
+        };
+      })
   },
 });
 

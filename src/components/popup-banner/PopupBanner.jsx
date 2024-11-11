@@ -13,9 +13,17 @@ const PopupBanner = () => {
 
     const handleClosePopup = () => {
         setPopupVisible(false);
+        // Set localStorage to mark the popup as seen
+        sessionStorage.setItem('popupShown', 'true');
     };
 
     useEffect(() => {
+
+        // Check if the popup has already been shown using localStorage
+        if (sessionStorage.getItem('popupShown') === 'true') {
+            setPopupVisible(false); // If the popup was shown before, don't show it again
+        }
+
         // Add a delay before showing the popup
         const timer = setTimeout(() => {
             setIsAnimated(true);

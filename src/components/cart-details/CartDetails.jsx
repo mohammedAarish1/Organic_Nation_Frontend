@@ -3,26 +3,19 @@ import { useDispatch, useSelector } from 'react-redux';
 // react icons 
 import { IoChevronDownOutline } from "react-icons/io5";
 
-import { calculateShippingFee } from '../../features/check-delivery/checkDelivery';
 import { PiSealCheckFill } from 'react-icons/pi';
 
 const CartDetails = () => {
 
     const dispatch = useDispatch()
     const { checking, shippingFee } = useSelector(state => state.delivery)
-    const { cartItemsList, totalCartAmount, totalWeight, couponCodeApplied } = useSelector((state) => state.cart);
+    const { cartItemsList, totalCartAmount,  couponCodeApplied } = useSelector((state) => state.cart);
     const [showSummary, setShowSummary] = useState(false);
 
 
     const toggleInfo = () => {
         setShowSummary(!showSummary);
     };
-
-
-
-    // useEffect(() => {
-    //     dispatch(calculateShippingFee({ pinCode: '', weight: totalWeight }));
-    // }, [totalWeight])
 
 
     if (checking) return <div>loading</div>

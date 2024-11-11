@@ -27,7 +27,6 @@ const ReportGenerator = () => {
     try {
       await dispatch(generateReport({ startDate, endDate })).unwrap();
     } catch (error) {
-      console.error('Failed to generate report:', error);
       setErrorMessage(error.message || 'Failed to generate report. Please try again.');
     }
   };

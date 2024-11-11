@@ -7,33 +7,33 @@ const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
 
 // extracting the wwight since weight is in different formats like 900 gm, 1 Ltr, 20 bags *1.8g=36g
-function extractWeight(description) {
-    // Remove all spaces from the description
-    const cleanDesc = description.replace(/\s/g, '');
+// function extractWeight(description) {
+//     // Remove all spaces from the description
+//     const cleanDesc = description.replace(/\s/g, '');
 
-    // Regular expression to match the last number followed by 'g', 'kg', 'l', or 'ltr'
-    const match = cleanDesc.match(/(\d+(?:\.\d+)?)(g|kg|l|ltr|gm)$/i);
-    if (match) {
-        const value = parseFloat(match[1]);
-        const unit = match[2].toLowerCase();
+//     // Regular expression to match the last number followed by 'g', 'kg', 'l', or 'ltr'
+//     const match = cleanDesc.match(/(\d+(?:\.\d+)?)(g|kg|l|ltr|gm)$/i);
+//     if (match) {
+//         const value = parseFloat(match[1]);
+//         const unit = match[2].toLowerCase();
 
-        switch (unit) {
-            case 'kg':
-                return value * 1000; // Convert kg to g
-            case 'g':
-                return value;
-            case 'gm':
-                return value;
-            case 'l':
-            case 'ltr':
-                return value * 1000; // Assume 1 liter = 1000g (for water-based products)
-            default:
-                return null;
-        }
-    }
+//         switch (unit) {
+//             case 'kg':
+//                 return value * 1000; // Convert kg to g
+//             case 'g':
+//                 return value;
+//             case 'gm':
+//                 return value;
+//             case 'l':
+//             case 'ltr':
+//                 return value * 1000; // Assume 1 liter = 1000g (for water-based products)
+//             default:
+//                 return null;
+//         }
+//     }
 
-    return null; // Return null if no match is found
-}
+//     return null; // Return null if no match is found
+// }
 
 
 
@@ -305,7 +305,7 @@ const initialState = {
     error: null,
     totalCartItems: 0,
     totalCartAmount: 0,
-    totalWeight: '',
+    // totalWeight: '',
     totalTax: 0,
 }
 
@@ -429,7 +429,7 @@ export const cartSlice = createSlice({
             })
             .addCase(getAllCartItems.fulfilled, (state, action) => {
                 // let totalPrice;
-                let totalWeight;
+                // let totalWeight;
                 let totalQty;
                 // let totalTax;
 
@@ -437,11 +437,11 @@ export const cartSlice = createSlice({
 
                     totalQty = action.payload.productDetails.reduce((total, product) => total + product.quantity, 0);
 
-                    totalWeight = action.payload.productDetails.reduce((total, product) => {
-                        total=0
-                        const weight = extractWeight(product.weight)*product.quantity;
-                        return total + (isNaN(weight) ? 0 : weight);
-                    }, 0);
+                    // totalWeight = action.payload.productDetails.reduce((total, product) => {
+                    //     // total=0
+                    //     const weight = extractWeight(product.grossWeight)*product.quantity;
+                    //     return total + (isNaN(weight) ? 0 : weight);
+                    // }, 0);
 
                 }
 
@@ -451,10 +451,9 @@ export const cartSlice = createSlice({
                     cartItemsList: action.payload.productDetails || [],
                     totalCartItems: totalQty,
                     totalCartAmount: action.payload.totalCartAmount,
-                    totalWeight: JSON.stringify(totalWeight),
+                    // totalWeight: JSON.stringify(totalWeight),
                     totalTax: action.payload.totalTax,
                     couponCodeApplied: action.payload.couponCodeApplied,
-                    // isCouponCodeApplied: action.payload.isCouponCodeApplied,
                     
                 }
             })
@@ -484,8 +483,6 @@ export const cartSlice = createSlice({
                         totalCartAmount: action.payload.totalCartAmount,
                         totalTax: action.payload.totalTax,
                         totalCartItems: 0,
-                        // isCouponCodeApplied: action.payload.isCouponCodeApplied,
-                        // isPickleCouponApplied:false
                         couponCodeApplied: action.payload.couponCodeApplied,
                     }
                 }
@@ -513,8 +510,6 @@ export const cartSlice = createSlice({
                         cartItems: action.payload.items,
                         totalCartAmount:action.payload.totalCartAmount,
                         totalTax:action.payload.totalTaxes,
-                        // isCouponCodeApplied: action.payload.isCouponCodeApplied,
-                        // isPickleCouponApplied:false
                         couponCodeApplied: action.payload.couponCodeApplied,
 
                     }
@@ -543,8 +538,6 @@ export const cartSlice = createSlice({
                         cartItems: action.payload.items,
                         totalCartAmount:action.payload.totalCartAmount,
                         totalTax:action.payload.totalTaxes,
-                        // isCouponCodeApplied: action.payload.isCouponCodeApplied,
-                        // isPickleCouponApplied:false
                         couponCodeApplied: action.payload.couponCodeApplied,
 
 

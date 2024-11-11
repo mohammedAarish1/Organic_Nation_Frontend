@@ -43,15 +43,20 @@ const AddToCartBtn = ({ item, qty = 1 }) => {
 
 
   return (
-    <div>
+    <div className='z-4 min-w-full  sm:mt-0'
+    onClick={(e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    }}
+    >
       <button
         type='button'
         disabled={isOutOfStock}
         data-tooltip-id={isOutOfStock && "addToCart-tooltip"}
         data-tooltip-content="Out of Stock"
         data-tooltip-place="top"
-        onClick={() => {
-
+        onClick={(e) => {
+          // e.stopPropagation();  // Prevent the event from bubbling up to the NavLink
           handleAddingItemsToCart();
           // if (stockExceededLimit) {
           //   setItemAdded(true)
@@ -61,7 +66,7 @@ const AddToCartBtn = ({ item, qty = 1 }) => {
           // }
 
         }}
-        className={`${isOutOfStock ? 'opacity-60' : 'hover:scale-90'}  flex justify-center items-center sm:mt-1  w-max text-white sm:py-2 py-1 sm:px-4 px-2 bg-[#712522]   transition-all duration-500 gap-1 `}>
+        className={`${isOutOfStock ? 'opacity-60' : 'hover:bg-[var(--bgColorPrimary)]'}  flex justify-center items-center sm:mt-1  w-full text-white sm:py-2 py-1 sm:px-4 px-2 rounded-2xl bg-[#712522]   transition-all duration-500 gap-1 `}>
 
         <BsCart4 className={`text-white  ${!isOutOfStock && 'animate-bounce'}`} />
 

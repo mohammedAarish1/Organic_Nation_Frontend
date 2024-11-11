@@ -23,7 +23,7 @@ const Product = ({ gridView, product }) => {
   const containerClasses = `
   relative overflow-hidden
   ${gridView ? 'sm:w-60 w-32 sm:h-60 h-32' : 'xs:w-48 xs:h-48 w-28 h-32'}
-  group hover:shadow-xl transition-shadow rounded-lg duration-500
+  group hover:shadow-xl transition-shadow rounded-lg duration-500 
 `;
 
   const imageClasses = `
@@ -55,12 +55,14 @@ const Product = ({ gridView, product }) => {
 
 
   return (
-    <div className={`${!gridView ? "flex flex-row lg:pl-32 justify-start items-center gap-5  " : "flex justify-between items-center flex-col xs:gap-2  xs:max-w-[150px] max-w-[120px] sm:max-w-[260px] "} font-sans `}
+    <NavLink to={`/shop/${categoryBtnValue}/${product['name-url']}`} className={`${!gridView && 'block w-full'}`}>
+
+      <div
+        className={`${!gridView ? "flex flex-row lg:pl-32 justify-start items-center gap-5 w-full  " : "flex justify-center items-center flex-col xs:gap-2 xs:max-w-[150px] max-w-[130px] sm:max-w-[260px]"} font-sans `}
       // data-aos="zoom-in-up"
       // data-aos-duration="700"
-    >
-      {/* image  */}
-      <NavLink to={`/shop/${categoryBtnValue}/${product['name-url']}`}>
+      >
+        {/* image  */}
         <div className={containerClasses}>
           {imgLoading && <div className='loader'></div>}
           <img
@@ -77,16 +79,15 @@ const Product = ({ gridView, product }) => {
             />
           )}
         </div>
-      </NavLink>
-      {/* info  */}
-      <div className={`flex flex-col justify-between  ${!gridView ? 'items-start' : 'items-center w-full'} flex-1`}>
-      <NavLink to={`/shop/${categoryBtnValue}/${product['name-url']}`}>
-        <div className={`flex flex-col justify-center sm:gap-1  sm:justify-between ${!gridView ? 'items-start' : 'items-center sm:h-32'}`}>
-          <p className={`font-medium sm:text-xl text-sm  ${gridView ? 'text-center xs:w-[70%]' : ''}    text-[#712522]`}>{product.name}</p>
-          <p className='text-gray-500 sm:text- text-sm'>Weight: {product.weight}</p>
-          {!gridView && <p className='lg:w-[70%] sm:block hidden text-sm font-serif'>{product.description.slice(0,80)}...</p>}
-          {/* <p>{error ? 'No reviews yet' : averageRating}</p> */}
-          <div className='flex justify-start items-center gap-2 sm:text-xl text-sm'>
+        <div className={`flex flex-col justify-between  ${!gridView ? 'items-start gap-3  flex-1' : 'items-center w-full'}`}>
+          {/* info  */}
+          <div className={`flex flex-col justify-center sm:gap-1  sm:justify-between ${!gridView ? 'items-start ' : 'items-center'} min-h-16 `}>
+            <p className={`font-medium sm:text-xl text-sm  ${gridView ? 'text-center xs:w-[70%] ' : ''}    text-[#712522] `}>{product.name}</p>
+            {/* <p className='text-gray-500 sm:text- text-sm'>Weight: {product.weight}</p> */}
+            {!gridView && <p className='lg:w-[70%] xs:block hidden text-sm font-serif'>{product.description.slice(0, 80)}...</p>}
+            {/* <p>{error ? 'No reviews yet' : averageRating}</p> */}
+            {/* ====================== rating section ======================  */}
+            {/* <div className='flex justify-start items-center gap-2 sm:text-xl text-sm'>
             {[...Array(5)].map((star, index) => {
               const ratingValue = index + 0.5;
               return (
@@ -108,15 +109,17 @@ const Product = ({ gridView, product }) => {
                 </label>
               );
             })}
+          </div> */}
+            {/* ====================== rating section end ======================  */}
+
+
+            <p className=''>₹ <span className='font-semibold sm:text-[16px] text-sm' >{Math.round(product.price - (product.price * product.discount / 100))}</span>/- &nbsp; <span className='text-green-700'>{product.discount}% off</span></p>
           </div>
-
-
-          <p className=''>₹ <span className='font-semibold sm:text-[16px] text-sm' >{Math.round(product.price - (product.price * product.discount / 100))}</span>/- &nbsp; <span className='text-green-700'>{product.discount}% off</span></p>
+          <AddToCartBtn item={product} />
         </div>
-        </NavLink>
-        <AddToCartBtn item={product} />
       </div>
-    </div>
+    </NavLink>
+
   )
 }
 

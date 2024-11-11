@@ -639,5 +639,22 @@ input[type="range"]::-moz-range-thumb {
 }
 
 
+.glowing-text {
+  /* font-weight: bold; */
+  color: #4caf50; /* Default text color */
+  text-shadow: 0 0 4px rgba(0, 255, 0, 0.6), 0 0 16px rgba(0, 255, 0, 0.4); /* Soft green glow */
+  transition: text-shadow 0.3s ease, color 0.3s ease; /* Smooth transition */
+}
+
+/* Hover effect for a slightly stronger glow */
+.glowing-text:hover {
+  color: #66bb6a; /* Lighter green when hovered */
+  text-shadow: 0 0 1px rgba(0, 255, 0, 1), 0 0 20px rgba(0, 255, 0, 0.6); /* More intense glow */
+}
+
+.glowing-text:active {
+  transform: scale(0.98); /* Slight scale effect when clicked */
+}
+
 
 /* ==============================  **** end **** ==================================================  */

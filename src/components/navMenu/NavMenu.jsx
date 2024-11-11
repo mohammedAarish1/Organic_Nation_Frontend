@@ -189,18 +189,29 @@ const NavMenu = () => {
                             <Search mobileMenu={true} />
                         </li>
 
-                        <li className='cursor-pointer p-4 rounded-md text-[#ffe9a1] hover:bg-[var(--bgColorSecondary)] hover:text-[var(--bgColorPrimary)]'>
-                            <Link to="/" onClick={() => dispatch(setShowSidebar())} className='flex text-xl gap-3 justify-start items-center'>
+                        <li className='cursor-pointer  rounded-md text-[#ffe9a1] hover:bg-[var(--bgColorSecondary)] hover:text-[var(--bgColorPrimary)]'>
+                            <Link
+                                to="/"
+                                onClick={() => dispatch(setShowSidebar())}
+                                className='flex text-xl gap-3 justify-start items-center p-4'
+                            >
                                 <MdOutlineHome className=' text' />
                                 <span>Home</span>
                             </Link>
                         </li>
 
-                        <li className=' cursor-pointer px-4 relative rounded-md text-[#ffe9a1] hover:bg-[var(--bgColorSecondary)] hover:text-[var(--bgColorPrimary)] '>
+                        <li className=' cursor-pointer relative rounded-md text-[#ffe9a1] hover:bg-[var(--bgColorSecondary)] hover:text-[var(--bgColorPrimary)] '>
                             <div className='flex justify-between items-center'>
-                                <Link to="/shop/all" className='w-full flex text-xl gap-3 justify-start items-center' onClick={() => {
-                                    dispatch(setShowSidebar())
-                                }}>
+                                <Link
+                                    to="/shop/all"
+                                    className='w-full flex text-xl gap-3 justify-start items-center p-4'
+                                    onClick={() => {
+                                        dispatch(setCurrentPage(1))
+                                        dispatch(setCategoryBtnValue('all'))
+                                        dispatch(fetchCategoryWiseData('all'))
+                                        dispatch(setShowSidebar())
+                                    }}
+                                >
                                     <RiShoppingBasketFill className='text-xl ' />
                                     <span className='w-full'>
                                         Shop
@@ -230,25 +241,46 @@ const NavMenu = () => {
                                 </ul>
                             )}
 
+                        </li>
+                        <li className='cursor-pointer rounded-md text-[#ffe9a1] hover:bg-[var(--bgColorSecondary)] hover:text-[var(--bgColorPrimary)]'>
+                            <Link
+                                to={`/shop/${'combo'}`}
+                                onClick={() => {
+                                    dispatch(setCurrentPage(1))
+                                    dispatch(setCategoryBtnValue('combo'))
+                                    dispatch(fetchCategoryWiseData('combo'))
+                                    dispatch(setShowSidebar())
+                                }}
+                                className='flex text-xl gap-3 justify-start items-center  p-4 '
 
-
-
+                            >
+                                <LiaGiftsSolid className=' text-2xl' />
+                                <span className='text-center'>Combo</span>
+                            </Link>
                         </li>
 
-                        <li className='cursor-pointer p-4 rounded-md text-[#ffe9a1] hover:bg-[var(--bgColorSecondary)] hover:text-[var(--bgColorPrimary)]'>
-                            <Link to="/our-blogs" onClick={() => dispatch(setShowSidebar())} className='flex text-xl gap-3 justify-start items-center '>
+                        <li className='cursor-pointer rounded-md text-[#ffe9a1] hover:bg-[var(--bgColorSecondary)] hover:text-[var(--bgColorPrimary)]'>
+                            <Link
+                                to="/our-blogs"
+                                onClick={() => dispatch(setShowSidebar())}
+                                className='flex text-xl gap-3 justify-start items-center  p-4'
+                            >
                                 <FaBlog className=' text-xl' />
                                 <span>Blogs</span>
                             </Link>
                         </li>
-                        <li className='cursor-pointer p-4 rounded-md text-[#ffe9a1] hover:bg-[var(--bgColorSecondary)] hover:text-[var(--bgColorPrimary)]'>
-                            <Link to="/our-recipes" onClick={() => dispatch(setShowSidebar())} className='flex text-xl gap-3 justify-start items-center '>
+                        <li className='cursor-pointer rounded-md text-[#ffe9a1] hover:bg-[var(--bgColorSecondary)] hover:text-[var(--bgColorPrimary)]'>
+                            <Link
+                                to="/our-recipes"
+                                onClick={() => dispatch(setShowSidebar())}
+                                className='flex text-xl gap-3 justify-start items-center  p-4 '
+                            >
                                 <LuChefHat />
                                 <span>Recipe</span>
                             </Link>
                         </li>
-                        <li className='cursor-pointer p-4 rounded-md text-[#ffe9a1] hover:bg-[var(--bgColorSecondary)] hover:text-[var(--bgColorPrimary)]'>
-                            <Link to="contact-us" onClick={() => dispatch(setShowSidebar())} className='flex text-xl gap-3 justify-start items-center '>
+                        <li className='cursor-pointer rounded-md text-[#ffe9a1] hover:bg-[var(--bgColorSecondary)] hover:text-[var(--bgColorPrimary)]'>
+                            <Link to="contact-us" onClick={() => dispatch(setShowSidebar())} className='flex text-xl gap-3 justify-start items-center  p-4'>
                                 <TbPhoneCall className=' text-xl' />
                                 <span>Contact Us</span>
                             </Link>

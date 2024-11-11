@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { memo, useEffect } from 'react'
 import Banner from '../../components/banner/Banner'
 import Title from '../../components/title/Title'
 
@@ -11,8 +11,12 @@ import ProductCategories from '../../components/productCategories/ProductCategor
 import { addReviews } from '../../features/reviews/reviews'
 import BlogSection from '../../components/blog-section/BlogSection';
 import SEO from '../../helper/SEO/SEO'
+import PopupBanner from '../../components/popup-banner/PopupBanner';
 
 
+
+// Memoized components
+const MemoizedPopupBanner = memo(PopupBanner);
 
 
 // images 
@@ -68,7 +72,7 @@ const Home = () => {
             })
         }
 
-    }, [ ])
+    }, [])
 
 
 
@@ -94,14 +98,22 @@ const Home = () => {
                 twitterSite="Organic Nation"
                 twitterCreator="organicnation_"
             />
+            <MemoizedPopupBanner />
             <Banner />
             {/* spotlight  */}
             <SpotlightSection />
+            {/* video  */}
+            {/* <div className="w-full ">
+                <video className="w-full h-auto" >
+                    <source src="https://organicnationmages.s3.ap-south-1.amazonaws.com/OrganicNation.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                </video>
+            </div> */}
             {/* our categories */}
             <ProductCategories />
             {/* how we are better */}
             <div>
-                <div className='text-center pt-32 pb-20 px-10'>
+                <div className='text-center xs:pt-32 xs:pb-20 px-10'>
                     <Title text="How We Are Better !" />
                 </div>
                 {/* horozontal line */}
@@ -127,7 +139,7 @@ const Home = () => {
             </div>
             {/* certificates  */}
             <div>
-                <div className='text-center pt-32 pb-20 px-10'>
+                <div className='text-center xs:pt-32 xs:pb-20 px-10'>
                     <Title text="Organic" />
                     <Title text="Certifications" />
                 </div>

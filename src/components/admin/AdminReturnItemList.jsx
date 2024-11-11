@@ -313,10 +313,8 @@ const AdminReturnItemList = ({ returns }) => {
                         `Are you sure, do you really want to delete this ?` :
                         `Do you want to update the order status to ${curStatusAndId.status}`
                 }
-                actionMessageOne='Yes'
-                actionMessageTwo='No'
                 hideAlert={hideAlert}
-                handleAction1={curStatusAndId.status === '' ? handleDelete : updateUserReturnStatus}
+                handleAction={curStatusAndId.status === '' ? handleDelete : updateUserReturnStatus}
             />
 
         </div>

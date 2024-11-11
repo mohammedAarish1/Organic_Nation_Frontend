@@ -18,21 +18,28 @@ const SortSection = ({ setGridView, gridView }) => {
   const { productData, categoryList } = useSelector((state) => state.product_data);
   const { categoryBtnValue } = useSelector((state) => state.filterData);
 
+  // for searching in mobile devices
+  const [searchValue, setSearchValue] = useState('');
 
   return (
     <div>
 
       {/* search filter  */}
-      <div className='md:hidden mb-5 bg-gray-500'>
+      <div className='md:hidden mb-5'>
         <form onSubmit={(e) => {
           e.preventDefault();
-
+          dispatch(getSearchedData({ value:searchValue, productData }))
         }}>
           <input
-            type="text"
+            type="search"
+            name='search'
+            id='search'
+            value={searchValue}
+            onChange={(e)=>setSearchValue(e.target.value)}
             className='py-1 pl-2 outline-none w-full'
             placeholder='Search...'
-            onChange={(e) => dispatch(getSearchedData({ value: e.target.value, productData }))} />
+          // onChange={(e) => dispatch(getSearchedData({ value: e.target.value, productData }))}
+          />
         </form>
       </div>
 
@@ -110,6 +117,7 @@ const SortSection = ({ setGridView, gridView }) => {
             value={sortValue}
             onChange={(e) => {
               setSortValue(e.target.value)
+              dispatch(setCategoryBtnValue('all'))
               dispatch(getSortData({ value: e.target.value, productData }))
             }}
             // className="w-auto block border cursor-pointer bg-white border-gray-300 hover:border-gray-500 p-2  leading-tight focus:outline-none"

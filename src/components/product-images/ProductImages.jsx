@@ -8,15 +8,14 @@ const ProductImages = ({ productImgs }) => {
     const [mainImage, setMainImage] = useState(productImgs[0]);
 
 
-
     useEffect(() => {
         setMainImage(productImgs[0])
     }, [productImgs])
 
     return (
 
-        <div className="md:w-[50%]  flex xs:flex-row flex-col justify-center md:justify-end items-center gap-10 py-6 px-10 ">
-            <div className="flex xs:flex-col justify-center items-center gap-4 xs:-order-none max-h-[400px]  order-2  ">
+        <div className="md:w-[50%]  flex xs:flex-row flex-col justify-center md:justify-end items-center gap-10 px-10 ">
+            <div className="flex xs:flex-col justify-center items-center gap-4 xs:-order-none order-2 ">
                 {productImgs?.map((img, index) => {
                     return (
                         <div key={index}>
@@ -34,7 +33,7 @@ const ProductImages = ({ productImgs }) => {
             </div>
             {/* 2nd column  */}
 
-            <div className=" flex justify-center overflow-hidden  ">
+            <div className=" flex justify-center overflow-hidden ">
                 <Zoom>
                     <img
                         src={mainImage && mainImage}
@@ -42,7 +41,7 @@ const ProductImages = ({ productImgs }) => {
                         // width={400}
                         // height={400}
                         style={{ display: 'block', maxWidth: '100%' }}
-                        className='xs:w-96 w-72 xs:max-h-[600px] max-h-[400px] object-contain'
+                        className='max-h-[515px] object-contain'
                     />
                 </Zoom>
 

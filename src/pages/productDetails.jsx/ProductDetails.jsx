@@ -168,13 +168,12 @@ const ProductDetails = () => {
         twitterSite="Organic Nation"
         twitterCreator="organicnation_"
       />
-      {/* <div>
-
+      <div>
         <OfferBanner />
-      </div> */}
+      </div>
       <section className='xs:py-20 py-5  '>
         {/* visible in mobile devices  */}
-        <h2 className=' md:hidden block font-semibold xs:text-3xl text-2xl xs:px-10 px-4' >{product.name}</h2>
+        <h2 className=' md:hidden block font-semibold xs:text-3xl text-xl xs:px-10 px-4 mb-3' >{product.name}</h2>
         {/* visible in mobile devices  */}
         <div className='flex md:flex-row flex-col  '>
           {/* left side  */}
@@ -182,7 +181,7 @@ const ProductDetails = () => {
 
           {/* right side  */}
           <div className="md:w-[50%] max-h-[600px]  flex md:justify-start justify-center items-center gap-4 py-6 xs:pr-10 px-4 xs:pl-10 md:pl-0 font-sans  ">
-            <div className='flex flex-col lg:gap-3 gap-2 tracking-wide'>
+            <div className='flex flex-col lg:gap-3 gap-1 tracking-wide'>
               <h2 className='md:block hidden font-medium md:text-4xl text-xl text-[var(--themeColor)]' >{product.name}</h2>
               <p className=''><span className='font-semibold'>Brand: </span><span>ORGANIC NATION</span> </p>
               <p className='flex items-center gap-2'><span className='border border-green-600'><GoDotFill className='text-green-700' /></span><span className='font-semibold '>Pure Vegetarian Product</span></p>
@@ -236,9 +235,8 @@ const ProductDetails = () => {
               <p className='text-green-700 font-semibold'>*Cash On Delivery is available</p>
               <p className='flex items-center gap-2'><LiaShippingFastSolid className='text-xl' /> <span>Free shipping for all orders above ₹499</span></p>
               <p className='flex items-center gap-3'><span>In Stock:</span>{product.availability ? (<FaCircleCheck className='text-xl text-[var(--bgColorPrimary)]' />) : (<HiXCircle className='text-3xl text-red-700' />)}</p>
-              <div className='flex items-center gap-2'>
+              <div className='flex items-center gap-2 xs:mb-0 mb-5'>
                 Quantity:-  <ProductQty qty={qty} increaseQty={increaseQty} decreaseQty={decreaseQty} />
-
               </div>
               <div>
                 <AddToCartBtn item={product} qty={qty} />
@@ -261,12 +259,12 @@ const ProductDetails = () => {
       </section> */}
       {/* =============== product reviews and ratings ========== */}
 
-      <section className='py-20'>
+      <section className='xs:py-20'>
         <div className=' text-start xs:text-2xl tracking-widest font-serif  w-[80%]  mx-auto mb-5'>
 
           <h3 className='text-center text-[var(--themeColor)] text-xl font-semibold pb-10'>Reviews and Ratings</h3>
         </div>
-        <div className=' w-[80%]   mx-auto flex flex-col gap-16'>
+        <div className=' xs:w-[80%] w-[95%]   mx-auto flex flex-col gap-16'>
           {/* {loading && (<div>loading.....</div>)} */}
           {allReviews?.length > 0 && (
             allReviews.map((reviews) => (
@@ -277,7 +275,7 @@ const ProductDetails = () => {
           )}
 
         </div>
-        <div className=' w-[80%] mt-10 mx-auto '>
+        <div className=' xs:w-[80%] w-[90%] mt-10 mx-auto '>
           {/* ============add reviews =========== */}
           <div>
             <h3 className='tracking-widest font-mono mb-2'>Add Review:</h3>

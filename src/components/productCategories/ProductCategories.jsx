@@ -44,7 +44,7 @@ const ProductCategories = () => {
 
     return (
         <div>
-            <div className='text-center pt-32 xs:pb-20 pb-3  px-10'>
+            <div className='text-center xs:pt-32 pt-16 xs:pb-20 pb-3  px-10'>
                 <Title text="Our Categories !" />
             </div>
             {/* horozontal line */}
@@ -67,8 +67,8 @@ const ProductCategories = () => {
                                 dispatch(fetchCategoryWiseData(curItem.categoryUrl.toLowerCase()))
                                 // navigate(`/shop/${curItem.categoryUrl.toLowerCase()}`)
                             }}
-                            data-aos="zoom-out"
-                            data-aos-duration="1000"
+                            // data-aos="zoom-out"
+                            // data-aos-duration="1000"
                         >
                             <div>
                                 <img src={curItem.image} className='w-72 rounded-xl hover:scale-90 hover:opacity-80 transition-all duration-500' alt="category_image" />

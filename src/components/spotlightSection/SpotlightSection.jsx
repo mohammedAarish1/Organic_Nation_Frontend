@@ -22,7 +22,7 @@ const SpotlightSection = () => {
 
     return (
         <div>
-            <div className='py-20'>
+            <div className='sm:py-20 py-10'>
                 <div className='flex justify-center xs:gap-4 gap-1 items-center'>
                     <div className='h-1 md:w-[30%] xs:w-[20%] w-[20%] bg-gradient-to-r from-[#712522] to-[#bb7d7b]'></div>
                     <Title text="In the Spotlight" />
@@ -36,7 +36,7 @@ const SpotlightSection = () => {
                 <Button title="Best Seller" basis="best_seller" />
                 <Button title="Seasons Special" basis="season_special" />
             </div>
-            <div className='flex justify-center flex-wrap gap-14 py-16 '>
+            <div className='flex justify-center flex-wrap xs:gap-14 gap-7 py-16 '>
                 {products?.map((product) => <Product key={product._id} product={product} gridView={true} />)}
 
             </div>

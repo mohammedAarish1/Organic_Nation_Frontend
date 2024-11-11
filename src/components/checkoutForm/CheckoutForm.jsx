@@ -60,10 +60,9 @@ const CheckoutForm = () => {
   const navigate = useNavigate();
 
   const { user } = useSelector((state) => state.auth);
-  const { cartItemsList, totalCartAmount, totalTax, totalWeight, couponCodeApplied } = useSelector((state) => state.cart);
+  const { cartItemsList, totalCartAmount, totalTax,  couponCodeApplied } = useSelector((state) => state.cart);
   const { addingNewOrder } = useSelector((state) => state.orders);
   const { shippingFee, userCity, userPincode, userState, } = useSelector((state) => state.delivery);
-
 
 
   const addresses = user?.addresses || [];
@@ -120,9 +119,9 @@ const CheckoutForm = () => {
     });
 
     let checkoutData = {
-      firstName: user?.firstName || values?.firstName,
-      lastName: user?.lastName || values?.lastName,
-      userEmail: user?.email || values?.email,
+      firstName: user?.firstName || values?.firstName?.trim(),
+      lastName: user?.lastName || values?.lastName?.trim(),
+      userEmail: user?.email || values?.email?.toLowerCase().trim(),
       phoneNumber: user?.phoneNumber || values?.phoneNumber,
       // billingAddress: address(values.billingAddress),
       addressType: values.addressType,
@@ -136,7 +135,7 @@ const CheckoutForm = () => {
       paymentStatus: "pending",
       receiverDetails,
       merchantTransactionId: values.paymentMethod === "cash_on_delivery" ? '' : merchantTransactionId,
-      couponCodeApplied: user?.cart?.couponCodeApplied || couponCodeApplied,
+      couponCodeApplied: couponCodeApplied || user?.cart?.couponCodeApplied ,
     };
 
 
@@ -176,7 +175,7 @@ const CheckoutForm = () => {
       const pinCode = shippingAddressInitial.pinCode
 
 
-      checkDeliveryAndCalculateShippingFee(pinCode, totalWeight, dispatch)
+      checkDeliveryAndCalculateShippingFee(pinCode, dispatch)
 
     }
   }, [shippingAddressInitial.pinCode])
@@ -546,7 +545,6 @@ const CheckoutForm = () => {
 
                           checkDeliveryAndCalculateShippingFee(
                             e.target.value,
-                            totalWeight,
                             dispatch
                           );
                         }

@@ -112,7 +112,7 @@ const manageOrders = createSlice({
                     }
                 }
             } else if (action.payload === "active") {
-                let activeOrders = state.orders.filter(order => order.orderStatus === action.payload);
+                let activeOrders = state.orders?.filter(order => order.orderStatus === action.payload);
                 return {
                     ...state,
                     ordersByStatus: {
@@ -122,7 +122,7 @@ const manageOrders = createSlice({
                     }
                 }
             } else if (action.payload === "dispatched") {
-                let activeOrders = state.orders.filter(order => order.orderStatus === action.payload);
+                let activeOrders = state.orders?.filter(order => order.orderStatus === action.payload);
                 return {
                     ...state,
                     ordersByStatus: {
@@ -132,7 +132,7 @@ const manageOrders = createSlice({
                     }
                 }
             } else if (action.payload === "completed") {
-                let activeOrders = state.orders.filter(order => order.orderStatus === action.payload);
+                let activeOrders = state.orders?.filter(order => order.orderStatus === action.payload);
                 return {
                     ...state,
                     ordersByStatus: {
@@ -142,7 +142,7 @@ const manageOrders = createSlice({
                     }
                 }
             } else if (action.payload === "cancelled") {
-                let activeOrders = state.orders.filter(order => order.orderStatus === action.payload);
+                let activeOrders = state.orders?.filter(order => order.orderStatus === action.payload);
                 return {
                     ...state,
                     ordersByStatus: {

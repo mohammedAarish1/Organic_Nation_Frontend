@@ -119,7 +119,7 @@ const AdminUsers = () => {
                             <th className="p-3">
                                 <input type="checkbox" className="form-checkbox" />
                             </th>
-                            {['First Name', 'Last Name', 'Email', 'Phone No', 'Date'].map((header) => (
+                            {['First Name', 'Last Name', 'Email', 'Phone No', 'Date','Time'].map((header) => (
                                 <th key={header} className="p-3 text-left">
                                     <div className="flex items-center">
                                         {header}
@@ -145,6 +145,7 @@ const AdminUsers = () => {
                                 <td className="p-3">{user.email}</td>
                                 <td className="p-3">{user.phoneNumber}</td>
                                 <td className="p-3">{new Date(user.createdAt).toLocaleDateString()}</td>
+                                <td className="p-3">{new Date(user.createdAt).toLocaleTimeString()}</td>
                                 <td className="p-3">
                                     <div className="flex flex-col space-y-2">
                                         <button
@@ -205,10 +206,8 @@ const AdminUsers = () => {
             <Alert
                 isOpen={isAlertOpen}
                 alertMessage={`Are you sure, do you really want to delete this ?`}
-                actionMessageOne='Yes'
-                actionMessageTwo='No'
                 hideAlert={hideAlert}
-                handleAction1={handleDelete}
+                handleAction={handleDelete}
             />
         </div>
 

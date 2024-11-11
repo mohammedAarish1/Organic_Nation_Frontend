@@ -13,7 +13,7 @@ const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024; // Convert to bytes
 const productSchema = Yup.object().shape({
   itemName: Yup.string().required("Required"),
   weight: Yup.string().required("Required"),
-  price: Yup.number().positive("Must be positive").required("Required"),
+  // price: Yup.number().positive("Must be positive").required("Required"),
   quantity: Yup.number()
     .transform((value) => (isNaN(value) ? undefined : Number(value)))
     .positive("Must be positive")
@@ -136,11 +136,11 @@ const ReturnItemForm = ({
         // itemName: product["name-url"].replace(/-/g, " "),
         itemName: product["name-url"],
         weight: product.weight,
-        price:
-          actualAmountPaid(product.unitPrice) *
-          (returnedQuantity > 0
-            ? product.quantity - returnedQuantity
-            : product.quantity),
+        // price:
+        //   actualAmountPaid(product.unitPrice) *
+        //   (returnedQuantity > 0
+        //     ? product.quantity - returnedQuantity
+        //     : product.quantity),
         quantity: Number(product.quantity - returnedQuantity),
         images: [],
         reason: "",
@@ -155,7 +155,7 @@ const ReturnItemForm = ({
     : {
         itemName: "",
         weight: "",
-        price: "",
+        // price: "",
         quantity: "",
         images: [],
         reason: "",
@@ -266,10 +266,10 @@ const ReturnItemForm = ({
         };
 
         return (
-          <Form className="bg-[var(--bgColorSecondary)] shadow-md rounded px-8 pt-6 pb-8 mb-4">
+          <Form className="bg-[var(--bgColorSecondary)] xs: shadow-none xs:shadow-md rounded xs:px-8 pt-6 pb-8 mb-4">
             <FormField name="itemName" label="Product Name" />
             <FormField name="weight" label="Weight" />
-            <FormField name="price" label="Rate Per Quantity" type="number" />
+            {/* <FormField name="price" label="Rate Per Quantity" type="number" /> */}
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Quantity
@@ -431,18 +431,18 @@ const ReturnItemForm = ({
               />
             </div>
 
-            <div className="flex items-center  gap-2 justify-between">
+            <div className="flex items-center flex-wrap  gap-2 justify-between">
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 xs:px-4 px-1 xs:text-[16px] text-[12px] rounded focus:outline-none focus:shadow-outline"
+                className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 xs:px-4 px-1 xs:text-[16px] w-full rounded focus:outline-none focus:shadow-outline"
               >
                 Submit Request
               </button>
               <button
                 type="button"
                 onClick={onCancel}
-                className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 w-full rounded focus:outline-none focus:shadow-outline"
               >
                 Cancel
               </button>

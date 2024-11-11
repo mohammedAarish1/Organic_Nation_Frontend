@@ -17,6 +17,8 @@ import adminReducer from '../features/admin/adminSlice';
 import adminDataReducer from '../features/admin/adminData';
 import manageReturnsReducer from '../features/manage-returns/manageReturns';
 import manageOrdersReducer from '../features/manageOrders/manageOrders'
+import userProfileReducer from '../features/user-profile/userProfile';
+import notificationSliceReducer from '../features/recent-purchase-notification/notificationSlice';
 
 // import adminFeatureReducer from '../features/admin/adminFeatures'
 
@@ -43,6 +45,8 @@ import { setStore } from '../helper/storeUtils';
         adminData: adminDataReducer,
         returns: manageReturnsReducer,
         orders: manageOrdersReducer,
+        userProfile:userProfileReducer,
+        notification:notificationSliceReducer,
         // adminFeatures: adminFeatureReducer,
     },
 })

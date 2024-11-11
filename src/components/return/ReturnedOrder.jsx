@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import {
   getAllOrders,
 } from "../../features/manageOrders/manageOrders";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Alert from "../alert/Alert";
 // react icons
-import {  MdOutlineCancel } from "react-icons/md";
+import { MdOutlineCancel } from "react-icons/md";
 import { GoDotFill } from "react-icons/go";
 
 import { toast } from "react-toastify";
@@ -23,15 +23,15 @@ const ReturnedOrder = ({ singleReturn }) => {
 
   const statusIcons = {
     requested: <GoDotFill className="text-xl text-green-500" />,
-    rejected: <MdOutlineCancel  className="text-xl text-red-500" />,
-    inProgress: <GrInProgress  className="text-sm text-orange-500" />,
-    completed: <MdOutlineFileDownloadDone  className="text-xl text-green-500" />, // Cancelled icon
+    rejected: <MdOutlineCancel className="text-xl text-red-500" />,
+    inProgress: <GrInProgress className="text-sm text-orange-500" />,
+    completed: <MdOutlineFileDownloadDone className="text-xl text-green-500" />, // Cancelled icon
   };
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [itemDetails, setItemDetails] = useState("");
-
+  const { loading } = useSelector(state => state.returns)
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   const showAlert = () => {
@@ -56,16 +56,17 @@ const ReturnedOrder = ({ singleReturn }) => {
   };
 
   const handleReturnCancel = () => {
-      dispatch(cancelReturnRequest(singleReturn._id))
-          .then(res => {
-              if (res.meta.requestStatus === 'fulfilled') {
-                dispatch(getAllReturnItems())
-                  dispatch(getAllOrders())
-                  toast.info('Cancelled Successfully')
-              }
-          })
-          setIsAlertOpen(false);
-      // navigate('/manage-returns')
+    dispatch(cancelReturnRequest(singleReturn._id))
+      .then(res => {
+        if (res.meta.requestStatus === 'fulfilled') {
+          dispatch(getAllReturnItems());
+          dispatch(getAllOrders());
+          // navigate('/manage-orders');
+          toast.info('Cancelled Successfully')
+        }
+      })
+    setIsAlertOpen(false);
+    // navigate('/manage-returns')
 
   };
 
@@ -73,6 +74,11 @@ const ReturnedOrder = ({ singleReturn }) => {
     getCurReturnedItem();
 
   }, [singleReturn.itemName]);
+
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
 
   return (
     <>
@@ -109,7 +115,7 @@ const ReturnedOrder = ({ singleReturn }) => {
               </div>
             </div>
             <div className="flex gap-3 font-mono">
-                {/* order detail button  */}
+              {/* order detail button  */}
               {/* <div className="flex gap-3 text-sm xs:text-[16px]">
                 <button
                   className=" flex  justify-center items-center gap-2 underline underline-offset-2 bg-green-700 xs:px-5 px-2 py-2 rounded-md text-white hover:bg-green-800 xs:text-[16px] text-sm"
@@ -166,7 +172,7 @@ const ReturnedOrder = ({ singleReturn }) => {
           {/* order details body  */}
           <div className=" p-4  bg-gradient-to-r from-[#6D613B] to-[#D3BB71]">
             {/* product details  */}
-<h4 className="text-white text-xl mb-4 italic">Item Description:</h4>
+            <h4 className="text-white text-xl mb-4 italic">Item Description:</h4>
             <div className="flex flex-col gap-4 font-sans">
               <div className="flex xs:flex-row flex-col gap-5 xs:gap-0 justify-between xs:items-center">
                 <div className="flex justify-start xs:gap-5 gap-5 items-center">
@@ -175,8 +181,8 @@ const ReturnedOrder = ({ singleReturn }) => {
                       src={
                         Array.isArray(itemDetails?.img)
                           ? itemDetails?.img.filter((path) =>
-                              path.toLowerCase().includes("front")
-                            )[0]
+                            path.toLowerCase().includes("front")
+                          )[0]
                           : null
                       }
                       className="xs:w-16 w-12 rounded-xl"
@@ -186,7 +192,7 @@ const ReturnedOrder = ({ singleReturn }) => {
                   <div className="flex flex-col justify-start xs:gap-3 gap-1 text-sm xs:text-[16px] text-white ">
                     <p>{itemDetails.name}</p>
                     <p>Quantity : {singleReturn.quantity} Pcs.</p>
-                    <p>Amount Paid: ₹ {singleReturn.price} </p>
+                    {/* <p>Amount Paid: ₹ {singleReturn.price} </p> */}
                   </div>
                 </div>
                 {/* ==================buttons============ */}
@@ -228,7 +234,7 @@ const ReturnedOrder = ({ singleReturn }) => {
           {/* order footer section  */}
           <div className=' bg-[#6D613B] '>
 
-                        {/* <div className='text-white xs:px-5 px-1 py-3 xs:text-[16px] text-[12px]'>
+            {/* <div className='text-white xs:px-5 px-1 py-3 xs:text-[16px] text-[12px]'>
                             <div className='flex justify-between '>
                                 <p className='text-end '>Sub Total:</p>
                                 <p> ₹ {order?.subTotal}</p>
@@ -243,26 +249,24 @@ const ReturnedOrder = ({ singleReturn }) => {
                                 <p> ₹ {order?.subTotal + order?.shippingFee}</p>
                             </div>
                         </div> */}
-                        <div className={`${singleReturn?.returnStatus === 'completed'?'bg-[#D3BB71] opacity-35':'bg-[#D3BB71] hover:bg-[#e0cf9c] '} `}>
-                            <button
-                                className='flex w-full h-full justify-center  py-3 gap-1 items-center'
-                                onClick={showAlert}
-                                disabled={singleReturn?.returnStatus === 'completed'}
-                            >
-                                {/* <span> <BsCartX className={`${singleReturn?.returnStatus !== 'requested' ? 'text-red-400' : 'text-red-500'} text-xl  `} /></span> */}
-                                <span className={` `}>Cancel Returning Item</span>
-                            </button>
-                        </div>
-                    </div>
+            <div className={`${singleReturn?.returnStatus === 'completed' ? 'bg-[#D3BB71] opacity-35' : 'bg-[#D3BB71] hover:bg-[#e0cf9c] '} `}>
+              <button
+                className='flex w-full h-full justify-center  py-3 gap-1 items-center'
+                onClick={showAlert}
+                disabled={singleReturn?.returnStatus === 'completed'}
+              >
+                {/* <span> <BsCartX className={`${singleReturn?.returnStatus !== 'requested' ? 'text-red-400' : 'text-red-500'} text-xl  `} /></span> */}
+                <span className={` `}>Cancel Returning Item</span>
+              </button>
+            </div>
+          </div>
         </div>
         {/* alert for cancelling order  */}
         <Alert
           isOpen={isAlertOpen}
           alertMessage="Do You want cancel 'returning the item' ?"
-          actionMessageOne="Yes, Cancel"
-          actionMessageTwo=" Go back"
           hideAlert={hideAlert}
-          handleAction1={handleReturnCancel}
+          handleAction={handleReturnCancel}
         />
       </div>
       {/* order 1 end */}

@@ -118,7 +118,6 @@ const handleDocumentDeleteFromDatabase = (collection, id, dispatch, updateLists)
 // for checking delivery availability and calculating shipping fee
 const checkDeliveryAndCalculateShippingFee = (
   pinCode,
-  totalWeight,
   dispatch
 ) => {
   if (pinCode) {
@@ -128,7 +127,7 @@ const checkDeliveryAndCalculateShippingFee = (
     dispatch(checkDeliveryAvailability(pinCode)).then((res) => {
       if (res.payload.available) {
         dispatch(
-          calculateShippingFee({ pinCode: res.meta.arg, weight: totalWeight })
+          calculateShippingFee({ pinCode: res.meta.arg })
         ).then((res) => {
 
           if (res.meta.requestStatus === "fulfilled") {

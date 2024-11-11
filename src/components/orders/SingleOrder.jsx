@@ -211,6 +211,11 @@ const SingleOrder = ({
             ref={modalRef}
             className="bg-[var(--bgColorSecondary)] p-6 mt-20 rounded-lg max-w-3xl w-full max-h-[70vh] overflow-y-auto"
           >
+            
+            <h2 className="text-2xl font-semibold text-[var(--themeColor)] mb-4">
+              Request a return for this Item
+            </h2>
+
             <div className="px-6 italic text-gray-500 text-sm pb-4 pt-2">
               
               <ul className=" flex flex-col gap-1 list-disc">
@@ -228,9 +233,6 @@ const SingleOrder = ({
                 </li>
               </ul>
             </div>
-            <h2 className="text-2xl font-semibold text-[var(--themeColor)] mb-4">
-              Request a return for this Item
-            </h2>
 
             <ReturnItemForm
               product={curOrder}

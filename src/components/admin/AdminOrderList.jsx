@@ -114,8 +114,7 @@ const AdminOrderList = ({ orders }) => {
     }
 
     // for changing order and payment  status in database
-    const updateUserOrderStatus = () => {
-
+    const updateUserOrderStatus = (deliveryDate) => {
         if (curStatusAndId.status === 'paid' || curStatusAndId.status === 'pending') {
             dispatch(updatePaymentStatus(curStatusAndId))
                 .then(res => {
@@ -126,7 +125,8 @@ const AdminOrderList = ({ orders }) => {
                     }
                 })
         } else {
-            dispatch(updateOrderStatus(curStatusAndId))
+            const payload={...curStatusAndId,deliveryDate:deliveryDate||null}
+            dispatch(updateOrderStatus(payload))
                 .then(res => {
                     if (res.meta.requestStatus === 'fulfilled') {
                         setIsAlertOpen(false)
@@ -343,10 +343,9 @@ const AdminOrderList = ({ orders }) => {
                         `Are you sure, do you really want to delete this ?` :
                         `Do you want to update the order status to ${curStatusAndId.status}`
                 }
-                actionMessageOne='Yes'
-                actionMessageTwo='No'
                 hideAlert={hideAlert}
-                handleAction1={curStatusAndId.status === '' ? handleDelete : updateUserOrderStatus}
+                handleAction={curStatusAndId.status === '' ? handleDelete : updateUserOrderStatus}
+                updatingOrderStatus={curStatusAndId.status ==='completed'}
             />
 
         </div>

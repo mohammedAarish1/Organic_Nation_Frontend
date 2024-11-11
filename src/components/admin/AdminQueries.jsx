@@ -218,10 +218,8 @@ const AdminQueries = () => {
       <Alert
         isOpen={isAlertOpen}
         alertMessage={`Are you sure, do you really want to delete this ?`}
-        actionMessageOne='Yes'
-        actionMessageTwo='No'
         hideAlert={hideAlert}
-        handleAction1={handleDelete}
+        handleAction={handleDelete}
       />
     </div>
 

@@ -40,7 +40,6 @@ const Cart = () => {
     loading,
     validatingCouponCode,
     totalCartAmount,
-    totalWeight,
     totalTax,
     error,
     couponCodeApplied,
@@ -79,7 +78,7 @@ const Cart = () => {
       dispatch(checkDeliveryAvailability(values.pincode)).then((res) => {
         if (res.payload.available) {
           dispatch(
-            calculateShippingFee({ pinCode: res.meta.arg, weight: totalWeight })
+            calculateShippingFee({ pinCode: res.meta.arg })
           ).then((res) => {
             if (res.meta.requestStatus === "fulfilled") {
               localStorage.setItem("deliveryChargeToken", res?.payload?.token);
@@ -90,7 +89,6 @@ const Cart = () => {
     }
   };
 
- 
 
   const handleClickOutside = (event) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -98,6 +96,7 @@ const Cart = () => {
       setShowCouponCodelist(false);
     }
   };
+
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -116,12 +115,12 @@ const Cart = () => {
       {/* <div>
         <OfferBanner />
       </div> */}
-      {totalCartAmount<399 && totalCartAmount>0 && (
-         <div className="md:mt-0 mt-5 sm:px-0 px-5 text-center italic text-orange-500 md:text-xl font-sans font-bold">
-         <span>*CASH ON DELIVERY (COD) is available on all orders above  ₹ 399 !</span>
-       </div>
+      {totalCartAmount < 399 && totalCartAmount > 0 && (
+        <div className="md:mt-0 mt-5 sm:px-0 px-5 text-center italic text-orange-500 md:text-xl font-sans font-bold">
+          <span>*CASH ON DELIVERY (COD) is available on all orders above  ₹ 399 !</span>
+        </div>
       )}
-     
+
       <div className=" py-10">
         {/* shopping btn and clear cart  */}
         <div className="flex justify-between items-center mb-3 lg:w-[80%] w-[90%] mx-auto ">
@@ -185,40 +184,45 @@ const Cart = () => {
             {cartItemsList?.map((curItem, index) => (
               <tbody key={curItem._id} className=" divide-y divide-gray-200">
                 <tr>
-                  <td className="px-6 py-4 text-center whitespace-nowrap ">
-                    <div className=" text-gray-900 ">{index + 1}.</div>
+                  <td className=" text-center whitespace-nowrap ">
+                    <div className=" text-gray-900 px-6 py-4 ">{index + 1}.</div>
                   </td>
-                  <td className="px-6 py-4 text-center whitespace-nowrap lg:table-cell hidden">
-                    <div className="font-semibold text-gray-900">
-                      <img
-                        src={
-                          Array.isArray(curItem.img)
-                            ? curItem.img.filter((path) =>
-                              path.includes("front")
-                            )[0]
-                            : null
-                        }
-                        className="w-20 max-h-24 object-contain"
-                        alt={curItem.name}
-                      />
-                    </div>
+                  <td className=" text-center whitespace-nowrap lg:table-cell hidden">
+                    <Link to={`/shop/${curItem['category-url'].toLowerCase()}/${curItem['name-url']}`}>
+
+                      <div className="font-semibold text-gray-900 px-6 py-4">
+                        <img
+                          src={
+                            Array.isArray(curItem.img)
+                              ? curItem.img.filter((path) =>
+                                path.includes("front")
+                              )[0]
+                              : null
+                          }
+                          className="w-20 max-h-24 object-contain"
+                          alt={curItem.name}
+                        />
+                      </div>
+                    </Link>
                   </td>
-                  <td className="px-6 py-4 text-center whitespace-nowrap ">
-                    <div className="font-semibold text-gray-900 ">
-                      {curItem.name}
-                    </div>
+                  <td className=" text-center whitespace-nowrap">
+                    <Link to={`/shop/${curItem['category-url'].toLowerCase()}/${curItem['name-url']}`}>
+                      <div className="font-semibold text-gray-900 px-6 py-4 ">
+                        {curItem.name}
+                      </div>
+                    </Link>
                   </td>
-                  <td className="px-6 py-4 text-center whitespace-nowrap lg:table-cell hidden">
-                    <div className=" text-gray-900">
+                  <td className="text-center whitespace-nowrap lg:table-cell hidden">
+                    <div className=" text-gray-900 px-6 py-4">
                       ₹{" "}
                       {Math.round(
                         curItem.price - (curItem.price * curItem.discount) / 100
                       )}
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-center   whitespace-nowrap">
+                  <td className=" text-center   whitespace-nowrap">
                     {/* <div className=" text-gray-900 flex justify-center items-center "><ProductQty qty={curItem.qty} increaseQty={() => dispatch(increaseProductQty(curItem.id))} decreaseQty={() => dispatch(decreaseProductQty(curItem.id))} /></div> */}
-                    <div className=" text-gray-900 flex justify-center items-center ">
+                    <div className=" text-gray-900 flex justify-center items-center px-6 py-4">
                       <ProductQty
                         qty={curItem.quantity}
                         increaseQty={() => {
@@ -248,8 +252,8 @@ const Cart = () => {
                       />
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-center whitespace-nowrap ">
-                    <div className=" text-gray-900">
+                  <td className=" text-center whitespace-nowrap ">
+                    <div className=" text-gray-900 px-6 py-4">
                       ₹{" "}
                       {Math.round(
                         (curItem.price -
@@ -258,14 +262,14 @@ const Cart = () => {
                       )}
                     </div>
                   </td>
-                  <td className="px-6 py-4  text-center whitespace-nowrap">
+                  <td className=" text-center whitespace-nowrap">
                     <button
                       onClick={() => {
                         dispatch(removeFromCart(curItem['name-url'])).then(() =>
                           dispatch(getAllCartItems())
                         );
                       }}
-                      className="text-red-500 hover:text-red-700"
+                      className="text-red-500 hover:text-red-700 px-6 py-4 "
                     >
                       <MdDelete className="text-xl" />
                     </button>
@@ -328,17 +332,15 @@ const Cart = () => {
             </div> */}
             {/* coupon  code list implementation */}
             <div className="">
-           
-              <div className=" flex justify-center items-center gap-1 mt-3  text-green-700">
+
+
+              <div className="flex justify-center items-center gap-1 mt-3 text-green-700 text-xl">
                 <FaTags />
                 <button
-                  className="hover:underline underline-offset-2"
-                  onClick={() => {
-                    setShowCouponCodelist(true);
-                  }}
+                  className="glowing-text hover:underline underline-offset-2"
+                  onClick={() => setShowCouponCodelist(true)}
                 >
-                  {" "}
-                  See Available Coupons !
+                  See Available Coupons!
                 </button>
               </div>
               {/* pop up box  */}
@@ -437,8 +439,8 @@ const Cart = () => {
             >
               <div
                 className={`${cartItemsList?.length === 0
-                    ? "bg-green-400"
-                    : "hover:scale-90 bg-green-500 hover:bg-green-700"
+                  ? "bg-green-400"
+                  : "hover:scale-90 bg-green-500 hover:bg-green-700"
                   } flex justify-center items-center gap-2    transition-all duration-700 text-white rounded-md`}
                 data-tooltip-id="checkout-tooltip"
                 data-tooltip-content="Your cart is Empty !"

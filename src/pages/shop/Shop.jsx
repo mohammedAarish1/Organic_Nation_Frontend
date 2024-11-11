@@ -68,9 +68,9 @@ const Shop = () => {
         twitterSite="Organic Nation"
         twitterCreator="organicnation_"
       />
-      {/* <div className='pb-8'>
+      <div className='pb-8'>
         <OfferBanner />
-      </div> */}
+      </div>
       {/* number of products available  */}
       {categoryBtnValue !== 'all' && (
         <div>

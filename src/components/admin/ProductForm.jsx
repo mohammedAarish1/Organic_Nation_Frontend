@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
-import { addNewProductInDatabase } from '../../features/admin/adminData'
+import { addNewProductInDatabase, updateExistingProduct } from '../../features/admin/adminData'
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -96,6 +96,20 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
         Object.keys(values).forEach(key => {
             data.append(key, values[key]);
         });
+
+
+
+        // Append meta data as a JSON string
+        // const metaData = {
+        //     buy: values.buy,
+        //     get: values.get,
+        //     season_special: values.season_special,
+        //     new_arrivals: values.new_arrivals,
+        //     best_seller: values.best_seller,
+        //     deal_of_the_day: values.deal_of_the_day
+        // };
+        // data.append('meta', JSON.stringify(metaData));
+
         images.forEach(image => {
             data.append('images', image);
         });
@@ -108,17 +122,15 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
         //     console.log(key, value);
         // }
         try {
-            let response;
             if (product) {
-                response = await axios.put(`/api/products/edit/${product._id}`, data);
-
+                dispatch(updateExistingProduct({ id: product._id, formData: data }))
 
             } else {
                 // response = await axios.post(`${apiUrl}/api/admin/products/add`, data);
                 dispatch(addNewProductInDatabase(data)).unwrap();
-                    // .then((res) => {
-                    //     console.log('res', res)
-                    // })
+                // .then((res) => {
+                //     console.log('res', res)
+                // })
             }
             onSubmit();
         } catch (error) {

@@ -113,7 +113,9 @@ export const generateInvoice = createAsyncThunk(
 export const updateOrderStatus = createAsyncThunk(
     'adminData/updateOrderStatus',
     async (data, { rejectWithValue }) => {
+
         const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
+
         try {
             const response = await axios.put(`${apiUrl}/api/admin/orders/update-status`, data, {
                 headers: {
@@ -121,7 +123,6 @@ export const updateOrderStatus = createAsyncThunk(
                     'Content-Type': 'application/json'
                 }
             })
-
             // return response.data;
         } catch (error) {
             if (error.response && error.response.data) {
@@ -170,7 +171,7 @@ export const addNewProductInDatabase = createAsyncThunk(
                 }
             });
 
-            // return response.data;
+            return response.data;
         } catch (error) {
             if (error.response && error.response.data) {
                 return rejectWithValue(error.response.data);
@@ -181,6 +182,24 @@ export const addNewProductInDatabase = createAsyncThunk(
     }
 );
 
+
+
+// Thunk for updating a product
+export const updateExistingProduct = createAsyncThunk(
+    'adminData/updateExistingProduct',
+    async ({ id, formData }, { rejectWithValue }) => {
+      try {
+        const response = await axios.put(`${apiUrl}/api/admin/products/update/${id}`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        // return response.data;
+      } catch (err) {
+        return rejectWithValue(err.response.data);
+      }
+    }
+  );
 
 // delete the document fromt the database 
 export const deleteDocumentFromDatabase = createAsyncThunk(
@@ -196,7 +215,7 @@ export const deleteDocumentFromDatabase = createAsyncThunk(
                     }
                 });
 
-                // return response.data;
+                return response.data;
             }
 
         } catch (error) {
@@ -588,6 +607,27 @@ const adminData = createSlice({
                 }
             })
             .addCase(getTotalReturns.rejected, (state, action) => {
+                return {
+                    ...state,
+                    loading: false,
+                    error: action.payload,
+                }
+            })
+            // delete from database
+            .addCase(deleteDocumentFromDatabase.pending, (state) => {
+                return {
+                    ...state,
+                    loading: true,
+                    error: null,
+                }
+            })
+            .addCase(deleteDocumentFromDatabase.fulfilled, (state, action) => {
+                return {
+                    ...state,
+                    loading: false,
+                }
+            })
+            .addCase(deleteDocumentFromDatabase.rejected, (state, action) => {
                 return {
                     ...state,
                     loading: false,

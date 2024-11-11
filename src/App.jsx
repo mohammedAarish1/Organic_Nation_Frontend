@@ -17,9 +17,8 @@ import {
 import getRoutes from './routes/routes';
 import AdminRoutes from './routes/AdminRoutes';
 import AdminLogin from './pages/admin/AdminLogin';
-import { fetchAdminData } from './features/admin/adminSlice';
-import PopupBanner from './components/popup-banner/PopupBanner';
 import { checkAuthStatus } from './features/auth/auth';
+import RecentOrderNotification from './components/recent-order-notification/RecentOrderNotification ';
 
 // Memoized components
 const MemoizedHeader = memo(Header);
@@ -27,7 +26,6 @@ const MemoizedFooter = memo(Footer);
 const MemoizedInfo = memo(Info);
 const MemoizedBreadcrumbs = memo(Breadcrumbs);
 const MemoizedWhatsApp = memo(WhatsApp);
-const MemoizedPopupBanner = memo(PopupBanner);
 
 const MainContent = memo(() => {
   return (
@@ -110,9 +108,10 @@ useEffect(()=>{
         {/* Normal routes */}
         <Route path="*" element={
           <>
-             <MemoizedPopupBanner />
+             {/* <MemoizedPopupBanner /> */}
             <ScrollToTop />
             <MainContent />
+            <RecentOrderNotification/>
           </>
         } />
       </Routes>

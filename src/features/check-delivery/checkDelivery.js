@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import api from "../../config/axiosConfig";
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -21,16 +22,16 @@ export const checkDeliveryAvailability = createAsyncThunk(
 
 export const calculateShippingFee = createAsyncThunk(
     'delivery/calculateShippingFee',
-    async ({ pinCode, weight }, { rejectWithValue }) => {
+    async ({ pinCode }, { rejectWithValue }) => {
         try {
-            let deliveryChargeToken = localStorage.getItem('deliveryChargeToken')
-            const response = await axios.post(`${apiUrl}/api/delivery-charges/calculate`, { pinCode, weight },
-                {
-                    headers: deliveryChargeToken ? {
-                        'Authorization': `Bearer ${deliveryChargeToken}`,
-                        'Content-Type': 'application/json'
-                    } : {}
-                }
+            // let deliveryChargeToken = localStorage.getItem('deliveryChargeToken')
+            const response = await api.post(`/api/delivery-charges/calculate`, { pinCode },
+                // {
+                //     headers: deliveryChargeToken ? {
+                //         'Authorization': `Bearer ${deliveryChargeToken}`,
+                //         'Content-Type': 'application/json'
+                //     } : {}
+                // }
             );
             return response.data;
         } catch (error) {

@@ -146,7 +146,6 @@ const filterSlice = createSlice({
             const { value, productData } = action.payload;
             const data = [...productData];
             let filterData;
-
             if (value === '') {
                 return {
                     ...state,

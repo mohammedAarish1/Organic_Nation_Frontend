@@ -16,7 +16,6 @@ const ProductList = ({ gridView }) => {
 
   const lastIndex = currentPage * postPerPage;
   const firstIndex = lastIndex - postPerPage;
-
   const currentPageData = filterProduct?.slice(firstIndex, lastIndex);
 
 
@@ -25,7 +24,7 @@ const ProductList = ({ gridView }) => {
 
   return (
     <div className=' mt-5  '>
-      <div className={`${gridView && "flex-row justify-center items-center"} flex flex-wrap sm:gap-16 gap-10  py-2 xs:py-8`}>
+      <div className={`${gridView && "flex-row justify-center items-center"} flex flex-wrap sm:gap-16 gap-7 py-2 xs:py-8`}>
         {currentPageData?.map((product) => (
           <Product gridView={gridView} key={product._id} product={product} />
         ))}
