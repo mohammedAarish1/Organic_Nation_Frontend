@@ -69,7 +69,7 @@ const CheckoutForm = () => {
 
 
   const shippingAddressInitial = {
-    address: addresses.length > 0 ? addresses[0].mainAddress : "",
+    mainAddress: addresses.length > 0 ? addresses[0].mainAddress : "",
     optionalAddress: addresses.length > 0 ? addresses[0].optionalAddress : "",
     city: addresses.length > 0 ? addresses[0].city : "",
     state: addresses.length > 0 ? addresses[0].state : "",
@@ -186,14 +186,14 @@ const CheckoutForm = () => {
     const selectedAddress = addresses?.find(add => add.addressType === selectedType)
 
     if (selectedAddress) {
-      setFieldValue("shippingAddress.address", selectedAddress.mainAddress);
+      setFieldValue("shippingAddress.mainAddress", selectedAddress.mainAddress);
       setFieldValue("shippingAddress.optionalAddress", selectedAddress.optionalAddress);
       setFieldValue("shippingAddress.city", selectedAddress.city);
       setFieldValue("shippingAddress.state", selectedAddress.state);
       setFieldValue("shippingAddress.pinCode", selectedAddress.pinCode);
     }
     else {
-      setFieldValue("shippingAddress.address", "");
+      setFieldValue("shippingAddress.mainAddress", "");
       setFieldValue("shippingAddress.optionalAddress", "");
       setFieldValue("shippingAddress.city", "");
       setFieldValue("shippingAddress.state", "");
@@ -405,28 +405,28 @@ const CheckoutForm = () => {
                   <div className="relative z-0 w-full">
                     <Field
                       type="text"
-                      name="shippingAddress.address"
-                      id="shippingAddress.address"
+                      name="shippingAddress.mainAddress"
+                      id="shippingAddress.mainAddress"
                       className={inputStyle}
                       placeholder=" "
                       autoComplete="off"
                       onBlur={(e) => {
-                        setFieldValue("billingAddress.address", e.target.value)
+                        setFieldValue("billingAddress.mainAddress", e.target.value)
 
                       }}
                     />
 
                     <label
-                      htmlFor="shippingAddress.address"
+                      htmlFor="shippingAddress.mainAddress"
                       className={lableStyle}
                     >
                       Address Line
                     </label>
                     <MdLocationCity className="absolute top-4 right-4 text-xl" />
-                    {errors?.shippingAddress?.address &&
-                      touched?.shippingAddress?.address ? (
+                    {errors?.shippingAddress?.mainAddress &&
+                      touched?.shippingAddress?.mainAddress ? (
                       <p className="text-red-600">
-                        *{errors?.shippingAddress?.address}
+                        *{errors?.shippingAddress?.mainAddress}
                       </p>
                     ) : null}
                   </div>
@@ -625,8 +625,8 @@ const CheckoutForm = () => {
                           values.shippingAddress.country
                         );
                         setFieldValue(
-                          "billingAddress.address",
-                          values.shippingAddress.address
+                          "billingAddress.mainAddress",
+                          values.shippingAddress.mainAddress
                         );
                         setFieldValue(
                           "billingAddress.city",
@@ -651,7 +651,7 @@ const CheckoutForm = () => {
                   <div className="grid sm:grid-cols-2 gap-10">
                     {/* Address   */}
                     <InputField
-                      name="billingAddress.address"
+                      name="billingAddress.mainAddress"
                       label=" Address Line"
                       icon={
                         <MdLocationCity className="absolute top-4 right-4 text-xl" />

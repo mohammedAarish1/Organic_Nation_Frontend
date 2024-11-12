@@ -3,6 +3,7 @@ import { FaCheckCircle } from 'react-icons/fa';
 import { Link, useParams } from 'react-router-dom';
 // import { getSingleOrder } from '../../features/manageOrders/manageOrders';
 import axios from 'axios';
+import { address } from '../../helper/helperFunctions';
 
 const OrderConfirm = () => {
 
@@ -56,7 +57,7 @@ const OrderConfirm = () => {
                     </div>
                     <div className="flex justify-between items-center mb-2">
                         <span className="font-semibold ">Shipping Address:</span>
-                        <span className="text-gray-800 text-end">{singleOrder.shippingAddress}</span>
+                        <span className="text-gray-800 text-end">{address(singleOrder.shippingAddress)}</span>
                     </div>
                     <div className="flex justify-between items-center mb-2">
                         <span className="font-semibold ">Phone Number</span>

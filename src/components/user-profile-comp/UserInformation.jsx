@@ -128,7 +128,6 @@
 //     console.log('payload', payload)
 //     dispatch(updateUserPhoneNumber(payload))
 //       .then((result) => {
-//         console.log('result phone', result)
 //         setShowOTPFields(false)
 //         setIsEditing({ personal: false, email: false, phoneNumber: false });
 //         dispatch(getUserData())

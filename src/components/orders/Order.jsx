@@ -19,6 +19,7 @@ import { toast } from "react-toastify";
 import { FaArrowRight } from "react-icons/fa";
 import { PiSealCheckFill } from "react-icons/pi";
 import DeliveryFeedbackForm from "../../helper/DeliveryFeedbackForm";
+import { address } from "../../helper/helperFunctions";
 
 const Order = ({ order }) => {
   const statusIcons = {
@@ -171,7 +172,7 @@ const Order = ({ order }) => {
                     <div className="flex justify-between items-center  border-gray-400 border-b-2 py-2">
                       <span>Shipping Address</span>
                       <span className="text-gray-400 sm:w-1/3 text-end">
-                        {order?.shippingAddress}
+                        {address(order?.shippingAddress)}
                       </span>
                     </div>
                     <div className="flex justify-between items-center  border-gray-400 border-b-2 py-2">

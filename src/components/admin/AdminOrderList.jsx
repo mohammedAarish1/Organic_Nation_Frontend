@@ -7,7 +7,7 @@ import { ImSpinner9 } from 'react-icons/im';
 import Alert from '../alert/Alert';
 import { fetchAdminData } from '../../features/admin/adminSlice';
 import { useNavigate } from 'react-router-dom';
-import { handleDocumentDeleteFromDatabase } from '../../helper/helperFunctions';
+import { address, handleDocumentDeleteFromDatabase } from '../../helper/helperFunctions';
 import ReportGenerator from './ReportGenerator';
 import { toast } from 'react-toastify';
 
@@ -27,7 +27,6 @@ const AdminOrderList = ({ orders }) => {
     const modalRef = useRef();
     const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
     const { generatingInvoice, loading } = useSelector(state => state.adminData);
-
 
     useEffect(() => {
         sortAndFilterOrders();
@@ -307,8 +306,8 @@ const AdminOrderList = ({ orders }) => {
                         <p><strong>Receiver:</strong> {selectedOrder.receiverDetails.name}</p>
                         <p><strong>Phone:</strong> {selectedOrder.receiverDetails.phoneNumber}</p>
                         <p><strong>Email:</strong> {selectedOrder.userEmail}</p>
-                        <p><strong>Billing Address:</strong> {selectedOrder.billingAddress}</p>
-                        <p><strong>Shipping Address:</strong> {selectedOrder.shippingAddress}</p>
+                        <p><strong>Billing Address:</strong> {address(selectedOrder.billingAddress)}</p>
+                        <p><strong>Shipping Address:</strong> {address(selectedOrder.shippingAddress)}</p>
                         <p><strong>Payment Method:</strong> {selectedOrder.paymentMethod}</p>
                         <p><strong>Payment Status:</strong> {selectedOrder.paymentStatus}</p>
                         <p><strong>Order Status:</strong> {selectedOrder.orderStatus}</p>

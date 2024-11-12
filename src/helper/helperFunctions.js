@@ -143,9 +143,27 @@ const checkDeliveryAndCalculateShippingFee = (
 };
 
 
+
+// to convert the address object into plain string 
+const address = (obj) => {
+  let result = '';
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key) && key !== '_id') {  // Skip _id field
+      const value = obj[key];
+      if (Array.isArray(value)) {
+        result += value.flat().join(' ') + ' ';
+      } else {
+        result += value + ' ';
+      }
+    }
+  }
+  return result.trim();
+}
+
+
 export {
   generateTransactionID,
-  // address,
+  address,
   // calculateDiscountAndTaxIncluded,
   fetchDataAfterLogin,
   handleDocumentDeleteFromDatabase,
