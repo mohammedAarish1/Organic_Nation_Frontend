@@ -214,7 +214,6 @@ const ReturnItemForm = ({
     // Append invoiceNumber
     data.append("invoiceNumber", invoiceNumber);
 
-    // console.log('FormData contents before dispatch:');
     // for (let [key, value] of data.entries()) {
     //     console.log(key, typeof value, value);
     // }

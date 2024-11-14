@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { handleDocumentDeleteFromDatabase } from '../../helper/helperFunctions';
 import { getAllUsers } from '../../features/admin/adminData';
 import Alert from '../alert/Alert';
+import { MdDeleteForever } from "react-icons/md";
+
 
 
 const AdminUsers = () => {
@@ -93,7 +95,7 @@ const AdminUsers = () => {
     if (loading) return <div>Loading..</div>
     return (
 
-        <div className="  p-4 w-full">
+        <div className="  p-4 w-full font-sans">
             <div className="flex justify-between items-center mb-4 ">
                 <h2 className="text-2xl font-bold">Users</h2>
                 <div className="flex items-center">
@@ -113,8 +115,8 @@ const AdminUsers = () => {
                 </button> */}
             </div>
             <div className="overflow-x-auto rounded-xl">
-                <table className="min-w-full bg-white shadow-md rounded-lg">
-                    <thead className="bg-gray-200">
+                <table className="min-w-full  shadow-md rounded-lg">
+                    <thead className="bg-[var(--bgColorPrimary)] text-white">
                         <tr>
                             <th className="p-3">
                                 <input type="checkbox" className="form-checkbox" />
@@ -154,9 +156,9 @@ const AdminUsers = () => {
                                                 setCurItemId(user._id)
                                                 setIsAlertOpen(true);
                                               }}
-                                            className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700"
+                                            className=" flex justify-center px-2 py-1 rounded "
                                         >
-                                            Delete
+                                            <MdDeleteForever className='text-red-500 text-2xl hover:text-red-700'/>
                                         </button>
                                         {/* <select
                                             value={user.orderStatus}

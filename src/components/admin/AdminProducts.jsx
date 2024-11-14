@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ImSpinner9 } from 'react-icons/im';
 import { FiPlusSquare } from "react-icons/fi";
 import ProductForm from './ProductForm';
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
+
 
 
 
@@ -101,7 +103,7 @@ const AdminProducts = () => {
 
     return (
 
-        <div className="  p-4 w-full">
+        <div className="  p-4 w-full font-sans">
             <div className="flex justify-between items-center mb-4 ">
                 <h2 className="text-2xl font-bold">Products</h2>
                 <div className="flex items-center">
@@ -131,8 +133,8 @@ const AdminProducts = () => {
                 </button>
             </div>
             <div className="overflow-x-auto">
-                <table className="min-w-full bg-white shadow-md rounded-lg">
-                    <thead className="bg-gray-200">
+                <table className="min-w-full shadow-md rounded-lg">
+                    <thead className="bg-[var(--bgColorPrimary)] text-white">
                         <tr>
                             <th className="p-3">
                                 <input type="checkbox" className="form-checkbox" />
@@ -167,20 +169,20 @@ const AdminProducts = () => {
                                 <td className="p-3 text-center"> {product.tax}%</td>
                                 <td className="p-3">
                                     <div className="flex flex-col space-y-2">
-                                        <button
+                                        {/* <button
                                             // onClick={() => handleOrderDetails(product)}
                                             className="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-800"
                                         >
                                             Product Details
-                                        </button>
+                                        </button> */}
                                         <button
                                             onClick={() => {
                                                 setSelectedProduct(product);
                                                 setIsFormVisible(true)
                                             }}
-                                            className="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-800"
+                                            className="  px-2 py-1 rounded hover:text-green-800 flex justify-center"
                                         >
-                                            Edit
+                                             <FaEdit className='text-yellow-500 text-xl' />
                                         </button>
                                         {/* <select
                                                 value={order.orderStatus}
@@ -205,7 +207,7 @@ const AdminProducts = () => {
             </div>
 
             {/* Pagination */}
-            <div className="mt-4 flex justify-center items-center space-x-2">
+            <div className="mt-10 flex justify-center items-center space-x-2">
                 <button
                     onClick={() => paginate(currentPage - 1)}
                     disabled={currentPage === 1}

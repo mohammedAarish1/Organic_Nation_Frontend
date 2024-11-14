@@ -161,7 +161,7 @@ const AdminReturnItemList = ({ returns }) => {
             </div>
             <div className="overflow-x-auto">
                 <table className="min-w-full bg-white shadow-md rounded-lg">
-                    <thead className="bg-gray-200">
+                    <thead className="bg-[var(--bgColorPrimary)] text-white">
                         <tr>
                             <th className="p-3">
                                 <input type="checkbox" className="form-checkbox" />

@@ -17,6 +17,7 @@ import AdminProducts from '../components/admin/AdminProducts';
 import { getProductsData } from '../imports';
 import { ToastContainer } from 'react-toastify';
 import AdminReturnItems from '../components/admin/AdminReturnItems';
+import AdminBanners from '../components/admin/AdminBanners';
 
 // Import other admin components
 
@@ -107,6 +108,7 @@ const AdminRoutes = () => {
             <Route path="/queries" element={<AdminQueries />} />
             <Route path="/products" element={<AdminProducts />} />
             <Route path="/returns" element={<AdminReturnItems />} />
+            <Route path="/banners" element={<AdminBanners />} />
           </Routes>
         </div>
       </div>

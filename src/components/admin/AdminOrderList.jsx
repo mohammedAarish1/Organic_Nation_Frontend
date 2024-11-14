@@ -161,7 +161,7 @@ const AdminOrderList = ({ orders }) => {
 
     return (
 
-        <div className="  p-4 w-full text-sm">
+        <div className="  p-4 w-full text-sm font-sans">
             <div className="flex justify-between items-center mb-4 ">
                 <h2 className="text-2xl font-bold">Orders</h2>
                 <div className="flex items-center">
@@ -181,8 +181,8 @@ const AdminOrderList = ({ orders }) => {
                 </button>
             </div>
             <div className="overflow-x-auto">
-                <table className="min-w-full bg-white shadow-md rounded-lg">
-                    <thead className="bg-gray-200">
+                <table className="min-w-full shadow-md rounded-lg">
+                    <thead className="bg-[var(--bgColorPrimary)] text-white">
                         <tr>
                             <th className="p-3">
                                 <input type="checkbox" className="form-checkbox" />

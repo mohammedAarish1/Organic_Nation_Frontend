@@ -3,7 +3,10 @@ import axios from 'axios';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
-import { addNewProductInDatabase, updateExistingProduct } from '../../features/admin/adminData'
+import { addNewProductInDatabase, updateExistingProduct } from '../../features/admin/adminData';
+import { RxCross2 } from "react-icons/rx";
+import { TiPlus } from "react-icons/ti";
+import { toast } from 'react-toastify';
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -11,6 +14,7 @@ const apiUrl = import.meta.env.VITE_BACKEND_URL;
 const productSchema = Yup.object().shape({
     name: Yup.string().required('Required'),
     weight: Yup.string().required('Required'),
+    grossWeight: Yup.string().required('Required'),
     price: Yup.number().positive('Must be positive').required('Required'),
     discount: Yup.number().min(0, 'Must be at least 0').max(100, 'Must be at most 100').required('Required'),
     tax: Yup.number().min(0, 'Must be at least 0').required('Required'),
@@ -20,20 +24,31 @@ const productSchema = Yup.object().shape({
     availability: Yup.number().min(0, 'Must be at least 0').required('Required'),
     buy: Yup.number().min(0, 'Must be at least 0'),
     get: Yup.number().min(0, 'Must be at least 0'),
+    images: Yup.array().min(1, 'At least one image is required').required('Required')
 });
 
-const FormField = ({ name, label, type = "text", as }) => (
-    <div className="mb-4">
-        <label htmlFor={name} className="block text-sm font-medium text-gray-500 mb-1 tracking-widest">{label}</label>
-        <Field
-            name={name}
-            type={type}
-            as={as}
-            className="mt-1 block w-full rounded-sm  px-2 py-1 border border-gray-200 shadow-sm outline-none focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-        />
-        <ErrorMessage name={name} component="div" className="mt-1 text-sm text-red-600" />
-    </div>
-);
+const FormField = ({ name, label, type = "text", as }) => {
+
+    // Add event handler to prevent scroll from changing number input values
+    const handleWheel = (e) => {
+        // Prevent the input from changing when scrolling
+        e.target.blur();
+    };
+
+    return (
+        <div className="mb-4">
+            <label htmlFor={name} className="block text-sm font-medium text-gray-500 mb-1 tracking-widest">{label}</label>
+            <Field
+                name={name}
+                type={type}
+                as={as}
+                className="mt-1 block w-full rounded-sm  px-2 py-1 border border-gray-200 shadow-sm outline-none focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                onWheel={type === "number" ? handleWheel : undefined}
+            />
+            <ErrorMessage name={name} component="div" className="mt-1 text-sm text-red-600" />
+        </div>
+    );
+}
 
 const CheckboxField = ({ name, label }) => (
     <div className="flex items-center mb-4">
@@ -46,15 +61,43 @@ const CheckboxField = ({ name, label }) => (
     </div>
 );
 
+
+const ImagePreview = ({ url, onRemove, index }) => (
+    <div className="relative group">
+        <img
+            src={url}
+            alt="Product"
+            className="w-24 h-24 object-cover rounded-lg border border-gray-200"
+        />
+        <button
+            type="button"
+            onClick={() => onRemove(index)}
+            className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+        >
+            <RxCross2 />
+        </button>
+    </div>
+);
+
 const ProductForm = ({ product, onSubmit, onCancel }) => {
-
     const dispatch = useDispatch();
-    const [images, setImages] = useState([]);
+    const [existingImages, setExistingImages] = useState(product ? product.img : []);
+    const [newImages, setNewImages] = useState([]);
+    const [removedImageUrls, setRemovedImageUrls] = useState([]);
 
+    useEffect(() => {
+        if (product && product.images) {
+            // Handle images array directly from S3 URLs
+            setExistingImages(product.images.map(url => ({
+                url: url
+            })));
+        }
+    }, [product]);
 
     const initialValues = product ? {
         name: product.name,
         weight: product.weight,
+        grossWeight: product.grossWeight,
         price: product.price,
         discount: product.discount,
         tax: product.tax,
@@ -68,9 +111,11 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
         new_arrivals: product.meta.new_arrivals,
         best_seller: product.meta.best_seller,
         deal_of_the_day: product.meta.deal_of_the_day,
+        images: product.img || []
     } : {
         name: '',
         weight: '',
+        grossWeight: '',
         price: '',
         discount: '',
         tax: '',
@@ -84,54 +129,74 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
         new_arrivals: false,
         best_seller: false,
         deal_of_the_day: false,
+        images: []
     };
 
-    const handleImageChange = (e) => {
-        setImages([...e.target.files]);
+    const handleNewImageChange = (e) => {
+        const files = Array.from(e.target.files);
+        const newImagePreviews = files.map(file => ({
+            file,
+            url: URL.createObjectURL(file)
+        }));
+        setNewImages(prev => [...prev, ...newImagePreviews]);
     };
 
+    const removeExistingImage = (index) => {
+        const removedImageUrl = existingImages[index];
+        setRemovedImageUrls(prev => [...prev, removedImageUrl]);
+        setExistingImages(prev => prev.filter((_, i) => i !== index));
+    };
+
+    const removeNewImage = (index) => {
+        URL.revokeObjectURL(newImages[index].url); // Clean up object URL
+        setNewImages(prev => prev.filter((_, i) => i !== index));
+    };
+
+    //  =============== form submission==========
     const handleSubmit = async (values, { setSubmitting }) => {
         const data = new FormData();
 
+        // Append form values
         Object.keys(values).forEach(key => {
             data.append(key, values[key]);
         });
 
-
-
-        // Append meta data as a JSON string
-        // const metaData = {
-        //     buy: values.buy,
-        //     get: values.get,
-        //     season_special: values.season_special,
-        //     new_arrivals: values.new_arrivals,
-        //     best_seller: values.best_seller,
-        //     deal_of_the_day: values.deal_of_the_day
-        // };
-        // data.append('meta', JSON.stringify(metaData));
-
-        images.forEach(image => {
-            data.append('images', image);
+        // Append new images
+        newImages.forEach(image => {
+            data.append('newImages', image.file);
         });
 
-        // console.log('Form values:', values);
-        // console.log('Images:', images);
+        // Append remaining existing image URLs
+        const remainingImages = existingImages.map(img => img);
+        data.append('existingImages', JSON.stringify(remainingImages));
 
-        // console.log('FormData contents:');
-        // for (let [key, value] of data.entries()) {
-        //     console.log(key, value);
-        // }
+        // Append removed image URLs
+        if (removedImageUrls.length > 0) {
+            data.append('removedImages', JSON.stringify(removedImageUrls));
+        }
+
         try {
             if (product) {
-                dispatch(updateExistingProduct({ id: product._id, formData: data }))
-
+                // for updating the product data
+                await dispatch(updateExistingProduct({
+                    id: product._id,
+                    formData: data
+                }))
+                    .unwrap()
+                    .then(result => {
+                        toast.info(result.message)
+                    })
             } else {
-                // response = await axios.post(`${apiUrl}/api/admin/products/add`, data);
-                dispatch(addNewProductInDatabase(data)).unwrap();
-                // .then((res) => {
-                //     console.log('res', res)
-                // })
+                // for adding new product
+                await dispatch(addNewProductInDatabase(data))
+                .then(result=>{
+                    toast.success(result.payload?.message)
+                })
             }
+
+            // Clean up object URLs
+            newImages.forEach(image => URL.revokeObjectURL(image.url));
+
             onSubmit();
         } catch (error) {
             console.error('Error submitting form:', error);
@@ -139,16 +204,25 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
         setSubmitting(false);
     };
 
+    // Clean up object URLs when component unmounts
+    useEffect(() => {
+        return () => {
+            newImages.forEach(image => URL.revokeObjectURL(image.url));
+        };
+    }, []);
+
     return (
         <Formik
             initialValues={initialValues}
             validationSchema={productSchema}
             onSubmit={handleSubmit}
         >
-            {({ isSubmitting }) => (
+            {({ values,isSubmitting ,setFieldValue}) => (
                 <Form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                    {/* Existing form fields */}
                     <FormField name="name" label="Product Name" />
                     <FormField name="weight" label="Weight" />
+                    <FormField name="grossWeight" label="Gross Weight" />
                     <FormField name="price" label="Price" type="number" />
                     <FormField name="discount" label="Discount (%)" type="number" />
                     <FormField name="tax" label="Tax (%)" type="number" />
@@ -166,19 +240,53 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
                         <CheckboxField name="deal_of_the_day" label="Deal of the Day" />
                     </div>
 
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Product Images</label>
-                        <input
-                            type="file"
-                            multiple
-                            onChange={handleImageChange}
-                            className="mt-1 block w-full text-sm text-gray-500
-                file:mr-4 file:py-2 file:px-4
-                file:rounded-md file:border-0
-                file:text-sm file:font-semibold
-                file:bg-indigo-50 file:text-indigo-700
-                hover:file:bg-indigo-100"
-                        />
+                    {/* Image Management Section */}
+                    <div className="mb-6">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Product Images</label>
+
+                        <div className="mb-4">
+                            <div className="grid grid-cols-4 gap-4">
+                                {/* Existing S3 Images */}
+                                {existingImages.map((url, index) => (
+                                    <ImagePreview
+                                        key={index}
+                                        url={url}
+                                        onRemove={() => removeExistingImage(index)}
+                                        index={index}
+                                    />
+                                ))}
+
+                                {/* New Image Previews */}
+                                {newImages.map((image, index) => (
+                                    <ImagePreview
+                                        key={`new-${index}`}
+                                        url={image.url}
+                                        onRemove={() => removeNewImage(index)}
+                                        index={index}
+                                    />
+                                ))}
+
+                                {/* Add Image Button */}
+                                <label className="w-24 h-24 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center cursor-pointer hover:border-green-500 transition-colors">
+                                    <input
+                                        type="file"
+                                        multiple
+                                        accept="image/*"
+                                        // onChange={handleNewImageChange}
+                                        onChange={(e) => {
+                                            handleNewImageChange(e);
+                                            setFieldValue('images', [...values.images, ...Array.from(e.target.files)]);
+                                        }}
+                                        className="hidden"
+                                    />
+                                    <div className="flex flex-col items-center">
+                                        <TiPlus size={24} className="text-green-500" />
+                                        <span className="text-xs text-gray-500 mt-1">Add Images</span>
+                                    </div>
+                                </label>
+                                <ErrorMessage name="images" component="div" className="mt-1 text-sm text-red-600" />
+                            </div>
+                        </div>
                     </div>
 
                     <div className="flex items-center justify-between">
@@ -187,7 +295,7 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
                             disabled={isSubmitting}
                             className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                         >
-                            {product ? 'Update Product' : 'Add Product'}
+                            {isSubmitting ? (product ? 'Updating...' : 'Adding...') : (product ? 'Update Product' : 'Add Product')}
                         </button>
                         <button
                             type="button"

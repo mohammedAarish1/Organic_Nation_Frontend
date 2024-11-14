@@ -107,6 +107,14 @@ const AdminSidebar = ({ setShowSidebar }) => {
                     <FaProductHunt />
                     <span>Products</span>
                 </NavLink>
+                <NavLink
+                    to="/admin/banners"
+                    className={({ isActive }) => `${isActive ? ' underline underline-offset-4' : null}  flex items-center space-x-4`}
+                    onClick={() => setShowSidebar(false)}
+                >
+                    <FaProductHunt />
+                    <span>Banners</span>
+                </NavLink>
                 <NavLink to="#" className={({ isActive }) => ` flex items-center space-x-4`}>
 
                     {adminToken ? (

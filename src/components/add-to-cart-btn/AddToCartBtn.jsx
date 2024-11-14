@@ -53,7 +53,7 @@ const AddToCartBtn = ({ item, qty = 1 }) => {
         type='button'
         disabled={isOutOfStock}
         data-tooltip-id={isOutOfStock && "addToCart-tooltip"}
-        data-tooltip-content="Out of Stock"
+        data-tooltip-content="SOLD OUT"
         data-tooltip-place="top"
         onClick={(e) => {
           // e.stopPropagation();  // Prevent the event from bubbling up to the NavLink

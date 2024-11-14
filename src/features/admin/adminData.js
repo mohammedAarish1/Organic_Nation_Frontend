@@ -188,18 +188,18 @@ export const addNewProductInDatabase = createAsyncThunk(
 export const updateExistingProduct = createAsyncThunk(
     'adminData/updateExistingProduct',
     async ({ id, formData }, { rejectWithValue }) => {
-      try {
-        const response = await axios.put(`${apiUrl}/api/admin/products/update/${id}`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-        // return response.data;
-      } catch (err) {
-        return rejectWithValue(err.response.data);
-      }
+        try {
+            const response = await axios.put(`${apiUrl}/api/admin/products/update/${id}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            return response.data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
     }
-  );
+);
 
 // delete the document fromt the database 
 export const deleteDocumentFromDatabase = createAsyncThunk(
@@ -308,6 +308,45 @@ export const getTotalReturns = createAsyncThunk(
         }
     }
 )
+
+
+
+// add a new banner in the database 
+export const addNewBannerInDatabase = createAsyncThunk(
+    'adminData/addNewBannerInDatabase',
+    async (data, { rejectWithValue }) => {
+        const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
+        try {
+            const response = await axios.post(`${apiUrl}/api/main/banners/add`, data, {
+                headers: {
+                    'Authorization': `Bearer ${adminToken}`,
+                    'Content-Type': 'multipart/form-data'  // Changed this line
+                }
+            });
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data.error);
+        }
+    }
+);
+// add a new banner in the database 
+export const deleteBannerFromDatabase = createAsyncThunk(
+    'adminData/deleteBannerFromDatabase',
+    async (bannerId, { rejectWithValue }) => {
+        const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
+        try {
+            const response = await axios.delete(`${apiUrl}/api/main/banners/delete/${bannerId}`, {
+                headers: {
+                    'Authorization': `Bearer ${adminToken}`,
+                    'Content-Type': 'multipart/form-data'  // Changed this line
+                }
+            });
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data.error);
+        }
+    }
+);
 
 
 
