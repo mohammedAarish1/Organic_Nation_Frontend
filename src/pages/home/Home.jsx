@@ -12,6 +12,8 @@ import { addReviews } from '../../features/reviews/reviews'
 import BlogSection from '../../components/blog-section/BlogSection';
 import SEO from '../../helper/SEO/SEO'
 import PopupBanner from '../../components/popup-banner/PopupBanner';
+import CategoryCarousel from '../../components/productCategories/CategoryCarousel'
+import Search from '../../components/search/Search'
 
 
 
@@ -99,7 +101,11 @@ const Home = () => {
                 twitterCreator="organicnation_"
             />
             <MemoizedPopupBanner />
+            <div className='pb-4 px-1 sm:px-10 md:hidden block'>
+                <Search />
+            </div>
             <Banner />
+            <CategoryCarousel/>
             {/* spotlight  */}
             <SpotlightSection />
             {/* video  */}

@@ -83,7 +83,6 @@ const NavMenu = () => {
                 {/* menu button */}
                 <div className='md:hidden'>
                     <button type='button' onClick={() => dispatch(setShowSidebar())}><RiMenu3Fill className='text-2xl ' /></button>
-
                 </div>
 
                 {/* navbar items */}
@@ -185,9 +184,9 @@ const NavMenu = () => {
                     </div>
 
                     <ul className=' md:flex justify-center items-center md:gap-4 text-[var(--titleTextColor)] font-mono'>
-                        <li className='cursor-pointer p-4 rounded-md '>
+                        {/* <li className='cursor-pointer p-4 rounded-md '>
                             <Search mobileMenu={true} />
-                        </li>
+                        </li> */}
 
                         <li className='cursor-pointer  rounded-md text-[#ffe9a1] hover:bg-[var(--bgColorSecondary)] hover:text-[var(--bgColorPrimary)]'>
                             <Link

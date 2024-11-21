@@ -657,4 +657,12 @@ input[type="range"]::-moz-range-thumb {
 }
 
 
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* ==============================  **** end **** ==================================================  */

@@ -5,6 +5,7 @@ import { ImSpinner9 } from 'react-icons/im';
 import { FiPlusSquare } from "react-icons/fi";
 import ProductForm from './ProductForm';
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import UploadProductImage from '../UploadProductImage';
 
 
 
@@ -104,6 +105,10 @@ const AdminProducts = () => {
     return (
 
         <div className="  p-4 w-full font-sans">
+            {/* <div className='pb-20'>
+
+                <UploadProductImage />
+            </div> */}
             <div className="flex justify-between items-center mb-4 ">
                 <h2 className="text-2xl font-bold">Products</h2>
                 <div className="flex items-center">
@@ -182,7 +187,7 @@ const AdminProducts = () => {
                                             }}
                                             className="  px-2 py-1 rounded hover:text-green-800 flex justify-center"
                                         >
-                                             <FaEdit className='text-yellow-500 text-xl' />
+                                            <FaEdit className='text-yellow-500 text-xl' />
                                         </button>
                                         {/* <select
                                                 value={order.orderStatus}
@@ -280,7 +285,11 @@ const AdminProducts = () => {
                             onSubmit={handleFormSubmit}
                             onCancel={handleFormCancel}
                         />
-
+                        {/* <UploadProductImage
+                            product={selectedProduct}
+                        //   onSubmit={handleFormSubmit}
+                        //   onCancel={handleFormCancel}
+                        /> */}
                     </div>
                 </div>
             )}

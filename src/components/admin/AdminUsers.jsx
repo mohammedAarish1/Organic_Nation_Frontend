@@ -2,25 +2,26 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FaSort, FaSync, FaChevronLeft, FaChevronRight, FaSearch } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { handleDocumentDeleteFromDatabase } from '../../helper/helperFunctions';
-import { getAllUsers } from '../../features/admin/adminData';
+import { getAllUsers, updateUserStatus } from '../../features/admin/adminData';
 import Alert from '../alert/Alert';
 import { MdDeleteForever } from "react-icons/md";
+import { toast } from 'react-toastify';
 
 
 
 const AdminUsers = () => {
     const dispatch = useDispatch()
-    const { totalUsers, loading } = useSelector(state => state.adminData)
+    const { totalUsers, loading } = useSelector(state => state.adminData);
+    const [curUser, setCurUser] = useState(null);  // this required for updating the user status:- customer, family etc
     const [sortedOrders, setSortedOrders] = useState([]);
     const [sortDirection, setSortDirection] = useState('desc');
-    const [selectedOrder, setSelectedOrder] = useState(null);
+    const [userCart, setUserCart] = useState(null); // needed to show the cart item of the user
     const [isAlertOpen, setIsAlertOpen] = useState(false);
-    const [curItemId, setCurItemId] = useState('');
-
     const [currentPage, setCurrentPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState('');
     const ordersPerPage = 8;
     const modalRef = useRef();
+
 
 
     useEffect(() => {
@@ -59,19 +60,45 @@ const AdminUsers = () => {
 
     const handleClickOutside = (event) => {
         if (modalRef.current && !modalRef.current.contains(event.target)) {
-            setSelectedOrder(null);
+            setUserCart(null);
         }
     };
 
 
     const hideAlert = () => {
-        setCurItemId('')
+        setCurUser(null)
         setIsAlertOpen(false);
 
     };
 
+
+    // for changing user  status locally
+    const handleUserStatusChange = (userId, status) => {
+        setCurUser({ userId, status })
+        setIsAlertOpen(true)
+    }
+
+
+
+    // for changing user status in database
+    const handleUpdatingUserStatus = () => {
+        dispatch(updateUserStatus(curUser))
+            .then(res => {
+                if (res.meta.requestStatus === 'fulfilled') {
+                    dispatch(getAllUsers())
+                    setIsAlertOpen(false)
+                    toast.info(res.payload.message)
+
+                } else {
+                    toast.error('Something went wrong !')
+                }
+            })
+    }
+
+
+
     const handleDelete = () => {
-        handleDocumentDeleteFromDatabase('users', curItemId, dispatch, getAllUsers)
+        handleDocumentDeleteFromDatabase('users', curUser?.userId, dispatch, getAllUsers)
         setIsAlertOpen(false);
     }
 
@@ -121,7 +148,7 @@ const AdminUsers = () => {
                             <th className="p-3">
                                 <input type="checkbox" className="form-checkbox" />
                             </th>
-                            {['First Name', 'Last Name', 'Email', 'Phone No', 'Date','Time'].map((header) => (
+                            {['First Name', 'Last Name', 'Email', 'Phone No', 'Date', 'Time', 'Actions'].map((header) => (
                                 <th key={header} className="p-3 text-left">
                                     <div className="flex items-center">
                                         {header}
@@ -133,7 +160,6 @@ const AdminUsers = () => {
                                     </div>
                                 </th>
                             ))}
-                            <th className="p-3">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -147,28 +173,42 @@ const AdminUsers = () => {
                                 <td className="p-3">{user.email}</td>
                                 <td className="p-3">{user.phoneNumber}</td>
                                 <td className="p-3">{new Date(user.createdAt).toLocaleDateString()}</td>
-                                <td className="p-3">{new Date(user.createdAt).toLocaleTimeString()}</td>
+                                <td className="p-3 text-xs">{new Date(user.createdAt).toLocaleTimeString()}</td>
                                 <td className="p-3">
-                                    <div className="flex flex-col space-y-2">
+                                    <div className="flex items-center gap-5">
+                                        <div className="flex flex-col gap-2">
+                                            <button
+                                                onClick={() => setUserCart(user.cart)}
+                                                className="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-800"
+                                            >
+                                                Cart Details
+                                            </button>
+                                            {/* ============== user status ==========  */}
+                                            <div className='flex justify-between items-center gap-2' >
+                                                <label htmlFor="">User Status:</label>
+                                                <select
+                                                    value={user.role}
+                                                    onChange={(e) => handleUserStatusChange(user._id, e.target.value)}
+                                                    className="border rounded p-1"
+                                                >
+                                                    <option value="Customer">Customer</option>
+                                                    <option value="Family">Family</option>
+                                                    <option value="Friends">Friends</option>
+                                                    <option value="Employee">Employee</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                         <button
                                             // onClick={() => handleDocumentDeleteFromDatabase("users", user._id, dispatch, getAllUsers)}
                                             onClick={() => {
-                                                setCurItemId(user._id)
-                                                setIsAlertOpen(true);
-                                              }}
+                                                // setCurUser(user._id)
+                                                handleUserStatusChange(user._id, '')
+                                                // setIsAlertOpen(true);
+                                            }}
                                             className=" flex justify-center px-2 py-1 rounded "
                                         >
-                                            <MdDeleteForever className='text-red-500 text-2xl hover:text-red-700'/>
+                                            <MdDeleteForever className='text-red-500 text-2xl hover:text-red-700' />
                                         </button>
-                                        {/* <select
-                                            value={user.orderStatus}
-                                            onChange={(e) => handleStatusChange(order._id, e.target.value)}
-                                            className="border rounded p-1"
-                                        >
-                                            <option value="active">Active</option>
-                                            <option value="dispatch">Dispatch</option>
-                                            <option value="cancelled">Cancelled</option>
-                                        </select> */}
                                     </div>
                                 </td>
                             </tr>
@@ -204,13 +244,39 @@ const AdminUsers = () => {
                 </button>
             </div>
 
-            {/* alert for changing order status  */}
+
+            {/* user cart info  */}
+
+            {userCart && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+                    <div ref={modalRef} className="bg-white p-6 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                        <h2 className="text-2xl font-bold mb-4">Cart Details</h2>
+                        <ul>
+                            {userCart.totalCartAmount ===0 ?('The cart is Empty !!'):(
+                                  userCart.items.map((item) => (
+                                    <li key={item.productId}>Item: <span className='font-bold'>{item.productName}</span>, Quantity:{item.quantity} </li>
+                                ))
+                            )}
+                        </ul>
+
+                    </div>
+                </div>
+            )}
+
+            {/* user cart info end */}
+
+
             <Alert
                 isOpen={isAlertOpen}
-                alertMessage={`Are you sure, do you really want to delete this ?`}
+                alertMessage={
+                    curUser?.status === '' ?
+                        `Are you sure, do you really want to delete this ?` :
+                        `Do you want to update the User status to '${curUser?.status}`
+                }
                 hideAlert={hideAlert}
-                handleAction={handleDelete}
+                handleAction={curUser?.status === '' ? handleDelete : handleUpdatingUserStatus}
             />
+
         </div>
 
     );

@@ -14,7 +14,6 @@ const SpotlightSection = () => {
     const { products, productsType } = useSelector((state) => state.spotlight);
 
 
-
     useEffect(() => {
         dispatch((spotlighProducts({ type: "new_arrivals", productData: productData })));
     }, [productData])
@@ -22,7 +21,7 @@ const SpotlightSection = () => {
 
     return (
         <div>
-            <div className='sm:py-20 py-10'>
+            <div className='sm:pb-20 pb-10 sm:pt-10 '>
                 <div className='flex justify-center xs:gap-4 gap-1 items-center'>
                     <div className='h-1 md:w-[30%] xs:w-[20%] w-[20%] bg-gradient-to-r from-[#712522] to-[#bb7d7b]'></div>
                     <Title text="In the Spotlight" />

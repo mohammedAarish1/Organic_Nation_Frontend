@@ -158,6 +158,31 @@ export const updatePaymentStatus = createAsyncThunk(
     }
 )
 
+
+// update user status 
+export const updateUserStatus = createAsyncThunk(
+    'adminData/updateUserStatus',
+    async ({userId,status}, { rejectWithValue }) => {
+        const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
+        try {
+            const response = await axios.put(`${apiUrl}/api/admin/orders/update/user-status/${userId}`, {status}, {
+                headers: {
+                    'Authorization': `Bearer ${adminToken}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+
+            return response.data;
+        } catch (error) {
+            if (error.response && error.response.data) {
+                return rejectWithValue(error.response.data);
+            } else {
+                return rejectWithValue(error.message);
+            }
+        }
+    }
+)
+
 // add a new product in the database 
 export const addNewProductInDatabase = createAsyncThunk(
     'adminData/addNewProductInDatabase',
@@ -347,6 +372,35 @@ export const deleteBannerFromDatabase = createAsyncThunk(
         }
     }
 );
+
+
+// experiment with images
+
+export const optimizeImages = createAsyncThunk(
+    'adminData/optimizeImages',
+    async (data, { rejectWithValue }) => {
+        const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
+        try {
+            const response = await axios.post(`${apiUrl}/api/admin/product/upload/optimized/images`, data, {
+                headers: {
+                    'Authorization': `Bearer ${adminToken}`,
+                    'Content-Type': 'multipart/form-data'  // Changed this line
+                }
+            });
+
+            // console.log('reposss', response.data)
+            // return response.data;
+        } catch (error) {
+            if (error.response && error.response.data) {
+                return rejectWithValue(error.response.data);
+            } else {
+                return rejectWithValue(error.message);
+            }
+        }
+    }
+);
+
+// experiment with images
 
 
 

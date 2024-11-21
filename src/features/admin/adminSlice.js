@@ -36,6 +36,7 @@ export const adminLogin = createAsyncThunk(
             if (response.status === 200) {
                 return response.data;
             }
+            return response.data
         } catch (error) {
             return rejectWithValue(error.response.data)
         }

@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import Logo from '../../components/logo/Logo'
+import { toast, ToastContainer } from 'react-toastify';
 
 
 // Example URL for background image (use your own image URL)
@@ -43,19 +44,18 @@ const AdminLogin = () => {
         if (res.meta.requestStatus === 'fulfilled') {
           const adminToken = res.payload.token;
           sessionStorage.setItem("adminToken", JSON.stringify(adminToken));
-          // setAdminToken(adminToken); // Update state with the token
-          // navigate('/admin')
           dispatch(fetchAdminData(adminToken));
-          // dispatch(getAllOrders(token));
-          // dispatch(getAllCartItems())
+          toast.info(res.payload?.message)
+        }else{
+          toast.error(res.payload?.message || 'Network Error')
         }
       })
+     
   }
 
 
 
   useEffect(() => {
-    // const adminToken = JSON.parse(sessionStorage.getItem("adminToken"));
     if (adminToken) {
       navigate('/admin');
     }
@@ -63,6 +63,7 @@ const AdminLogin = () => {
 
   return (
     <div>
+          <ToastContainer position='bottom-right' autoClose={1000} />
       <div
         className="relative min-h-screen flex items-center justify-center "
         style={{ backgroundImage: `url(${backgroundImageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' }}

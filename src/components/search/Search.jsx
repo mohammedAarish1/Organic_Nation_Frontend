@@ -17,7 +17,7 @@ const suggestions = [
   
 ];
 
-const Search = ({ mobileMenu = false }) => {
+const Search = () => {
 
 
   const [inputValue, setInputValue] = useState('')
@@ -34,10 +34,7 @@ const Search = ({ mobileMenu = false }) => {
 
   const handleSearch = (e) => {
     e.preventDefault()
-    // below code is for hiding the sidebar in mobile menu after searching 
-    if (mobileMenu) {
-      dispatch(setShowSidebar())
-    }
+   
     if (inputValue !== '' && productData.length > 0) {
       navigate('/searched-product')
     }
