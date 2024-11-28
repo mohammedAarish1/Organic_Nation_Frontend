@@ -19,12 +19,12 @@ const RecipeDetails = () => {
 
     const dispatch = useDispatch()
     const [singleRecipe, setSingleRecipe] = useState({});
-    const { id } = useParams()
+    const { titleUrl } = useParams()
 
-    const getSingleRecipe = async (id) => {
+    const getSingleRecipe = async (titleUrl) => {
 
         try {
-            const response = await axios.get(`${apiUrl}/api/recipes/${id}`);
+            const response = await axios.get(`${apiUrl}/api/blogs/recipes/${titleUrl}`);
             if (response.status === 200) {
                 setSingleRecipe(response.data)
             }
@@ -35,8 +35,8 @@ const RecipeDetails = () => {
 
 
     useEffect(() => {
-        getSingleRecipe(id)
-    }, [id, dispatch])
+        getSingleRecipe(titleUrl)
+    }, [titleUrl, dispatch])
 
 
 

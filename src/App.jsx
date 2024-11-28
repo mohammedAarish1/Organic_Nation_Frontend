@@ -30,7 +30,7 @@ const MemoizedWhatsApp = memo(WhatsApp);
 const MainContent = memo(() => {
   return (
     <div className="bg-[var(--bgColorSecondary)] relative">
-      <MemoizedInfo text="Enjoy FREE SHIPPING on orders of Rs. 499 or more — Shop now and save!" fontSize='xl' />
+      <MemoizedInfo text="Enjoy FREE SHIPPING on orders above Rs. 499 and COD on orders over Rs. 399—Shop now!" fontSize='xl' />
       <ToastContainer position='bottom-right' autoClose={1000} />
       <MemoizedHeader />
       <div>

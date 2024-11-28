@@ -257,10 +257,10 @@ export const deleteDocumentFromDatabase = createAsyncThunk(
 // to generate the sale report 
 export const generateReport = createAsyncThunk(
     'report/generate',
-    async ({ startDate, endDate }, { rejectWithValue }) => {
+    async ({ startDate, endDate ,type}, { rejectWithValue }) => {
         const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
         try {
-            const response = await axios.post(`${apiUrl}/api/admin/generate-report`, { startDate, endDate },
+            const response = await axios.post(`${apiUrl}/api/admin/generate/${type}/report`, { startDate, endDate },
                 {
                     responseType: 'blob',
                     headers: {
@@ -273,7 +273,7 @@ export const generateReport = createAsyncThunk(
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', 'OrderReport.xlsx');
+            link.setAttribute('download', `${type}Report.xlsx`);
             document.body.appendChild(link);
             link.click();
             link.parentNode.removeChild(link);
@@ -388,7 +388,6 @@ export const optimizeImages = createAsyncThunk(
                 }
             });
 
-            // console.log('reposss', response.data)
             // return response.data;
         } catch (error) {
             if (error.response && error.response.data) {

@@ -3,6 +3,9 @@ import { deleteDocumentFromDatabase } from "../features/admin/adminData";
 import { getAllCartItems, getAllOrders } from "../imports";
 import { calculateShippingFee, checkDeliveryAvailability, updateShippingFee } from "../features/check-delivery/checkDelivery";
 import { mergeCart } from "../features/cart/cart";
+import api from "../config/axiosConfig";
+const apiUrl = import.meta.env.VITE_BACKEND_URL;
+
 
 
 const fetchDataAfterLogin = (dispatch, navigate, cart, checkoutStatus) => {
@@ -161,6 +164,20 @@ const address = (obj) => {
 }
 
 
+const getCouponDetails = async (couponId) => {
+  try {
+      const response = await api.get(`/api/validate/${couponId}`);
+      if (response.status === 200) {
+          // setCouponDetails(response.data);
+          return response.data
+      }
+  } catch (error) {
+      throw error;
+  }
+};
+
+
+
 export {
   generateTransactionID,
   address,
@@ -168,5 +185,6 @@ export {
   fetchDataAfterLogin,
   handleDocumentDeleteFromDatabase,
   checkDeliveryAndCalculateShippingFee,
-  additionalDiscountforOnlinePayment
+  additionalDiscountforOnlinePayment,
+  getCouponDetails
 }

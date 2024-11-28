@@ -103,7 +103,7 @@ const Search = () => {
         {inputValue.length > 0 && (
           <button
             type='button'
-            className=' absolute top-[50%] -translate-y-1/2 xs:right-10 right-6  cursor-pointer bg-[var(--bgColorSecondary)]'
+            className='absolute top-[50%] -translate-y-1/2 xs:right-10 right-6  cursor-pointer bg-[var(--bgColorSecondary)]'
             onClick={() => {
               setInputValue('')
               dispatch(setFilterInitialValues(productData))

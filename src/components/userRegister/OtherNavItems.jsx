@@ -59,7 +59,7 @@ const OtherNavItems = () => {
       dispatch(resetCheckoutStatus(false));
       setShowUserMenu(false);
       localStorage.removeItem('deliveryChargeToken');
-      toast.success("You've been successfully logged out !! ");
+      toast.success("Successfully logged out !! ");
       navigate('/')
     }
   }
@@ -98,7 +98,7 @@ const OtherNavItems = () => {
             <ul ref={userMenuRef} className={`${showUserMenu ? 'max-h-max translate-y-[0] py-6' : 'max-h-0 overflow-hidden invisible opacity-0 -translate-y-[40px] py-0'} text-[var(--bgColorSecondary)] transition-all duration-700   bg-[var(--bgColorPrimary)] flex flex-col gap-2 absolute right-2  rounded-md shadow-xl min-w-max`}>
               <li className=''>
                 <p className='pl-2 pr-20'>Signed in as</p>
-                <p className='lowercase text-sm px-2'>{user.email}</p>
+                <p className='lowercase text-sm px-2'>{user.phoneNumber||user.email}</p>
                 <div className='h-[2px] w-full bg-[var(--bgColorSecondary)] mt-1'></div>
               </li>
               {/* my profile link  */}
@@ -106,7 +106,7 @@ const OtherNavItems = () => {
                 className='hover:bg-[var(--bgColorSecondary)] hover:text-[var(--bgColorPrimary)]  cursor-pointer pl-4   py-1'
                 onClick={() => setShowUserMenu(false)}
               >
-                <Link to="/profile">
+                <Link to="/profile/personal-info">
                   <span className='flex items-center gap-2'>
                     <LuUserCircle className='text-xl' />   My Profile
                   </span>

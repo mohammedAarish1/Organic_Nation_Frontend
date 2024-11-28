@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { checkoutSchema } from "../../form-validation/checkoutSchema";
@@ -24,6 +24,7 @@ import {
 import { Formik, Form, Field } from "formik";
 import { initiatePayment } from "../../features/orderPayment/payment";
 import { ImSpinner9 } from "react-icons/im";
+import CouponList from "../couponCodeList/CouponList";
 // import { handleSavingLocalAdd } from "../../features/check-delivery/checkDelivery";
 // import { saveLocalUserInfo } from "../../features/auth/auth";
 
@@ -58,14 +59,19 @@ const InputField = ({ name, label, icon, errors, touched }) => {
 const CheckoutForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [showCouponCodeList, setShowCouponCodelist] = useState(false);
 
   const { user } = useSelector((state) => state.auth);
-  const { cartItemsList, totalCartAmount, totalTax,  couponCodeApplied } = useSelector((state) => state.cart);
+  const { cartItemsList, totalCartAmount, totalTax, couponCodeApplied } = useSelector((state) => state.cart);
   const { addingNewOrder } = useSelector((state) => state.orders);
   const { shippingFee, userCity, userPincode, userState, } = useSelector((state) => state.delivery);
 
 
   const addresses = user?.addresses || [];
+
+  const totalPickleQuantity = cartItemsList
+    .filter((item) => item.category.includes("Pickles"))
+    .reduce((sum, item) => sum + item.quantity, 0);
 
 
   const shippingAddressInitial = {
@@ -130,12 +136,13 @@ const CheckoutForm = () => {
       orderDetails: orderDetails,
       subTotal: values.paymentMethod === "cash_on_delivery" ? totalCartAmount : totalCartAmount - discountAmount,
       taxAmount: values.paymentMethod === "cash_on_delivery" ? totalTax : totalTax - taxDiscount,
-      shippingFee: totalCartAmount < 499 ? shippingFee : 0,
+      // shippingFee: totalCartAmount < 499 ? shippingFee : 0,
+      shippingFee: 0,
       paymentMethod: values.paymentMethod,
       paymentStatus: "pending",
       receiverDetails,
       merchantTransactionId: values.paymentMethod === "cash_on_delivery" ? '' : merchantTransactionId,
-      couponCodeApplied: couponCodeApplied || user?.cart?.couponCodeApplied ,
+      couponCodeApplied: couponCodeApplied || user?.cart?.couponCodeApplied,
     };
 
 
@@ -153,8 +160,9 @@ const CheckoutForm = () => {
           if (value.type === "manageOrders/addOrders/fulfilled") {
             dispatch(
               initiatePayment({
-                number:values?.phoneNumber.slice(3),
-                amount: totalCartAmount - discountAmount + (totalCartAmount < 499 ? shippingFee : 0),
+                number: values?.phoneNumber.slice(3),
+                // amount: totalCartAmount - discountAmount + (totalCartAmount < 499 ? shippingFee : 0),
+                amount: totalCartAmount - discountAmount + 0,
                 merchantTransactionId: merchantTransactionId,
               })
             );
@@ -210,8 +218,23 @@ const CheckoutForm = () => {
     "block py-2.5 tracking-widest  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer";
 
   return (
-    <div className="xl:col-span-2 bg-[#f8eecf]   rounded-md p-8 sticky top-0">
-      <h2 className="text-2xl font-bold text-[#333]">Complete your order</h2>
+    <div className="xl:col-span-2 bg-[#f8eecf]  p-8">
+      <div className=" flex flex-wrap justify-between items-center">
+        <h2 className="text-2xl font-bold text-[#333]">Complete your order</h2>
+        <div>
+          <CouponList
+            totalCartAmount={totalCartAmount}
+            totalTax={totalTax}
+            setShowCouponCodelist={setShowCouponCodelist}
+            totalPickleQuantity={totalPickleQuantity}
+            couponCodeApplied={couponCodeApplied}
+            showCouponCodeList={showCouponCodeList}
+            showList={() => setShowCouponCodelist(true)}
+            hideList={() => setShowCouponCodelist(false)}
+
+          />
+        </div>
+      </div>
       <Formik
         initialValues={initialValues}
         validationSchema={checkoutSchema}
@@ -530,7 +553,7 @@ const CheckoutForm = () => {
                       className={inputStyle}
                       placeholder=" "
                       autoComplete="off"
-                      onBlur={(e)=>{
+                      onBlur={(e) => {
                         setFieldValue("shippingAddress.city", userCity)
                         setFieldValue("billingAddress.city", userCity)
                         setFieldValue("shippingAddress.state", userState)
@@ -539,7 +562,7 @@ const CheckoutForm = () => {
                       }}
                       onChange={(e) => {
                         setFieldValue("billingAddress.pinCode", e.target.value)
-                        setFieldValue( "shippingAddress.pinCode", e.target.value );
+                        setFieldValue("shippingAddress.pinCode", e.target.value);
 
                         if (e.target.value.length === 6) {
 

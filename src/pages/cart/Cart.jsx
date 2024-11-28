@@ -1,11 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect,  useState } from "react";
 import ProductQty from "../../components/productQty/ProductQty";
 import { useDispatch, useSelector } from "react-redux";
 // react icons
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { BsEmojiAstonished } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
-import { FaTags } from "react-icons/fa";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { ImSpinner9 } from "react-icons/im";
 import { PiSealCheckFill } from "react-icons/pi";
@@ -27,18 +26,16 @@ import {
 import { resetCheckoutStatus } from "../../features/manageOrders/manageOrders";
 import { toast } from "react-toastify";
 import { Tooltip } from "react-tooltip";
-import OfferBanner from "../../components/offerBanner/OfferBanner";
+// import OfferBanner from "../../components/offerBanner/OfferBanner";
 import CouponList from "../../components/couponCodeList/CouponList";
 
 const Cart = () => {
   const { user } = useSelector((state) => state.auth);
   const [showCouponCodeList, setShowCouponCodelist] = useState(false);
-  const modalRef = useRef();
 
   const {
     cartItemsList,
     loading,
-    validatingCouponCode,
     totalCartAmount,
     totalTax,
     error,
@@ -92,21 +89,21 @@ const Cart = () => {
   };
 
 
-  const handleClickOutside = (event) => {
-    if (modalRef.current && !modalRef.current.contains(event.target)) {
-      // setSelectedOrder(null);
-      setShowCouponCodelist(false);
-    }
-  };
+  // const handleClickOutside = (event) => {
+  //   if (modalRef.current && !modalRef.current.contains(event.target)) {
+  //     // setSelectedOrder(null);
+  //     setShowCouponCodelist(false);
+  //   }
+  // };
 
 
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
+  // useEffect(() => {
+  //   document.addEventListener("mousedown", handleClickOutside);
 
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, []);
 
   useEffect(() => {
     dispatch(setIsAvailable());
@@ -323,46 +320,18 @@ const Cart = () => {
               <span>Order Total:</span>
               <span className="font-semibold">₹ {Math.round(totalCartAmount || 0)}</span>
             </div>
-            {/* <div className="flex justify-between items-center gap-10">
-              <span>Sub Total:</span>
-              <span>₹ {Math.round(totalCartAmount - totalTax || 0)}</span>
-            </div> */}
-            {/* tax  */}
-            {/* <div className="flex justify-between items-center gap-10">
-              <span>Total tax (included): (+)</span>
-              <span>₹ {cartItemsList?.length > 0 ? totalTax : 0}</span>
-            </div> */}
-            {/* coupon  code list implementation */}
-            <div className="">
 
-
-              <div className="flex justify-center items-center gap-1 mt-3 text-green-700 text-xl">
-                <FaTags />
-                <button
-                  className="glowing-text hover:underline underline-offset-2"
-                  onClick={() => setShowCouponCodelist(true)}
-                >
-                  See Available Coupons!
-                </button>
-              </div>
-              {/* pop up box  */}
-              {showCouponCodeList && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-40">
-                  <div
-                    ref={modalRef}
-                    className="bg-white rounded-lg max-w-xl pt-2 pb-6 px-4 w-full max-h-[90vh] overflow-y-auto"
-                  >
-                    <CouponList
+            <CouponList
                       totalCartAmount={totalCartAmount}
                       totalTax={totalTax}
                       setShowCouponCodelist={setShowCouponCodelist}
                       totalPickleQuantity={totalPickleQuantity}
                       couponCodeApplied={couponCodeApplied}
+                      showCouponCodeList={showCouponCodeList}
+                      showList={()=>setShowCouponCodelist(true)}
+                      hideList={()=>setShowCouponCodelist(false)}
+                      
                     />
-                  </div>
-                </div>
-              )}
-            </div>
 
             {/* coupon  */}
             <hr />

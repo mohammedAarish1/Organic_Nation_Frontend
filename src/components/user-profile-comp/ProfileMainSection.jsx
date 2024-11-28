@@ -3,6 +3,7 @@ import UserInformation from './UserInformation';
 import UserAddresses from './UserAddresses';
 import { useParams } from 'react-router-dom';
 import { FiPackage } from 'react-icons/fi';
+import UserCoupons from './UserCoupons';
 
 
 const OrdersSection = () => {
@@ -36,9 +37,9 @@ const ProfileMainSection = ({activeMenu}) => {
                 return <UserAddresses />;
             case 'orders':
                 return <OrdersSection />;
-            case 'logout':
+            case 'coupons':
                 // Handle logout logic here
-                return null;
+                return <UserCoupons/>;
             default:
                 return <UserInformation />;
         }

@@ -10,12 +10,11 @@ import { ImSpinner9 } from "react-icons/im";
 import { FaArrowRight } from "react-icons/fa6";
 import { getAllOrders } from "../../features/manageOrders/manageOrders";
 import { getAllCartItems, mergeCart } from "../../features/cart/cart";
-import { handleGoogleSignup, login, updateUserRegisterStatus, verifyOTP } from "../../features/auth/auth";
+import { handleGoogleSignup, updateUserRegisterStatus, verifyOTP } from "../../features/auth/auth";
 
 const OtpSubmit = () => {
-  // from below code extract the phoneNumber of first time user
   const location = useLocation();
-  const signingUpUser = location?.state;
+  const userInfo = location?.state;  // this will contain the data from the previous route
   const { checkoutStatus } = useSelector((state) => state.orders);
   const { totalCartAmount, totalTax, couponCodeApplied } = useSelector(state => state.cart)
 
@@ -26,7 +25,6 @@ const OtpSubmit = () => {
 
 
 
-
   // below function will fetch the data when the existing user logged in via otp
   const getDataAfterLogin = () => {
     dispatch(getAllOrders())
@@ -34,9 +32,9 @@ const OtpSubmit = () => {
     if (localCart.length > 0) {
       const cart = {
         items: localCart,
-        totalCartAmount: signingUpUser.totalCartAmount || totalCartAmount,
-        totalTaxes: signingUpUser.totalTax || totalTax,
-        couponCodeApplied: signingUpUser.couponCodeApplied || couponCodeApplied
+        totalCartAmount: userInfo.totalCartAmount || totalCartAmount,
+        totalTaxes: userInfo.totalTax || totalTax,
+        couponCodeApplied: userInfo.couponCodeApplied || couponCodeApplied
       }
 
 
@@ -55,40 +53,48 @@ const OtpSubmit = () => {
 
   };
 
-  //otp submission
+  // ======================= otp submission =======================
   const handleOtpSubmit = (otp) => {
-    if (otp && signingUpUser) {
-      dispatch(verifyOTP({ phoneNumber: signingUpUser.phoneNumber, otp }))
+    if (otp && userInfo) {
+      const payload = {
+        phoneNumber: userInfo.phoneNumber,
+        referralCode: userInfo.referralCode,
+        otp
+      }
+      dispatch(verifyOTP(payload))
         .then((value) => {
-            if (value.meta.requestStatus === "fulfilled") {
-              const token = value.payload.accessToken;
-              if (token) {
-                getDataAfterLogin();
-              } else if (signingUpUser.otherDetails && signingUpUser.googleSignup) {
-                dispatch(handleGoogleSignup({ userData: signingUpUser.otherDetails, }))
-                  .unwrap() // This ensures proper error handling
-                  .then((result) => {
-                    if (result.accessToken) {
-                      dispatch(updateUserRegisterStatus(true));
-                      getDataAfterLogin();
-                      toast.success("Sign up Successfully");
-                    }
-                  })
-                  .catch((error) => {
-                    toast.error(error.message || "Sign up failed");
-                  });
-
-              } else {
-                //this block will execute when the user tries to sign up with otp for the first time
-                dispatch(updateUserRegisterStatus(false));
-                navigate("/register", {
-                  state: { ...signingUpUser },
-                });
-              }
-            } else {
-              toast.error(value.payload);
+          if (value.meta.requestStatus === "fulfilled") {
+            const token = value.payload.accessToken;
+            if (token) {
+              getDataAfterLogin();
             }
+            // =========== below code will be executed when the user login with google ========
+            // else if (signingUpUser.otherDetails && signingUpUser.googleSignup) {
+            //   dispatch(handleGoogleSignup({ userData: signingUpUser.otherDetails, }))
+            //     .unwrap() // This ensures proper error handling
+            //     .then((result) => {
+            //       if (result.accessToken) {
+            //         dispatch(updateUserRegisterStatus(true));
+            //         getDataAfterLogin();
+            //         toast.success("Sign up Successfully");
+            //       }
+            //     })
+            //     .catch((error) => {
+            //       toast.error(error.message || "Sign up failed");
+            //     });
+
+            // }
+            // ======== this block will execute when the user tries to sign up with otp for the first time ====
+            // else {
+            //   dispatch(updateUserRegisterStatus(false));
+            //   navigate("/register", {
+            //     state: { ...signingUpUser },
+            //   });
+            // }
+          } else {
+            toast.error(value.payload);
           }
+        }
         );
     }
   };

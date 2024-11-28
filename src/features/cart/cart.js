@@ -250,18 +250,19 @@ export const mergeCart = createAsyncThunk(
 )
 
 
-// coupon code validation logic
+// family coupon code validation logic
 export const getCouponCodeValidate = createAsyncThunk(
     'cart/getCouponCodeValidate',
     async (data, { rejectWithValue, getState }) => {
-        const { auth } = getState();
+        // const { auth } = getState();
         try {
-            if (auth.user) {
-                const response = await api.post(`/api/validate/coupon-code`, data,
+            // if (auth.user) {
 
-                )
-                return response.data;
-            }
+            // }
+            const response = await axios.post(`${apiUrl}/api/validate/family/coupon-code`, data,
+
+            )
+            return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data.error);
         }
@@ -276,7 +277,7 @@ export const applyPickleCouponCode = createAsyncThunk(
             const response = await axios.post(`${apiUrl}/api/validate/pickle/coupon-code`, payload);
             return response.data;
         } catch (error) {
-            return rejectWithValue(error.response.data);
+            return rejectWithValue(error.response.data.error);
         }
     }
 );
@@ -292,6 +293,25 @@ export const applyAdditionalCouponDiscount = createAsyncThunk(
     }
 );
 
+
+// family coupon code validation logic
+export const applyReferralCouponDiscount = createAsyncThunk(
+    'cart/applyReferralCouponDiscount',
+    async (data, { rejectWithValue, getState }) => {
+        const { auth } = getState();
+        try {
+            if (auth.user) {
+                const response = await api.post(`/api/validate/referral/coupon/discount`, data)
+                return response.data;
+            }else{
+                return rejectWithValue('Please login to apply referral code')
+            }
+
+        } catch (error) {
+            return rejectWithValue(error.response.data.error);
+        }
+    }
+)
 
 
 

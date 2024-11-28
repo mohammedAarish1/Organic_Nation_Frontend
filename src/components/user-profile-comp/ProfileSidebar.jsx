@@ -97,20 +97,24 @@ import {
   FiMenu,
   FiChevronRight
 } from 'react-icons/fi';
+import { RiCouponLine } from "react-icons/ri";
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { FaAngleDown } from "react-icons/fa6";
 
 const ProfileSidebar = ({ activeMenu, setActiveMenu, isMobileMenuOpen, setIsMobileMenuOpen }) => {
 
   const navigate=useNavigate()
   const { user } = useSelector(state => state.auth)
 
+  const firstName=user?.firstName || 'You'
+  const lastName=user?.lastName || ''
 
   const menuItems = [
     { id: 'personal-info', label: 'Personal Information', icon: FiUser },
     { id: 'addresses', label: 'Manage Addresses', icon: FiMapPin },
     { id: 'orders', label: 'My Orders', icon: FiPackage },
-    // { id: 'logout', label: 'Log Out', icon: FiLogOut },
+    { id: 'coupons', label: 'Coupons', icon: RiCouponLine },
   ];
 
   return (
@@ -124,7 +128,7 @@ const ProfileSidebar = ({ activeMenu, setActiveMenu, isMobileMenuOpen, setIsMobi
                 <FiUser className="text-white" size={24} />
               </div>
               <div>
-                <h2 className="text-lg font-semibold text-gray-600">{user?.firstName+' '+user?.lastName}</h2>
+                <h2 className="text-lg font-semibold text-gray-600">{firstName+''+lastName}</h2>
                 <p className="text-sm text-gray-500">{user.email}</p>
               </div>
             </div>
@@ -162,14 +166,14 @@ const ProfileSidebar = ({ activeMenu, setActiveMenu, isMobileMenuOpen, setIsMobi
         </div>
       </div>
 
-      {/* Mobile Dropdown */}
+      {/* ================================ Mobile Dropdown =================================== */}
       <div className="md:hidden flex justify-end">
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="relative  p-2 rounded-lg bg-white shadow-lg text-gray-700 hover:bg-gray-50 z-50 flex items-center gap-2"
+          className="relative  p-2 rounded-lg bg-gray-300 shadow-lg text-gray-700 hover:bg-gray-400 z-50 flex justify-center items-center  gap-2"
         >
-          <FiMenu size={24} />
           <span className="font-medium">Menu</span>
+          <FaAngleDown  className='items-end'  size={20} />
         </button>
 
         {/* Dropdown Menu */}
@@ -188,7 +192,7 @@ const ProfileSidebar = ({ activeMenu, setActiveMenu, isMobileMenuOpen, setIsMobi
                 <FiUser className="text-white" size={20} />
               </div>
               <div>
-                <h2 className="text-sm font-semibold text-gray-600">{user?.firstName+' '+user?.lastName}</h2>
+                <h2 className="text-sm font-semibold text-gray-600">{firstName+' '+ lastName}</h2>
                 <p className="text-xs text-gray-500">{user.email}</p>
               </div>
             </div>

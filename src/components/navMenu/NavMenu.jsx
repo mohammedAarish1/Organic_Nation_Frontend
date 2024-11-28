@@ -14,7 +14,7 @@ import { BsChevronDown } from "react-icons/bs";
 import { IoCloseSharp } from "react-icons/io5";
 import { FaBlog } from "react-icons/fa";
 import { LiaGiftsSolid } from "react-icons/lia";
-
+import { FaRegUser } from "react-icons/fa";
 
 
 import { LuChefHat } from "react-icons/lu";
@@ -168,7 +168,7 @@ const NavMenu = () => {
             <nav id='mobileMenu' className={`mobile-menu-container ${showSidebar ? 'active' : ''}  `} >
                 <div className={`mobile-menu min-h-full xs:w-1/2 w-2/3 ${showDropDownMenu && 'w-full'} ${showSidebar ? 'active' : ''}`}>
 
-                    <div className='p-4'>
+                    <div className='p-4 max-w-min' onClick={()=> dispatch(setShowSidebar())}>
                         <Logo />
                     </div>
 
@@ -279,9 +279,15 @@ const NavMenu = () => {
                             </Link>
                         </li>
                         <li className='cursor-pointer rounded-md text-[#ffe9a1] hover:bg-[var(--bgColorSecondary)] hover:text-[var(--bgColorPrimary)]'>
-                            <Link to="contact-us" onClick={() => dispatch(setShowSidebar())} className='flex text-xl gap-3 justify-start items-center  p-4'>
+                            <Link to="/contact-us" onClick={() => dispatch(setShowSidebar())} className='flex text-xl gap-3 justify-start items-center  p-4'>
                                 <TbPhoneCall className=' text-xl' />
                                 <span>Contact Us</span>
+                            </Link>
+                        </li>
+                        <li className='cursor-pointer rounded-md text-[#ffe9a1] hover:bg-[var(--bgColorSecondary)] hover:text-[var(--bgColorPrimary)]'>
+                            <Link to="/profile/personal-info" onClick={() => dispatch(setShowSidebar())} className='flex text-xl gap-3 justify-start items-center  p-4'>
+                                <FaRegUser className=' text-xl' />
+                                <span> Profile</span>
                             </Link>
                         </li>
 

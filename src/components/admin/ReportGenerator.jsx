@@ -8,7 +8,7 @@ import { ImSpinner9 } from 'react-icons/im';
 
 
 
-const ReportGenerator = () => {
+const ReportGenerator = ({title,type}) => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -25,7 +25,7 @@ const ReportGenerator = () => {
     }
 
     try {
-      await dispatch(generateReport({ startDate, endDate })).unwrap();
+      await dispatch(generateReport({ startDate, endDate ,type})).unwrap();
     } catch (error) {
       setErrorMessage(error.message || 'Failed to generate report. Please try again.');
     }
@@ -37,7 +37,7 @@ const ReportGenerator = () => {
     
 
     <div className="max-w-2xl mt-10 p-6  rounded-lg shadow-md">
-      <h2 className="text-2xl mb-6 text-gray-800">Generate Sale Report</h2>
+      <h2 className="text-2xl mb-6 text-gray-800">{title}</h2>
       <div className="space-y-4">
         <div>
           <label htmlFor="startDate" className="block text-sm font-medium text-gray-700 mb-1">

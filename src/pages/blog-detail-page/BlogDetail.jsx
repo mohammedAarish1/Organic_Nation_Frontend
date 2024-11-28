@@ -15,12 +15,11 @@ const BlogDetail = () => {
     const dispatch = useDispatch()
     const [singleBlog, setSingleBlog] = useState({});
     const { recentBlogs } = useSelector(state => state.blog)
-    const { id } = useParams()
-
-    const getSingleBlog = async (id) => {
+    const { titleUrl } = useParams()
+    const getSingleBlog = async (titleUrl) => {
 
         try {
-            const response = await axios.get(`${apiUrl}/api/blogs/${id}`);
+            const response = await axios.get(`${apiUrl}/api/blogs/${titleUrl}`);
             if (response.status === 200) {
                 setSingleBlog(response.data)
             }
@@ -31,8 +30,8 @@ const BlogDetail = () => {
 
 
     useEffect(() => {
-        getSingleBlog(id)
-    }, [id, dispatch])
+        getSingleBlog(titleUrl)
+    }, [titleUrl, dispatch])
 
     return (
         <div>
@@ -79,9 +78,9 @@ const BlogDetail = () => {
 
                         {recentBlogs.map(recentBlog => (
                             <article key={recentBlog._id} className="flex flex-col items-center gap-4 md:flex-row lg:gap-6">
-                                <a href="#" className="group shrink-0 relative block h-56 w-full self-start overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-24 md:w-24 lg:h-40 lg:w-40">
+                                <Link to={`/blogs/${recentBlog._id}`} className="group shrink-0 relative block h-56 w-full self-start overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-24 md:w-24 lg:h-40 lg:w-40">
                                     <img src={recentBlog.image} loading="lazy" alt="" className="group-hover:scale-110 absolute inset-0 h-full w-full object-cover object-center transition duration-500 " />
-                                </a>
+                                </Link>
 
                                 <div className="flex flex-col gap-2">
                                     <span className="text-sm text-gray-400">{new Date(recentBlog?.date).toDateString()}</span>

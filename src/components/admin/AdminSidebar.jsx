@@ -6,7 +6,8 @@ import { PiSignOutBold } from "react-icons/pi";
 import { FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
 import { RiMailUnreadFill } from "react-icons/ri";
 import { FaProductHunt } from "react-icons/fa6";
-
+import { PiImagesSquareThin } from "react-icons/pi";
+import { MdOutlineAssignmentReturn } from "react-icons/md";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { IoCloseSharp } from "react-icons/io5";
 import { adminLogout } from "../../features/admin/adminSlice";
@@ -96,7 +97,7 @@ const AdminSidebar = ({ setShowSidebar }) => {
                     className={({ isActive }) => `${isActive ? ' underline underline-offset-4' : null}  flex items-center space-x-4`}
                     onClick={() => setShowSidebar(false)}
                 >
-                    <RiMailUnreadFill />
+                    <MdOutlineAssignmentReturn />
                     <span>Returns</span>
                 </NavLink>
                 <NavLink
@@ -112,7 +113,7 @@ const AdminSidebar = ({ setShowSidebar }) => {
                     className={({ isActive }) => `${isActive ? ' underline underline-offset-4' : null}  flex items-center space-x-4`}
                     onClick={() => setShowSidebar(false)}
                 >
-                    <FaProductHunt />
+                    <PiImagesSquareThin />
                     <span>Banners</span>
                 </NavLink>
                 <NavLink to="#" className={({ isActive }) => ` flex items-center space-x-4`}>

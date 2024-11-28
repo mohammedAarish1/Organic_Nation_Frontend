@@ -94,7 +94,7 @@ const RecentOrderNotification = () => {
     }
 
     return (
-        <div className="fixed bottom-4 left-4 animate-slide-in font-sans z-20 max-w-96">
+        <div className="fixed bottom-4 left-4 xs:right-0 right-4 animate-slide-in font-sans z-20 max-w-96">
             <div className="bg-[var(--bgColorPrimary)]  rounded-lg shadow-lg p-4 pt-2 ">
                 <div className='text-end'>
                 <button

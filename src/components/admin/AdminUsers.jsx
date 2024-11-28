@@ -6,6 +6,7 @@ import { getAllUsers, updateUserStatus } from '../../features/admin/adminData';
 import Alert from '../alert/Alert';
 import { MdDeleteForever } from "react-icons/md";
 import { toast } from 'react-toastify';
+import ReportGenerator from './ReportGenerator';
 
 
 
@@ -265,6 +266,13 @@ const AdminUsers = () => {
 
             {/* user cart info end */}
 
+
+            <div>
+                <ReportGenerator
+                title='Generate User Report'
+                type='users'
+                 />
+            </div>
 
             <Alert
                 isOpen={isAlertOpen}

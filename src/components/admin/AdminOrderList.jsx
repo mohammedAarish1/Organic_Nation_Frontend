@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FaSort, FaSync, FaChevronLeft, FaChevronRight, FaSearch } from 'react-icons/fa';
 import { MdDeleteForever } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
-import { generateInvoice, getOrdersByStatus, getTotalOrders, updateOrderStatus, updatePaymentStatus } from '../../features/admin/adminData';
+import { generateInvoice, generateReport, getOrdersByStatus, getTotalOrders, updateOrderStatus, updatePaymentStatus } from '../../features/admin/adminData';
 import { ImSpinner9 } from 'react-icons/im';
 import Alert from '../alert/Alert';
 import { fetchAdminData } from '../../features/admin/adminSlice';
@@ -210,7 +210,8 @@ const AdminOrderList = ({ orders }) => {
                                     <input type="checkbox" className="form-checkbox" />
                                 </td>
                                 <td className="p-3">{order.receiverDetails.name}</td>
-                                <td className="p-3">{order.receiverDetails.phoneNumber}</td>
+                                {/* <td className="p-3">{order.receiverDetails.phoneNumber}</td> */}
+                                <td className="p-3">{order.phoneNumber}</td>
                                 {/* <td className="p-3">{order.userEmail}</td> */}
                                 <td className="p-3">{order.invoiceNumber}</td>
                                 <td className="p-3">{order.paymentStatus.toUpperCase()}</td>
@@ -300,11 +301,11 @@ const AdminOrderList = ({ orders }) => {
 
             {selectedOrder && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-                    <div ref={modalRef} className="bg-white p-6 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                    <div ref={modalRef} className="bg-[var(--bgColorPrimary)] flex flex-col gap-2 mx-2 text-white p-6 rounded-lg max-w-2xl w-full max-h-[80vh] overflow-y-auto">
                         <h2 className="text-2xl font-bold mb-4">Order Details</h2>
                         <p><strong>Order No:</strong> {selectedOrder.orderNo}</p>
                         <p><strong>Receiver:</strong> {selectedOrder.receiverDetails.name}</p>
-                        <p><strong>Phone:</strong> {selectedOrder.receiverDetails.phoneNumber}</p>
+                        <p><strong>Phone:</strong> {selectedOrder.phoneNumber}</p>
                         <p><strong>Email:</strong> {selectedOrder.userEmail}</p>
                         <p><strong>Billing Address:</strong> {address(selectedOrder.billingAddress)}</p>
                         <p><strong>Shipping Address:</strong> {address(selectedOrder.shippingAddress)}</p>
@@ -316,8 +317,8 @@ const AdminOrderList = ({ orders }) => {
                         <p><strong>Total:</strong> ₹ {selectedOrder.subTotal + selectedOrder.shippingFee}</p>
                         <h3 className="text-xl font-bold mt-4 mb-2">Order Items:</h3>
                         <ul>
-                            {selectedOrder.orderDetails.map((item) => (
-                                <li key={item.id}>Item:{item['name-url']}, Quantity:{item.quantity}, Weight:{item.weight} </li>
+                            {selectedOrder.orderDetails.map((item,index) => (
+                                <li key={item.id}>({index+1}) -- Item: {item['name-url']} | Quantity: {item.quantity} | Weight: {item.weight} </li>
                             ))}
                         </ul>
                         <button
@@ -331,7 +332,10 @@ const AdminOrderList = ({ orders }) => {
             )}
 
             <div>
-                <ReportGenerator />
+                <ReportGenerator
+                title='Generate Sale Report'
+                type='sales'
+                 />
             </div>
 
             {/* alert for changing order status and delete the order */}

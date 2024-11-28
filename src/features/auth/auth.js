@@ -124,10 +124,11 @@ export const requestOTP = createAsyncThunk(
 
 export const verifyOTP = createAsyncThunk(
   "auth/verifyOTP",
-  async ({ phoneNumber, otp }, { rejectWithValue }) => {
+  async ({ phoneNumber,referralCode, otp }, { rejectWithValue }) => {
     try {
       const response = await api.post(`/api/otp-auth/verify-otp`, {
         phoneNumber,
+        referralCode,
         otp,
       });
 

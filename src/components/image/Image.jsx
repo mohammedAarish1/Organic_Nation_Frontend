@@ -4,8 +4,6 @@
 
 // const Image = ({ src, blurSrc, alt, className, onLoad }) => {
 
-// console.log('src',src)
-// console.log('blurSrc',blurSrc)
 
 //     const [isLoaded, setIsLoaded] = useState(false);
 //     const { ref, inView } = useInView({
@@ -13,7 +11,6 @@
 //       threshold: 0.1
 //     });
   
-// console.log('isLoaded',isLoaded)
 
 //     return (
 //       <div ref={ref} className="relative">

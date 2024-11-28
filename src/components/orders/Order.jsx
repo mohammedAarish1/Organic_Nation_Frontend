@@ -38,7 +38,7 @@ const Order = ({ order }) => {
     useState(false);
 
   const deliveryDate = new Date(order?.deliveryDate);
-  const isReturnDisabled = deliveryDate &&  (new Date() - deliveryDate) / (1000 * 60 * 60 * 24) > 3;
+  const isReturnDisabled = deliveryDate && (new Date() - deliveryDate) / (1000 * 60 * 60 * 24) > 3;
 
   const showAlert = () => {
     setIsAlertOpen(true);
@@ -113,15 +113,13 @@ const Order = ({ order }) => {
 
               {/* order details modal  */}
               <div
-                className={`modal-background ${
-                  showOrderDetails ? "active" : ""
-                }`}
+                className={`modal-background ${showOrderDetails ? "active" : ""
+                  }`}
                 onClick={() => setShowOrderDetails(false)}
               >
                 <div
-                  className={`text-white modal ${
-                    showOrderDetails ? "active" : ""
-                  }`}
+                  className={`text-white modal ${showOrderDetails ? "active" : ""
+                    }`}
                   onClick={(e) => e.stopPropagation()}
                 >
                   <p className="flex justify-end">
@@ -236,7 +234,7 @@ const Order = ({ order }) => {
                   {" "}
                   ₹{" "}
                   {order?.orderDetails.reduce(
-                    (total, item) => total + item.unitPrice *item.quantity,
+                    (total, item) => total + item.unitPrice * item.quantity,
                     0
                   )}
                 </p>
@@ -246,7 +244,7 @@ const Order = ({ order }) => {
                 <p className="font-semibold">
                   (₹{" "}
                   {order?.orderDetails.reduce(
-                    (total, item) => total + item.unitPrice *item.quantity,
+                    (total, item) => total + item.unitPrice * item.quantity,
                     0
                   ) - order.subTotal}
                   )
@@ -262,34 +260,41 @@ const Order = ({ order }) => {
                 <p> ₹ {order?.shippingFee}</p>
               </div>
               <div className="flex justify-between items-center xs:text-[20px]  font-semibold">
-                <div className="flex items-end gap-2">
-                  <p className="text-end ">Total Amount Payable:</p>
-                  <div className=" text-green-200 font-bold text-xs">
-                    {order.couponCodeApplied.length>0 && (
-                      <p className="flex  items-center gap-1">
-                        (Coupon Code Applied){" "}
-                        <PiSealCheckFill className="text-xl" />
+                <div className="flex items-center gap-2">
+                  <p className=" ">Total Amount Payable:</p>
+                  <div className=" text-green-200 font-bold text-xs sm:block hidden">
+                    {order.couponCodeApplied.length > 0 && (
+                      <p className="flex items-center ">
+                        (Coupon Code Applied) <PiSealCheckFill className="text-xl" />
                       </p>
                     )}
                   </div>
                 </div>
                 <p> ₹ {order?.subTotal + order?.shippingFee}</p>
               </div>
+              {/* visible in mobile devices */}
+              <div className=" text-green-200 font-bold text-xs sm:hidden block">
+                {order.couponCodeApplied.length > 0 && (
+                  <p className="flex items-center ">
+                    (Coupon Code Applied) <PiSealCheckFill className="text-xl" />
+                  </p>
+                )}
+              </div>
+              {/* visible in mobile devices  end*/}
+
             </div>
 
             {order.orderStatus === "completed" && (
               <div>
                 {/* =================== feedback modal ==========  */}
                 <div
-                  className={`delivery-feedback-modal-bg ${
-                    showDeliveryFeedbackForm ? "active" : ""
-                  }`}
+                  className={`delivery-feedback-modal-bg ${showDeliveryFeedbackForm ? "active" : ""
+                    }`}
                   onClick={() => setShowDeliveryFeedbackForm(false)}
                 >
                   <div
-                    className={`text-white delivery-feedback-modal ${
-                      showDeliveryFeedbackForm ? "active" : ""
-                    }`}
+                    className={`text-white delivery-feedback-modal ${showDeliveryFeedbackForm ? "active" : ""
+                      }`}
                     onClick={(e) => e.stopPropagation()}
                   >
                     <div className="flex justify-end">
@@ -315,11 +320,10 @@ const Order = ({ order }) => {
 
             {/* cancel button  */}
             <div
-              className={` ${
-                order?.orderStatus !== "active"
+              className={` ${order?.orderStatus !== "active"
                   ? "bg-[#D3BB71]"
                   : "bg-[#D3BB71] hover:bg-[#e0cf9c]"
-              }  `}
+                }  `}
             >
               <button
                 className="flex w-full h-full justify-center  py-3 gap-1 items-center"
@@ -329,17 +333,15 @@ const Order = ({ order }) => {
                 <span>
                   {" "}
                   <BsCartX
-                    className={`${
-                      order?.orderStatus !== "active"
+                    className={`${order?.orderStatus !== "active"
                         ? "text-red-400"
                         : "text-red-500"
-                    } text-xl  `}
+                      } text-xl  `}
                   />
                 </span>
                 <span
-                  className={`${
-                    order?.orderStatus !== "active" ? "text-gray-400" : ""
-                  } `}
+                  className={`${order?.orderStatus !== "active" ? "text-gray-400" : ""
+                    } `}
                 >
                   Cancel order
                 </span>

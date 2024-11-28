@@ -23,7 +23,7 @@ const BlogSection = ({ homePage = false }) => {
             <div className='flex flex-wrap justify-center gap-10 px-10 py-10 '>
                 {blogs.slice(0, homePage ? 3 : blogs?.length)?.map(blog => (
                     <Link
-                        to={`/blogs/${blog._id}`}
+                        to={`/blogs/${blog['title-url']}`}
                         key={blog._id}
                         className='flex md:w-1/4  flex-col gap-2 '
                         data-aos="flip-up"

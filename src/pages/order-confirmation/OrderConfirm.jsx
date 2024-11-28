@@ -73,11 +73,11 @@ const OrderConfirm = () => {
                     </div>
                     <div className="flex justify-between items-center">
                         <span className="font-semibold ">Confirmation sent to:</span>
-                        <span className="text-gray-800">{singleOrder.userEmail}</span>
+                        <span className="text-gray-800">{singleOrder.phoneNumber||singleOrder.userEmail}</span>
                     </div>
                 </div>
             </div>
-            <div className="bg-gray-50 flex justify-center  gap-3 px-6 py-4">
+            <div className="bg-gray-50 flex flex-wrap justify-center  gap-3 px-6 py-4">
                 <Link to='/manage-orders' className=" bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition duration-300">
                     Track Your Order
                 </Link>

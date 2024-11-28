@@ -11,7 +11,6 @@ const RecipeSection = ({ showBtn = false }) => {
 
     const { recipes, loading } = useSelector(state => state.blog)
 
-
     // array for img src is pending
 
 
@@ -25,7 +24,7 @@ const RecipeSection = ({ showBtn = false }) => {
             <div className='flex flex-wrap justify-center items-center gap-10 px-10 py-10'>
                 {recipes?.map(recipe => (
                     <Link
-                        to={`/recipes/${recipe._id}`}
+                        to={`/recipes/${recipe['title-url']}`}
                         key={recipe._id}
                         className='flex md:w-1/4  flex-col gap-2 '
                         data-aos="flip-up"

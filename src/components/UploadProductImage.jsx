@@ -16,7 +16,6 @@ const UploadProductImage = ({product}) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const productId =  product['name-url'];  // You can replace this with a dynamic value as needed
-// console.log('productId', product._id)
         // Create a FormData object to send data as multipart/form-data
         const formData = new FormData();
         formData.append('productId', productId);  // Add productId to the FormData
@@ -32,7 +31,6 @@ const UploadProductImage = ({product}) => {
 
             // if (response.ok) {
             //   const data = await response.json();
-            //   console.log('Server Response:', data);
             //   // Handle successful response here
             // } else {
             //   console.error('Failed to upload images');

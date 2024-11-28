@@ -71,12 +71,12 @@ const getRoutes = () => {
         />,
         <Route
             key="recipe-details"
-            path='/recipes/:id'
+            path='/recipes/:titleUrl'
             element={<RecipeDetails
             />} />,
         <Route
-            key="blogsId"
-            path='/blogs/:id'
+            key="blogsTitleUrl"
+            path='/blogs/:titleUrl'
             element={<BlogDetail />}
         />,
         <Route
@@ -139,11 +139,11 @@ const getRoutes = () => {
             path='/manage-returns'
             element={user ?<ManageReturns />:<OtpLogin/>}
         />,
-        <Route
-            key="user-profile"
-            path='/profile'
-            element={user ?<UserProfile />:<OtpLogin/>}
-        />,
+        // <Route
+        //     key="user-profile"
+        //     path='/profile'
+        //     element={user ?<UserProfile />:<OtpLogin/>}
+        // />,
         <Route
             key="user-profile"
             path='/profile/:id'
