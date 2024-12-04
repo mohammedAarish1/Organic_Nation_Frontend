@@ -15,7 +15,6 @@ const CouponCard = ({ coupon }) => {
     // const getCouponDetails = async (couponId) => {
     //     try {
     //         const response = await api.get(`${apiUrl}/api/validate/${couponId}`);
-    //         console.log('res', response);
     //         if (response.status === 200) {
     //             setCouponDetails(response.data);
     //         }

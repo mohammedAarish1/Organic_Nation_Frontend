@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { address, handleDocumentDeleteFromDatabase } from '../../helper/helperFunctions';
 import ReportGenerator from './ReportGenerator';
 import { toast } from 'react-toastify';
+import UpdateInvoiceNo from './UpdateInvoiceNo';
 
 
 
@@ -304,6 +305,7 @@ const AdminOrderList = ({ orders }) => {
                     <div ref={modalRef} className="bg-[var(--bgColorPrimary)] flex flex-col gap-2 mx-2 text-white p-6 rounded-lg max-w-2xl w-full max-h-[80vh] overflow-y-auto">
                         <h2 className="text-2xl font-bold mb-4">Order Details</h2>
                         <p><strong>Order No:</strong> {selectedOrder.orderNo}</p>
+                        <UpdateInvoiceNo selectedOrder={selectedOrder} />
                         <p><strong>Receiver:</strong> {selectedOrder.receiverDetails.name}</p>
                         <p><strong>Phone:</strong> {selectedOrder.phoneNumber}</p>
                         <p><strong>Email:</strong> {selectedOrder.userEmail}</p>

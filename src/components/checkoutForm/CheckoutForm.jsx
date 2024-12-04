@@ -12,6 +12,7 @@ import { MdEmail, MdOutlinePhoneAndroid, MdLocationCity } from "react-icons/md";
 import { FaUserEdit } from "react-icons/fa";
 import { PiFileZipFill } from "react-icons/pi";
 import { BsArrowRight } from "react-icons/bs";
+import { FaArrowLeftLong, FaArrowRight } from "react-icons/fa6";
 import {
   generateTransactionID,
   // address,
@@ -801,6 +802,18 @@ const CheckoutForm = () => {
                     <p className="text-red-600">*{errors?.paymentMethod}</p>
                   ) : null}
                 </div>
+                {totalCartAmount < 399 && (
+                    <div className="flex flex-wrap  text-gray-500  xs:justify-center items-center gap-2  rounded-lg  xs:text-[16px] mt-4 text-sm italic ">
+                      *CASH ON DELIVERY (COD) is available on all orders above  ₹ 399 !
+                    <Link
+                      to="/shop/all"
+                      className="flex xs:justify-center items-center gap-2"
+                    > 
+                      <FaArrowLeftLong />
+                      <span className="text-orange-400 hover:text-orange-500 underline-hover">Continue Shopping</span>
+                    </Link>
+                  </div>
+                  )}
               </div>
               {/* complete btn  */}
               <div className="flex  gap-10 max-sm:flex-col mt-10">
