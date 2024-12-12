@@ -61,7 +61,7 @@ const Footer = ({ moveToTop }) => {
                         <a href=" https://www.linkedin.com/company/earthyfoods-pvt-ltd" target='_blank'><GrLinkedin className='text-[30px] hover:text-[var(--bgColorPrimary)] hover:scale-125 transition-all duration-300 rounded-md' /></a>
                         <a href="https://twitter.com/organicnation_" target='_blank'><FaSquareXTwitter className='text-[34px] hover:text-[var(--bgColorPrimary)] hover:scale-125 transition-all duration-300 rounded-lg' /></a>
                         <a href="https://www.facebook.com/organicnation/" target='_blank'><ImFacebook2 className='text-[29px] hover:text-[var(--bgColorPrimary)] hover:scale-125 transition-all duration-300 rounded-md' /></a>
-                        <a href="https://www.instagram.com/organicnationadmin/" target='_blank'><FaInstagramSquare className='text-[33px] hover:text-[var(--bgColorPrimary)] hover:scale-125 transition-all duration-300' /></a>
+                        <a href="https://www.instagram.com/organicnation.co.in/" target='_blank'><FaInstagramSquare className='text-[33px] hover:text-[var(--bgColorPrimary)] hover:scale-125 transition-all duration-300' /></a>
                         <a href="https://www.youtube.com/channel/UCyUSaFyepi2jx_ViFKE0TkA/community?pvf=CAI%253D" target='_blank'><FaYoutube className='text-[41px] hover:text-[var(--bgColorPrimary)] hover:scale-125 transition-all duration-300' /></a>
 
                     </div>
