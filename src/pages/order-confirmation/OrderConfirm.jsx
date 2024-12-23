@@ -12,9 +12,6 @@ const OrderConfirm = () => {
     const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
 
-
-
-
     const getSingleOrder = async (orderId) => {
         try {
             const response = await axios.get(`${apiUrl}/api/orders/${orderId}`)
@@ -31,6 +28,23 @@ const OrderConfirm = () => {
 
         getSingleOrder(orderId)
     }, [orderId])
+
+
+    // Once the order details are fetched, trigger Facebook Pixel Purchase event
+    useEffect(() => {
+        if (singleOrder) {
+            const purchaseValue = singleOrder.subTotal + singleOrder.shippingFee; // Total purchase amount
+            const currency = 'INR'; // Assuming INR, replace with dynamic if needed
+
+            // Trigger Facebook Pixel purchase event
+            if (window.fbq) {
+                window.fbq('track', 'Purchase', {
+                    value: purchaseValue,
+                    currency: currency,
+                });
+            }
+        }
+    }, [singleOrder]);
 
 
 
@@ -73,7 +87,7 @@ const OrderConfirm = () => {
                     </div>
                     <div className="flex justify-between items-center">
                         <span className="font-semibold ">Confirmation sent to:</span>
-                        <span className="text-gray-800">{singleOrder.phoneNumber||singleOrder.userEmail}</span>
+                        <span className="text-gray-800">{singleOrder.phoneNumber || singleOrder.userEmail}</span>
                     </div>
                 </div>
             </div>

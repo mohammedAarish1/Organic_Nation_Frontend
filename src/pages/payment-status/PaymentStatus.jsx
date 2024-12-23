@@ -1,10 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { PiSealCheckBold } from "react-icons/pi";
 import { RxCrossCircled } from "react-icons/rx";
 import { Link } from 'react-router-dom';
 import { initiatePayment } from '../../features/orderPayment/payment';
 import { useDispatch } from 'react-redux';
 import { clearCart } from '../../features/cart/cart';
+import axios from 'axios';
+
+const apiUrl = import.meta.env.VITE_BACKEND_URL;
+
 
 const PaymentStatus = () => {
 
@@ -12,8 +16,26 @@ const PaymentStatus = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const status = urlParams.get('status');
     const transactionId = urlParams.get('id');
+    const orderId = urlParams.get('orderId');    // Order ID from the URL
     const retryToken = urlParams.get('retryToken')
     const error = urlParams.get('error');
+
+    const [orderDetails, setOrderDetails] = useState(null);
+
+
+    const getOrderDetails = async (orderId) => {
+        try {
+            const response = await axios.get(`${apiUrl}/api/orders/${orderId}`)
+            if (response.data) {
+                setOrderDetails(response.data)
+            }
+        } catch (error) {
+            throw error
+        }
+    }
+
+
+
 
     const handleRetryPayment = () => {
         if (retryToken) {
@@ -26,10 +48,33 @@ const PaymentStatus = () => {
     }
 
 
+    // Fetch order details once the orderId is available in the URL
+    useEffect(() => {
+        if (orderId) {
+            getOrderDetails(orderId);
+        }
+    }, [orderId]);
+
+
+    // Trigger Facebook Pixel Purchase Event when payment is successful
+    useEffect(() => {
+        if (status === 'success' && orderDetails) {
+            const purchaseValue = orderDetails.subTotal + orderDetails.shippingFee; // Calculate purchase value
+            const currency = 'INR'; // You can replace with dynamic currency if needed
+
+            // Ensure fbq is available and then trigger the purchase event
+            if (window.fbq) {
+                window.fbq('track', 'Purchase', {
+                    value: purchaseValue,
+                    currency: currency,
+                });
+            }
+        }
+    }, [status, orderDetails]);
+
     useEffect(() => {
         if (status === 'success') {
             dispatch(clearCart());
-            localStorage.removeItem('deliveryChargeToken');
         }
     }, [status])
 
