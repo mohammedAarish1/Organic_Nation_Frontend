@@ -12,24 +12,24 @@ import { toast } from "react-toastify";
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
 // Placeholder data (replace this with API data in production)
-const initialBanners = [
-  {
-    id: 1,
-    image: "https://via.placeholder.com/150",
-    title: "Summer Sale",
-    description: "50% off on all products!",
-    redirectionUrl: "/sale",
-    order: 1,
-  },
-  {
-    id: 2,
-    image: "https://via.placeholder.com/150",
-    title: "New Arrivals",
-    description: "Check out the latest products.",
-    redirectionUrl: "/new-arrivals",
-    order: 2,
-  },
-];
+// const initialBanners = [
+//   {
+//     id: 1,
+//     image: "https://via.placeholder.com/150",
+//     title: "Summer Sale",
+//     description: "50% off on all products!",
+//     redirectionUrl: "/sale",
+//     order: 1,
+//   },
+//   {
+//     id: 2,
+//     image: "https://via.placeholder.com/150",
+//     title: "New Arrivals",
+//     description: "Check out the latest products.",
+//     redirectionUrl: "/new-arrivals",
+//     order: 2,
+//   },
+// ];
 
 const AdminBanners = () => {
   const dispatch = useDispatch();

@@ -1,4 +1,4 @@
-import React, { useEffect,  useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProductQty from "../../components/productQty/ProductQty";
 import { useDispatch, useSelector } from "react-redux";
 // react icons
@@ -28,6 +28,8 @@ import { toast } from "react-toastify";
 import { Tooltip } from "react-tooltip";
 // import OfferBanner from "../../components/offerBanner/OfferBanner";
 import CouponList from "../../components/couponCodeList/CouponList";
+import Image from '../../components/image/Image';
+
 
 const Cart = () => {
   const { user } = useSelector((state) => state.auth);
@@ -190,16 +192,25 @@ const Cart = () => {
                     <Link to={`/shop/${curItem['category-url'].toLowerCase()}/${curItem['name-url']}`}>
 
                       <div className="font-semibold text-gray-900 px-6 py-4">
-                        <img
+                        {/* <img
                           src={
-                            Array.isArray(curItem.img)
-                              ? curItem.img.filter((path) =>
-                                path.includes("front")
-                              )[0]
-                              : null
+                            Array.isArray(curItem.img) ? curItem.img.filter((path) => path.includes("front") )[0] : null
                           }
                           className="w-20 max-h-24 object-contain"
                           alt={curItem.name}
+                        /> */}
+                        <Image
+                          src={{
+                            // sm: leftImage.sm,
+                            sm:  Array.isArray(curItem.img) ? curItem.img.filter((path) => path.sm.includes("front") )[0].sm : null,
+                            md:  Array.isArray(curItem.img) ? curItem.img.filter((path) => path.md.includes("front") )[0].md : null,
+                            lg:  Array.isArray(curItem.img) ? curItem.img.filter((path) => path.lg.includes("front") )[0].lg : null,
+                            // md: leftImage.md,
+                            // lg: leftImage.lg
+                          }}
+                          // blurSrc={leftImage.blur}
+                          alt={curItem.name}
+                          className="w-20 max-h-24 object-contain"
                         />
                       </div>
                     </Link>
@@ -322,16 +333,16 @@ const Cart = () => {
             </div>
 
             <CouponList
-                      totalCartAmount={totalCartAmount}
-                      totalTax={totalTax}
-                      setShowCouponCodelist={setShowCouponCodelist}
-                      totalPickleQuantity={totalPickleQuantity}
-                      couponCodeApplied={couponCodeApplied}
-                      showCouponCodeList={showCouponCodeList}
-                      showList={()=>setShowCouponCodelist(true)}
-                      hideList={()=>setShowCouponCodelist(false)}
-                      
-                    />
+              totalCartAmount={totalCartAmount}
+              totalTax={totalTax}
+              setShowCouponCodelist={setShowCouponCodelist}
+              totalPickleQuantity={totalPickleQuantity}
+              couponCodeApplied={couponCodeApplied}
+              showCouponCodeList={showCouponCodeList}
+              showList={() => setShowCouponCodelist(true)}
+              hideList={() => setShowCouponCodelist(false)}
+
+            />
 
             {/* coupon  */}
             <hr />

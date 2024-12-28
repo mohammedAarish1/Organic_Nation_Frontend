@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import Image from '../../components/image/Image';
 // react icons 
 import { IoChevronDownOutline } from "react-icons/io5";
 
 import { PiSealCheckFill } from 'react-icons/pi';
 
+
 const CartDetails = () => {
 
     const dispatch = useDispatch()
     const { checking, shippingFee } = useSelector(state => state.delivery)
-    const { cartItemsList, totalCartAmount,  couponCodeApplied } = useSelector((state) => state.cart);
+    const { cartItemsList, totalCartAmount, couponCodeApplied } = useSelector((state) => state.cart);
     const [showSummary, setShowSummary] = useState(false);
 
 
@@ -40,7 +42,23 @@ const CartDetails = () => {
                         {cartItemsList?.map((product) => (
                             <div key={product?._id} className="grid grid-cols-2 items-center xs:gap-4">
                                 <div className="px-4 shrink-0  ">
-                                    <img src={Array.isArray(product.img) ? product.img.filter(path => path.includes('front'))[0] : null} className="lg:w-20 lg:h-24 w-16  object-contain rounded-2xl" />
+                                    {/* <img
+                                        src={Array.isArray(product.img) ? product.img.filter(path => path.includes('front'))[0] : null}
+                                        className="lg:w-20 lg:h-24 w-16  object-contain rounded-2xl"
+                                    /> */}
+                                    <Image
+                                        src={{
+                                            // sm: leftImage.sm,
+                                            sm: Array.isArray(product.img) ? product.img.filter(path => path.sm.includes('front'))[0].sm : null,
+                                            md: Array.isArray(product.img) ? product.img.filter(path => path.md.includes('front'))[0].md : null,
+                                            lg: Array.isArray(product.img) ? product.img.filter(path => path.lg.includes('front'))[0].lg : null,
+                                            // md: leftImage.md,
+                                            // lg: leftImage.lg
+                                        }}
+                                        // blurSrc={leftImage.blur}
+                                        alt={product.name}
+                                        className="w-20 max-h-24 object-contain"
+                                    />
                                 </div>
                                 <div>
                                     <h3 className="text-base font-bold text-white">{product.name}</h3>

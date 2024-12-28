@@ -92,14 +92,14 @@ const Image = ({ src, blurSrc, alt, className, onLoad }) => {
         <picture>
           {src.sm && (
             <source
-              media="(max-width: 640px)"
+              // media="(max-width: 640px)"
               srcSet={src.sm}
               type="image/webp"
             />
           )}
           {src.md && (
             <source
-              media="(max-width: 1024px)"
+              // media="(max-width: 1024px)"
               srcSet={src.md}
               type="image/webp"
             />

@@ -20,6 +20,8 @@ import Accordion from '../../components/accordionItem/Accordion';
 import OfferBanner from '../../components/offerBanner/OfferBanner';
 import { individualProductData } from '../../helper/SEO/SEOdata';
 import SEO from '../../helper/SEO/SEO';
+import Image from '../../components/image/Image';
+
 
 
 
@@ -90,13 +92,69 @@ import SEO from '../../helper/SEO/SEO';
 // ]
 
 
+// const productone = {
+//   _id: "672c90fd6582a38d3147800d",
+//   product_id: 1,
+//   name: "Organic Light Flora Honey",
+//   "name-url": "Organic-Light-Flora-Honey",
+//   weight: "500 gm",
+//   grossWeight: "768 gm",
+//   price: 450,
+//   discount: 20,
+//   tax: 5,
+//   "hsn-code": "4090000",
+//   category: "Organic Honey",
+//   "category-url": "Organic-Honey",
+//   description: "Introducing our Light Flora Honey, a premium product sourced from the finest flowers and crafted with utmost care",
+//   availability: 75,
+//   img: [
+//     {
+//       blur: "https://organic-nation-product-images.s3.amazonaws.com/products/Organic-Light-Flora-Honey/blur/back.webp",
+//       sm: "https://organic-nation-product-images.s3.amazonaws.com/products/Organic-Light-Flora-Honey/sm/back.webp",
+//       md: "https://organic-nation-product-images.s3.amazonaws.com/products/Organic-Light-Flora-Honey/md/back.webp",
+//       lg: "https://organic-nation-product-images.s3.amazonaws.com/products/Organic-Light-Flora-Honey/lg/back.webp",
+//       _id: "676e75b1ac8842f1442f5373"
+//     },
+//     {
+//       blur: "https://organic-nation-product-images.s3.amazonaws.com/products/Organic-Light-Flora-Honey/blur/front.webp",
+//       sm: "https://organic-nation-product-images.s3.amazonaws.com/products/Organic-Light-Flora-Honey/sm/front.webp",
+//       md: "https://organic-nation-product-images.s3.amazonaws.com/products/Organic-Light-Flora-Honey/md/front.webp",
+//       lg: "https://organic-nation-product-images.s3.amazonaws.com/products/Organic-Light-Flora-Honey/lg/front.webp",
+//       _id: "676e75b1ac8842f1442f5374"
+//     },
+//     {
+//       blur: "https://organic-nation-product-images.s3.amazonaws.com/products/Organic-Light-Flora-Honey/blur/left.webp",
+//       sm: "https://organic-nation-product-images.s3.amazonaws.com/products/Organic-Light-Flora-Honey/sm/left.webp",
+//       md: "https://organic-nation-product-images.s3.amazonaws.com/products/Organic-Light-Flora-Honey/md/left.webp",
+//       lg: "https://organic-nation-product-images.s3.amazonaws.com/products/Organic-Light-Flora-Honey/lg/left.webp",
+//       _id: "676e75b1ac8842f1442f5375"
+//     },
+//     {
+//       blur: "https://organic-nation-product-images.s3.amazonaws.com/products/Organic-Light-Flora-Honey/blur/right.webp",
+//       sm: "https://organic-nation-product-images.s3.amazonaws.com/products/Organic-Light-Flora-Honey/sm/right.webp",
+//       md: "https://organic-nation-product-images.s3.amazonaws.com/products/Organic-Light-Flora-Honey/md/right.webp",
+//       lg: "https://organic-nation-product-images.s3.amazonaws.com/products/Organic-Light-Flora-Honey/lg/right.webp",
+//       _id: "676e75b1ac8842f1442f5376"
+//     }
+//   ],
+//   meta: {
+//     buy: 2,
+//     get: 1,
+//     season_special: false,
+//     new_arrivals: false,
+//     best_seller: false,
+//     deal_of_the_day: false
+//   },
+//   updatedAt: new Date(1735292337798)
+// };
+
 const ProductDetails = () => {
 
   const { nameUrl } = useParams();
   const dispatch = useDispatch();
   const [qty, setQty] = useState(1);
-  const [product, setProduct] = useState('');
-  const [curProductSeoData, setProductSeoData] = useState(individualProductData.nameUrl||{});
+  const [product, setProduct] = useState(null);
+  const [curProductSeoData, setProductSeoData] = useState(individualProductData.nameUrl || {});
 
 
   const filterProduct = useSelector((state) => state.filterData.data);
@@ -107,12 +165,15 @@ const ProductDetails = () => {
 
 
 
+
+
   const getProductDetail = async (nameUrl) => {
 
     try {
       const response = await axios.get(`${apiUrl}/category/organic-honey/${nameUrl}`);
       let product = response.data.product
       if (product) {
+
         setProduct(product)
         dispatch(fetchCategoryWiseData(product['category-url'].toLowerCase()))
         dispatch(getAllReviews(product['name-url']))
@@ -129,7 +190,7 @@ const ProductDetails = () => {
     setProductSeoData(individualProductData[nameUrl] || individualProductData.nameUrl);
 
   }, [nameUrl])
-  
+
 
   // for qty increase and decrease 
 
@@ -142,7 +203,6 @@ const ProductDetails = () => {
 
 
 
-
   if (!product) {
     return (
       <div className='min-h-screen flex justify-center items-center'>
@@ -152,19 +212,19 @@ const ProductDetails = () => {
   }
   return (
     <div>
-        <SEO
-        title={curProductSeoData?.title ||''}
-        description={curProductSeoData?.description||''}
-        canonicalUrl={curProductSeoData?.canonicalUrl||''}
-        ogTitle={curProductSeoData?.title||''}
-        ogDescription={curProductSeoData?.description||''}
-        ogUrl={curProductSeoData?.canonicalUrl||''}
-        ogImage={curProductSeoData?.image||''}
+      <SEO
+        title={curProductSeoData?.title || ''}
+        description={curProductSeoData?.description || ''}
+        canonicalUrl={curProductSeoData?.canonicalUrl || ''}
+        ogTitle={curProductSeoData?.title || ''}
+        ogDescription={curProductSeoData?.description || ''}
+        ogUrl={curProductSeoData?.canonicalUrl || ''}
+        ogImage={curProductSeoData?.image || ''}
         ogImageWidth="478"
         ogImageHeight="446"
-        twitterTitle={curProductSeoData?.title||''}
-        twitterDescription={curProductSeoData?.description||''}
-        twitterImage={curProductSeoData?.image||''}
+        twitterTitle={curProductSeoData?.title || ''}
+        twitterDescription={curProductSeoData?.description || ''}
+        twitterImage={curProductSeoData?.image || ''}
         twitterSite="Organic Nation"
         twitterCreator="organicnation_"
       />
@@ -293,21 +353,38 @@ const ProductDetails = () => {
         <div className='hidden-scrollbar flex justify-start items-center gap-5 py-4  overflow-x-auto  w-[90%] mx-auto'>
 
 
-          {filterProduct?.map((product) => (
+          {filterProduct.filter(product=>product.name==='Organic Light Flora Honey')?.map((product) => (
             <Link to={`/shop/${categoryBtnValue}/${product['name-url']}`} key={product._id} >
               <div className='flex flex-col justify-center items-center gap-5 shadow-xl px-8 py-4 cursor-pointer hover:scale-90 hover:bg-[#dcd3b9] transition-all duration-500  min-h-[350px] w-80'>
-                {/* image  */}
 
                 <div className=''>
-                  <img src={Array.isArray(product.img) ? product.img.filter(path => path.toLowerCase().includes('front'))[0] : null} alt="product-image" className='min-w-32 h-40 object-contain max-h-[240px] rounded-xl' />
+                  {/* <img
+                    src={Array.isArray(product.img) ? product.img.filter(path => path.toLowerCase().includes('front'))[0] : null}
+                    alt="product-image"
+                    className='min-w-32 h-40 object-contain max-h-[240px] rounded-xl'
+                  /> */}
+
+                  <Image
+                    src={{
+                      // sm: mainImage && mainImage.sm,
+                      sm:Array.isArray(product.img) ? product.img.filter(path => path.sm.toLowerCase().includes('front'))[0].sm : null,
+                      md:Array.isArray(product.img) ? product.img.filter(path => path.md.toLowerCase().includes('front'))[0].md : null,
+                      lg:Array.isArray(product.img) ? product.img.filter(path => path.lg.toLowerCase().includes('front'))[0].lg : null,
+                      // md: mainImage && mainImage.md,
+                      // lg: mainImage && mainImage.lg
+                    }}
+                  // blurSrc={mainImage.blur}
+                  // alt={'image-main'}
+                  // style={{ display: 'block', maxWidth: '100%' }}
+                  // className='max-h-[515px] object-contain'
+                  />
+
                 </div>
-                {/* info  */}
                 <div className='flex flex-col justify-center items-center gap-2 '>
                   <p className=' tracking-widest text-[var(--themeColor)] text-center font-medium '>{product.name}</p>
                   <p className='text-[14px] text-gray-500 tracking-widest'>Weight: <span className='text-gray-600'>{product.weight}</span></p>
 
                   <p className='text-[14px] tracking-widest'>₹ <span className='font-semibold'>{Math.round(product.price - (product.price * product.discount / 100))}</span>/- &nbsp; <span>{product.discount}% off</span></p>
-                  {/* <AddToCartBtn item={product} /> */}
 
                 </div>
               </div>

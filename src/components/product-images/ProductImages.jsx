@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
+import Image from '../../components/image/Image';
+
 
 const ProductImages = ({ productImgs }) => {
 
 
     const [mainImage, setMainImage] = useState(productImgs[0]);
-
 
     useEffect(() => {
         setMainImage(productImgs[0])
@@ -18,13 +19,31 @@ const ProductImages = ({ productImgs }) => {
             <div className="flex xs:flex-col justify-center items-center gap-4 xs:-order-none order-2 ">
                 {productImgs?.map((img, index) => {
                     return (
-                        <div key={index}>
-                            <img
+                        <div key={index}
+                        onClick={() => {
+                            setMainImage(img)}}
+                        >
+                            {/* <img
                                 src={img}
                                 alt="image"
                                 className={`${img === mainImage ? 'border-2 border-[var(--themeColor)] p-2' : ''} w-20 max-h-24 object-contain cursor-pointer hover:scale-90 transition-all duration-400`}
                                 key={index}
                                 onClick={() => setMainImage(img)}
+                            /> */}
+
+                            <Image
+                                src={{
+                                    sm: img.sm,
+                                    md: img.md,
+                                    lg: img.lg
+                                }}
+                                alt="image"
+                                key={index}
+                                // onClick={() => {
+                                //     console.log('hello')
+                                //     setMainImage(img)}}
+                                className={`${img === mainImage ? 'border-2 border-[var(--themeColor)] p-2' : ''} w-20 max-h-24 object-contain cursor-pointer hover:scale-90 transition-all duration-400`}
+                                blurSrc={img.blur}
                             />
                         </div>
                     );
@@ -35,11 +54,22 @@ const ProductImages = ({ productImgs }) => {
 
             <div className=" flex justify-center overflow-hidden ">
                 <Zoom>
-                    <img
+                    {/* <img
                         src={mainImage && mainImage}
                         alt={'image-main'}
                         // width={400}
                         // height={400}
+                        style={{ display: 'block', maxWidth: '100%' }}
+                        className='max-h-[515px] object-contain'
+                    /> */}
+                    <Image
+                        src={{
+                            sm: mainImage && mainImage.sm,
+                            md: mainImage && mainImage.md,
+                            lg: mainImage && mainImage.lg
+                        }}
+                        // blurSrc={mainImage.blur}
+                        alt={'image-main'}
                         style={{ display: 'block', maxWidth: '100%' }}
                         className='max-h-[515px] object-contain'
                     />

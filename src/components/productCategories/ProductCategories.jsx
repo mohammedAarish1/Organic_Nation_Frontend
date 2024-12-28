@@ -10,7 +10,6 @@ const ProductCategories = () => {
     const dispatch = useDispatch();
     const { categoryList } = useSelector((state) => state.product_data);
 
-
     const categoriesImages = [
         { 'Organic-Honey': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories/Honey.png' },
         { 'Authentic-Pickles': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories/Pickle.png' },

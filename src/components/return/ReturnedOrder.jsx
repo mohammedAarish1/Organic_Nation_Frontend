@@ -16,6 +16,7 @@ import ButtonTwo from "../button/ButtonTwo";
 import { Link, useNavigate } from "react-router-dom";
 import { addToCart, getAllCartItems } from "../../features/cart/cart";
 import { cancelReturnRequest, getAllReturnItems } from "../../features/manage-returns/manageReturns";
+import Image from "../image/Image";
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -177,7 +178,7 @@ const ReturnedOrder = ({ singleReturn }) => {
               <div className="flex xs:flex-row flex-col gap-5 xs:gap-0 justify-between xs:items-center">
                 <div className="flex justify-start xs:gap-5 gap-5 items-center">
                   <div>
-                    <img
+                    {/* <img
                       src={
                         Array.isArray(itemDetails?.img)
                           ? itemDetails?.img.filter((path) =>
@@ -187,6 +188,20 @@ const ReturnedOrder = ({ singleReturn }) => {
                       }
                       className="xs:w-16 w-12 rounded-xl"
                       alt="product-image"
+                    /> */}
+
+                    <Image
+                      src={{
+                        // sm: leftImage.sm,
+                        sm: Array.isArray(itemDetails?.img) ? itemDetails?.img.filter((path) => path.sm.toLowerCase().includes("front"))[0].sm: null,
+                        md: Array.isArray(itemDetails?.img) ? itemDetails?.img.filter((path) => path.md.toLowerCase().includes("front"))[0].md: null,
+                        lg: Array.isArray(itemDetails?.img) ? itemDetails?.img.filter((path) => path.lg.toLowerCase().includes("front"))[0].lg: null,
+                        // md: leftImage.md,
+                        // lg: leftImage.lg
+                      }}
+                      // blurSrc={leftImage.blur}
+                      alt='product-image'
+                      className="w-20 max-h-24 object-contain"
                     />
                   </div>
                   <div className="flex flex-col justify-start xs:gap-3 gap-1 text-sm xs:text-[16px] text-white ">

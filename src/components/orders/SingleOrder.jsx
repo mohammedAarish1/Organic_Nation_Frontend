@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 // react icons
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import ReturnItemForm from "../returnItemForm/ReturnItemForm";
+import Image from "../image/Image";
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
 const SingleOrder = ({
@@ -72,14 +73,22 @@ const SingleOrder = ({
       <div className="flex xs:flex-row flex-col gap-5 xs:gap-0 justify-between xs:items-center">
         <div className="flex justify-start xs:gap-5 gap-5 items-center">
           <div>
-            <img
-              src={
-                Array.isArray(singleOrderItem.img)
-                  ? singleOrderItem.img.filter((path) =>
-                      path.toLowerCase().includes("front")
-                    )[0]
-                  : null
-              }
+            {/* <img
+              src={ Array.isArray(singleOrderItem.img) ? singleOrderItem.img.filter((path) => path.toLowerCase().includes("front") )[0]  : null }
+              className="xs:w-16 w-12 rounded-xl"
+              alt="product-image"
+            /> */}
+
+            <Image
+              src={{
+                // sm: leftImage.sm,
+                sm: Array.isArray(singleOrderItem.img) ? singleOrderItem.img.filter((path) => path.sm.toLowerCase().includes("front") )[0].sm  : null,
+                md: Array.isArray(singleOrderItem.img) ? singleOrderItem.img.filter((path) => path.md.toLowerCase().includes("front") )[0].md  : null,
+                lg: Array.isArray(singleOrderItem.img) ? singleOrderItem.img.filter((path) => path.lg.toLowerCase().includes("front") )[0].lg  : null,
+                // md: leftImage.md,
+                // lg: leftImage.lg
+              }}
+              // blurSrc={leftImage.blur}
               className="xs:w-16 w-12 rounded-xl"
               alt="product-image"
             />
@@ -89,7 +98,7 @@ const SingleOrder = ({
             <p>Quantity : {curOrder.quantity} Pcs.</p>
             <p>
               Rate Per Quantity: ₹
-              {Math.round( singleOrderItem.price )}
+              {Math.round(singleOrderItem.price)}
               {/* <span className="text-green-300 text-sm">
                 ({singleOrderItem.discount}% off)
               </span> */}
@@ -141,13 +150,12 @@ const SingleOrder = ({
           >
             <button
               type="submit"
-              className={`${
-                curOrder.quantity === curOrder.returnInfo.returnedQuantity ||
-                isReturnDisabled ||
-                orderStatus !== "completed"
+              className={`${curOrder.quantity === curOrder.returnInfo.returnedQuantity ||
+                  isReturnDisabled ||
+                  orderStatus !== "completed"
                   ? "opacity-50 "
                   : ""
-              } btn-97 `}
+                } btn-97 `}
               disabled={
                 curOrder.quantity === curOrder.returnInfo.returnedQuantity ||
                 isReturnDisabled ||
@@ -162,15 +170,13 @@ const SingleOrder = ({
         </div>
         {/* =================== review modal ==========  */}
         <div
-          className={`product-review-modal-bg ${
-            showProductReview ? "active" : ""
-          }`}
+          className={`product-review-modal-bg ${showProductReview ? "active" : ""
+            }`}
           onClick={() => setShowProductReview(false)}
         >
           <div
-            className={`text-white product-review-modal ${
-              showProductReview ? "active" : ""
-            }`}
+            className={`text-white product-review-modal ${showProductReview ? "active" : ""
+              }`}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-end">
@@ -191,12 +197,11 @@ const SingleOrder = ({
       </div>
 
       <div className="text-end text-white text-sm italic">
-        <p>{`${
-          curOrder.returnInfo.returnedQuantity < curOrder.quantity &&
-          curOrder.returnInfo.returnedQuantity > 0
+        <p>{`${curOrder.returnInfo.returnedQuantity < curOrder.quantity &&
+            curOrder.returnInfo.returnedQuantity > 0
             ? `* ${curOrder.returnInfo.returnedQuantity} Quantity of this item is returned by you`
             : ""
-        }`}</p>
+          }`}</p>
       </div>
 
       {/* horozontal line */}
@@ -211,13 +216,13 @@ const SingleOrder = ({
             ref={modalRef}
             className="bg-[var(--bgColorSecondary)] p-6 mt-20 rounded-lg max-w-3xl w-full max-h-[70vh] overflow-y-auto"
           >
-            
+
             <h2 className="text-2xl font-semibold text-[var(--themeColor)] mb-4">
               Request a return for this Item
             </h2>
 
             <div className="px-6 italic text-gray-500 text-sm pb-4 pt-2">
-              
+
               <ul className=" flex flex-col gap-1 list-disc">
                 <li>
                   We accept returns within 2 days of delivery for unused and
@@ -240,7 +245,7 @@ const SingleOrder = ({
               paymentMethod={paymentMethod}
               amountPaid={Math.round(
                 singleOrderItem.price -
-                  (singleOrderItem.price * singleOrderItem.discount) / 100
+                (singleOrderItem.price * singleOrderItem.discount) / 100
               )}
               invoiceNumber={invoiceNumber}
               onSubmit={() => setIsFormVisible(false)}
