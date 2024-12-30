@@ -234,7 +234,7 @@ import Image from '../image/Image';
 
 
 const Product = ({ gridView ,product}) => {
-  const [imgLoading, setImgLoading] = useState(true);
+  // const [imgLoading, setImgLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
   const { categoryBtnValue } = useSelector((state) => state.filterData);
 
@@ -265,7 +265,7 @@ const Product = ({ gridView ,product}) => {
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          {imgLoading && <div className='loader'></div>}
+          {/* {imgLoading && <div className='loader'></div>} */}
           
           {/* Stack both images absolutely */}
           <div className="relative w-full h-full">
@@ -279,7 +279,7 @@ const Product = ({ gridView ,product}) => {
                 blurSrc={frontImage.blur}
                 alt={`${product.name} front view`}
                 className={`${imageClasses} transition-opacity duration-500 ease-in-out`}
-                onLoad={() => setImgLoading(false)}
+                // onLoad={() => setImgLoading(false)}
                 isHovered={isHovered}
               />
             )}
@@ -299,7 +299,7 @@ const Product = ({ gridView ,product}) => {
                   blurSrc={leftImage.blur}
                   alt={`${product.name} left view`}
                   className={imageClasses}
-                  onLoad={() => setImgLoading(false)}
+                  // onLoad={() => setImgLoading(false)}
                 />
               </div>
             )}

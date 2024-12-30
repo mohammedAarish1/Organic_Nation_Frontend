@@ -15,10 +15,11 @@ const UploadProductImage = ({product}) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const productId =  product['name-url'];  // You can replace this with a dynamic value as needed
+        // const productId =  product['name-url'];  // You can replace this with a dynamic value as needed
+        const bannerId =  product._id;  // You can replace this with a dynamic value as needed
         // Create a FormData object to send data as multipart/form-data
         const formData = new FormData();
-        formData.append('productId', productId);  // Add productId to the FormData
+        formData.append('productId', bannerId);  // Add productId to the FormData
 
         // Append all images to FormData
         images.forEach((image, index) => {

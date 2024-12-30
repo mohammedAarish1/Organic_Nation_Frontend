@@ -7,29 +7,31 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addNewBannerInDatabase, deleteBannerFromDatabase } from "../../features/admin/adminData";
 import { toast } from "react-toastify";
+import UploadProductImage from "../UploadProductImage";
+import BannerImage from "../image/BannerImage";
 
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
 // Placeholder data (replace this with API data in production)
-// const initialBanners = [
-//   {
-//     id: 1,
-//     image: "https://via.placeholder.com/150",
-//     title: "Summer Sale",
-//     description: "50% off on all products!",
-//     redirectionUrl: "/sale",
-//     order: 1,
-//   },
-//   {
-//     id: 2,
-//     image: "https://via.placeholder.com/150",
-//     title: "New Arrivals",
-//     description: "Check out the latest products.",
-//     redirectionUrl: "/new-arrivals",
-//     order: 2,
-//   },
-// ];
+const initialBanners = [
+  {
+    id: 1,
+    image: "https://via.placeholder.com/150",
+    title: "Summer Sale",
+    description: "50% off on all products!",
+    redirectionUrl: "/sale",
+    order: 1,
+  },
+  {
+    id: 2,
+    image: "https://via.placeholder.com/150",
+    title: "New Arrivals",
+    description: "Check out the latest products.",
+    redirectionUrl: "/new-arrivals",
+    order: 2,
+  },
+];
 
 const AdminBanners = () => {
   const dispatch = useDispatch();
@@ -61,20 +63,20 @@ const AdminBanners = () => {
   // delete the banner
   const handleDeleteBanner = (id) => {
     dispatch(deleteBannerFromDatabase(id))
-    .then(result => {
-      if(result.error?.message==='Rejected'){
-        toast.error(result.payload)
-      }else{
-        getMainBanners()
-        toast.success(result.payload?.message);
-      }
-    })
+      .then(result => {
+        if (result.error?.message === 'Rejected') {
+          toast.error(result.payload)
+        } else {
+          getMainBanners()
+          toast.success(result.payload?.message);
+        }
+      })
   };
 
-  const handleEditBanner = (banner) => {
-    setEditingBanner(banner);
-    setIsModalOpen(true);
-  };
+  // const handleEditBanner = (banner) => {
+  //   setEditingBanner(banner);
+  //   setIsModalOpen(true);
+  // };
 
   const handleModalClose = () => {
     setIsModalOpen(false);
@@ -101,13 +103,13 @@ const AdminBanners = () => {
       );
     } else {
       // Adding new banner
-     
+
       dispatch(addNewBannerInDatabase(formData))
         // .unwrap()
         .then(result => {
-          if(result.error?.message==='Rejected'){
+          if (result.error?.message === 'Rejected') {
             toast.error(result.payload)
-          }else{
+          } else {
             getMainBanners()
             toast.success(result.payload?.message);
           }
@@ -118,9 +120,6 @@ const AdminBanners = () => {
     resetForm();
     handleModalClose();
   };
-
-
-  
 
   useEffect(() => {
     getMainBanners();
@@ -157,11 +156,21 @@ const AdminBanners = () => {
             {bannersList.map((banner) => (
               <tr key={banner._id} className="border-b border-gray-200">
                 <td className="p-3 text-center">
-                  <img
+                  {/* <img
                     src={banner.image}
                     alt={banner.title}
                     className="w-16 h-16 object-cover rounded-md"
-                  />
+                  /> */}
+                   <BannerImage
+                  src={{
+                    sm: banner.image.sm,
+                    md: banner.image.md,
+                    lg: banner.image.lg
+                  }}
+                  alt={banner.image.redirectionUrl}
+                  className="w-16 h-16 object-cover rounded-md"
+                  blurSrc={banner.image.blur}
+                />
                 </td>
                 <td className="p-3 text-center">{banner.title}</td>
                 <td className="p-3">{banner.description}</td>
@@ -314,6 +323,12 @@ const AdminBanners = () => {
             </Formik>
           </div>
         </div>
+
+        // <UploadProductImage
+        //   product={editingBanner}
+        // // onSubmit={handleFormSubmit}
+        // //  onCancel={handleFormCancel}
+        // />
       )}
     </div>
   );

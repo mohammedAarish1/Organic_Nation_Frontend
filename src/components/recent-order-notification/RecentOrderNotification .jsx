@@ -43,7 +43,6 @@ const RecentOrderNotification = () => {
     const dispatch = useDispatch();
     const rotationTimerRef = useRef(null);
     const currentOrder = useSelector(selectCurrentOrder);
-    console.log('currentOrder',currentOrder)
     const { isVisible, hasUserDismissed, isInitialized } = useSelector(
         state => state.notification
     );

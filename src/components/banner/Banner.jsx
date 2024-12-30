@@ -15,17 +15,18 @@ import 'swiper/css/effect-fade';
 // import required modules
 import { EffectFade, Autoplay, Pagination } from 'swiper/modules';
 import axios from "axios";
+import BannerImage from "../image/BannerImage";
 
 
 
 
 // const images = [
- 
+
 //   {
 //     image: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/main_banners/8.png',
 //     categoryUrl: `all`,
 //   },
- 
+
 //   {
 //     image: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/main_banners/additionalDiscount.png',
 //     categoryUrl: `all`,
@@ -67,22 +68,21 @@ const apiUrl = import.meta.env.VITE_BACKEND_URL;
 const Banner = () => {
 
   const dispatch = useDispatch();
-  const [mainBanners,setMainBanners]=useState([]);
+  const [mainBanners, setMainBanners] = useState([]);
 
-  const getMainBanners=async()=>{
+  const getMainBanners = async () => {
     try {
-      const response=await axios.get(`${apiUrl}/api/main/banners`)
-      if(response.data){
+      const response = await axios.get(`${apiUrl}/api/main/banners`)
+      if (response.data) {
         setMainBanners(response.data.mainBanners)
       }
     } catch (error) {
       throw error
     }
   }
-
-  useEffect(()=>{
+  useEffect(() => {
     getMainBanners();
-  },[])
+  }, [])
 
   return (
     <section className="w-full">
@@ -100,9 +100,9 @@ const Banner = () => {
         className="mySwiper bannerCustomCss">
 
         {mainBanners.map((curItem) => (
-          <SwiperSlide key={curItem.image} >
+          <SwiperSlide key={curItem._id} >
             <Link to={curItem.redirectionUrl === 'about-us' ? `/about-us` : `/shop/${curItem.redirectionUrl.toLowerCase()}`}>
-              <img
+              {/* <img
                 src={curItem.image}
                 alt={curItem.redirectionUrl}
                 className="bg-[var(--bgColorSecondary)]"
@@ -111,9 +111,29 @@ const Banner = () => {
                   dispatch(setCategoryBtnValue(curItem.redirectionUrl))
                   dispatch(fetchCategoryWiseData(curItem.redirectionUrl.toLowerCase()))
 
+                }}
+              /> */}
+              <div
+              // className="w-full"
+                onClick={() => {
+                  dispatch(setCurrentPage(1))
+                  dispatch(setCategoryBtnValue(curItem.redirectionUrl))
+                  dispatch(fetchCategoryWiseData(curItem.redirectionUrl.toLowerCase()))
 
                 }}
-              />
+              >
+                <BannerImage
+                  src={{
+                    sm: curItem.image.sm,
+                    md: curItem.image.md,
+                    lg: curItem.image.lg
+                  }}
+                  alt={curItem.redirectionUrl}
+                  className="bg-[var(--bgColorSecondary)]"
+                  blurSrc={curItem.image.blur}
+                />
+              </div>
+
             </Link>
           </SwiperSlide>
         ))}

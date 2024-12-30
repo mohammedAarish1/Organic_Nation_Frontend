@@ -22,7 +22,7 @@ const AdminOrderList = ({ orders }) => {
 
     const [sortDirection, setSortDirection] = useState('desc');
     const [selectedOrder, setSelectedOrder] = useState(null);
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1); 
     const [searchTerm, setSearchTerm] = useState('');
     const ordersPerPage = 4;
     const modalRef = useRef();
