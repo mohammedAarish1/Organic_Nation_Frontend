@@ -70,19 +70,34 @@ const Banner = () => {
   const dispatch = useDispatch();
   const [mainBanners, setMainBanners] = useState([]);
 
-  const getMainBanners = async () => {
-    try {
-      const response = await axios.get(`${apiUrl}/api/main/banners`)
-      if (response.data) {
-        setMainBanners(response.data.mainBanners)
-      }
-    } catch (error) {
-      throw error
-    }
-  }
+  // const getMainBanners = async () => {
+  //   try {
+  //     const response = await axios.get(`${apiUrl}/api/main/banners`)
+  //     if (response.data) {
+  //       setMainBanners(response.data.mainBanners)
+  //     }
+  //   } catch (error) {
+  //     throw error
+  //   }
+  // }
+  // useEffect(() => {
+  //   getMainBanners();
+  // }, [])
+
   useEffect(() => {
+    const getMainBanners = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/api/main/banners`);
+        if (response.data?.mainBanners) {
+          setMainBanners(response.data.mainBanners);
+        }
+      } catch (error) {
+        throw error;
+      }
+    };
+
     getMainBanners();
-  }, [])
+  }, []);
 
   return (
     <section className="w-full">
@@ -99,38 +114,43 @@ const Banner = () => {
         modules={[EffectFade, Autoplay, Pagination]}
         className="mySwiper bannerCustomCss">
 
-        {mainBanners.map((curItem) => (
-          <SwiperSlide key={curItem._id} >
-            <Link to={curItem.redirectionUrl === 'about-us' ? `/about-us` : `/shop/${curItem.redirectionUrl.toLowerCase()}`}>
+        {mainBanners.map((banner,index) => (
+          <SwiperSlide key={banner._id} >
+            <Link
+              to={banner.redirectionUrl === 'about-us' ? `/about-us` : `/shop/${banner.redirectionUrl.toLowerCase()}`}
+              onClick={() => {
+                dispatch(setCurrentPage(1))
+                dispatch(setCategoryBtnValue(banner.redirectionUrl))
+                dispatch(fetchCategoryWiseData(banner.redirectionUrl.toLowerCase()))
+
+              }}
+            >
               {/* <img
-                src={curItem.image}
-                alt={curItem.redirectionUrl}
+                src={banner.image}
+                alt={banner.redirectionUrl}
                 className="bg-[var(--bgColorSecondary)]"
                 onClick={() => {
                   dispatch(setCurrentPage(1))
-                  dispatch(setCategoryBtnValue(curItem.redirectionUrl))
-                  dispatch(fetchCategoryWiseData(curItem.redirectionUrl.toLowerCase()))
+                  dispatch(setCategoryBtnValue(banner.redirectionUrl))
+                  dispatch(fetchCategoryWiseData(banner.redirectionUrl.toLowerCase()))
 
                 }}
               /> */}
               <div
-              // className="w-full"
-                onClick={() => {
-                  dispatch(setCurrentPage(1))
-                  dispatch(setCategoryBtnValue(curItem.redirectionUrl))
-                  dispatch(fetchCategoryWiseData(curItem.redirectionUrl.toLowerCase()))
-
-                }}
+                // className="w-full"
+               
               >
                 <BannerImage
                   src={{
-                    sm: curItem.image.sm,
-                    md: curItem.image.md,
-                    lg: curItem.image.lg
+                    sm: banner.image.sm,
+                    md: banner.image.md,
+                    lg: banner.image.lg
                   }}
-                  alt={curItem.redirectionUrl}
-                  className="bg-[var(--bgColorSecondary)]"
-                  blurSrc={curItem.image.blur}
+                  blurSrc={banner.image.blur}
+                  alt={banner.redirectionUrl}
+                  // className="bg-[var(--bgColorSecondary)]"
+                  className="w-full"
+                  isFirst={index === 0} // Only first image is eagerly loaded
                 />
               </div>
 
@@ -144,11 +164,6 @@ const Banner = () => {
 };
 
 export default Banner;
-
-
-
-
-
 
 
 

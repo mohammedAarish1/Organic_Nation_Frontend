@@ -1,17 +1,10 @@
 import { useState } from "react";
 import AddressForm from "./AddressForm";
 import {
-  FiUser,
   FiMapPin,
-  FiPackage,
-  FiLogOut,
-  FiMenu,
-  FiX,
   FiEdit2,
-  FiSave,
   FiTrash2,
   FiPlus,
-  FiChevronRight
 } from 'react-icons/fi';
 import { useDispatch, useSelector } from "react-redux";
 import { handleDeletingAddress } from "../../features/user-profile/userProfile";

@@ -12,10 +12,7 @@ export const checkDeliveryAvailability = createAsyncThunk(
             const response = await axios.get(`${apiUrl}/api/delivery/check-availability/${pincode}`);
             return response.data;
         } catch (error) {
-            return rejectWithValue({
-                message: err.message,
-                status: err.response?.status
-            });
+            return rejectWithValue(error.response?.data);
         }
     }
 )
@@ -110,6 +107,7 @@ const checkDelivery = createSlice({
                 isAvailable: action.payload?.available,
                 message: action.payload.message,
                 checking: false,
+                error:null,
                 userCity:action.payload?.data?.city,
                 userState:action.payload?.data?.state,
                 userPincode:action.payload?.data?.pinCode
@@ -119,9 +117,8 @@ const checkDelivery = createSlice({
             return {
                 ...state,
                 isAvailable: action.payload.available,
-                message: action.payload.message,
                 checking: false,
-                error: action.payload.message,
+                error: action.payload?.message,
             }
         })
         // calculate shipping fee 

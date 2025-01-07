@@ -61,7 +61,6 @@ function App() {
   const { isAdminLoggedIn } = useSelector(state => state.admin)
 
   // animation initialization 
-  // AOS.init();
 
   const {token} =useSelector(state=>state.auth)
   const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
@@ -78,8 +77,8 @@ function App() {
     const fetchInitialData = async () => {
       dispatch(getProductsData());
       dispatch(getAllCartItems());
-      dispatch(getAllBlogs());
-      dispatch(getAllRecipes());
+      // dispatch(getAllBlogs());
+      // dispatch(getAllRecipes());
       dispatch(getAllOrders());
       // if (token) {
       //   await Promise.all([

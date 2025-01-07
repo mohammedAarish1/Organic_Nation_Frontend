@@ -4,7 +4,6 @@ import { IoIosClose } from "react-icons/io";
 import { useDispatch, useSelector } from 'react-redux';
 import { getSearchedData, setFilterInitialValues } from '../../features/filter/filterSlice';
 import { useNavigate } from 'react-router-dom';
-import { setShowSidebar } from '../../features/toggleSidebar/toggleSidebar';
 
 
 
@@ -24,7 +23,6 @@ const Search = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const { productData } = useSelector((state) => state.product_data);
-  const { searchInputValue } = useSelector(state => state.filterData);
 
   // for auto typed suggestions in the placeholder 
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
@@ -94,6 +92,7 @@ const Search = () => {
         {/* submit button  */}
         <button
           type='submit'
+          aria-label="Search" 
           className=' absolute top-[50%] -translate-y-1/2 xs:right-3 right-2  cursor-pointer bg-[var(--bgColorSecondary)]'
         >
           <IoSearch />

@@ -5,11 +5,6 @@ import ProfileMainSection from '../../components/user-profile-comp/ProfileMainSe
 import { useLocation } from 'react-router-dom';
 
 
-
-
-
-
-
 const UserProfile = () => {
 
 const location=useLocation();

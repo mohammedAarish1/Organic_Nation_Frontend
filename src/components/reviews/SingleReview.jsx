@@ -1,11 +1,7 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React  from 'react'
 import { FaStar } from 'react-icons/fa6';
 
 const SingleReview = ({ reviews }) => {
-
-    const apiUrl = import.meta.env.VITE_BACKEND_URL;
-    
 
 
     // const getCustomerName = async (email) => {

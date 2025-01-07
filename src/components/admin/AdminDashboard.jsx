@@ -1,33 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { FaBars, FaHome, FaShoppingCart, FaUserAlt, FaChartLine, FaCog } from 'react-icons/fa';
-import { BsSearch } from 'react-icons/bs';
-import { VscAccount } from 'react-icons/vsc';
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-import AdminSidebar from './AdminSidebar';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchAdminData } from '../../features/admin/adminSlice';
-import { getOrdersByStatus, getTotalOrders } from '../../features/admin/adminData';
+import React, {  useState } from 'react';
+import {  useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-const data = [
-  { name: 'Jan', users: 400, orders: 240, queries: 80 },
-  { name: 'Feb', users: 450, orders: 280, queries: 90 },
-  { name: 'Mar', users: 500, orders: 320, queries: 100 },
-  { name: 'Apr', users: 550, orders: 360, queries: 110 },
-  { name: 'May', users: 600, orders: 400, queries: 120 },
-  { name: 'Jun', users: 650, orders: 440, queries: 130 },
-];
+// const data = [
+//   { name: 'Jan', users: 400, orders: 240, queries: 80 },
+//   { name: 'Feb', users: 450, orders: 280, queries: 90 },
+//   { name: 'Mar', users: 500, orders: 320, queries: 100 },
+//   { name: 'Apr', users: 550, orders: 360, queries: 110 },
+//   { name: 'May', users: 600, orders: 400, queries: 120 },
+//   { name: 'Jun', users: 650, orders: 440, queries: 130 },
+// ];
 
 const AdminDashboard = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const navigate = useNavigate()
 
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const adminToken = JSON.parse(sessionStorage.getItem('adminToken'))
-  const { totalOrders, loading, totalUsers, totalUserQueries, ordersByStatus } = useSelector(state => state.adminData);
-  const { isLoading, productData } = useSelector((state) => state.product_data);
+  const { totalOrders, loading, totalUsers, totalUserQueries } = useSelector(state => state.adminData);
+  const {  productData } = useSelector((state) => state.product_data);
 
 
 

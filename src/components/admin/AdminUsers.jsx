@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FaSort, FaSync, FaChevronLeft, FaChevronRight, FaSearch } from 'react-icons/fa';
+import { FaSort,  FaChevronLeft, FaChevronRight, FaSearch } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { handleDocumentDeleteFromDatabase } from '../../helper/helperFunctions';
 import { getAllUsers, updateUserStatus } from '../../features/admin/adminData';

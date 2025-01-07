@@ -1,17 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Title from '../title/Title'
 import { Link } from 'react-router-dom';
 // react icons 
 import { FaArrowRightLong } from "react-icons/fa6";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllRecipes } from '../../imports';
 
 
 const RecipeSection = ({ showBtn = false }) => {
 
-
+const dispatch=useDispatch()
     const { recipes, loading } = useSelector(state => state.blog)
 
     // array for img src is pending
+
+    useEffect(()=>{
+              dispatch(getAllRecipes());
+    },[])
+
+
 
 
     if (loading) return (<div>loading........</div>)

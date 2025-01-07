@@ -1,19 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FaSort, FaSync, FaChevronLeft, FaChevronRight, FaSearch } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
-import { ImSpinner9 } from 'react-icons/im';
+import { FaSort,  FaChevronLeft, FaChevronRight, FaSearch } from 'react-icons/fa';
+import {  useSelector } from 'react-redux';
 import { FiPlusSquare } from "react-icons/fi";
 import ProductForm from './ProductForm';
-import { FaEdit, FaTrashAlt } from "react-icons/fa";
-import UploadProductImage from '../UploadProductImage';
-
-
+import { FaEdit } from "react-icons/fa";
+// import UploadProductImage from '../UploadProductImage';
 
 
 const AdminProducts = () => {
-    const dispatch = useDispatch();
     const [sortedProducts, setSortedProducts] = useState([]);
-    const { isLoading, productData } = useSelector((state) => state.product_data);
+    const {  productData } = useSelector((state) => state.product_data);
     const [sortDirection, setSortDirection] = useState('desc');
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [isFormVisible, setIsFormVisible] = useState(false);

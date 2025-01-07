@@ -1,21 +1,15 @@
 import { useState } from "react";
-import { FaBars, FaHome, FaShoppingCart, FaUserAlt, FaChartLine, FaCog } from 'react-icons/fa';
-import { BsSearch } from 'react-icons/bs';
+import {  FaHome, FaShoppingCart, FaUserAlt, } from 'react-icons/fa';
 import { IoMdLogIn } from "react-icons/io";
 import { PiSignOutBold } from "react-icons/pi";
-import { FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
 import { RiMailUnreadFill } from "react-icons/ri";
 import { FaProductHunt } from "react-icons/fa6";
 import { PiImagesSquareThin } from "react-icons/pi";
 import { MdOutlineAssignmentReturn } from "react-icons/md";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { IoCloseSharp } from "react-icons/io5";
 import { adminLogout } from "../../features/admin/adminSlice";
 import { useDispatch } from "react-redux";
-
-
-
-
 
 
 const AdminSidebar = ({ setShowSidebar }) => {

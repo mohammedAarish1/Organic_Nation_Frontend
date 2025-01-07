@@ -1,15 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Title from '../title/Title'
 import { Link } from 'react-router-dom';
 // react icons 
 import { FaArrowRightLong } from "react-icons/fa6";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllBlogs } from '../../imports';
 
 
 
 const BlogSection = ({ homePage = false }) => {
 
     const { blogs, loading } = useSelector(state => state.blog)
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getAllBlogs());
+    }, [])
+
     // array for img src is pending
     if (loading) return <div>loading...</div>
 

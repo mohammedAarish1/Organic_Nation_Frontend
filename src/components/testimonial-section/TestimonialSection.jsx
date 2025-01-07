@@ -8,8 +8,8 @@ const TestimonialSection = ({ showBtn = false }) => {
 
     // array for img src is pending
     return (
-        <div className=' pb-20'>
-            <div className='text-center pt-32 pb-20 px-10'>
+        <div className=' xs:pb-20 pb-10'>
+            <div className='text-center xs:pt-32 pt-10 xs:pb-20 px-10'>
                 <Title text="Love From Our Customers" />
                 <p>Testimonials</p>
             </div>

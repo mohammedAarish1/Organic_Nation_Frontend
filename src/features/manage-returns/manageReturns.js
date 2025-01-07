@@ -27,10 +27,6 @@ export const addReturnItems = createAsyncThunk(
       }
      
     } catch (error) {
-      console.error(
-        "Error in addReturnItems:",
-        error.response?.data || error.message
-      );
       return rejectWithValue(error.response?.data || error.message);
     }
   }

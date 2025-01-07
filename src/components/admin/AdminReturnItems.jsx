@@ -1,12 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getOrdersByStatus,
   getReturnsByStatus,
-  getTotalOrders,
   getTotalReturns,
 } from "../../features/admin/adminData";
-import AdminOrderList from "./AdminOrderList";
 import StatusButton from "../statusButton/StatusButton";
 import AdminReturnItemList from "./AdminReturnItemList";
 

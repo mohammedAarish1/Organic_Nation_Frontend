@@ -7,9 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
-
-
-
 const BlogDetail = () => {
 
     const dispatch = useDispatch()

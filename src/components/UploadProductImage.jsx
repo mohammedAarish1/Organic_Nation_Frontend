@@ -38,7 +38,7 @@ const UploadProductImage = ({product}) => {
             //   // Handle error here
             // }
         } catch (error) {
-            console.error('Error while submitting:', error);
+            throw error
         }
     };
 

@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { BiChevronLeft, BiChevronRight, BiDownload } from 'react-icons/bi';
 import { RxCross2 } from "react-icons/rx";
 // Sample image array - replace with your actual images
-const sampleImages = [
-  '/api/placeholder/800/600',
-  '/api/placeholder/800/600',
-  '/api/placeholder/800/600',
-  '/api/placeholder/800/600',
-];
+// const sampleImages = [
+//   '/api/placeholder/800/600',
+//   '/api/placeholder/800/600',
+//   '/api/placeholder/800/600',
+//   '/api/placeholder/800/600',
+// ];
 
 const AdminReturnItemImages=({images})=> {
   const [isOpen, setIsOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isDownloading, setIsDownloading] = useState(false);
+  // const [isDownloading, setIsDownloading] = useState(false);
 
   const handlePrevious = () => {
     setCurrentIndex((prevIndex) => 

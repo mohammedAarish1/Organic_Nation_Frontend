@@ -353,7 +353,7 @@ const ProductDetails = () => {
         <div className='hidden-scrollbar flex justify-start items-center gap-5 py-4  overflow-x-auto  w-[90%] mx-auto'>
 
 
-          {filterProduct.filter(product=>product.name==='Organic Light Flora Honey')?.map((product) => (
+          {filterProduct?.map((product) => (
             <Link to={`/shop/${categoryBtnValue}/${product['name-url']}`} key={product._id} >
               <div className='flex flex-col justify-center items-center gap-5 shadow-xl px-8 py-4 cursor-pointer hover:scale-90 hover:bg-[#dcd3b9] transition-all duration-500  min-h-[350px] w-80'>
 
@@ -376,7 +376,7 @@ const ProductDetails = () => {
                   // blurSrc={mainImage.blur}
                   // alt={'image-main'}
                   // style={{ display: 'block', maxWidth: '100%' }}
-                  // className='max-h-[515px] object-contain'
+                  className='min-w-32 h-40 object-contain'
                   />
 
                 </div>

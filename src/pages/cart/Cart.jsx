@@ -40,11 +40,10 @@ const Cart = () => {
     loading,
     totalCartAmount,
     totalTax,
-    error,
     couponCodeApplied,
   } = useSelector((state) => state.cart);
 
-  const { isAvailable, message, checking } = useSelector(
+  const { isAvailable, message, checking ,error} = useSelector(
     (state) => state.delivery
   );
 
@@ -405,7 +404,7 @@ const Cart = () => {
                           </p>
                         ) : (
                           <p className="text-center text-red-500 text-[13px] py-1 break-all">
-                            {isAvailable === false && message}
+                            {error}
                           </p>
                         )}
                       </div>
@@ -422,7 +421,7 @@ const Cart = () => {
               <div
                 className={`${cartItemsList?.length === 0
                   ? "bg-green-400"
-                  : "hover:scale-90 bg-green-500 hover:bg-green-700"
+                  : " bg-green-500 hover:bg-green-700"
                   } flex justify-center items-center gap-2    transition-all duration-700 text-white rounded-md`}
                 data-tooltip-id="checkout-tooltip"
                 data-tooltip-content="Your cart is Empty !"

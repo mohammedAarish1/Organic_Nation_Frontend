@@ -1,9 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import SEO from '../../helper/SEO/SEO';
 
-
-
-
 const About = () => {
     const [scrollPosition, setScrollPosition] = useState(0);
     const sectionRefs = useRef([]);

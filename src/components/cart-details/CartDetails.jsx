@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import React, {  useState } from 'react'
+import {  useSelector } from 'react-redux';
 import Image from '../../components/image/Image';
 // react icons 
 import { IoChevronDownOutline } from "react-icons/io5";
@@ -9,7 +9,6 @@ import { PiSealCheckFill } from 'react-icons/pi';
 
 const CartDetails = () => {
 
-    const dispatch = useDispatch()
     const { checking, shippingFee } = useSelector(state => state.delivery)
     const { cartItemsList, totalCartAmount, couponCodeApplied } = useSelector((state) => state.cart);
     const [showSummary, setShowSummary] = useState(false);
@@ -24,7 +23,7 @@ const CartDetails = () => {
 
 
     return (
-        <div className="bg-gradient-to-r from-[#6D613B] to-[#D3BB71] lg:h-screen lg:sticky lg:top-0">
+        <div className={`bg-gradient-to-r from-[#6D613B] to-[#D3BB71] lg:h-screen ${!showSummary && 'sticky top-[85px] z-10'}`}>
             <div className="relative h-full">
                 <div className="xs:p-8 p-4 lg:overflow-auto lg:h-[calc(100vh-60px)]" >
                     <div className=' flex items-center justify-between'>
@@ -40,8 +39,8 @@ const CartDetails = () => {
                     </div>
                     <div className={` space-y-6 mt-10 ${!showSummary && 'lg:block hidden'} ${showSummary && 'block'} `}>
                         {cartItemsList?.map((product) => (
-                            <div key={product?._id} className="grid grid-cols-2 items-center xs:gap-4">
-                                <div className="px-4 shrink-0  ">
+                            <div key={product?._id} className="grid grid-cols-2 items-center xs:gap-4 ">
+                                <div className="p shrink-0 ">
                                     {/* <img
                                         src={Array.isArray(product.img) ? product.img.filter(path => path.includes('front'))[0] : null}
                                         className="lg:w-20 lg:h-24 w-16  object-contain rounded-2xl"
@@ -57,12 +56,12 @@ const CartDetails = () => {
                                         }}
                                         // blurSrc={leftImage.blur}
                                         alt={product.name}
-                                        className="w-20 max-h-24 object-contain"
+                                        className="w-32 max-h-32 object-contain"
                                     />
                                 </div>
                                 <div>
                                     <h3 className="text-base font-bold text-white">{product.name}</h3>
-                                    <ul className="text-xs text-white xs:space-y-3 xs:mt-4">
+                                    <ul className="text-[10px] text-white xs:space-y-3 xs:mt-4">
                                         <li className="flex flex-wrap gap-4">Weight <span className="ml-auto">{product.weight}</span></li>
                                         <li className="flex flex-wrap gap-4">Quantity <span className="ml-auto">{product.quantity} Pcs.</span></li>
                                         <li className="flex flex-wrap gap-4">Total Price (including taxes) <span className="ml-auto font-bold">₹ {Math.round((product.price - (product.price * product.discount / 100)) * product.quantity)}</span></li>

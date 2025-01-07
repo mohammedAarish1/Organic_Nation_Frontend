@@ -51,6 +51,19 @@ body {
    ========================
 */
 
+/* Add these styles to your CSS file */
+.bannerCustomCss .swiper-slide img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* If you have CORS-enabled images, add this for better performance */
+.bannerCustomCss img {
+  crossorigin: "anonymous";
+}
+
 .bannerCustomCss .swiper-pagination {
   padding-bottom: 20px;
 }

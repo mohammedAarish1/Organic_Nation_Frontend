@@ -82,7 +82,13 @@ const NavMenu = () => {
 
                 {/* menu button */}
                 <div className='md:hidden'>
-                    <button type='button' onClick={() => dispatch(setShowSidebar())}><RiMenu3Fill className='text-2xl ' /></button>
+                    <button
+                        type='button'
+                        aria-label="Open Menu" 
+                        onClick={() => dispatch(setShowSidebar())}
+                    >
+                        <RiMenu3Fill className='text-2xl ' />
+                    </button>
                 </div>
 
                 {/* navbar items */}
@@ -168,7 +174,7 @@ const NavMenu = () => {
             <nav id='mobileMenu' className={`mobile-menu-container ${showSidebar ? 'active' : ''}  `} >
                 <div className={`mobile-menu min-h-full xs:w-1/2 w-2/3 ${showDropDownMenu && 'w-full'} ${showSidebar ? 'active' : ''}`}>
 
-                    <div className='p-4 max-w-min' onClick={()=> dispatch(setShowSidebar())}>
+                    <div className='p-4 max-w-min' onClick={() => dispatch(setShowSidebar())}>
                         <Logo />
                     </div>
 

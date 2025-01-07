@@ -6,18 +6,18 @@ import { fetchCategoryWiseData, setCategoryBtnValue } from '../../features/filte
 import { useDispatch } from 'react-redux';
 
 const icons = [
-    { name:'Pickles',category: 'Authentic-Pickles', icon: '/CategoryCarousel/pickle.png' },
-    { name:'Honey',category: 'Organic-Honey', icon: '/CategoryCarousel/honey.png' },
-    { name:'Seasonings',category: 'Seasonings-&-Herbs', icon: '/CategoryCarousel/seasonings.png' },
-    { name:'Salt',category: 'Salt', icon: '/CategoryCarousel/salt.png' },
-    { name:'Cereals',category: 'Breakfast-Cereals', icon: '/CategoryCarousel/brefastCereals.png' },
-    { name:'Chutney',category: 'Chutney-&-Dip', icon: '/CategoryCarousel/chutney.png' },
-    { name:'Oats',category: 'Oats', icon: '/CategoryCarousel/oats.png' },
-    { name:'Oils',category: 'Organic-Oils', icon: '/CategoryCarousel/oils.png' },
-    { name:'Preserves',category: 'Fruit-Preserves', icon: '/CategoryCarousel/preserves.png' },
-    { name:'Vegan',category: 'Vegan', icon: '/CategoryCarousel/soyaChaap.png' },
-    { name:'Sweetners',category: 'Sweetners', icon: '/CategoryCarousel/sugar.png' },
-    { name:'Tea',category: 'Organic-Tea', icon: '/CategoryCarousel/tea.png' },
+    { name:'Pickles',category: 'Authentic-Pickles', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/pickle.webp' },
+    { name:'Honey',category: 'Organic-Honey', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/honey.webp' },
+    { name:'Seasonings',category: 'Seasonings-&-Herbs', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/seasonings.webp' },
+    { name:'Salt',category: 'Salt', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/salt.webp' },
+    { name:'Cereals',category: 'Breakfast-Cereals', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/brefastCereals.webp' },
+    { name:'Chutney',category: 'Chutney-&-Dip', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/chutney.webp' },
+    { name:'Oats',category: 'Oats', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/oats.webp' },
+    { name:'Oils',category: 'Organic-Oils', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/oils.webp' },
+    { name:'Preserves',category: 'Fruit-Preserves', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/preserves.webp' },
+    { name:'Vegan',category: 'Vegan', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/soyaChaap.webp' },
+    { name:'Sweetners',category: 'Sweetners', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/sugar.webp' },
+    { name:'Tea',category: 'Organic-Tea', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/tea.webp' },
 ];
 
 const CategoryCarousel = () => {
@@ -59,6 +59,7 @@ const CategoryCarousel = () => {
                 {/* Left Arrow */}
                 <button
                     onClick={() => scroll('left')}
+                    aria-label="Previous Categories" 
                     className={`flex-shrink-0 p-2 rounded-full hover:bg-gray-100 transition-colors duration-200
                               ${showLeftArrow ? 'text-gray-800' : 'text-gray-300'}`}
                     disabled={!showLeftArrow}
@@ -92,7 +93,7 @@ const CategoryCarousel = () => {
                                             flex items-center justify-center">
                                     <img
                                         src={item.icon}
-                                        alt={item.name}
+                                        alt={item.category}
                                         className="w-full h-full object-contain"
                                     />
                                 </div>
@@ -111,6 +112,7 @@ const CategoryCarousel = () => {
                 {/* Right Arrow */}
                 <button
                     onClick={() => scroll('right')}
+                    aria-label="Next Categories" 
                     className={`flex-shrink-0 p-2 rounded-full hover:bg-gray-100 transition-colors duration-200
                               ${showRightArrow ? 'text-gray-800' : 'text-gray-300'}`}
                     disabled={!showRightArrow}

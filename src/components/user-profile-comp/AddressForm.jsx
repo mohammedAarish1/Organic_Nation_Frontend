@@ -7,15 +7,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { handleAddingNewAddress, updateExistingAddress } from '../../features/user-profile/userProfile';
 import { checkDeliveryAndCalculateShippingFee } from "../../helper/helperFunctions";
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
 import { getUserData } from '../../features/auth/auth';
 
 const AddressForm = ({ onSubmit, onCancel, address }) => {
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const { userCity, userPincode, userState,isAvailable} = useSelector((state) => state.delivery);
-    const { error, message } = useSelector(state => state.userProfile)
 
 
     const validationSchema = Yup.object({

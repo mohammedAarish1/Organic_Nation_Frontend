@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 // import bannerImg from '../../images/blog.png'
-import BlogSection from '../../components/blog-section/BlogSection';
+// import BlogSection from '../../components/blog-section/BlogSection';
 import SEO from '../../helper/SEO/SEO';
 
+const BlogSection = lazy(() => import('../../components/blog-section/BlogSection'))
 
 const Blogs = () => {
     return (
@@ -27,7 +28,13 @@ const Blogs = () => {
                 <img src='https://organicnationmages.s3.ap-south-1.amazonaws.com/other_banners/blog.png' alt="blog-image" className='w-full sm:h-[600px] md:object-fill sm:object-cover' />
             </div>
             <div>
-                <BlogSection />
+                <Suspense fallback={
+                    <div className='py-52 flex justify-center items-center'>
+                        <div className="loader"></div>
+                    </div>
+                }>
+                    <BlogSection />
+                </Suspense>
             </div>
         </div>
     )

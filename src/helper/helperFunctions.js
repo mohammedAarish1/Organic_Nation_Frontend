@@ -112,9 +112,6 @@ const handleDocumentDeleteFromDatabase = (collection, id, dispatch, updateLists)
       toast.success("Deleted Successfully");
       dispatch(updateLists());
     })
-    .catch((error) => {
-      // console.log('error deleting',error)
-    })
 }
 
 
@@ -131,12 +128,7 @@ const checkDeliveryAndCalculateShippingFee = (
       if (res.payload.available) {
         dispatch(
           calculateShippingFee({ pinCode: res.meta.arg })
-        ).then((res) => {
-
-          if (res.meta.requestStatus === "fulfilled") {
-            // localStorage.setItem("deliveryChargeToken", res?.payload?.token);
-          }
-        });
+        )
       } else {
         toast.error(`Delivery is not available for pin code ${pinCode}`);
         dispatch(updateShippingFee());

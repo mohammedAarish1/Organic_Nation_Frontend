@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { addReturnItems } from "../../features/manage-returns/manageReturns";
 import { getAllOrders } from "../../features/manageOrders/manageOrders";
@@ -228,7 +227,7 @@ const ReturnItemForm = ({
         })
         .catch(() => {});
     } catch (error) {
-      console.error("Error submitting form:", error);
+      throw error;
     }
 
     setSubmitting(false);

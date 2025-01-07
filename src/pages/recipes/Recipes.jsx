@@ -1,6 +1,8 @@
-import React from 'react'
-import RecipeSection from '../../components/recipe-section/RecipeSection';
+import React, { lazy, Suspense } from 'react'
+// import RecipeSection from '../../components/recipe-section/RecipeSection';
 import SEO from '../../helper/SEO/SEO';
+
+const RecipeSection = lazy(() => import('../../components/recipe-section/RecipeSection'));
 
 
 const Recipes = () => {
@@ -26,7 +28,13 @@ const Recipes = () => {
         <img src='https://organicnationmages.s3.ap-south-1.amazonaws.com/other_banners/recipeBanner.png' alt="recipe-image" className='w-full sm:h-[600px] md:object-fill sm:object-cover object-contain' />
       </div>
       <div>
-        <RecipeSection />
+        <Suspense fallback={
+          <div className='py-52 flex justify-center items-center'>
+            <div className="loader"></div>
+          </div>
+        }>
+          <RecipeSection />
+        </Suspense>
       </div>
     </div>
   )

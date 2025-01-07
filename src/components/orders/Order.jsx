@@ -3,12 +3,12 @@ import {
   cancelOrder,
   getAllOrders,
 } from "../../features/manageOrders/manageOrders";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import SingleOrder from "./SingleOrder";
 import Alert from "../alert/Alert";
 // react icons
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import { MdOutlineFileDownload, MdOutlineCancel } from "react-icons/md";
+import {  MdOutlineCancel } from "react-icons/md";
 import { GoDotFill } from "react-icons/go";
 import {
   IoCheckmarkDoneCircleSharp,

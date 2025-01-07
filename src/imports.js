@@ -12,10 +12,10 @@ import WhatsApp from './components/whatsApp/WhatsApp';
 import VerifyEmail from './components/forgotPassword/VerifyEmail';
 import ResetPassword from './components/forgotPassword/ResetPassword';
 import SearchedProduct from './components/searchedProduct/SearchedProduct';
-
+import Home from './pages/home/Home';
 
 // pages
-export const Home = lazy(() => import('./pages/home/Home'));
+// export const Home = lazy(() => import('./pages/home/Home'));
 export const About = lazy(() => import('./pages/about/About'));
 export const Shop = lazy(() => import('./pages/shop/Shop'));
 export const ContactUs = lazy(() => import('./pages/contact-us/ContactUs'))
@@ -27,7 +27,7 @@ export const Faq = lazy(() => import('./pages/FAQ\'s/Faq'))
 export const PrivacyPolicy = lazy(() => import('./pages/privacy-policy/PrivacyPolicy'))
 export const TermsAndConditions = lazy(() => import('./pages/terms&conditions/TermsCondions'))
 export const CsrPolicy = lazy(() => import('./pages/CSR-Policy/CsrPolicy'));
-export const BulkOrder = lazy(() => import('./pages/bulk-order/BulkOrder'));
+// export const BulkOrder = lazy(() => import('./pages/bulk-order/BulkOrder'));
 export const ProductDetails = lazy(() => import('./pages/productDetails.jsx/ProductDetails'));
 export const Checkout = lazy(() => import('./pages/checkout/Checkout'));
 export const BlogDetail = lazy(() => import('./pages/blog-detail-page/BlogDetail'));
@@ -52,6 +52,7 @@ import ManageOrders from './pages/manage-orders/ManageOrders';
 
 
 export {
+  Home,
   Header,
   Footer,
   Info,

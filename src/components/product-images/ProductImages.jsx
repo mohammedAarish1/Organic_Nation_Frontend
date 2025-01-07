@@ -40,7 +40,6 @@ const ProductImages = ({ productImgs }) => {
                                 alt="image"
                                 key={index}
                                 // onClick={() => {
-                                //     console.log('hello')
                                 //     setMainImage(img)}}
                                 className={`${img === mainImage ? 'border-2 border-[var(--themeColor)] p-2' : ''} w-20 max-h-24 object-contain cursor-pointer hover:scale-90 transition-all duration-400`}
                                 blurSrc={img.blur}

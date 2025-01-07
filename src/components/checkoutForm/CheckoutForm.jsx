@@ -65,8 +65,7 @@ const CheckoutForm = () => {
   const { user } = useSelector((state) => state.auth);
   const { cartItemsList, totalCartAmount, totalTax, couponCodeApplied } = useSelector((state) => state.cart);
   const { addingNewOrder } = useSelector((state) => state.orders);
-  const { shippingFee, userCity, userPincode, userState, } = useSelector((state) => state.delivery);
-
+  const { shippingFee, userCity, userPincode, userState,error } = useSelector((state) => state.delivery);
 
   const addresses = user?.addresses || [];
 
@@ -586,6 +585,9 @@ const CheckoutForm = () => {
                         *{errors?.shippingAddress?.pinCode}
                       </p>
                     ) : null}
+                    {error && (
+                      <p className="text-red-600">{error}</p>
+                    )}
                   </div>
                   {/* country  */}
                   <div className="w-full relative ">

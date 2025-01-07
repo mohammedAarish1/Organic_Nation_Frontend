@@ -2,16 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FaSort, FaSync, FaChevronLeft, FaChevronRight, FaSearch } from 'react-icons/fa';
 import { MdDeleteForever } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
-import { generateInvoice, generateReport, getOrdersByStatus, getTotalOrders, updateOrderStatus, updatePaymentStatus } from '../../features/admin/adminData';
+import { generateInvoice,  getTotalOrders, updateOrderStatus, updatePaymentStatus } from '../../features/admin/adminData';
 import { ImSpinner9 } from 'react-icons/im';
 import Alert from '../alert/Alert';
-import { fetchAdminData } from '../../features/admin/adminSlice';
-import { useNavigate } from 'react-router-dom';
 import { address, handleDocumentDeleteFromDatabase } from '../../helper/helperFunctions';
 import ReportGenerator from './ReportGenerator';
 import { toast } from 'react-toastify';
 import UpdateInvoiceNo from './UpdateInvoiceNo';
-
 
 
 const AdminOrderList = ({ orders }) => {
@@ -89,17 +86,11 @@ const AdminOrderList = ({ orders }) => {
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-
-
-
-
     const hideAlert = () => {
         setCurStatusAndId('')
         setIsAlertOpen(false);
 
     };
-
-
 
     // for changing order  status locally
     const handleStatusChange = (orderId, status) => {

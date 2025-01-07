@@ -1,6 +1,8 @@
+import { lazy, Suspense } from "react";
 import CartDetails from "../../components/cart-details/CartDetails";
-import CheckoutForm from "../../components/checkoutForm/CheckoutForm";
+// import CheckoutForm from "../../components/checkoutForm/CheckoutForm";
 
+const CheckoutForm = lazy(() => import('../../components/checkoutForm/CheckoutForm'))
 
 const Checkout = () => {
 
@@ -10,9 +12,14 @@ const Checkout = () => {
             <div className="font-[sans-serif]">
                 <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap- h-full">
                     {/* left side  */}
-                   <CartDetails/>
+                        <CartDetails />
+                    {/* <div className="sticky top-[85px] z-10"> 
+                    </div> */}
                     {/* right side  */}
-                    <CheckoutForm />
+                    {/* <CheckoutForm /> */}
+                    <Suspense fallback={<div className="h-48 animate-pulse bg-gray-100" />}>
+                        <CheckoutForm />
+                    </Suspense>
                 </div>
             </div>
 

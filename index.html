@@ -1,83 +1,100 @@
 <!doctype html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- <link rel="icon" type="image/svg+xml" href="https://organicnationmages.s3.ap-south-1.amazonaws.com/logo/logo.png" /> -->
-  <!-- <title>Organic Nation</title> -->
+  
+  <!-- Resource hints -->
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
+  <link rel="preconnect" href="https://connect.facebook.net" crossorigin>
+  
+  <!-- Preload critical image -->
+  <link rel="preload" as="image"
+    href="https://organicnationmages.s3.ap-south-1.amazonaws.com/homepage-banners/1.shopnowsavemore/blur/1.shopnowsavemore.webp" 
+    type="image/webp">
 
-  <!-- Google Tag Manager -->
-  <script>(function (w, d, s, l, i) {
-      w[l] = w[l] || []; w[l].push({
-        'gtm.start':
-          new Date().getTime(), event: 'gtm.js'
-      }); var f = d.getElementsByTagName(s)[0],
-        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'GTM-W9CXKK55');</script>
-  <!-- End Google Tag Manager -->
-
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KBKFW084WY"></script>
+  <!-- Google Tag Manager with async loading -->
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'G-KBKFW084WY');
-  </script>
-
-  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-356654067">
-  </script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'AW-356654067');
-  </script>
-
-  <!-- Google tag (gtag.js)  end -->
-
-  <!-- Meta Pixel Code -->
-  <script>
-    !function (f, b, e, v, n, t, s) {
-      if (f.fbq) return; n = f.fbq = function () {
-        n.callMethod ?
-          n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+    // Defer GTM loading
+    window.addEventListener('load', function() {
+      const script = document.createElement('script');
+      script.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-W9CXKK55';
+      script.async = true;
+      document.head.appendChild(script);
+      
+      // Initialize GTM after script loads
+      script.onload = function() {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          'gtm.start': new Date().getTime(),
+          event: 'gtm.js'
+        });
       };
-      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
-      n.queue = []; t = b.createElement(e); t.async = !0;
-      t.src = v; s = b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t, s)
-    }(window, document, 'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '397875066598539');
-    fbq('track', 'PageView');
+    });
   </script>
 
-  <!-- End Meta Pixel Code -->
-  <meta name="google-site-verification" content="lfAgd8_lz2afHqhTRhb03ADVs7lMjD44S9pHUGkeKF4" />
+  <!-- Google Analytics with minimal blocking -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    
+    // Defer GA loading
+    window.addEventListener('load', function() {
+      const script = document.createElement('script');
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=G-KBKFW084WY';
+      script.async = true;
+      document.head.appendChild(script);
+      
+      script.onload = function() {
+        gtag('js', new Date());
+        gtag('config', 'G-KBKFW084WY', {
+          'send_page_view': false // Defer page view until after critical content loads
+        });
+      };
+    });
+  </script>
 
+  <!-- Meta Pixel Code with performance optimizations -->
+  <script>
+    // Defer Facebook Pixel loading
+    window.addEventListener('load', function() {
+      // Create a lightweight fbq stub
+      window.fbq = function() {
+        window.fbq.callMethod ? 
+          window.fbq.callMethod.apply(window.fbq, arguments) : 
+          window.fbq.queue.push(arguments)
+      };
+      window._fbq = window.fbq;
+      window.fbq.push = window.fbq;
+      window.fbq.loaded = true;
+      window.fbq.version = '2.0';
+      window.fbq.queue = [];
+      
+      // Load Facebook pixel script
+      const script = document.createElement('script');
+      script.src = 'https://connect.facebook.net/en_US/fbevents.js';
+      script.async = true;
+      document.head.appendChild(script);
+      
+      script.onload = function() {
+        fbq('init', '397875066598539');
+        fbq('track', 'PageView');
+      };
+    });
+  </script>
+
+  <meta name="google-site-verification" content="lfAgd8_lz2afHqhTRhb03ADVs7lMjD44S9pHUGkeKF4" />
 </head>
 
 <body>
-
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W9CXKK55" height="0" width="0"
-      style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
+  <!-- Minimal GTM noscript -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W9CXKK55" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
 
-
-  <!-- Meta Pixel Noscript Fallback -->
-  <noscript><img height="1" width="1" style="display:none"
-      src="https://www.facebook.com/tr?id=397875066598539&ev=PageView&noscript=1" />
-  </noscript>
-  <!-- End Meta Pixel Noscript Fallback -->
+  <!-- Meta Pixel Noscript -->
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=397875066598539&ev=PageView&noscript=1" /></noscript>
 </body>
-
 </html>

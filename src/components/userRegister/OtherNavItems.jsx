@@ -58,7 +58,6 @@ const OtherNavItems = () => {
       // dispatch(getAllCartItems());
       dispatch(resetCheckoutStatus(false));
       setShowUserMenu(false);
-      localStorage.removeItem('deliveryChargeToken');
       toast.success("Successfully logged out !! ");
       navigate('/')
     }

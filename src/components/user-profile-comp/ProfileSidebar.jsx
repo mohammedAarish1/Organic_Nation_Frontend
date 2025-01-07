@@ -93,8 +93,6 @@ import {
   FiUser, 
   FiMapPin, 
   FiPackage, 
-  FiLogOut, 
-  FiMenu,
   FiChevronRight
 } from 'react-icons/fi';
 import { RiCouponLine } from "react-icons/ri";

@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { FaClipboard } from 'react-icons/fa';  // Importing icons
-import api from '../../config/axiosConfig';
 import { getCouponDetails } from '../../helper/helperFunctions';
 import { FaCheckCircle, FaCheck, FaTimesCircle } from 'react-icons/fa';
 
-const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
 const CouponCard = ({ coupon }) => {
     const [copied, setCopied] = useState(false);

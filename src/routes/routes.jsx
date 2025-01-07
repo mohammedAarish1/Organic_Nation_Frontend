@@ -7,8 +7,6 @@ import {
 } from '../imports';
 import ManageReturns from '../pages/manage-returns/ManageReturns';
 import GoogleLoginHandler from '../pages/login-signup/GoogleLoginHandler';
-import UserAddresses from '../components/user-profile-comp/UserAddresses';
-import ProfileMainSection from '../components/user-profile-comp/ProfileMainSection';
 
 
 

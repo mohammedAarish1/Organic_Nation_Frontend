@@ -3,7 +3,7 @@ import ButtonTwo from "../button/ButtonTwo";
 import ReviewsAndRatings from "../../helper/ReviewsAndRatings";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addToCart, getAllCartItems } from "../../features/cart/cart";
 import { toast } from "react-toastify";
 // react icons

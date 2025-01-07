@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
@@ -8,7 +7,6 @@ import { RxCross2 } from "react-icons/rx";
 import { TiPlus } from "react-icons/ti";
 import { toast } from 'react-toastify';
 
-const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
 
 const productSchema = Yup.object().shape({
@@ -84,7 +82,6 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
     const [existingImages, setExistingImages] = useState(product ? product.img : []);
     const [newImages, setNewImages] = useState([]);
     const [removedImageUrls, setRemovedImageUrls] = useState([]);
-
     useEffect(() => {
         if (product && product.images) {
             // Handle images array directly from S3 URLs
@@ -199,7 +196,7 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
 
             onSubmit();
         } catch (error) {
-            console.error('Error submitting form:', error);
+            throw error
         }
         setSubmitting(false);
     };
@@ -249,8 +246,8 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
                                 {/* Existing S3 Images */}
                                 {existingImages.map((url, index) => (
                                     <ImagePreview
-                                        key={index}
-                                        url={url}
+                                        key={url._id}
+                                        url={url.md}
                                         onRemove={() => removeExistingImage(index)}
                                         index={index}
                                     />

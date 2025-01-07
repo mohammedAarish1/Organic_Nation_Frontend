@@ -1,13 +1,13 @@
-import React from 'react'
-import TestimonialSlider from '../../components/testimonialSlider/TestimonialSlider';
-import TestimonialSection from '../../components/testimonial-section/TestimonialSection';
+import React, { lazy, Suspense } from 'react'
 import SEO from '../../helper/SEO/SEO'
+
+const TestimonialSlider = lazy(() => import('../../components/testimonialSlider/TestimonialSlider'));
+const TestimonialSection = lazy(() => import('../../components/testimonial-section/TestimonialSection'));
 
 const Testimonials = () => {
 
-
   return (
-    <div className=' mb-28'>
+    <div className='mb-28'>
       <SEO
         title="Testimonials - Our Customers Love Us"
         description="Experience the difference firsthand. Explore our collection of customer testimonials and see why Organic Nation is the best choice."
@@ -29,7 +29,13 @@ const Testimonials = () => {
       </div>
       {/* images or videos */}
       <div>
-        <TestimonialSection />
+        <Suspense fallback={
+          <div className='py-52 flex justify-center items-center'>
+            <div className="loader"></div>
+          </div>
+        }>
+          <TestimonialSection />
+        </Suspense>
       </div>
 
       {/* customer feedback section  */}
@@ -45,8 +51,13 @@ const Testimonials = () => {
         </div>
 
       </div>
-
-      <TestimonialSlider />
+      <Suspense fallback={
+          <div className='py-52 flex justify-center items-center'>
+            <div className="loader"></div>
+          </div>
+        }>
+          <TestimonialSlider />
+        </Suspense>
     </div>
 
   )
