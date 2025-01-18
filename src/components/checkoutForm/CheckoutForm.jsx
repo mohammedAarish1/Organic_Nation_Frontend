@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { checkoutSchema } from "../../form-validation/checkoutSchema";
@@ -29,14 +29,23 @@ import CouponList from "../couponCodeList/CouponList";
 // import { handleSavingLocalAdd } from "../../features/check-delivery/checkDelivery";
 // import { saveLocalUserInfo } from "../../features/auth/auth";
 
-const InputField = ({ name, label, icon, errors, touched }) => {
+const InputField = ({ name, label, icon, errors, touched,autoFocus =false }) => {
+  const inputRef = useRef(null);
   const { user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (autoFocus && inputRef.current && (!user || !user[name])) {
+      inputRef.current.focus();
+    }
+  }, [autoFocus, name, user]);
+
   return (
     <div className="relative z-0">
       <Field
         type="text"
         id={name}
         name={name}
+        innerRef={inputRef}
         className={`block py-2.5 tracking-widest  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer ${user && user[name] && 'opacity-70'}`}
         placeholder=" "
         autoComplete="off"
@@ -216,7 +225,7 @@ const CheckoutForm = () => {
     "block py-2.5 tracking-widest  w-full text-sm bg-transparent border-0 border-b-2  appearance-none  dark:border-gray-600 dark:focus:border-green-700 focus:outline-none focus:ring-0  peer";
 
   return (
-    <div className="xl:col-span-2 bg-[#f8eecf]  p-8">
+    <div className="xl:col-span-2 bg-gray-100 p-8">
       <div className=" flex flex-wrap justify-between items-center">
         <h2 className="text-2xl font-bold text-[#333]">Complete your order</h2>
         <div>
@@ -263,6 +272,7 @@ const CheckoutForm = () => {
                   }
                   errors={errors}
                   touched={touched}
+                  autoFocus={true}
                 />
 
                 {/* last name  */}

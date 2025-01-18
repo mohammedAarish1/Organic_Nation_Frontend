@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 const Info = ({ text, fontSize }) => {
   return (
@@ -8,4 +8,4 @@ const Info = ({ text, fontSize }) => {
   )
 }
 
-export default Info;
+export default memo(Info);

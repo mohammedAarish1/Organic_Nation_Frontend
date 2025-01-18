@@ -9,6 +9,9 @@ export default {
       screens:{
         "xs":"450px"
       },
+      backgroundImage: {
+        'custom-gradient': 'linear-gradient(to right, #6D613B, #D3BB71)',
+      },
       // keyframes:{
       //   'slide-in': {
       //     '0%': { transform: 'translateX(-100%)' },

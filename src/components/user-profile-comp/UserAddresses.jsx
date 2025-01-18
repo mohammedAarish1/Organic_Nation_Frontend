@@ -78,16 +78,16 @@ const UserAddresses = () => {
         {user.addresses.length > 0 && user.addresses.map((address) => (
           <div
             key={address._id}
-            className=" rounded-xl shadow-xl border border-gray-100 p-6 hover:shadow-md transition-shadow duration-300"
+            className=" text-white bg-custom-gradient border border-gray-100 p-6 hover:shadow-md transition-shadow duration-300"
           >
             <div className="flex justify-between items-start mb-4">
               <span className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-green-700 text-sm font-medium capitalize">
                 <FiMapPin size={16} className="mr-2" />
                 {address.addressType}
               </span>
-              <div className="flex gap-2">
+              <div className="flex">
                 <button
-                  className="p-2 text-gray-600 hover:text-green-600 hover:bg-blue-50 rounded-lg transition-colors duration-200"
+                  className="p-2 text-green-600 hover:text-green-600 hover:bg-blue-50 rounded-lg transition-colors duration-200"
                   onClick={() => {
                     setSelectedAddress(address)
                     setShowAddForm(!showAddForm)
@@ -96,16 +96,16 @@ const UserAddresses = () => {
                   <FiEdit2 size={18} />
                 </button>
                 <button 
-                className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200"
+                className="p-2 text-red-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200"
                 onClick={()=>handleAddressDelete(address._id)}
                 >
                   <FiTrash2 size={18} />
                 </button>
               </div>
             </div>
-            <p className="text-gray-700 mb-2">{address.mainAddress}</p>
-            <p className="text-gray-700 mb-2">{address.optionalAddress}</p>
-            <p className="text-gray-500">
+            <p className=" mb-2">{address.mainAddress}</p>
+            <p className=" mb-2">{address.optionalAddress}</p>
+            <p>
               {address.city}, {address.state} - {address.pinCode}
             </p>
           </div>

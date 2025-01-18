@@ -25,7 +25,7 @@ const Testimonials = () => {
         twitterCreator="organicnation_"
       />
       <div className=''>
-        <img src='https://organicnationmages.s3.ap-south-1.amazonaws.com/other_banners/testimonialBanner.png' alt="image" className='w-full' />
+        <img src='https://organicnationmages.s3.ap-south-1.amazonaws.com/other_banners/testimonialBanner.webp' alt="image" className='w-full' />
       </div>
       {/* images or videos */}
       <div>

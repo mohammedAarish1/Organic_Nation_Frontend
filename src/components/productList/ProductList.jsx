@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import Product from '../../components/product/Product'
 import { useSelector } from 'react-redux';
 import Pagination from '../pagination/Pagination';
@@ -24,7 +24,10 @@ const ProductList = ({ gridView }) => {
 
   return (
     <div className=' mt-5  '>
-      <div className={`${gridView && "flex-row justify-center items-center"} flex flex-wrap sm:gap-16 gap-7 py-2 xs:py-8`}>
+      <div
+        className={`${gridView && "flex-row  items-center"} flex flex-wrap justify-center sm:gap-10 xs:gap-2 gap-x-1 gap-y-8 py-2 xs:py-8`}
+        // className={`products-grid bg-gray-200`}
+      >
         {currentPageData?.map((product) => (
           <Product gridView={gridView} key={product._id} product={product} />
         ))}

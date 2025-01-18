@@ -99,7 +99,7 @@ const SpotlightSection = () => {
     ];
 
     return (
-        <div className="min-h-[800px]"> {/* Reserve minimum height */}
+        <div className="sm:min-h-[1000px] min-h-[1350px]"> {/* Reserve minimum height */}
             <div className="sm:pb-20 pb-10 sm:pt-10">
                 <div className="flex justify-center xs:gap-4 gap-1 items-center">
                     <div className="h-1 md:w-[30%] xs:w-[20%] w-[20%] bg-gradient-to-r from-[#712522] to-[#bb7d7b]"></div>
@@ -119,7 +119,7 @@ const SpotlightSection = () => {
                 ))}
             </div>
 
-            <div className="flex justify-center flex-wrap xs:gap-14 gap-7 py-16 min-h-[400px]">
+            <div className="flex justify-center flex-wrap sm:gap-14 xs:gap-7 gap-x-2 gap-y-8 py-16 min-h-[400px]">
                 {isLoading ? (
                     // Show skeleton grid with same dimensions as actual products
                     Array(8).fill(0).map((_, index) => (

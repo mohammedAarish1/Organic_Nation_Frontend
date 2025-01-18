@@ -25,7 +25,7 @@ const Blogs = () => {
                 twitterCreator="organicnation_"
             />
             <div>
-                <img src='https://organicnationmages.s3.ap-south-1.amazonaws.com/other_banners/blog.png' alt="blog-image" className='w-full sm:h-[600px] md:object-fill sm:object-cover' />
+                <img src='https://organicnationmages.s3.ap-south-1.amazonaws.com/other_banners/blog.webp' alt="blog-image" className='w-full sm:h-[600px] md:object-fill sm:object-cover' />
             </div>
             <div>
                 <Suspense fallback={

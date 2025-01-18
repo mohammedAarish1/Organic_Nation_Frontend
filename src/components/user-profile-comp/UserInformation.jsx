@@ -10,13 +10,13 @@ import { toast } from 'react-toastify';
 
 const FormInput = ({ label, name, type = 'text', disabled, value, onChange, error, touched, prefix }) => (
   <div>
-    <label className="block text-sm font-medium text-gray-700 mb-2">{label}</label>
+    <label className="block text-sm font-medium italic mb-2">{label}</label>
     <div className={prefix ? 'flex items-center' : ''}>
       {prefix && (
         <span className={`
           px-2 py-3 rounded-lg border transition-colors duration-200
           ${!disabled
-            ? 'outline-none bg-white focus:border-green-500 focus:ring-2 focus:ring-green-200'
+            ? 'outline-none bg-transparent focus:border-green-500 focus:ring-2 focus:ring-green-200'
             : 'border-gray-100 bg-transparent'
           }
         `}>
@@ -32,7 +32,7 @@ const FormInput = ({ label, name, type = 'text', disabled, value, onChange, erro
         className={`
           w-full px-4 py-3 rounded-lg border transition-colors duration-200
           ${!disabled
-            ? 'outline-none bg-white focus:border-green-500 focus:ring-2 focus:ring-green-200'
+            ? 'outline-none bg-transparent focus:border-green-500 focus:ring-2 focus:ring-green-200'
             : 'border-gray-100 bg-transparent font- tracking-widest'
           }
         `}
@@ -62,10 +62,10 @@ const SaveButton = ({ isSubmitting, loading }) => (
 );
 
 const InfoCard = ({ title, isEditing, onEdit, onCancel, children }) => (
-  <div className="rounded-xl shadow-xl border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300">
+  <div className="bg-custom-gradient text-white border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300">
     <div className="p-6">
       <div className="flex justify-between items-center mb-4">
-        <h3 className="xs:text-lg font-semibold text-gray-600">{title}</h3>
+        <h3 className="xs:text-lg font-semibold ">{title}</h3>
         <button
           type="button"
           onClick={isEditing ? onCancel : onEdit}

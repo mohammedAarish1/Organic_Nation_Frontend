@@ -9,8 +9,8 @@ import Info from './components/info/Info';
 import Breadcrumbs from './components/breadcrumbs/Breadcrumbs';
 import WhatsApp from './components/whatsApp/WhatsApp';
 
-import VerifyEmail from './components/forgotPassword/VerifyEmail';
-import ResetPassword from './components/forgotPassword/ResetPassword';
+// import VerifyEmail from './components/forgotPassword/VerifyEmail';
+// import ResetPassword from './components/forgotPassword/ResetPassword';
 import SearchedProduct from './components/searchedProduct/SearchedProduct';
 import Home from './pages/home/Home';
 
@@ -58,8 +58,8 @@ export {
   Info,
   Breadcrumbs,
   WhatsApp,
-  VerifyEmail,
-  ResetPassword,
+  // VerifyEmail,
+  // ResetPassword,
   SearchedProduct,
   ManageOrders
 };

@@ -1,134 +1,134 @@
-import React, { useState } from 'react';
-import Logo from '../../components/logo/Logo';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
-import * as Yup from 'yup';
-import { useDispatch, useSelector } from 'react-redux';
-import { verifyEmail } from '../../features/forgotPassword/forgotPassword';
-import { toast } from 'react-toastify';
+// import React, { useState } from 'react';
+// import Logo from '../../components/logo/Logo';
+// import { ErrorMessage, Field, Form, Formik } from 'formik';
+// import * as Yup from 'yup';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { verifyEmail } from '../../features/forgotPassword/forgotPassword';
+// import { toast } from 'react-toastify';
 
-// react icons 
-import { FaArrowRight } from "react-icons/fa6";
-import { ImSpinner9 } from 'react-icons/im';
-
-
+// // react icons 
+// import { FaArrowRight } from "react-icons/fa6";
+// import { ImSpinner9 } from 'react-icons/im';
 
 
 
 
 
-const VerifyEmail = () => {
-
-    const dispatch = useDispatch();
-    const [emailSent, setEmailSent] = useState(false);
-
-    const { loading } = useSelector(state => state.forgotPassword);
-
-    const initialValues = {
-        email: '',
-    }
 
 
-    const emailSchema = Yup.object({
-        email: Yup.string().email().required('Please enter your email'),
-    });
+// const VerifyEmail = () => {
 
-    const handleEmailSubmit = (values) => {
-        dispatch(verifyEmail(values.email)).then((value) => {
-            setEmailSent(true)
-            toast.info(value.payload.message)
-        })
-    }
+//     const dispatch = useDispatch();
+//     const [emailSent, setEmailSent] = useState(false);
 
+//     const { loading } = useSelector(state => state.forgotPassword);
 
+//     const initialValues = {
+//         email: '',
+//     }
 
 
-    return (
-        <section className='xs:px-10 px-2 pb-20 mt-5 sm:mt-0 font-mono'>
-            <div className='lg:w-[80%] h-auto py-2 bg-opacity-35 mx-auto'>
-                <h2 className="text- text-center sm:mt-6 mt-10 sm:mb-2 mb-6 text-[var(--bgColorPrimary)] text-2xl tracking-widest ">Log in with OTP</h2>
-                <div className='md:w-[90%] py-10 sm:px-0 px-4 flex sm:flex-row flex-col sm:gap-0 gap-6 shadow-md shadow-black justify-center h-[100%] mx-auto  my-auto bg-[var(--bgColorPrimary)] '>
+//     const emailSchema = Yup.object({
+//         email: Yup.string().email().required('Please enter your email'),
+//     });
 
-                    {/* ============== right side ================  */}
+//     const handleEmailSubmit = (values) => {
+//         dispatch(verifyEmail(values.email)).then((value) => {
+//             setEmailSent(true)
+//             toast.info(value.payload.message)
+//         })
+//     }
 
-                    <div className='sm:w-[40%] mt-3 sm:mt-0 flex justify-center items-center'>
-                        <div className='flex justify-center items-center sm:flex-col gap-3 '>
-                            <div>
-                                <Logo />
-                            </div>
-                            <div className='flex flex-col justify-center items-center'>
-                                <span className='sm:text-2xl uppercase text-[var(--bgColorSecondary)]'>Login to</span>
-                                <span className='sm;text-2xl uppercase text-[var(--bgColorSecondary)]'>Organic Nation</span>
-                            </div>
-                        </div>
-                    </div>
 
-                    {/* ============== left side ================  */}
 
-                    <div className='sm:w-[60%] flex justify-center items-center'>
-                        <div className="sm:w-[80%]  mx-auto">
-                            {!emailSent ? (
-                                <Formik
-                                    initialValues={initialValues}
-                                    validationSchema={emailSchema}
-                                    onSubmit={handleEmailSubmit}
-                                >
 
-                                    {({ values }) => (
-                                        <Form>
-                                            <div className='flex flex-col gap-5'>
-                                                <div className='flex flex-col gap-1'>
-                                                    <label
-                                                        htmlFor="phoneNumber"
-                                                        className='text-[var(--bgColorSecondary)]'
-                                                    >
-                                                        Please Enter Your Registered Email
-                                                    </label>
-                                                    <div className='flex  items-center gap-2 border border-[var(--bgColorSecondary)]  rounded-md'>
+//     return (
+//         <section className='xs:px-10 px-2 pb-20 mt-5 sm:mt-0 font-mono'>
+//             <div className='lg:w-[80%] h-auto py-2 bg-opacity-35 mx-auto'>
+//                 <h2 className="text- text-center sm:mt-6 mt-10 sm:mb-2 mb-6 text-[var(--bgColorPrimary)] text-2xl tracking-widest ">Log in with OTP</h2>
+//                 <div className='md:w-[90%] py-10 sm:px-0 px-4 flex sm:flex-row flex-col sm:gap-0 gap-6 shadow-md shadow-black justify-center h-[100%] mx-auto  my-auto bg-[var(--bgColorPrimary)] '>
+
+//                     {/* ============== right side ================  */}
+
+//                     <div className='sm:w-[40%] mt-3 sm:mt-0 flex justify-center items-center'>
+//                         <div className='flex justify-center items-center sm:flex-col gap-3 '>
+//                             <div>
+//                                 <Logo />
+//                             </div>
+//                             <div className='flex flex-col justify-center items-center'>
+//                                 <span className='sm:text-2xl uppercase text-[var(--bgColorSecondary)]'>Login to</span>
+//                                 <span className='sm;text-2xl uppercase text-[var(--bgColorSecondary)]'>Organic Nation</span>
+//                             </div>
+//                         </div>
+//                     </div>
+
+//                     {/* ============== left side ================  */}
+
+//                     <div className='sm:w-[60%] flex justify-center items-center'>
+//                         <div className="sm:w-[80%]  mx-auto">
+//                             {!emailSent ? (
+//                                 <Formik
+//                                     initialValues={initialValues}
+//                                     validationSchema={emailSchema}
+//                                     onSubmit={handleEmailSubmit}
+//                                 >
+
+//                                     {({ values }) => (
+//                                         <Form>
+//                                             <div className='flex flex-col gap-5'>
+//                                                 <div className='flex flex-col gap-1'>
+//                                                     <label
+//                                                         htmlFor="phoneNumber"
+//                                                         className='text-[var(--bgColorSecondary)]'
+//                                                     >
+//                                                         Please Enter Your Registered Email
+//                                                     </label>
+//                                                     <div className='flex  items-center gap-2 border border-[var(--bgColorSecondary)]  rounded-md'>
                                                        
-                                                        <div className='w-full'>
-                                                            <Field
-                                                                type="text"
-                                                                placeholder='abc@gmail.com'
-                                                                name='email'
-                                                                className=' outline-none w-full bg-transparent py-2 text-[var(--bgColorSecondary)] pl-2 tracking-widest'
-                                                            />
-                                                        </div>
+//                                                         <div className='w-full'>
+//                                                             <Field
+//                                                                 type="text"
+//                                                                 placeholder='abc@gmail.com'
+//                                                                 name='email'
+//                                                                 className=' outline-none w-full bg-transparent py-2 text-[var(--bgColorSecondary)] pl-2 tracking-widest'
+//                                                             />
+//                                                         </div>
 
-                                                    </div>
-                                                    <ErrorMessage name="email" component="div" className='text-red-600 text-[14px]' />
-                                                </div>
-                                                <div>
-                                                    <button
-                                                        type="submit"
-                                                        className='p-2 text-[#712522] bg-[var(--bgColorSecondary)] hover:bg-green-500 hover:text-white transition-all duration-300 w-full flex justify-center items-center gap-2 rounded-md '
-                                                    >
-                                                        Verify Email
-                                                        {loading ? (
-                                                            <ImSpinner9 className='animate-spin' />
-                                                        ) : (
-                                                            <FaArrowRight />
-                                                        )}
+//                                                     </div>
+//                                                     <ErrorMessage name="email" component="div" className='text-red-600 text-[14px]' />
+//                                                 </div>
+//                                                 <div>
+//                                                     <button
+//                                                         type="submit"
+//                                                         className='p-2 text-[#712522] bg-[var(--bgColorSecondary)] hover:bg-green-500 hover:text-white transition-all duration-300 w-full flex justify-center items-center gap-2 rounded-md '
+//                                                     >
+//                                                         Verify Email
+//                                                         {loading ? (
+//                                                             <ImSpinner9 className='animate-spin' />
+//                                                         ) : (
+//                                                             <FaArrowRight />
+//                                                         )}
 
 
-                                                    </button>
-                                                </div>
+//                                                     </button>
+//                                                 </div>
 
-                                            </div>
-                                        </Form>
-                                    )}
-                                </Formik>
-                            ) : (
-                                <div className='flex flex-col gap-5 text-2xl'>
-                                    <p className='text-[var(--bgColorSecondary)] text-center'>Please Check Your Email for the Link for resetting the Password</p>
-                                </div>
-                            )}
+//                                             </div>
+//                                         </Form>
+//                                     )}
+//                                 </Formik>
+//                             ) : (
+//                                 <div className='flex flex-col gap-5 text-2xl'>
+//                                     <p className='text-[var(--bgColorSecondary)] text-center'>Please Check Your Email for the Link for resetting the Password</p>
+//                                 </div>
+//                             )}
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    );
-};
+//                         </div>
+//                     </div>
+//                 </div>
+//             </div>
+//         </section>
+//     );
+// };
 
-export default VerifyEmail;
+// export default VerifyEmail;

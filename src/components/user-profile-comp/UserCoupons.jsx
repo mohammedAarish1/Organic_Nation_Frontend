@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { useSelector } from 'react-redux';
-import ReferralOfferCard from './ReferralOfferCard';
+// import ReferralOfferCard from './ReferralOfferCard';
 import CouponCard from './CouponCard';
+import Loader from '../common/Loader';
 
+const ReferralOfferCard=lazy(()=>import('./ReferralOfferCard'))
 
 const UserCoupons = () => {
     const { user } = useSelector(state => state.auth)
@@ -23,7 +25,10 @@ const UserCoupons = () => {
                 ))}
             </section>
             <section>
+                <Suspense fallback={<Loader height='100px' />}>
+
                 <ReferralOfferCard />
+                </Suspense>
             </section>
         </div>
     )

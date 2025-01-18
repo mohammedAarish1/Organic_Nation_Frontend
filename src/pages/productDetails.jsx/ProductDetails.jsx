@@ -1,29 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { lazy, Suspense, useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useParams } from 'react-router-dom';
-import ProductImages from '../../components/product-images/ProductImages'
-import ProductQty from '../../components/productQty/ProductQty'
-import AddToCartBtn from '../../components/add-to-cart-btn/AddToCartBtn';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchCategoryWiseData } from '../../features/filter/filterSlice';
-import { getAllReviews, getAverageRating } from '../../features/reviews/reviews';
+import { useParams } from 'react-router-dom';
+import ProductImages from '../../components/product-images/ProductImages';
 import SingleReview from '../../components/reviews/SingleReview';
-import ReviewsAndRatings from '../../helper/ReviewsAndRatings';
-// react icons 
-import { FaCircleCheck, FaStar, FaIndianRupeeSign } from "react-icons/fa6";
-import { HiXCircle } from "react-icons/hi";
-import { AiOutlineStar } from "react-icons/ai";
-import { FaStarHalfAlt } from 'react-icons/fa';
-import { GoDotFill } from "react-icons/go";
-import { LiaShippingFastSolid } from "react-icons/lia";
-import Accordion from '../../components/accordionItem/Accordion';
+// import ReviewsAndRatings from '../../helper/ReviewsAndRatings';
 import OfferBanner from '../../components/offerBanner/OfferBanner';
-import { individualProductData } from '../../helper/SEO/SEOdata';
 import SEO from '../../helper/SEO/SEO';
-import Image from '../../components/image/Image';
+// import YouMayAlsoLike from '../../components/module/product-details/YouMayAlsoLike';
+import ProductInfo from '../../components/module/product-details/ProductInfo';
+import Loader from '../../components/common/Loader'
 
-
-
+const YouMayAlsoLike = lazy(() => import('../../components/module/product-details/YouMayAlsoLike'));
+const ReviewsAndRatings = lazy(() => import('../../helper/ReviewsAndRatings'));
+const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
 
 // const productInfo = [
@@ -149,35 +138,17 @@ import Image from '../../components/image/Image';
 // };
 
 const ProductDetails = () => {
-
   const { nameUrl } = useParams();
-  const dispatch = useDispatch();
-  const [qty, setQty] = useState(1);
   const [product, setProduct] = useState(null);
-  const [curProductSeoData, setProductSeoData] = useState(individualProductData.nameUrl || {});
-
-
-  const filterProduct = useSelector((state) => state.filterData.data);
-  const { allReviews, loading, averageRating } = useSelector((state) => state.reviews);
-  const { categoryBtnValue } = useSelector((state) => state.filterData);
-
-  const apiUrl = import.meta.env.VITE_BACKEND_URL;
-
-
-
-
+  const [curProductSeoData, setProductSeoData] = useState({});
 
   const getProductDetail = async (nameUrl) => {
 
     try {
-      const response = await axios.get(`${apiUrl}/category/organic-honey/${nameUrl}`);
-      let product = response.data.product
-      if (product) {
-
-        setProduct(product)
-        dispatch(fetchCategoryWiseData(product['category-url'].toLowerCase()))
-        dispatch(getAllReviews(product['name-url']))
-        dispatch(getAverageRating(product['name-url']))
+      const response = await axios.get(`${apiUrl}/category/product/details/${nameUrl}`);
+      if (response.status === 200) {
+        setProductSeoData(response.data.seoData)
+        setProduct(response.data);
       }
     } catch (error) {
       throw error
@@ -187,21 +158,8 @@ const ProductDetails = () => {
 
   useEffect(() => {
     getProductDetail(nameUrl)
-    setProductSeoData(individualProductData[nameUrl] || individualProductData.nameUrl);
 
-  }, [nameUrl])
-
-
-  // for qty increase and decrease 
-
-  const increaseQty = () => {
-    setQty((prevQty) => prevQty + 1)
-  };
-  const decreaseQty = () => {
-    qty > 1 ? setQty(qty - 1) : setQty(1)
-  };
-
-
+  }, [nameUrl]);
 
   if (!product) {
     return (
@@ -233,76 +191,13 @@ const ProductDetails = () => {
       </div>
       <section className='xs:py-20 py-5  '>
         {/* visible in mobile devices  */}
-        <h2 className=' md:hidden block font-semibold xs:text-3xl text-xl xs:px-10 px-4 mb-3' >{product.name}</h2>
+        <h2 className=' md:hidden block font-semibold xs:text-3xl text-xl xs:px-10 px-4 mb-3' >{product.details.name}</h2>
         {/* visible in mobile devices  */}
-        <div className='flex md:flex-row flex-col  '>
+        <div className='flex md:flex-row flex-col'>
           {/* left side  */}
-          <ProductImages productImgs={product?.img?.length >= 1 && product.img} />
-
+          <ProductImages productImgs={product.details?.img?.length >= 1 && product.details?.img} />
           {/* right side  */}
-          <div className="md:w-[50%] max-h-[600px]  flex md:justify-start justify-center items-center gap-4 py-6 xs:pr-10 px-4 xs:pl-10 md:pl-0 font-sans  ">
-            <div className='flex flex-col lg:gap-3 gap-1 tracking-wide'>
-              <h2 className='md:block hidden font-medium md:text-4xl text-xl text-[var(--themeColor)]' >{product.name}</h2>
-              <p className=''><span className='font-semibold'>Brand: </span><span>ORGANIC NATION</span> </p>
-              <p className='flex items-center gap-2'><span className='border border-green-600'><GoDotFill className='text-green-700' /></span><span className='font-semibold '>Pure Vegetarian Product</span></p>
-              <p className=''><span className=' font-semibold'>Weight: </span>{product.weight}</p>
-              <p className=''><span className=' font-semibold'>Category: </span>{product.category}</p>
-              <div className='flex justify-start items-center gap-6'>
-                <div className='flex justify-start items-center gap-2'>
-                  <p>{averageRating}</p>
-                  <div className='flex justify-start items-center gap-2'>
-                    {[...Array(5)].map((star, index) => {
-                      const ratingValue = index + 0.5;
-                      return (
-                        <label key={index}>
-                          <input
-                            type="radio"
-                            name="rating"
-                            value={ratingValue}
-                            // onClick={() => setFieldValue('rating', ratingValue)}
-                            className='hidden'
-                          />
-                          {averageRating >= index + 1 ? (
-                            <FaStar className="text-orange-400" />
-                          ) : averageRating >= index + 0.5 ? (
-                            <FaStarHalfAlt className='text-orange-400' />
-                          ) : (
-                            <AiOutlineStar className="text-orange-400" />
-                          )}
-
-                        </label>
-                      );
-                    })}
-                  </div>
-                </div>
-                <p className=''>{allReviews.length} <span>ratings</span></p>
-              </div>
-
-              <div className='flex gap-3  items-center '>
-                <p className='text-2xl text-red-600'>-{product.discount}%</p>
-                <p className='flex items-start'>
-                  <FaIndianRupeeSign className='text-sm' />
-                  <span className='text-3xl font-medium'>{Math.round(product.price - (product.price * product.discount / 100))}</span>
-                </p>
-                <p className='text-gray-600 text-sm self-end'>(Incl. of all taxes)</p>
-              </div>
-              <p><span className='font-semibold text-sm'>MRP:</span> <span className='line-through'> ₹{product.price}</span> </p>
-
-
-
-
-              {/* <p className='lg:w-[70%]'>{product.description}</p> */}
-              <p className='text-green-700 font-semibold'>*Cash On Delivery is available</p>
-              <p className='flex items-center gap-2'><LiaShippingFastSolid className='text-xl' /> <span>Free shipping for all orders above ₹499</span></p>
-              <p className='flex items-center gap-3'><span>In Stock:</span>{product.availability ? (<FaCircleCheck className='text-xl text-[var(--bgColorPrimary)]' />) : (<HiXCircle className='text-3xl text-red-700' />)}</p>
-              <div className='flex items-center gap-2 xs:mb-0 mb-5'>
-                Quantity:-  <ProductQty qty={qty} increaseQty={increaseQty} decreaseQty={decreaseQty} />
-              </div>
-              <div>
-                <AddToCartBtn item={product} qty={qty} />
-              </div>
-            </div>
-          </div>
+          <ProductInfo product={product} />
         </div>
 
       </section>
@@ -326,8 +221,8 @@ const ProductDetails = () => {
         </div>
         <div className=' xs:w-[80%] w-[95%]   mx-auto flex flex-col gap-16'>
           {/* {loading && (<div>loading.....</div>)} */}
-          {allReviews?.length > 0 && (
-            allReviews.map((reviews) => (
+          {product.reviews?.length > 0 && (
+            product.reviews.map((reviews) => (
 
               <SingleReview key={reviews._id} reviews={reviews} />
 
@@ -340,68 +235,23 @@ const ProductDetails = () => {
           <div>
             <h3 className='tracking-widest font-mono mb-2'>Add Review:</h3>
           </div>
-          <ReviewsAndRatings productName={nameUrl} insideProductDetails={true} />
+          <Suspense fallback={<Loader height='200px' />}>
+            <ReviewsAndRatings productName={nameUrl} insideProductDetails={true} />
+          </Suspense>
         </div>
       </section>
 
 
       {/* =============== you may also like section ========== */}
-
-      <section className='mt-20'>
-        <h2 className='text-center text-2xl tracking-widest font-serif'>You may also like</h2>
-
-        <div className='hidden-scrollbar flex justify-start items-center gap-5 py-4  overflow-x-auto  w-[90%] mx-auto'>
-
-
-          {filterProduct?.map((product) => (
-            <Link to={`/shop/${categoryBtnValue}/${product['name-url']}`} key={product._id} >
-              <div className='flex flex-col justify-center items-center gap-5 shadow-xl px-8 py-4 cursor-pointer hover:scale-90 hover:bg-[#dcd3b9] transition-all duration-500  min-h-[350px] w-80'>
-
-                <div className=''>
-                  {/* <img
-                    src={Array.isArray(product.img) ? product.img.filter(path => path.toLowerCase().includes('front'))[0] : null}
-                    alt="product-image"
-                    className='min-w-32 h-40 object-contain max-h-[240px] rounded-xl'
-                  /> */}
-
-                  <Image
-                    src={{
-                      // sm: mainImage && mainImage.sm,
-                      sm:Array.isArray(product.img) ? product.img.filter(path => path.sm.toLowerCase().includes('front'))[0].sm : null,
-                      md:Array.isArray(product.img) ? product.img.filter(path => path.md.toLowerCase().includes('front'))[0].md : null,
-                      lg:Array.isArray(product.img) ? product.img.filter(path => path.lg.toLowerCase().includes('front'))[0].lg : null,
-                      // md: mainImage && mainImage.md,
-                      // lg: mainImage && mainImage.lg
-                    }}
-                  // blurSrc={mainImage.blur}
-                  // alt={'image-main'}
-                  // style={{ display: 'block', maxWidth: '100%' }}
-                  className='min-w-32 h-40 object-contain'
-                  />
-
-                </div>
-                <div className='flex flex-col justify-center items-center gap-2 '>
-                  <p className=' tracking-widest text-[var(--themeColor)] text-center font-medium '>{product.name}</p>
-                  <p className='text-[14px] text-gray-500 tracking-widest'>Weight: <span className='text-gray-600'>{product.weight}</span></p>
-
-                  <p className='text-[14px] tracking-widest'>₹ <span className='font-semibold'>{Math.round(product.price - (product.price * product.discount / 100))}</span>/- &nbsp; <span>{product.discount}% off</span></p>
-
-                </div>
-              </div>
-            </Link>
-          ))}
-
-          <div className=''>
-            <Link to='/shop/all'> <button className='tracking-widest hover:underline underline-offset-4'>View all Products</button></Link>
-          </div>
-        </div>
-      </section>
+      <Suspense fallback={<Loader height='300px' />}>
+        <YouMayAlsoLike categoryUrl={product.details['category-url'].toLowerCase()} />
+      </Suspense>
 
     </div>
   )
 }
 
-export default ProductDetails
+export default ProductDetails;
 
 
 

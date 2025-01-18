@@ -118,7 +118,6 @@
 
 
 // const Home = () => {
-// console.log('homepage')
 //     const dispatch = useDispatch();
 //     // const { isLoading, productData } = useSelector((state) => state.product_data);
 //     const reviewsAndRating = JSON.parse(sessionStorage.getItem('reviews&rating'));
@@ -497,7 +496,7 @@ const Home = memo(() => {
             <div className='max-w-2xl font-semibold mx-auto font-sans py-4 italic px-2 text-[10px] xs:text-base'>
                 <p className="text-[var(--themeColor)] text-center">
                     Refer a friend, and earn a coupon worth ₹100 when they place an order. Share the love! 
-                    <Link to='/profile/coupons' className='text-green-500 underline'>Share now</Link>
+                    <Link to='/profile/coupons' className='text-green-800 underline'> Share now</Link>
                 </p>
             </div>
             

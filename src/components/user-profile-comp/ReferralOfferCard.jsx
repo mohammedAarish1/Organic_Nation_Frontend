@@ -36,17 +36,17 @@ if(user_loading){
 }
 
     return (
-        <div className="max-w-4xl w-full  rounded-lg shadow-xl overflow-hidden p-6">
+        <div className="max-w-4xl w-full  rounded-lg shadow-xl bg-custom-gradient text-white overflow-hidden p-6">
             <div className="flex items-center justify-between mb-4">
                 {/* Title Section */}
-                <h2 className="xs:text-2xl font-semibold text-gray-800">
+                <h2 className="xs:text-2xl font-semibold">
                     Earn a coupon worth ₹100 on Referrals!
                 </h2>
                 <FaGift className="text-green-600 text-3xl" />
             </div>
 
             {/* Description */}
-            <p className="text-gray-600 xs:text-base text-sm mb-4">
+            <p className="text-gray-200 xs:text-base text-sm mb-4">
                 Refer a friend to our platform, and if they place an order, you'll earn a ₹100 coupon!
                 It's a win-win!
             </p>

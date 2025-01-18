@@ -92,7 +92,7 @@ const Shop = () => {
 
       {/* number of products available end */}
 
-      <div className={`max-w-[90%] mx-auto mt-5 flex md:flex-row flex-col `}>
+      <div className={`xs:max-w-[90%] max-w-[95%] mx-auto mt-5 flex md:flex-row flex-col `}>
         <div className={` filters-container ${showFilters ? 'active' : ''}`}>
           <FilterSection />
         </div>
@@ -104,7 +104,6 @@ const Shop = () => {
           </div>
           <div className="">
             <ProductList gridView={gridView} />
-
           </div>
         </section>
       </div>

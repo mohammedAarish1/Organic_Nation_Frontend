@@ -1,93 +1,3 @@
-// import { 
-//     FiUser, 
-//     FiMapPin, 
-//     FiPackage, 
-//     FiLogOut, 
-//     FiMenu,
-//     FiX,
-//     FiChevronRight
-//   } from 'react-icons/fi';
-
-
-
-// const ProfileSidebar = ({ activeMenu, setActiveMenu, isMobileMenuOpen, setIsMobileMenuOpen }) => {
-//     const menuItems = [
-//       { id: 'personal-info', label: 'Personal Information', icon: FiUser },
-//       { id: 'addresses', label: 'Manage Addresses', icon: FiMapPin },
-//       { id: 'orders', label: 'My Orders', icon: FiPackage },
-//       { id: 'logout', label: 'Log Out', icon: FiLogOut },
-//     ];
-  
-//     return (
-//       <div className=''>
-//         {/* Mobile Menu Button */}
-//         <div className="md:hidden fixed top-4 left-4 z-50">
-//           <button
-//             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-//             className="p-2 rounded-lg bg-white shadow-lg text-gray-700 hover:bg-gray-50"
-//           >
-//             {isMobileMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-//           </button>
-//         </div>
-  
-//         {/* Sidebar Content */}
-//         <div
-//           className={`
-//             fixed md:relative top-0 left-0 h-full w-80  shadow-xl md:shadow-md transform 
-//             ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} 
-//             md:translate-x-0 transition-transform duration-300 ease-in-out z-10
-//           `}
-//         >
-//           <div className="p-6">
-//             <div className="flex items-center gap-3 mb-8">
-//               <div className="w-12 h-12 rounded-full bg-green-600 flex items-center justify-center">
-//                 <FiUser className="text-white" size={24} />
-//               </div>
-//               <div>
-//                 <h2 className="text-lg font-semibold text-gray-600">John Doe</h2>
-//                 <p className="text-sm text-gray-500">john.doe@example.com</p>
-//               </div>
-//             </div>
-  
-//             <nav className="space-y-2">
-//               {menuItems.map((item) => {
-//                 const Icon = item.icon;
-//                 return (
-//                   <button
-//                     key={item.id}
-//                     onClick={() => {
-//                       setActiveMenu(item.id);
-//                       setIsMobileMenuOpen(false);
-//                     }}
-//                     className={`
-//                       w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200
-//                       ${
-//                         activeMenu === item.id
-//                           ? 'bg-blue-50 text-green-600 shadow-sm'
-//                           : 'text-gray-600 hover:bg-gray-50'
-//                       }
-//                     `}
-//                   >
-//                     <Icon size={20} />
-//                     <span className="font-medium">{item.label}</span>
-//                     {activeMenu === item.id && (
-//                       <FiChevronRight className="ml-auto" size={18} />
-//                     )}
-//                   </button>
-//                 );
-//               })}
-//             </nav>
-//           </div>
-//         </div>
-//       </div>
-//     );
-//   };
-
-
-//   export default ProfileSidebar;
-
-
-
 import React from 'react';
 import { 
   FiUser, 
@@ -119,15 +29,15 @@ const ProfileSidebar = ({ activeMenu, setActiveMenu, isMobileMenuOpen, setIsMobi
     <div className="relative">
       {/* Desktop Sidebar */}
       <div className="hidden md:block">
-        <div className="w-80 shadow-md">
+        <div className="w-80 shadow-md bg-custom-gradient text-white">
           <div className="p-6">
             <div className="flex items-center gap-3 mb-8">
               <div className="w-12 h-12 rounded-full bg-green-600 flex items-center justify-center">
                 <FiUser className="text-white" size={24} />
               </div>
               <div>
-                <h2 className="text-lg font-semibold text-gray-600">{firstName+''+lastName}</h2>
-                <p className="text-sm text-gray-500">{user.email}</p>
+                <h2 className="text-lg font-semibold capitalize">{firstName+''+lastName}</h2>
+                <p className="text-sm text-gray-300">{user.email}</p>
               </div>
             </div>
 
@@ -147,7 +57,7 @@ const ProfileSidebar = ({ activeMenu, setActiveMenu, isMobileMenuOpen, setIsMobi
                       ${
                         activeMenu === item.id
                           ? 'bg-blue-50 text-green-600 shadow-sm'
-                          : 'text-gray-600 hover:bg-gray-50'
+                          : ' hover:bg-gray-50 hover:text-green-600'
                       }
                     `}
                   >

@@ -3,7 +3,33 @@ import { Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import {
-    VerifyEmail, ResetPassword, SearchedProduct, Home, About, Shop, ContactUs, Cart,  Recipes, Testimonials, Faq, PrivacyPolicy, TermsAndConditions, CsrPolicy,  ProductDetails, Checkout, BlogDetail, OtpLogin, Blogs, RecipeDetails, GoogleSignup, ManageOrders, OrderConfirm, NoPageFound, OtpSubmit, PaymentStatus, UserProfile
+    // VerifyEmail,
+    // ResetPassword,
+    SearchedProduct,
+    Home,
+    About,
+    Shop,
+    ContactUs,
+    Cart,
+    Recipes,
+    Testimonials,
+    Faq,
+    PrivacyPolicy,
+    TermsAndConditions,
+    CsrPolicy,
+    ProductDetails,
+    Checkout,
+    BlogDetail,
+    OtpLogin,
+    Blogs,
+    RecipeDetails,
+    GoogleSignup,
+    ManageOrders,
+    OrderConfirm,
+    NoPageFound,
+    OtpSubmit,
+    PaymentStatus,
+    UserProfile
 } from '../imports';
 import ManageReturns from '../pages/manage-returns/ManageReturns';
 import GoogleLoginHandler from '../pages/login-signup/GoogleLoginHandler';
@@ -13,7 +39,7 @@ import GoogleLoginHandler from '../pages/login-signup/GoogleLoginHandler';
 const getRoutes = () => {
 
     const { cartItemsList } = useSelector((state) => state.cart);
-    const {user}=useSelector(state=>state.auth);
+    const { user } = useSelector(state => state.auth);
 
     return [
         <Route
@@ -45,18 +71,18 @@ const getRoutes = () => {
             key="register"
             path='/register'
             // element={!token ? <Auth /> : <Home />}
-            element={user? <Home/>: <OtpLogin />}
+            element={user ? <Home /> : <OtpLogin />}
         />,
-        <Route
-            key="forgot-password"
-            path='/auth/forgot-password'
-            element={<VerifyEmail />}
-        />,
-        <Route
-            key="reset-password"
-            path='/reset-password/:token'
-            element={<ResetPassword />}
-        />,
+        // <Route
+        //     key="forgot-password"
+        //     path='/auth/forgot-password'
+        //     element={<VerifyEmail />}
+        // />,
+        // <Route
+        //     key="reset-password"
+        //     path='/reset-password/:token'
+        //     element={<ResetPassword />}
+        // />,
         <Route
             key="recipes"
             path='/our-recipes'
@@ -120,22 +146,22 @@ const getRoutes = () => {
         <Route
             key="google-signup"
             path='/collect-phone-number'
-            element={ <GoogleSignup />}
+            element={<GoogleSignup />}
         />,
         <Route
             key="google-login"
             path='/auth/google/login'
-            element={ <GoogleLoginHandler />}
+            element={<GoogleLoginHandler />}
         />,
         <Route
             key="manage-orders"
             path='/manage-orders'
-            element={user ? <ManageOrders />:<OtpLogin/>}
+            element={user ? <ManageOrders /> : <OtpLogin />}
         />,
         <Route
             key="manage-returns"
             path='/manage-returns'
-            element={user ?<ManageReturns />:<OtpLogin/>}
+            element={user ? <ManageReturns /> : <OtpLogin />}
         />,
         // <Route
         //     key="user-profile"
@@ -145,7 +171,7 @@ const getRoutes = () => {
         <Route
             key="user-profile"
             path='/profile/:id'
-            element={user ?<UserProfile />:<OtpLogin/>}
+            element={user ? <UserProfile /> : <OtpLogin />}
         />,
         <Route
             key="otp-login"

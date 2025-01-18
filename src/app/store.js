@@ -9,7 +9,7 @@ import sidebarReducer from '../features/toggleSidebar/toggleSidebar'
 import reviewsReducer from '../features/reviews/reviews';
 import deliveryReducer from '../features/check-delivery/checkDelivery';
 // import otpSliceReducer from '../features/auth/OTPSlice';
-import forgotPasswordReducer from '../features/forgotPassword/forgotPassword';
+// import forgotPasswordReducer from '../features/forgotPassword/forgotPassword';
 import blogReducer from '../features/blogs/blogs';
 import contactedUserReducer from '../features/contactedUser/contactedUser';
 import paymentReducer from '../features/orderPayment/payment';
@@ -37,7 +37,7 @@ import { setStore } from '../helper/storeUtils';
         reviews: reviewsReducer,
         delivery: deliveryReducer,
         // OTPSlice: otpSliceReducer,
-        forgotPassword: forgotPasswordReducer,
+        // forgotPassword: forgotPasswordReducer,
         blog: blogReducer,
         contactedUser: contactedUserReducer,
         payment: paymentReducer,

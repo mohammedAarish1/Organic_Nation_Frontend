@@ -12,7 +12,26 @@ export const getProductsData = createAsyncThunk(
     } catch (error) {
       throw error
     }
-  })
+  });
+
+
+  // Move this function outside to prevent recreation
+const createCategoryList = (products) => {
+  if (!products) return [];
+  
+  const categoryListData = products.map(product => ({
+    category: product.category,
+    categoryUrl: product['category-url']
+  }));
+
+  const uniqueData = categoryListData.filter((product, index, self) =>
+    index === self.findIndex(t =>
+      t.category === product.category && t.categoryUrl === product.categoryUrl
+    )
+  );
+
+  return [{ category: 'All', categoryUrl: 'All' }, ...uniqueData];
+};
 
 const initialState = {
   isLoading: false,
@@ -27,46 +46,25 @@ export const productsDataSlice = createSlice({
   initialState,
   // for fetching data 
   extraReducers: (builder) => {
-    builder.addCase(getProductsData.pending, (state, action) => {
-      return {
-        ...state,
-        isLoading: true
-      }
+    builder
+    .addCase(getProductsData.pending, (state) => {
+      state.isLoading = true;
     })
-    builder.addCase(getProductsData.fulfilled, (state, action) => {
-
-      if (action.payload) {
-        const data = [...action.payload?.product];
-
-        let categoryListData = data?.map(product => ({
-          category: product.category,
-          categoryUrl: product['category-url'] // Accessing category-url using bracket notation
-        }));
-
-        let uniqueData = categoryListData.filter((product, index, self) =>
-          index === self.findIndex(t =>
-            t.category === product.category && t.categoryUrl === product.categoryUrl
-          )
-        );
-
-        categoryListData = [{ category: 'All', categoryUrl: 'All' }, ...uniqueData];
-
-        return {
-          ...state,
-          isLoading: false,
-          productData: action.payload.product,
-          categoryList: categoryListData,
+    .addCase(getProductsData.fulfilled, (state, action) => {
+      if (action.payload?.product) {
+        state.productData = action.payload.product;
+        // Only update categoryList if it's actually different
+        const newCategoryList = createCategoryList(action.payload.product);
+        if (JSON.stringify(state.categoryList) !== JSON.stringify(newCategoryList)) {
+          state.categoryList = newCategoryList;
         }
       }
-
-
+      state.isLoading = false;
     })
-    builder.addCase(getProductsData.rejected, (state, action) => {
-      return {
-        ...state,
-        isError: true,
-      }
-    })
+    .addCase(getProductsData.rejected, (state) => {
+      state.isError = true;
+      state.isLoading = false;
+    });
   },
 
 })

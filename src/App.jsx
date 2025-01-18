@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import React, { Suspense, useEffect ,memo} from 'react';
+import React, { Suspense, useEffect, memo } from 'react';
 import './App.css';
 //======== tostify =======
 import { ToastContainer } from 'react-toastify';
@@ -10,7 +10,17 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 import {
-  Header, Footer, Info, Breadcrumbs, WhatsApp, ScrollToTop, getProductsData, getAllCartItems, getAllBlogs, getAllRecipes,  getAllOrders,
+  Header,
+  Footer,
+   Info,
+  Breadcrumbs,
+  WhatsApp,
+  ScrollToTop,
+  getProductsData,
+  // getAllCartItems,
+  // getAllBlogs,
+  // getAllRecipes,
+  getAllOrders,
 } from './imports';
 
 
@@ -21,20 +31,15 @@ import { checkAuthStatus } from './features/auth/auth';
 import RecentOrderNotification from './components/recent-order-notification/RecentOrderNotification ';
 
 // Memoized components
-const MemoizedHeader = memo(Header);
-const MemoizedFooter = memo(Footer);
-const MemoizedInfo = memo(Info);
-const MemoizedBreadcrumbs = memo(Breadcrumbs);
-const MemoizedWhatsApp = memo(WhatsApp);
 
 const MainContent = memo(() => {
   return (
     <div className="bg-[var(--bgColorSecondary)] relative">
-      <MemoizedInfo text="Enjoy FREE SHIPPING on orders above Rs. 499 and COD on orders over Rs. 399—Shop now!" fontSize='xl' />
+      <Info text="Enjoy FREE SHIPPING on orders above Rs. 499 and COD on orders over Rs. 399—Shop now!" fontSize='xl' />
       <ToastContainer position='bottom-right' autoClose={1000} />
-      <MemoizedHeader />
+      <Header />
       <div>
-        <MemoizedBreadcrumbs />
+        <Breadcrumbs />
         <Suspense fallback={
           <div className='py-52 flex justify-center items-center'>
             <div className="loader"></div>
@@ -44,12 +49,12 @@ const MainContent = memo(() => {
             {getRoutes()}
           </Routes>
         </Suspense>
-        <MemoizedFooter />
+        <Footer />
         <div className='max-w-max fixed xs:bottom-10 bottom-5 xs:right-10 right-5 z-50'>
-          <MemoizedWhatsApp />
+          <WhatsApp />
         </div>
       </div>
-      <MemoizedInfo text="Organic Nation © All rights reserved." fontSize='xs' />
+      <Info text="Organic Nation © All rights reserved." fontSize='xs' />
     </div>
   );
 });
@@ -57,16 +62,13 @@ const MainContent = memo(() => {
 MainContent.displayName = 'MainContent';
 
 function App() {
-
   const { isAdminLoggedIn } = useSelector(state => state.admin)
 
-  // animation initialization 
 
-  const {token} =useSelector(state=>state.auth)
+  // const {token} =useSelector(state=>state.auth)
   const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
 
   const dispatch = useDispatch();
-  // const { totalOrders, loading, ordersByStatus } = useSelector(state => state.adminData)
 
 
   useEffect(() => {
@@ -76,24 +78,17 @@ function App() {
   useEffect(() => {
     const fetchInitialData = async () => {
       dispatch(getProductsData());
-      dispatch(getAllCartItems());
+      // dispatch(getAllCartItems());
       // dispatch(getAllBlogs());
       // dispatch(getAllRecipes());
       dispatch(getAllOrders());
-      // if (token) {
-      //   await Promise.all([
-      //     // dispatch(fetchAdminData(adminToken)),
-          
-      //   ]);
-      // }
+      dispatch(checkAuthStatus())
     }
 
     fetchInitialData();
-  }, [token, dispatch]);
+  }, [dispatch]);
 
-useEffect(()=>{
-  dispatch(checkAuthStatus())
-},[dispatch])
+
 
 
   return (
@@ -107,10 +102,9 @@ useEffect(()=>{
         {/* Normal routes */}
         <Route path="*" element={
           <>
-             {/* <MemoizedPopupBanner /> */}
             <ScrollToTop />
             <MainContent />
-            <RecentOrderNotification/>
+            <RecentOrderNotification />
           </>
         } />
       </Routes>
@@ -121,4 +115,3 @@ useEffect(()=>{
 export default App;
 
 
-  

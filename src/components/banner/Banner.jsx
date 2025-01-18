@@ -118,11 +118,19 @@ const Banner = () => {
           <SwiperSlide key={banner._id} >
             <Link
               to={banner.redirectionUrl === 'about-us' ? `/about-us` : `/shop/${banner.redirectionUrl.toLowerCase()}`}
-              onClick={() => {
-                dispatch(setCurrentPage(1))
-                dispatch(setCategoryBtnValue(banner.redirectionUrl))
-                dispatch(fetchCategoryWiseData(banner.redirectionUrl.toLowerCase()))
+              // onClick={() => {
+              //   dispatch(setCurrentPage(1))
+              //   dispatch(setCategoryBtnValue(banner.redirectionUrl))
+              //   dispatch(fetchCategoryWiseData(banner.redirectionUrl.toLowerCase()))
 
+              // }}
+              onClick={() => {
+                // Batch dispatch calls
+                dispatch((dispatch) => {
+                  dispatch(setCurrentPage(1));
+                  dispatch(setCategoryBtnValue(banner.redirectionUrl));
+                  dispatch(fetchCategoryWiseData(banner.redirectionUrl.toLowerCase()));
+                });
               }}
             >
               {/* <img

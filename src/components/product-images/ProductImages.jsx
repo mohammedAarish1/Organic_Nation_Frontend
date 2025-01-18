@@ -70,7 +70,7 @@ const ProductImages = ({ productImgs }) => {
                         // blurSrc={mainImage.blur}
                         alt={'image-main'}
                         style={{ display: 'block', maxWidth: '100%' }}
-                        className='max-h-[515px] object-contain'
+                        className='max-h-[515px] xs:h-[500px] object-contain'
                     />
                 </Zoom>
 

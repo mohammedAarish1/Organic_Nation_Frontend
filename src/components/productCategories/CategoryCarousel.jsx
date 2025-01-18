@@ -93,7 +93,7 @@ const CategoryCarousel = () => {
                                             flex items-center justify-center">
                                     <img
                                         src={item.icon}
-                                        alt={item.category}
+                                        alt={`Image representing the ${item.name} category`}
                                         className="w-full h-full object-contain"
                                     />
                                 </div>

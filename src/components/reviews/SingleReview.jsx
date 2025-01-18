@@ -3,28 +3,6 @@ import { FaStar } from 'react-icons/fa6';
 
 const SingleReview = ({ reviews }) => {
 
-
-    // const getCustomerName = async (email) => {
-
-    //     try {
-    //         const response = await axios.get(`${apiUrl}/api/auth/user/${email}`,
-    //         );
-    //         if (response.statusText === 'OK') {
-    //             let fullName = response?.data?.firstName + ' ' + response?.data?.lastName
-    //             setCustomerName(fullName);
-    //         }
-    //     } catch (error) {
-    //         return error
-    //     }
-    // }
-
-
-    // useEffect(() => {
-    //     if (reviews) {
-    //         getCustomerName(reviews.userEmail)
-    //     }
-    // }, [])
-
     return (
         <div className='w-full shadow-lg px-5 py-4 rounded-lg  flex flex-col gap-3' >
             <div className='flex justify-between'>

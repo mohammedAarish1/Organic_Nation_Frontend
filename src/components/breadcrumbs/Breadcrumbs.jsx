@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { MdOutlineHome } from "react-icons/md";
 import { FaAngleRight } from "react-icons/fa";
@@ -60,4 +60,4 @@ const Breadcrumbs = () => {
     )
 }
 
-export default Breadcrumbs;
+export default memo(Breadcrumbs);

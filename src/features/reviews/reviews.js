@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+// import axios from "axios";
 import api from "../../config/axiosConfig";
 
-const apiUrl = import.meta.env.VITE_BACKEND_URL;
+// const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
 
 // for adding reviews 
@@ -35,43 +35,43 @@ export const addReviews = createAsyncThunk(
 )
 
 //  for getting all reviews 
-export const getAllReviews = createAsyncThunk(
-    'reviews/getAllReviews',
-    async (nameUrl, { rejectWithValue }) => {
-        try {
+// export const getAllReviews = createAsyncThunk(
+//     'reviews/getAllReviews',
+//     async (nameUrl, { rejectWithValue }) => {
+//         try {
 
-            const response = await axios.get(`${apiUrl}/api/reviews/${nameUrl}`);
-            if (response.data) {
-                return response.data;
-            }
+//             const response = await axios.get(`${apiUrl}/api/reviews/${nameUrl}`);
+//             if (response.data) {
+//                 return response.data;
+//             }
 
-        } catch (error) {
-            return rejectWithValue({
-                message: err.message,
-                status: err.response?.status
-            });
-        }
-    }
-)
+//         } catch (error) {
+//             return rejectWithValue({
+//                 message: err.message,
+//                 status: err.response?.status
+//             });
+//         }
+//     }
+// )
 
 
 // for getting the average rating of the product
 
-export const getAverageRating = createAsyncThunk(
-    'reviews/getAverageRating',
-    async (nameUrl, { rejectWithValue }) => {
-        try {
-            const response = await axios.get(`${apiUrl}/api/reviews/average/${nameUrl}`);
-            return response.data.averageRating;
+// export const getAverageRating = createAsyncThunk(
+//     'reviews/getAverageRating',
+//     async (nameUrl, { rejectWithValue }) => {
+//         try {
+//             const response = await axios.get(`${apiUrl}/api/reviews/average/${nameUrl}`);
+//             return response.data.averageRating;
 
-        } catch (error) {
-            return rejectWithValue({
-                message: error.message,
-                status: error.response?.status
-            });
-        }
-    }
-)
+//         } catch (error) {
+//             return rejectWithValue({
+//                 message: error.message,
+//                 status: error.response?.status
+//             });
+//         }
+//     }
+// )
 
 // for delivery feedback 
 export const addDeliveryFeedback = createAsyncThunk(
@@ -143,50 +143,50 @@ const reviews = createSlice({
                 }
             })
             // ============= get reviews ==========
-            .addCase(getAllReviews.pending, (state) => {
-                return {
-                    ...state,
-                    loading: true,
-                }
-            })
-            .addCase(getAllReviews.fulfilled, (state, action) => {
-                return {
-                    ...state,
-                    loading: false,
-                    allReviews: action.payload
-                }
-            })
-            .addCase(getAllReviews.rejected, (state, action) => {
-                return {
-                    ...state,
-                    loading: false,
-                    error: action.payload,
-                    allReviews: []
+            // .addCase(getAllReviews.pending, (state) => {
+            //     return {
+            //         ...state,
+            //         loading: true,
+            //     }
+            // })
+            // .addCase(getAllReviews.fulfilled, (state, action) => {
+            //     return {
+            //         ...state,
+            //         loading: false,
+            //         allReviews: action.payload
+            //     }
+            // })
+            // .addCase(getAllReviews.rejected, (state, action) => {
+            //     return {
+            //         ...state,
+            //         loading: false,
+            //         error: action.payload,
+            //         allReviews: []
 
-                }
-            })
-            // ============= get average ratings ==========
-            .addCase(getAverageRating.pending, (state) => {
-                return {
-                    ...state,
-                    loading: true,
-                }
-            })
-            .addCase(getAverageRating.fulfilled, (state, action) => {
-                return {
-                    ...state,
-                    loading: false,
-                    averageRating: action.payload
-                }
-            })
-            .addCase(getAverageRating.rejected, (state, action) => {
-                return {
-                    ...state,
-                    loading: false,
-                    error: action.payload,
-                    averageRating: '',
-                }
-            })
+            //     }
+            // })
+            // // ============= get average ratings ==========
+            // .addCase(getAverageRating.pending, (state) => {
+            //     return {
+            //         ...state,
+            //         loading: true,
+            //     }
+            // })
+            // .addCase(getAverageRating.fulfilled, (state, action) => {
+            //     return {
+            //         ...state,
+            //         loading: false,
+            //         averageRating: action.payload
+            //     }
+            // })
+            // .addCase(getAverageRating.rejected, (state, action) => {
+            //     return {
+            //         ...state,
+            //         loading: false,
+            //         error: action.payload,
+            //         averageRating: '',
+            //     }
+            // })
     }
 })
 
