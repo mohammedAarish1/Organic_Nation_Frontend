@@ -43,7 +43,7 @@ export const NoPageFound = lazy(() => import('./pages/no-page-found/NoPageFound'
 export const UserProfile=lazy(()=>import('./pages/user-profile/UserProfile'))
 
 // Redux actions
-export { getProductsData } from '../src/features/productData/productsDataSlice';
+export { getProductsData } from '../src/features/filter/filterSlice';
 export { getAllCartItems } from './features/cart/cart';
 export { getAllOrders } from './features/manageOrders/manageOrders';
 export { getAllBlogs } from './features/blogs/blogs';

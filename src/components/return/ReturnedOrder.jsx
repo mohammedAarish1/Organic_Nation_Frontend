@@ -46,7 +46,7 @@ const ReturnedOrder = ({ singleReturn }) => {
   const getCurReturnedItem = async () => {
     try {
       const response = await axios.get(
-        `${apiUrl}/category/organic-honey/${singleReturn.itemName}`
+        `${apiUrl}/products/organic-honey/${singleReturn.itemName}`
       );
       if (response.data.product) {
         setItemDetails(response.data.product);
@@ -115,60 +115,6 @@ const ReturnedOrder = ({ singleReturn }) => {
                 </p>
               </div>
             </div>
-            <div className="flex gap-3 font-mono">
-              {/* order detail button  */}
-              {/* <div className="flex gap-3 text-sm xs:text-[16px]">
-                <button
-                  className=" flex  justify-center items-center gap-2 underline underline-offset-2 bg-green-700 xs:px-5 px-2 py-2 rounded-md text-white hover:bg-green-800 xs:text-[16px] text-sm"
-                  onClick={() => setShowOrderDetails(true)}
-                >
-                  Order Details <FaArrowRight />{" "}
-                </button>
-              </div> */}
-
-              {/* order details modal  */}
-              {/* <div className={`modal-background ${showOrderDetails ? 'active' : ''}`} onClick={() => setShowOrderDetails(false)}>
-                                <div className={`text-white modal ${showOrderDetails ? 'active' : ''}`} onClick={(e) => e.stopPropagation()}>
-
-                                    <p className="flex justify-end" ><IoIosCloseCircleOutline className='cursor-pointer text-3xl hover:scale-110' onClick={() => setShowOrderDetails(false)} /></p>
-                                    <h2 className='text-xl font-medium'>Order Details</h2>
-                                    <div className='mt-4'>
-                                        <div className='flex justify-between items-center  border-gray-400 border-b-2 py-2'>
-                                            <span>Order Status</span>
-                                            <span className=' flex justify-center items-center gap-2 text-gray-400'>{order?.orderStatus} {statusIcons[order.orderStatus] ? statusIcons[order.orderStatus] : null}</span>
-                                        </div>
-                                        <div className='flex justify-between items-center  border-gray-400 border-b-2 py-2'>
-                                            <span>Order Number</span>
-                                            <span className='text-gray-400 '>#{order?.orderNo}</span>
-                                        </div>
-                                        <div className='flex justify-between items-center  border-gray-400 border-b-2 py-2'>
-                                            <span>Order Date</span>
-                                            <span className='text-gray-400 capitalize'>{new Date(order?.createdAt).toDateString()}</span>
-                                        </div>
-                                        <div className='flex justify-between items-center  border-gray-400 border-b-2 py-2'>
-                                            <span>Email</span>
-                                            <span className='text-gray-400 lowercase'>{order?.userEmail}</span>
-                                        </div>
-                                        <div className='flex justify-between items-center  border-gray-400 border-b-2 py-2'>
-                                            <span>Phone</span>
-                                            <span className='text-gray-400'>{order.receiverDetails.phoneNumber}</span>
-                                        </div>
-                                        <div className='flex justify-between items-center  border-gray-400 border-b-2 py-2'>
-                                            <span>Payment Method</span>
-                                            <span className='text-gray-400'>{order?.paymentMethod}</span>
-                                        </div>
-                                        <div className='flex justify-between items-center  border-gray-400 border-b-2 py-2'>
-                                            <span>Shipping Address</span>
-                                            <span className='text-gray-400 sm:w-1/3 text-end'>{order.shippingAddress}</span>
-                                        </div>
-                                        <div className='flex justify-between items-center  border-gray-400 border-b-2 py-2'>
-                                            <span>Total Price <span className='text-sm capitalize'> (including shippingFee)</span></span>
-                                            <span className='text-gray-400'>₹{order.subTotal + order.shippingFee}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> */}
-            </div>
           </div>
           {/* order details body  */}
           <div className=" p-4  bg-gradient-to-r from-[#6D613B] to-[#D3BB71]">
@@ -178,17 +124,6 @@ const ReturnedOrder = ({ singleReturn }) => {
               <div className="flex xs:flex-row flex-col gap-5 xs:gap-0 justify-between xs:items-center">
                 <div className="flex justify-start xs:gap-5 gap-5 items-center">
                   <div>
-                    {/* <img
-                      src={
-                        Array.isArray(itemDetails?.img)
-                          ? itemDetails?.img.filter((path) =>
-                            path.toLowerCase().includes("front")
-                          )[0]
-                          : null
-                      }
-                      className="xs:w-16 w-12 rounded-xl"
-                      alt="product-image"
-                    /> */}
 
                     <Image
                       src={{

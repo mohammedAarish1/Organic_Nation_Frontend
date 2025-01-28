@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { Link } from 'react-router-dom';
-import { setCurrentPage } from '../../features/pagination/pagination';
-import { fetchCategoryWiseData, setCategoryBtnValue } from '../../features/filter/filterSlice';
-import { useDispatch } from 'react-redux';
+// import { setCurrentPage } from '../../features/pagination/pagination';
+// import { fetchCategoryWiseData, setCategoryBtnValue } from '../../features/filter/filterSlice';
+// import { useDispatch } from 'react-redux';
 
 const icons = [
     { name:'Pickles',category: 'Authentic-Pickles', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/pickle.webp' },
@@ -22,7 +22,7 @@ const icons = [
 
 const CategoryCarousel = () => {
 
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
     const scrollRef = useRef(null);
     const [showLeftArrow, setShowLeftArrow] = useState(false);
     const [showRightArrow, setShowRightArrow] = useState(true);
@@ -78,12 +78,11 @@ const CategoryCarousel = () => {
                             to={`/shop/${item.category.toLowerCase()}`}
                             key={item.name}
                             className="flex flex-col items-center flex-shrink-0 snap-center group cursor-pointer"
-                            onClick={() => {
-                                dispatch(setCurrentPage(1))
-                                dispatch(setCategoryBtnValue(item.category))
-                                dispatch(fetchCategoryWiseData(item.category.toLowerCase()))
-                                // navigate(`/shop/${curItem.categoryUrl.toLowerCase()}`)
-                            }}
+                            // onClick={() => {
+                            //     dispatch(setCurrentPage(1))
+                            //     dispatch(setCategoryBtnValue(item.category))
+                            //     dispatch(fetchCategoryWiseData(item.category.toLowerCase()))
+                            // }}
                         >
                             <div className="relative">
                                 <div className="border-4 border-[var(--themeColor)] p-2 rounded-full 

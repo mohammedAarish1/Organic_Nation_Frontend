@@ -109,79 +109,7 @@ export const generateInvoice = createAsyncThunk(
     }
 );
 
-// update order status 
-export const updateOrderStatus = createAsyncThunk(
-    'adminData/updateOrderStatus',
-    async (data, { rejectWithValue }) => {
 
-        const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
-
-        try {
-            const response = await axios.put(`${apiUrl}/api/admin/orders/update-status`, data, {
-                headers: {
-                    'Authorization': `Bearer ${adminToken}`,
-                    'Content-Type': 'application/json'
-                }
-            })
-            // return response.data;
-        } catch (error) {
-            if (error.response && error.response.data) {
-                return rejectWithValue(error.response.data);
-            } else {
-                return rejectWithValue(error.message);
-            }
-        }
-    }
-)
-
-
-// update payment status 
-export const updatePaymentStatus = createAsyncThunk(
-    'adminData/updatePaymentStatus',
-    async (data, { rejectWithValue }) => {
-        const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
-        try {
-            const response = await axios.put(`${apiUrl}/api/admin/orders/update/payment-status`, data, {
-                headers: {
-                    'Authorization': `Bearer ${adminToken}`,
-                    'Content-Type': 'application/json'
-                }
-            })
-            // return response.data;
-        } catch (error) {
-            if (error.response && error.response.data) {
-                return rejectWithValue(error.response.data);
-            } else {
-                return rejectWithValue(error.message);
-            }
-        }
-    }
-)
-
-
-// update user status 
-export const updateUserStatus = createAsyncThunk(
-    'adminData/updateUserStatus',
-    async ({userId,status}, { rejectWithValue }) => {
-        const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
-        try {
-            const response = await axios.put(`${apiUrl}/api/admin/orders/update/user-status/${userId}`, {status}, {
-                headers: {
-                    'Authorization': `Bearer ${adminToken}`,
-                    'Content-Type': 'application/json'
-                }
-            })
-
-            return response.data;
-        } catch (error) {
-            if (error.response && error.response.data) {
-                return rejectWithValue(error.response.data);
-            } else {
-                return rejectWithValue(error.message);
-            }
-        }
-    }
-)
 
 // add a new product in the database 
 export const addNewProductInDatabase = createAsyncThunk(
@@ -257,7 +185,7 @@ export const deleteDocumentFromDatabase = createAsyncThunk(
 // to generate the sale report 
 export const generateReport = createAsyncThunk(
     'report/generate',
-    async ({ startDate, endDate ,type}, { rejectWithValue }) => {
+    async ({ startDate, endDate, type }, { rejectWithValue }) => {
         const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
         try {
             const response = await axios.post(`${apiUrl}/api/admin/generate/${type}/report`, { startDate, endDate },
@@ -285,30 +213,6 @@ export const generateReport = createAsyncThunk(
     }
 );
 
-
-// update return status 
-export const updateReturnStatus = createAsyncThunk(
-    'adminData/updateReturnStatus',
-    async (data, { rejectWithValue }) => {
-        const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
-        try {
-            const response = await axios.put(`${apiUrl}/api/admin/returns/update/return-status`, data, {
-                headers: {
-                    'Authorization': `Bearer ${adminToken}`,
-                    'Content-Type': 'application/json'
-                }
-            })
-
-            // return response.data;
-        } catch (error) {
-            if (error.response && error.response.data) {
-                return rejectWithValue(error.response.data);
-            } else {
-                return rejectWithValue(error.message);
-            }
-        }
-    }
-)
 
 // get all returns 
 export const getTotalReturns = createAsyncThunk(
@@ -399,6 +303,30 @@ export const optimizeImages = createAsyncThunk(
     }
 );
 
+
+
+export const updateCurrentStatus = createAsyncThunk(
+    'adminData/updateCurrentStatus',
+    async (data, { rejectWithValue }) => {
+        const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
+        try {
+            const response = await axios.put(`${apiUrl}/api/admin/update/status`, data, {
+                headers: {
+                    'Authorization': `Bearer ${adminToken}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+            return response.data;
+        } catch (error) {
+            if (error.response && error.response.data) {
+                return rejectWithValue(error.response.data);
+            } else {
+                return rejectWithValue(error.message);
+            }
+        }
+    }
+)
+
 // experiment with images
 
 
@@ -413,12 +341,15 @@ const initialState = {
     generatingInvoice: false,
     generatingSaleReport: false,
     ordersByStatus: {
-        orderData: [],
+        filteredOrderData: [],
         orderStatusTab: "total"
     },
     returnsByStatus: {
         returnData: [],
         returnStatusTab: "requested"
+    },
+    otherLoading: {
+        updatingOrderStatus: false
     },
     // hasLocalCart: false,
 }
@@ -433,7 +364,7 @@ const adminData = createSlice({
                     ...state,
                     ordersByStatus: {
                         ...state.ordersByStatus,
-                        orderData: state.totalOrders,
+                        filteredOrderData: state.totalOrders,
                         orderStatusTab: action.payload
                     }
                 }
@@ -443,7 +374,7 @@ const adminData = createSlice({
                     ...state,
                     ordersByStatus: {
                         ...state.ordersByStatus,
-                        orderData: activeOrders,
+                        filteredOrderData: activeOrders,
                         orderStatusTab: action.payload
                     }
                 }
@@ -453,7 +384,7 @@ const adminData = createSlice({
                     ...state,
                     ordersByStatus: {
                         ...state.ordersByStatus,
-                        orderData: completedOrders,
+                        filteredOrderData: completedOrders,
                         orderStatusTab: action.payload
                     }
                 }
@@ -463,7 +394,7 @@ const adminData = createSlice({
                     ...state,
                     ordersByStatus: {
                         ...state.ordersByStatus,
-                        orderData: cancelledOrders,
+                        filteredOrderData: cancelledOrders,
                         orderStatusTab: action.payload
                     }
                 }
@@ -473,7 +404,7 @@ const adminData = createSlice({
                     ...state,
                     ordersByStatus: {
                         ...state.ordersByStatus,
-                        orderData: dispatchOrders,
+                        filteredOrderData: dispatchOrders,
                         orderStatusTab: action.payload
                     }
                 }
@@ -482,7 +413,7 @@ const adminData = createSlice({
                     ...state,
                     ordersByStatus: {
                         ...state.ordersByStatus,
-                        orderData: state.cancelledOrders,
+                        filteredOrderData: state.cancelledOrders,
                     }
                 }
             }
@@ -560,7 +491,7 @@ const adminData = createSlice({
                     totalOrders: action.payload,
                     ordersByStatus: {
                         ...state.ordersByStatus,
-                        orderData: state.totalOrders,
+                        filteredOrderData: state.totalOrders,
                         orderStatusTab: action.payload
                     }
 
@@ -621,49 +552,16 @@ const adminData = createSlice({
             })
             // ========= invoice generate ==========
             .addCase(generateInvoice.pending, (state) => {
-                return {
-                    ...state,
-                    generatingInvoice: true,
-                    error: null,
-                }
+                state.generatingInvoice = true,
+                    state.error = null
             })
             .addCase(generateInvoice.fulfilled, (state, action) => {
-                return {
-                    ...state,
-                    generatingInvoice: false,
-
-                }
+                state.generatingInvoice = false
             })
             .addCase(generateInvoice.rejected, (state, action) => {
-                return {
-                    ...state,
-                    generatingInvoice: false,
-                    error: action.payload,
-                }
+                state.generatingInvoice = false
+                state.error = action.payload
             })
-            // ========= invoice generate ==========
-            .addCase(updateOrderStatus.pending, (state) => {
-                return {
-                    ...state,
-                    loading: true,
-                    error: null,
-                }
-            })
-            .addCase(updateOrderStatus.fulfilled, (state, action) => {
-                return {
-                    ...state,
-                    loading: false,
-
-                }
-            })
-            .addCase(updateOrderStatus.rejected, (state, action) => {
-                return {
-                    ...state,
-                    loading: false,
-                    error: action.payload,
-                }
-            })
-            // ========= admin data ==========
             // generating sales report
             .addCase(generateReport.pending, (state) => {
                 state.generatingSaleReport = true;
@@ -709,22 +607,55 @@ const adminData = createSlice({
             .addCase(deleteDocumentFromDatabase.pending, (state) => {
                 return {
                     ...state,
-                    loading: true,
+                    // loading: true,
                     error: null,
                 }
             })
             .addCase(deleteDocumentFromDatabase.fulfilled, (state, action) => {
-                return {
-                    ...state,
-                    loading: false,
+                const { data, collection } = action.payload;
+                if (collection === 'Orders') {
+                    state.ordersByStatus.filteredOrderData = state.ordersByStatus.filteredOrderData.filter(order => order._id !== data._id)
+                    state.totalOrders = state.totalOrders.filter(order => order._id !== data._id)
+                } else if (collection === 'Users') {
+                    state.totalUsers = state.totalUsers.filter(user => user._id !== data._id)
+                } else if (collection === 'Queries') {
+                    state.totalUserQueries = state.totalUserQueries.filter(query => query._id !== data._id)
                 }
+                // return {
+                //     ...state,
+                //     loading: false,
+                // }
             })
             .addCase(deleteDocumentFromDatabase.rejected, (state, action) => {
                 return {
                     ...state,
-                    loading: false,
+                    // loading: false,
                     error: action.payload,
                 }
+            })
+            // ===== update statussssssssss=================
+            .addCase(updateCurrentStatus.pending, (state) => {
+                state.otherLoading.updatingOrderStatus = false
+                state.error = null
+            })
+            .addCase(updateCurrentStatus.fulfilled, (state, action) => {
+                const { data, collection } = action.payload
+                state.otherLoading.updatingOrderStatus = false
+                if (collection === 'Orders') {
+                    state.ordersByStatus.filteredOrderData = state.ordersByStatus.filteredOrderData.map(order => order._id === data._id ? { ...order, orderStatus: data.orderStatus } : order)
+
+                } else if (collection === 'Payment') {
+                    state.ordersByStatus.filteredOrderData = state.ordersByStatus.filteredOrderData.map(order => order._id === data._id ? { ...order, paymentStatus: data.paymentStatus } : order)
+                } else if (collection === 'Users') {
+                    state.totalUsers = state.totalUsers.map(user => user._id === data._id ? { ...user, role: data.role } : user)
+                } else if (collection === 'Returns') {
+                    state.returnsByStatus.returnData = state.returnsByStatus.returnData.map(returned => returned._id === data._id ? { ...returned, returnStatus: data.returnStatus } : returned)
+
+                }
+            })
+            .addCase(updateCurrentStatus.rejected, (state, action) => {
+                state.otherLoading.updatingOrderStatus=false
+                state.error = action.payload
             })
 
     }

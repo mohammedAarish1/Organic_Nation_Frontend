@@ -89,7 +89,7 @@ export const getAllCartItems = createAsyncThunk(
 
                     const productDetails = await Promise.all(
                         products.map(async ({ nameUrl, quantity }) => {
-                            const response = await axios.get(`${apiUrl}/category/organic-honey/${nameUrl}`)
+                            const response = await axios.get(`${apiUrl}/products/organic-honey/${nameUrl}`)
                             return { ...response.data.product, quantity }
                         })
                     );
@@ -106,7 +106,7 @@ export const getAllCartItems = createAsyncThunk(
                 if (localCart.length > 0) {
                     const productDetails = await Promise.all(
                         localCart.map(async ({ quantity, productName }) => {
-                            const response = await axios.get(`${apiUrl}/category/organic-honey/${productName}`)
+                            const response = await axios.get(`${apiUrl}/products/organic-honey/${productName}`)
                             return { ...response.data.product, quantity }
                         })
                     );

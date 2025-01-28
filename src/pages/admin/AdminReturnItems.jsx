@@ -1,11 +1,25 @@
-import React, { useEffect } from "react";
+import React, { lazy, Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getReturnsByStatus,
   getTotalReturns,
 } from "../../features/admin/adminData";
-import StatusButton from "../statusButton/StatusButton";
-import AdminReturnItemList from "./AdminReturnItemList";
+import StatusButton from "../../components/statusButton/StatusButton";
+import Loader from "../../components/common/Loader";
+
+const AdminTable = lazy(() => import("../../components/admin/common/AdminTable"))
+
+
+const headers = [
+  { key: 'invoiceNumber', label: 'Invoice Number' },
+  { key: 'itemName', label: 'Item Name' },
+  { key: 'weight', label: 'Weight' },
+  { key: 'quantity', label: 'Quantity' },
+  { key: 'returnStatus', label: 'Return Status' },
+  { key: 'returnOptions', label: 'Requested for' },
+  { key: 'createdAt', label: 'Date' }
+]
+
 
 const AdminReturnItems = () => {
   const dispatch = useDispatch();
@@ -97,7 +111,13 @@ const AdminReturnItems = () => {
           </div>
         )} */}
 
-        <AdminReturnItemList returns={returnsByStatus.returnData} />
+      <Suspense fallback={<Loader height='200px' />}>
+      <AdminTable
+          title='Returns'
+          headers={headers}
+          data={returnsByStatus.returnData}
+        />
+      </Suspense>
       </div>
     </div>
   );

@@ -103,7 +103,7 @@
 // export default AddToCartBtn;
 
 
-import React, { useMemo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, getAllCartItems } from '../../features/cart/cart';
 import { toast } from 'react-toastify';
@@ -193,4 +193,4 @@ const AddToCartBtn = ({ item, qty = 1 }) => {
   );
 };
 
-export default AddToCartBtn;
+export default memo(AddToCartBtn);

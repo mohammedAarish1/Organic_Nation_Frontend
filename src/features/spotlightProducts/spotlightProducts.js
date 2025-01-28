@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    products: [],
+    spotlightProducts: [],
     productsType:"new_arrivals"
 }
 
@@ -9,36 +9,36 @@ export const spotlightProducts = createSlice({
     name: "spotlight",
     initialState,
     reducers: {
-        spotlighProducts: (state, action) => {
+        getSpotlightProducts: (state, action) => {
             if(action.payload.type==="new_arrivals"){
-                const newArrivals=action.payload?.productData?.filter((curItem)=>curItem.meta.new_arrivals)
+                const newArrivals=action.payload?.products?.filter((curItem)=>curItem.meta.new_arrivals)
                 return{
                     ...state,
-                    products:newArrivals,
+                    spotlightProducts:newArrivals,
                     productsType:action.payload.type
                 }
             }
             if(action.payload.type==="deal_of_the_day"){
-                const newArrivals=action.payload?.productData?.filter((curItem)=>curItem.meta.deal_of_the_day)
+                const newArrivals=action.payload?.products?.filter((curItem)=>curItem.meta.deal_of_the_day)
                 return{
                     ...state,
-                    products:newArrivals,
+                    spotlightProducts:newArrivals,
                     productsType:action.payload.type
                 }
             }
             if(action.payload.type==="best_seller"){
-                const bestSeller=action.payload?.productData?.filter((curItem)=>curItem.meta.best_seller)
+                const bestSeller=action.payload?.products?.filter((curItem)=>curItem.meta.best_seller)
                 return{
                     ...state,
-                    products:bestSeller,
+                    spotlightProducts:bestSeller,
                     productsType:action.payload.type
                 }
             }
             if(action.payload.type==="season_special"){
-                const seasonSpecial=action.payload?.productData?.filter((curItem)=>curItem.meta.season_special)
+                const seasonSpecial=action.payload?.products?.filter((curItem)=>curItem.meta.season_special)
                 return{
                     ...state,
-                    products:seasonSpecial,
+                    spotlightProducts:seasonSpecial,
                     productsType:action.payload.type
                 }
             }
@@ -49,6 +49,6 @@ export const spotlightProducts = createSlice({
     }
 })
 
-export const {spotlighProducts } = spotlightProducts.actions;
+export const {getSpotlightProducts } = spotlightProducts.actions;
 
 export default spotlightProducts.reducer;

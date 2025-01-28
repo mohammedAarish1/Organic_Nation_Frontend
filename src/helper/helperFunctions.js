@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { deleteDocumentFromDatabase } from "../features/admin/adminData";
+// import { deleteDocumentFromDatabase } from "../features/admin/adminData";
 import { getAllCartItems, getAllOrders } from "../imports";
 import { calculateShippingFee, checkDeliveryAvailability, updateShippingFee } from "../features/check-delivery/checkDelivery";
 import { mergeCart } from "../features/cart/cart";
@@ -106,13 +106,13 @@ const additionalDiscountforOnlinePayment = (totalCartAmount,totalTax) => {
 }
 
 
-const handleDocumentDeleteFromDatabase = (collection, id, dispatch, updateLists) => {
-  dispatch(deleteDocumentFromDatabase({ collection, id }))
-    .then(() => {
-      toast.success("Deleted Successfully");
-      dispatch(updateLists());
-    })
-}
+// const handleDocumentDeleteFromDatabase = (collection, id, dispatch, updateLists) => {
+//   dispatch(deleteDocumentFromDatabase({ collection, id }))
+//     .then(() => {
+//       toast.success("Deleted Successfully");
+//       dispatch(updateLists());
+//     })
+// }
 
 
 // for checking delivery availability and calculating shipping fee
@@ -175,7 +175,7 @@ export {
   address,
   // calculateDiscountAndTaxIncluded,
   fetchDataAfterLogin,
-  handleDocumentDeleteFromDatabase,
+  // handleDocumentDeleteFromDatabase,
   checkDeliveryAndCalculateShippingFee,
   additionalDiscountforOnlinePayment,
   getCouponDetails

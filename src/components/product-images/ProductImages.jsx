@@ -8,7 +8,6 @@ const ProductImages = ({ productImgs }) => {
 
 
     const [mainImage, setMainImage] = useState(productImgs[0]);
-
     useEffect(() => {
         setMainImage(productImgs[0])
     }, [productImgs])
@@ -41,7 +40,7 @@ const ProductImages = ({ productImgs }) => {
                                 key={index}
                                 // onClick={() => {
                                 //     setMainImage(img)}}
-                                className={`${img === mainImage ? 'border-2 border-[var(--themeColor)] p-2' : ''} w-20 max-h-24 object-contain cursor-pointer hover:scale-90 transition-all duration-400`}
+                                className={`${img === mainImage ? 'border-2 border-[var(--themeColor)] p-2' : ''} w-20 max-h-16 object-contain cursor-pointer hover:scale-90 transition-all duration-400`}
                                 blurSrc={img.blur}
                             />
                         </div>
@@ -63,8 +62,8 @@ const ProductImages = ({ productImgs }) => {
                     /> */}
                     <Image
                         src={{
-                            sm: mainImage && mainImage.sm,
-                            md: mainImage && mainImage.md,
+                            sm: mainImage && mainImage.lg,
+                            md: mainImage && mainImage.lg,
                             lg: mainImage && mainImage.lg
                         }}
                         // blurSrc={mainImage.blur}
@@ -76,9 +75,6 @@ const ProductImages = ({ productImgs }) => {
 
             </div>
         </div>
-
-
-
     )
 }
 

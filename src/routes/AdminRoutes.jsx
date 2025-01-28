@@ -121,14 +121,14 @@ import { getProductsData } from '../imports';
 import { ToastContainer } from 'react-toastify';
 
 // Lazy-load the admin components
-const AdminDashboard = React.lazy(() => import('../components/admin/AdminDashboard'));
-const AdminOrders = React.lazy(() => import('../components/admin/AdminOrders'));
+const AdminDashboard = React.lazy(() => import('../pages/admin/AdminDashboard'));
+const AdminOrders = React.lazy(() => import('../pages/admin/AdminOrders'));
 const AdminSidebar = React.lazy(() => import('../components/admin/AdminSidebar'));
-const AdminUsers = React.lazy(() => import('../components/admin/AdminUsers'));
-const AdminQueries = React.lazy(() => import('../components/admin/AdminQueries'));
-const AdminProducts = React.lazy(() => import('../components/admin/AdminProducts'));
-const AdminReturnItems = React.lazy(() => import('../components/admin/AdminReturnItems'));
-const AdminBanners = React.lazy(() => import('../components/admin/AdminBanners'));
+const AdminUsers = React.lazy(() => import('../pages/admin/AdminUsers'));
+const AdminQueries = React.lazy(() => import('../pages/admin/AdminQueries'));
+const AdminProducts = React.lazy(() => import('../pages/admin/AdminProducts'));
+const AdminReturnItems = React.lazy(() => import('../pages/admin/AdminReturnItems'));
+const AdminBanners = React.lazy(() => import('../pages/admin/AdminBanners'));
 
 const AdminRoutes = () => {
   const dispatch = useDispatch();

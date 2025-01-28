@@ -92,14 +92,14 @@
 
 import React, { useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setCurrentPage } from '../../features/pagination/pagination';
-import { fetchCategoryWiseData, setCategoryBtnValue } from '../../features/filter/filterSlice';
+// import { setCurrentPage } from '../../features/pagination/pagination';
+// import { fetchCategoryWiseData, setCategoryBtnValue } from '../../features/filter/filterSlice';
 import { Link } from 'react-router-dom';
 import Title from '../title/Title';
 
 const ProductCategories = () => {
     const dispatch = useDispatch();
-    const { categoryList } = useSelector((state) => state.product_data);
+    const { categoryList } = useSelector((state) => state.filterData);
 
     // Categories images
     const categoriesImages = [
@@ -137,11 +137,11 @@ const ProductCategories = () => {
     }, [categoryList, imageLookup]);
 
     // Handle category click (dispatch actions)
-    const handleCategoryClick = (categoryUrl) => {
-        dispatch(setCurrentPage(1));
-        dispatch(setCategoryBtnValue(categoryUrl));
-        dispatch(fetchCategoryWiseData(categoryUrl.toLowerCase()));
-    };
+    // const handleCategoryClick = (categoryUrl) => {
+    //     dispatch(setCurrentPage(1));
+    //     dispatch(setCategoryBtnValue(categoryUrl));
+    //     dispatch(fetchCategoryWiseData(categoryUrl.toLowerCase()));
+    // };
 
     return (
         <div>
@@ -159,7 +159,7 @@ const ProductCategories = () => {
                             to={`/shop/${curItem.categoryUrl.toLowerCase()}`}
                             key={curItem.category}
                             className='flex flex-col gap-2 cursor-pointer'
-                            onClick={() => handleCategoryClick(curItem.categoryUrl)}
+                            // onClick={() => handleCategoryClick(curItem.categoryUrl)}
                         >
                             <div>
                                 <img

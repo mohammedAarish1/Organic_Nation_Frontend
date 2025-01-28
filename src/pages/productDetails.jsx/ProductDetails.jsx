@@ -145,7 +145,7 @@ const ProductDetails = () => {
   const getProductDetail = async (nameUrl) => {
 
     try {
-      const response = await axios.get(`${apiUrl}/category/product/details/${nameUrl}`);
+      const response = await axios.get(`${apiUrl}/products/product/details/${nameUrl}`);
       if (response.status === 200) {
         setProductSeoData(response.data.seoData)
         setProduct(response.data);

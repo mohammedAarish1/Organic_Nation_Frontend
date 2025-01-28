@@ -1,61 +1,12 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { addReturnItems } from "../../features/manage-returns/manageReturns";
 import { getAllOrders } from "../../features/manageOrders/manageOrders";
+import { ImSpinner9 } from "react-icons/im";
+import { returnItemFormSchema } from "../../form-validation/returnItemFormSchema";
 
-const MAX_SIZE_MB = 15; // Maximum size in MB
-const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024; // Convert to bytes
-
-const productSchema = Yup.object().shape({
-  itemName: Yup.string().required("Required"),
-  weight: Yup.string().required("Required"),
-  // price: Yup.number().positive("Must be positive").required("Required"),
-  quantity: Yup.number()
-    .transform((value) => (isNaN(value) ? undefined : Number(value)))
-    .positive("Must be positive")
-    .required("Required"),
-  images: Yup.array().min(
-    1,
-    "At least one image is required and You can only upload a maximum of 3 images"
-  ),
-  // .max(3, 'You can only upload a maximum of 3 images'),
-  reason: Yup.string().required(
-    "Please let us know a Valid Reason for your return !"
-  ),
-  returnOptions: Yup.string().required("Please select an option"),
-  //   Add validation for bank details
-  accountName: Yup.string().when("returnOptions", {
-    is: "refund",
-    then: (schema) => schema.required("Account Name is required for refund"),
-  }),
-  bankName: Yup.string().when("returnOptions", {
-    is: "refund",
-    then: (schema) => schema.required("Bank Name is required for refund"),
-  }),
-  accountNumber: Yup.string().when("returnOptions", {
-    is: "refund",
-    then: (schema) => schema.required("Account Number is required for refund"),
-  }),
-  ifscCode: Yup.string().when("returnOptions", {
-    is: "refund",
-    then: (schema) => schema.required("IFSC Code is required for refund"),
-  }),
-  video: Yup.mixed()
-    .required("A video file is required")
-    .test(
-      "fileSize",
-      `File size must be less than ${MAX_SIZE_MB} MB`,
-      (value) => value && value.size <= MAX_SIZE_BYTES
-    )
-    .test(
-      "fileType",
-      "Unsupported file format",
-      (value) => value && value.type.startsWith("video/")
-    ),
-});
 
 const FormField = ({ name, label, type = "text", as }) => (
   <div className="mb-4">
@@ -111,6 +62,7 @@ const ReturnItemForm = ({
   onCancel,
 }) => {
   const dispatch = useDispatch();
+  const {addingReturnedItems}=useSelector(state=>state.returns)
 
   const actualAmountPaid = (productMRP) => {
     // Find the product details based on the nameUrl
@@ -132,40 +84,40 @@ const ReturnItemForm = ({
 
   const initialValues = product
     ? {
-        // itemName: product["name-url"].replace(/-/g, " "),
-        itemName: product["name-url"],
-        weight: product.weight,
-        // price:
-        //   actualAmountPaid(product.unitPrice) *
-        //   (returnedQuantity > 0
-        //     ? product.quantity - returnedQuantity
-        //     : product.quantity),
-        quantity: Number(product.quantity - returnedQuantity),
-        images: [],
-        reason: "",
-        returnOptions: "",
-        // Add initial values for bank details
-        accountName: "",
-        bankName: "",
-        accountNumber: "",
-        ifscCode: "",
-        video: null,
-      }
+      // itemName: product["name-url"].replace(/-/g, " "),
+      itemName: product["name-url"],
+      weight: product.weight,
+      // price:
+      //   actualAmountPaid(product.unitPrice) *
+      //   (returnedQuantity > 0
+      //     ? product.quantity - returnedQuantity
+      //     : product.quantity),
+      quantity: Number(product.quantity - returnedQuantity),
+      images: [],
+      reason: "",
+      returnOptions: "",
+      // Add initial values for bank details
+      accountName: "",
+      bankName: "",
+      accountNumber: "",
+      ifscCode: "",
+      video: null,
+    }
     : {
-        itemName: "",
-        weight: "",
-        // price: "",
-        quantity: "",
-        images: [],
-        reason: "",
-        returnOptions: "",
-        // Add initial values for bank details
-        accountName: "",
-        bankName: "",
-        accountNumber: "",
-        ifscCode: "",
-        video: null,
-      };
+      itemName: "",
+      weight: "",
+      // price: "",
+      quantity: "",
+      images: [],
+      reason: "",
+      returnOptions: "",
+      // Add initial values for bank details
+      accountName: "",
+      bankName: "",
+      accountNumber: "",
+      ifscCode: "",
+      video: null,
+    };
 
   const handleImageChange = (e, setFieldValue, values) => {
     const files = Array.from(e.target.files);
@@ -175,7 +127,7 @@ const ReturnItemForm = ({
     // setImageError('');
   };
 
-  const handleSubmit = (values, { setSubmitting,resetForm }) => {
+  const handleSubmit = (values, { setSubmitting, resetForm }) => {
     const data = new FormData();
 
     const formValues = {
@@ -194,22 +146,22 @@ const ReturnItemForm = ({
     // });
 
 
-     // Append form values to FormData
-  Object.keys(formValues).forEach((key) => {
-    if (key !== 'images' && key !== 'video') {
-      data.append(key, formValues[key]);
+    // Append form values to FormData
+    Object.keys(formValues).forEach((key) => {
+      if (key !== 'images' && key !== 'video') {
+        data.append(key, formValues[key]);
+      }
+    });
+
+    // Append images to FormData
+    values.images.forEach((image) => {
+      data.append('images', image);
+    });
+
+    // Append video to FormData if it exists
+    if (values.video) {
+      data.append('video', values.video);
     }
-  });
-
-  // Append images to FormData
-  values.images.forEach((image) => {
-    data.append('images', image);
-  });
-
-  // Append video to FormData if it exists
-  if (values.video) {
-    data.append('video', values.video);
-  }
     // Append invoiceNumber
     data.append("invoiceNumber", invoiceNumber);
 
@@ -225,7 +177,7 @@ const ReturnItemForm = ({
           onSubmit();
           toast.success("Request Submitted Succefully");
         })
-        .catch(() => {});
+        .catch(() => { });
     } catch (error) {
       throw error;
     }
@@ -237,7 +189,7 @@ const ReturnItemForm = ({
   return (
     <Formik
       initialValues={initialValues}
-      validationSchema={productSchema}
+      validationSchema={returnItemFormSchema}
       onSubmit={handleSubmit}
     >
       {({ isSubmitting, setFieldValue, errors, values, touched }) => {
@@ -432,10 +384,11 @@ const ReturnItemForm = ({
             <div className="flex items-center flex-wrap  gap-2 justify-between">
               <button
                 type="submit"
-                disabled={isSubmitting}
-                className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 xs:px-4 px-1 xs:text-[16px] w-full rounded focus:outline-none focus:shadow-outline"
+                disabled={addingReturnedItems||isSubmitting}
+                className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 xs:px-4 px-1 xs:text-[16px] w-full rounded focus:outline-none focus:shadow-outline" 
               >
-                Submit Request
+
+                {addingReturnedItems ? <ImSpinner9 className="animate-spin" /> : ' Submit Request'}
               </button>
               <button
                 type="button"

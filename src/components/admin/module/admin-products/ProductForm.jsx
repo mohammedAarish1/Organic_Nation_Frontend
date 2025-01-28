@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
-import { addNewProductInDatabase, updateExistingProduct } from '../../features/admin/adminData';
+import { addNewProductInDatabase, updateExistingProduct } from '../../../../features/admin/adminData';
 import { RxCross2 } from "react-icons/rx";
 import { TiPlus } from "react-icons/ti";
 import { toast } from 'react-toastify';

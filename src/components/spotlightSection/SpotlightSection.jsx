@@ -10,13 +10,13 @@
 
 
 //     const dispatch = useDispatch();
-//     const { productData } = useSelector((state) => state.product_data);
+//     const { products } = useSelector((state) => state.product_data);
 //     const { products, productsType } = useSelector((state) => state.spotlight);
 
 
 //     useEffect(() => {
-//         dispatch((spotlighProducts({ type: "new_arrivals", productData: productData })));
-//     }, [productData])
+//         dispatch((spotlighProducts({ type: "new_arrivals", products: products })));
+//     }, [products])
 
 
 //     return (
@@ -63,7 +63,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '../button/Button';
 import Title from '../title/Title';
 import Product from '../product/Product';
-import { spotlighProducts } from '../../features/spotlightProducts/spotlightProducts';
+import { getSpotlightProducts } from '../../features/spotlightProducts/spotlightProducts';
 
 const ProductSkeleton = () => (
     <div className="animate-pulse">
@@ -76,20 +76,19 @@ const ProductSkeleton = () => (
 const SpotlightSection = () => {
     const [isLoading, setIsLoading] = useState(true);
     const dispatch = useDispatch();
-    const { productData } = useSelector((state) => state.product_data);
-    const { products, productsType } = useSelector((state) => state.spotlight);
-
+    const  products  = useSelector((state) => state.filterData.products);
+    const { spotlightProducts, productsType } = useSelector((state) => state.spotlight);
     useEffect(() => {
         const loadProducts = () => {
             setIsLoading(true);
-            dispatch(spotlighProducts({ type: "new_arrivals", productData }));
+            dispatch(getSpotlightProducts({ type: "new_arrivals", products }));
             setIsLoading(false);
         };
 
-        if (productData) {
+        if (products) {
             loadProducts();
         }
-    }, [productData, dispatch]);
+    }, [products, dispatch]);
 
     const buttonTypes = [
         { title: "New Arrival", basis: "new_arrivals" },
@@ -128,7 +127,7 @@ const SpotlightSection = () => {
                         </div>
                     ))
                 ) : (
-                    products?.map((product) => (
+                    spotlightProducts?.map((product) => (
                         <div key={product._id} className="">
                             <Product product={product} gridView={true} />
                         </div>

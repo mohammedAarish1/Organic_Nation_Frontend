@@ -457,8 +457,8 @@ const Product = memo(({ gridView, product }) => {
               `}>
                   <Image
                     src={{
-                      sm: frontImage.sm,
-                      md: frontImage.md,
+                      sm: frontImage.lg,
+                      md: frontImage.lg,
                       lg: frontImage.lg
                     }}
                     blurSrc={frontImage.blur}
@@ -477,8 +477,8 @@ const Product = memo(({ gridView, product }) => {
               `}>
                   <Image
                     src={{
-                      sm: leftImage.sm,
-                      md: leftImage.md,
+                      sm: leftImage.lg,
+                      md: leftImage.lg,
                       lg: leftImage.lg
                     }}
                     blurSrc={leftImage.blur}
@@ -529,7 +529,7 @@ const Product = memo(({ gridView, product }) => {
                 </p>
               )}
             </NavLink>
-            <div className="mt- space-y-2 relative z-20">
+            <div className="space-y-2 relative z-20">
               <NavLink
                 to={`/shop/${categoryBtnValue}/${product['name-url']}`}
                 className="relative z-20"

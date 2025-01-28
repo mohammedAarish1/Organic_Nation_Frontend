@@ -342,24 +342,24 @@ const NAV_ITEMS = [
     { path: '/profile/personal-info', icon: FaRegUser, label: 'Profile', mobileOnly: true }
 ];
 
-const CategoryItem = memo(({ category, image, onClick }) => {
+const CategoryItem = memo(({ category,  onClick }) => {
     return (
         <div className=" xl:p-4 px-1 py-2 transition-transform hover:scale-105 ">
             <Link
-                to={`/shop/${category.toLowerCase()}`}
+                to={`/shop/${category.categoryUrl.toLowerCase()}`}
                 className="flex flex-col items-center group"
-                onClick={onClick}
+                // onClick={onClick}
             >
                 <div className="relative overflow-hidden mb-2 p-4 shadow-2xl rounded-full">
                     <img
-                        src={image}
-                        alt={category}
+                        src={category.image}
+                        alt={category.categoryUrl}
                         className="lg:w-16 w-16 transition-transform duration-300 group-hover:scale-110"
                         loading="lazy"
                     />
                 </div>
                 <span className="text-sm font-serif text-center group-hover:text-yellow-600 transition-colors">
-                    {category}
+                    {category.category}
                 </span>
             </Link>
         </div>
@@ -400,13 +400,13 @@ const MobileMenuItem = memo(({ item, onClick }) => {
 const NavMenu = () => {
     const dispatch = useDispatch();
     const { showSidebar } = useSelector(state => state.sidebar);
-    const { categoryList } = useSelector(state => state.product_data);
+    const { categoryList } = useSelector(state => state.filterData);
 
-    const handleCategoryClick = useCallback((category) => {
-        dispatch(setCurrentPage(1))
-        dispatch(setCategoryBtnValue(category.categoryUrl))
-        dispatch(fetchCategoryWiseData(category.categoryUrl.toLowerCase()))
-    }, [dispatch]);
+    // const handleCategoryClick = useCallback((category) => {
+    //     dispatch(setCurrentPage(1))
+    //     dispatch(setCategoryBtnValue(category.categoryUrl))
+    //     dispatch(fetchCategoryWiseData(category.categoryUrl.toLowerCase()))
+    // }, [dispatch]);
 
 
     const categoriesImages = [
@@ -464,15 +464,15 @@ const NavMenu = () => {
                             <NavLink
                                 to={item.path}
                                 className={({ isActive }) => `flex flex-col items-center lg:p-4 min-w-[86px] rounded-md hover:underline hover:underline-offset-4 transition-all  ${isActive ? 'underline underline-offset-4' : ''}`}
-                                onClick={() => {
-                                    if (item.label === 'Shop') {
-                                        dispatch(setCategoryBtnValue('all'))
-                                    } else if (item.label === 'Combo') {
-                                        dispatch(setCurrentPage(1))
-                                        dispatch(setCategoryBtnValue('combo'))
-                                        dispatch(fetchCategoryWiseData('combo'))
-                                    }
-                                }}
+                                // onClick={() => {
+                                //     if (item.label === 'Shop') {
+                                //         dispatch(setCategoryBtnValue('all'))
+                                //     } else if (item.label === 'Combo') {
+                                //         dispatch(setCurrentPage(1))
+                                //         dispatch(setCategoryBtnValue('combo'))
+                                //         dispatch(fetchCategoryWiseData('combo'))
+                                //     }
+                                // }}
                             >
                                 <item.icon className="text-xl" />
                                 <span className="flex items-center">
@@ -484,12 +484,13 @@ const NavMenu = () => {
                             {item.hasDropdown && (
                                 <div className="dropDown absolute lg:right-44 right-24 lg:w-[60%] w-[80%] md:top-[84%] shadow-xl rounded-lg overflow-hidden">
                                     <div className="grid grid-cols-7 gap-x-3 bg-[var(--bgColorSecondary)] p-2">
+                                       
                                         {filteredCategories.map(category => (
                                             <CategoryItem
                                                 key={category.categoryUrl}
-                                                category={category.category}
-                                                image={category.image}
-                                                onClick={() => handleCategoryClick(category)}
+                                                category={category}
+                                                // image={category.image}
+                                                // onClick={() => handleCategoryClick(category)}
                                             />
                                         ))}
                                     </div>
@@ -527,18 +528,7 @@ const NavMenu = () => {
                             <MobileMenuItem
                                 key={item.path}
                                 item={item}
-                                onClick={() => {
-                                    dispatch(setShowSidebar(false));
-                                    if (item.label === 'Shop') {
-                                        dispatch(setCurrentPage(1))
-                                        dispatch(setCategoryBtnValue('all'))
-                                        dispatch(fetchCategoryWiseData('all'))
-                                    }else if(item.label==='Combo'){
-                                        dispatch(setCurrentPage(1))
-                                        dispatch(setCategoryBtnValue('combo'))
-                                        dispatch(fetchCategoryWiseData('combo'))
-                                    }
-                                }}
+                                onClick={() => {dispatch(setShowSidebar(false))}}
                             />
                         ))}
                     </ul>

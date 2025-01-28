@@ -1,22 +1,33 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { setFilterInitialValues, getFilterData, getPricerRangeData, getSearchedData, fetchCategoryWiseData, setCategoryBtnValue, clearFilters, getSortData } from '../../features/filter/filterSlice';
+import {
+  // setFilterInitialValues,
+  // getFilterData,
+  // getPricerRangeData,
+  // getSearchedData,
+  // fetchCategoryWiseData,
+  // setCategoryBtnValue,
+  clearFilters,
+  // getSortData,
+  getFilteredData
+} from '../../features/filter/filterSlice';
 import { setCurrentPage } from '../../features/pagination/pagination';
 import { setShowFilters } from '../../features/toggleSidebar/toggleSidebar';
 import { Link } from 'react-router-dom';
 // react icons 
 import { IoCloseSharp } from 'react-icons/io5';
+import PriceRangeFilter from '../module/shop/PriceRangeFilter ';
+import SortFilter from '../module/shop/SortFilter';
 
 
 const FilterSection = () => {
 
   const dispatch = useDispatch();
-  const [sortValue, setSortValue] = useState("sort")
-  const [inputValue, setInputValue] = useState('')
-  const { productData, categoryList } = useSelector((state) => state.product_data);
+  // const [searchInputValue, setSearchInputValue] = useState('')
+  // const  products  = useSelector((state) => state.filterData.products);
   const { showFilters } = useSelector(state => state.sidebar);
-  const { price, minPrice, maxPrice } = useSelector((state) => state.filterData.priceRangeFilter);
-  const { categoryBtnValue } = useSelector((state) => state.filterData);
+  // const { price, minPrice, maxPrice } = useSelector((state) => state.filterData.priceRangeFilter);
+  const { products, categoryBtnValue, categoryList,searchInputValue } = useSelector((state) => state.filterData);
 
 
   useEffect(() => {
@@ -29,11 +40,13 @@ const FilterSection = () => {
 
 
 
-  useEffect(() => {
-    dispatch(setFilterInitialValues(productData));
-  }, [productData])
+  // useEffect(() => {
+  //   dispatch(setFilterInitialValues(products));
+  // }, [products])
 
-
+  // useEffect(()=>{
+  //   dispatch(getFilteredData({value:searchInputValue}))
+  // },[searchInputValue])
 
   return (
     <div className={`px-4 filters ${showFilters ? 'active' : ''}`}>
@@ -56,13 +69,13 @@ const FilterSection = () => {
             type="text"
             className='py-1 pl-2 outline-none'
             placeholder='Search...'
-            value={inputValue}
+            value={searchInputValue}
             onChange={(e) => {
               e.preventDefault()
-              setInputValue(e.target.value)
-              if (inputValue.length > 0) {
-                dispatch(getSearchedData({ value: e.target.value, productData }))
-              }
+              // setSearchInputValue(e.target.value)
+              // dispatch(getSearchedData({ value: e.target.value, products }))
+              dispatch(getFilteredData({ type: 'SEARCH', value: e.target.value }))
+
             }}
           />
         </form>
@@ -79,11 +92,11 @@ const FilterSection = () => {
               key={index}
               value={categoryBtnValue}
               className={`${categoryBtnValue === curItem.categoryUrl.toLowerCase() && "border-b-2 border-gray-600"} text-[var(--themeColor)] text-sm hover:border-b-2 border-gray-600 w-max cursor-pointer`}
-              onClick={() => {
-                dispatch(setCurrentPage(1))
-                dispatch(setCategoryBtnValue(curItem.categoryUrl))
-                dispatch(fetchCategoryWiseData(curItem.categoryUrl.toLowerCase()))
-              }}
+              // onClick={() => {
+              //   dispatch(setCurrentPage(1))
+              //   dispatch(setCategoryBtnValue(curItem.categoryUrl))
+              //   dispatch(fetchCategoryWiseData(curItem.categoryUrl.toLowerCase()))
+              // }}
             >
               {curItem.category}
             </Link>
@@ -94,37 +107,31 @@ const FilterSection = () => {
       {/*  sort section showing in mobile devices  */}
 
       <div className="relative md:hidden block mt-10">
-        <select
+        {/* <select
           id="sort"
           name="sort"
           value={sortValue}
           onChange={(e) => {
-            setSortValue(e.target.value)
-            dispatch(getSortData({ value: e.target.value, productData }))
+            // setSortValue(e.target.value)
+            dispatch(getFilteredData({ type: 'SORT', value: e.target.value }))
             dispatch(setShowFilters('hide'))
           }}
           // className="w-auto block border cursor-pointer bg-white border-gray-300 hover:border-gray-500 p-2  leading-tight focus:outline-none"
           className="outline-none block w-auto p-2.5"
         >
           <option defaultValue="sort" >Sort</option>
-          {/* <option value="#" disabled></option> */}
           <option value="low_to_high">Price: Low to High</option>
-          {/* <option value="#" disabled></option> */}
           <option value="high_to_low">Price: High to Low</option>
-          {/* <option value="#" disabled></option> */}
           <option value="a-z">a - z</option>
-          {/* <option value="#" disabled></option> */}
           <option value="z-a">z - a</option>
-        </select>
-        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-
-        </div>
+        </select> */}
+       <SortFilter isMobile={true} />
       </div>
 
       {/* sort sections showing in mobile devices end */}
 
-      {/* price  */}
-      <div className="filter_price md:pt-16 pt-8 pl-2">
+      {/*  filteration based on price  */}
+      {/* <div className="filter_price md:pt-16 pt-8 pl-2">
         <h3 className='text-xl mb-2 md:text-black text-[#ffe9a1] '>Price</h3>
         <p className='text-[#ffe9a1] md:text-black'> ₹ {price}</p>
         <input
@@ -134,9 +141,9 @@ const FilterSection = () => {
           min={minPrice}
           max={maxPrice}
           onChange={(e) => {
-            // dispatch(setFilterInitialValues(productData))
-            dispatch(getFilterData({ type: 'PRICE_FILTER', data: { value: e.target.value, productData } }))
-            dispatch(getPricerRangeData({ price: e.target.value, productData }))
+            // dispatch(setFilterInitialValues(products))
+            dispatch(getFilterData({ type: 'PRICE_FILTER', data: { value: e.target.value, products } }))
+            dispatch(getPricerRangeData({ price: e.target.value, products }))
             if (window.innerWidth <= 768) {
 
               setTimeout(() => {
@@ -146,6 +153,10 @@ const FilterSection = () => {
             }
           }}
         />
+      </div> */}
+
+      <div className='md:pt-8 pt-8 pl-2'>
+        <PriceRangeFilter isMobile={true}/>
       </div>
 
       {/* clear filter  */}
@@ -153,7 +164,7 @@ const FilterSection = () => {
         <button type='button'
           className='bg-[var(--themeColor)] text-white hover:bg-red-700 hover:text-white  text-sm md:text-[16px] transition-all duration-500 md:py-3 py-2 md:px-5 px-3 '
           onClick={() => {
-            dispatch(clearFilters(productData))
+            dispatch(clearFilters())
             if (window.innerWidth <= 768) {
               dispatch(setShowFilters('hide'))
 

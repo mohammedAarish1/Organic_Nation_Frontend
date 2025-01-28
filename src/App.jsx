@@ -16,7 +16,6 @@ import {
   Breadcrumbs,
   WhatsApp,
   ScrollToTop,
-  getProductsData,
   // getAllCartItems,
   // getAllBlogs,
   // getAllRecipes,
@@ -29,6 +28,7 @@ import AdminRoutes from './routes/AdminRoutes';
 import AdminLogin from './pages/admin/AdminLogin';
 import { checkAuthStatus } from './features/auth/auth';
 import RecentOrderNotification from './components/recent-order-notification/RecentOrderNotification ';
+import { getProductsData } from './features/filter/filterSlice';
 
 // Memoized components
 

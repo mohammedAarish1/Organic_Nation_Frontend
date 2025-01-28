@@ -169,12 +169,12 @@
 
 
 
-import React, { memo, useCallback, useMemo } from 'react';
+import React, { memo,  useMemo } from 'react';
 import Logo from '../logo/Logo';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentPage } from '../../features/pagination/pagination';
-import { fetchCategoryWiseData, setCategoryBtnValue } from '../../features/filter/filterSlice';
+import {  useSelector } from 'react-redux';
+// import { setCurrentPage } from '../../features/pagination/pagination';
+// import { fetchCategoryWiseData, setCategoryBtnValue } from '../../features/filter/filterSlice';
 import { FaAnglesRight, FaSquareXTwitter } from "react-icons/fa6";
 import { FaInstagramSquare, FaYoutube } from "react-icons/fa";
 import { GrLinkedin } from "react-icons/gr";
@@ -241,9 +241,11 @@ const FooterLinks = React.memo(({ title, links }) => (
     <div className="flex flex-col gap-3 md:pb-0 pb-4">
         <h2 className="text-lg font-semibold uppercase">{title}</h2>
         <ul className="flex flex-col gap-1">
-            {links.map(({ to, label, onClick }, index) => (
+            {links.map(({ to, label }, index) => (
                 <li key={index}>
-                    <Link to={to} onClick={onClick}>
+                    <Link to={to}
+                        // onClick={onClick}
+                    >
                         <span className="flex items-center gap-2 cursor-pointer hover:text-orange-500 hover:translate-x-1 transition-all duration-300 tracking-widest">
                             <FaAnglesRight /> {label}
                         </span>
@@ -256,12 +258,12 @@ const FooterLinks = React.memo(({ title, links }) => (
 
 
 // Create a selector outside the component
-const selectCategoryList = state => state.product_data.categoryList;
+const selectCategoryList = state => state.filterData.categoryList;
 
 const Footer = () => {
 
-   
-    const dispatch = useDispatch();
+
+    // const dispatch = useDispatch();
     const categoryList = useSelector(selectCategoryList, (prev, next) => {
         if (!prev || !next) return false;
         return JSON.stringify(prev) === JSON.stringify(next);
@@ -270,23 +272,23 @@ const Footer = () => {
 
 
     // Memoize the category handling function
-    const handleCategoryClick = useCallback((categoryUrl) => {
-        dispatch(setCurrentPage(1));
-        dispatch(setCategoryBtnValue(categoryUrl));
-        dispatch(fetchCategoryWiseData(categoryUrl.toLowerCase()));
-        window.scrollTo(0, 0);
-    }, [dispatch]);
+    // const handleCategoryClick = useCallback((categoryUrl) => {
+    //     dispatch(setCurrentPage(1));
+    //     dispatch(setCategoryBtnValue(categoryUrl));
+    //     dispatch(fetchCategoryWiseData(categoryUrl.toLowerCase()));
+    //     window.scrollTo(0, 0);
+    // }, [dispatch]);
 
-  
+
     // Memoize category links creation
     const categoryLinks = useMemo(() => {
         const productCategories = categoryList.filter(curItem => curItem.category !== 'All');
         return productCategories.map(item => ({
             to: `/shop/${item.categoryUrl.toLowerCase()}`,
             label: item.category,
-            onClick: () => handleCategoryClick(item.categoryUrl)
+            // onClick: () => handleCategoryClick(item.categoryUrl)
         }));
-    }, [categoryList, handleCategoryClick]);
+    }, [categoryList]);
     return (
         <footer className="relative bg-[var(--hoverEffect)] xs:px-10 px-1 py-6 text-sm text-[var(--themeColor)]">
             <div className="lg:container mx-auto px-4">

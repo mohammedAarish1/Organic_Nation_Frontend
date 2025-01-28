@@ -7,11 +7,11 @@ const apiUrl = import.meta.env.VITE_BACKEND_URL;
 // api calling for handling return items
 export const addReturnItems = createAsyncThunk(
   "manageReturns/addReturnItems",
-  async (formData, { rejectWithValue,getState }) => {
+  async (formData, { rejectWithValue, getState }) => {
     // const token = JSON.parse(sessionStorage.getItem("token"));
     const { auth } = getState();
     try {
-      if(auth.user){
+      if (auth.user) {
         const response = await api.post(
           `/api/orders/add-return-item`,
           formData,
@@ -22,10 +22,10 @@ export const addReturnItems = createAsyncThunk(
             },
           }
         );
-  
+
         // return response.data;
       }
-     
+
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
     }
@@ -35,11 +35,11 @@ export const addReturnItems = createAsyncThunk(
 // get all return items for single user
 export const getAllReturnItems = createAsyncThunk(
   "manageReturns/getAllReturnItems",
-  async (_, { rejectWithValue,getState }) => {
+  async (_, { rejectWithValue, getState }) => {
     // const token = JSON.parse(sessionStorage.getItem("token"));
     const { auth } = getState();
     try {
-      if(auth.user){
+      if (auth.user) {
         const response = await api.get(
           `/api/orders/all/return-items`,
           {
@@ -49,10 +49,10 @@ export const getAllReturnItems = createAsyncThunk(
             },
           }
         );
-  
+
         return response.data;
       }
-    
+
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -62,11 +62,11 @@ export const getAllReturnItems = createAsyncThunk(
 // cance return request
 export const cancelReturnRequest = createAsyncThunk(
   "manageReturns/cancelReturnRequest",
-  async (returnId, { rejectWithValue,getState }) => {
+  async (returnId, { rejectWithValue, getState }) => {
     // const token = JSON.parse(sessionStorage.getItem("token"));
     const { auth } = getState();
     try {
-      if(auth.user){
+      if (auth.user) {
         const response = await api.delete(
           `/api/orders/cancel-return/${returnId}`,
           {
@@ -76,12 +76,12 @@ export const cancelReturnRequest = createAsyncThunk(
             },
           }
         );
-  
+
         return response.data;
       }
-     
+
     } catch (error) {
-      
+
       return rejectWithValue(error.response?.data || error.message);
     }
   }
@@ -179,24 +179,15 @@ const manageReturns = createSlice({
     builder
       // add returns
       .addCase(addReturnItems.pending, (state) => {
-        return {
-          ...state,
-          addingReturnedItems: true,
-        };
+        state.addingReturnedItems = true
       })
       .addCase(addReturnItems.fulfilled, (state) => {
-        return {
-          ...state,
-          addingReturnedItems: false,
-          error: null,
-        };
+        state.addingReturnedItems = false
+        state.error = null
       })
       .addCase(addReturnItems.rejected, (state, action) => {
-        return {
-          ...state,
-          addReturnItems: false,
-          error: action.payload || "Something went wrong",
-        };
+        state.addingReturnedItems = false
+        state.error = action.payload || "Something went wrong"
       })
       // get all returns
       .addCase(getAllReturnItems.pending, (state) => {
@@ -226,25 +217,17 @@ const manageReturns = createSlice({
       })
       // cancel return request
       .addCase(cancelReturnRequest.pending, (state) => {
-        return {
-          ...state,
-          loading: true,
-        };
+        state.loading = true
+        state.error = null
       })
       .addCase(cancelReturnRequest.fulfilled, (state, action) => {
-        return {
-          ...state,
-          loading: false,
-          error: null,
-         
-        };
+        state.loading = false
+        state.returnsByStatus.returnData = state.returnsByStatus.returnData.filter(item => item._id !== action.payload.data._id)
+
       })
       .addCase(cancelReturnRequest.rejected, (state, action) => {
-        return {
-          ...state,
-          loading: false,
-          error: action.payload || "Something went wrong",
-        };
+        state.loading=false
+        state.error= action.payload || "Something went wrong"
       });
   },
 });

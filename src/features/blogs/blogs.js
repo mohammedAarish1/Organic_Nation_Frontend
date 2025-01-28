@@ -42,61 +42,38 @@ const blogSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(getAllBlogs.pending, (state, action) => {
-            return {
-                ...state,
-                loading: true,
-            }
+        builder.addCase(getAllBlogs.pending, (state) => {
+            state.loading = true;
         })
         builder.addCase(getAllBlogs.fulfilled, (state, action) => {
 
             if (action.payload) {
                 const recentBlogs = action.payload?.filter(blog => blog.recent)
 
-                return {
-                    ...state,
-                    loading: false,
-                    blogs: action.payload,
-                    recentBlogs,
-                }
+                state.loading = false;
+                state.blogs = action.payload;
+                state.recentBlogs = recentBlogs;
             }
-
-
         })
         builder.addCase(getAllBlogs.rejected, (state, action) => {
-            return {
-                ...state,
-                loading: false,
-                error: action.payload,
-            }
+            state.loading = false;
+            state.error = action.payload
         })
         // get all recipes
         builder.addCase(getAllRecipes.pending, (state, action) => {
-            return {
-                ...state,
-                loading: true,
-            }
+            state.loading = true;
         })
         builder.addCase(getAllRecipes.fulfilled, (state, action) => {
 
             if (action.payload) {
                 // const recentBlogs = action.payload.filter(blog => blog.recent)
-
-                return {
-                    ...state,
-                    loading: false,
-                    recipes: action.payload,
-                }
+                state.loading = false;
+                state.recipes = action.payload
             }
-
-
         })
         builder.addCase(getAllRecipes.rejected, (state, action) => {
-            return {
-                ...state,
-                loading: false,
-                error: action.payload,
-            }
+            state.loading = false;
+            state.error = action.payload   
         })
     }
 })

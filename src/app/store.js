@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from '../features/auth/auth';
-import productReducer from '../features/productData/productsDataSlice';
+// import productReducer from '../features/productData/productsDataSlice';
 import filterReducer from '../features/filter/filterSlice';
 import paginationReducer from '../features/pagination/pagination';
 import cartReducer from '../features/cart/cart';
@@ -28,7 +28,7 @@ import { setStore } from '../helper/storeUtils';
  const store = configureStore({
     reducer: {
         auth: authReducer,
-        product_data: productReducer,
+        // product_data: productReducer,
         filterData: filterReducer,
         pagination: paginationReducer,
         cart: cartReducer,

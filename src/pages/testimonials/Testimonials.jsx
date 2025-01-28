@@ -40,7 +40,7 @@ const Testimonials = () => {
 
       {/* customer feedback section  */}
 
-      <div className="w-[80%] mx-auto flex flex-wrap items-center mb-20">
+      <div className="w-[80%] mx-auto flex flex-wrap items-center xs:mb-20">
         <div className="w-full lg:w-2/3 px-4 mb-12 lg:mb-0">
           <span className="inline-block py-1 px-3 mb-4 text-xs font-semibold text-[var(--titleTextColor)] bg-orange-50 rounded-full">TESTIMONIALS</span>
           <h1 className="font-heading text-5xl xs:text-5xl font-semibold text-[var(--themeColor)] mb-4">

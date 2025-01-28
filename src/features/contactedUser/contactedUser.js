@@ -31,27 +31,16 @@ const contactedUser = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(submitContactForm.pending, (state) => {
-                return {
-                    ...state,
-                    loading: true
-                }
+                state.loading = true;
             })
             .addCase(submitContactForm.fulfilled, (state) => {
-                return {
-                    ...state,
-                    loading: false,
-                    success: true,
-
-                }
+                state.loading = false;
+                state.success = true;
             })
             .addCase(submitContactForm.rejected, (state, action) => {
-                return {
-                    ...state,
-                    loading: false,
-                    success: false,
-                    error: action.payload.message || 'An error occurred'
-                }
-
+                state.loading = false;
+                state.success=false
+                state.error = action.payload.message || 'An error occurred'
             });
     },
 });

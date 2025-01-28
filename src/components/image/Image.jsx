@@ -112,7 +112,7 @@ const Image = ({ src, blurSrc, alt, className, onLoad, isHovered }) => {
           {/* Mobile devices */}
           {src.sm && (
             <source
-              media="(max-width: 640px)"
+              // media="(max-width: 640px)"
               srcSet={src.sm}
               type="image/webp"
             />
@@ -120,7 +120,7 @@ const Image = ({ src, blurSrc, alt, className, onLoad, isHovered }) => {
           {/* Tablets */}
           {src.md && (
             <source
-              media="(max-width: 1024px)"
+              // media="(max-width: 1024px)"
               srcSet={src.md}
               type="image/webp"
             />
@@ -128,7 +128,7 @@ const Image = ({ src, blurSrc, alt, className, onLoad, isHovered }) => {
           {/* Desktop */}
           {src.lg && (
             <source
-              media="(min-width: 1025px)"
+              // media="(min-width: 1025px)"
               srcSet={src.lg}
               type="image/webp"
             />

@@ -13,19 +13,14 @@ import OfferBanner from '../../components/offerBanner/OfferBanner';
 
 
 const Shop = () => {
-
   const dispatch = useDispatch();
   const { category } = useParams();
   const [gridView, setGridView] = useState(true);
   const { showFilters } = useSelector(state => state.sidebar);
-  const { isLoading } = useSelector((state) => state.product_data);
-  const { searchInputValue } = useSelector(state => state.filterData);
+  const { filteredProducts,searchInputValue ,loading,categoryBtnValue} = useSelector(state => state.filterData);
 
   const [curCategorySeoData, setCategorySeoData] = useState(productCategoriesData.all);
 
-
-  const filterProduct = useSelector((state) => state.filterData.data);
-  const { categoryBtnValue } = useSelector((state) => state.filterData);
 
 
 
@@ -36,7 +31,7 @@ const Shop = () => {
       dispatch(setCategoryBtnValue(category));
       dispatch(setCurrentPage(1))
     }
-  }, [])
+  }, [category])
 
 
   useEffect(() => {
@@ -44,7 +39,7 @@ const Shop = () => {
   }, [categoryBtnValue])
 
 
-  if (isLoading) return (
+  if (loading) return (
     <div className='py-52 flex justify-center items-center'>
       <div className="loader"></div>
     </div>
@@ -83,7 +78,7 @@ const Shop = () => {
           ) : (
             <div className='uppercase  text-center xs:text-2xl md:pb-10 md:mt-0 mt-5 font-thin px-2 font-sans '>
               Total
-              <span className='font-bold  text-[var(--themeColor)] '> {filterProduct?.length} </span>
+              <span className='font-bold  text-[var(--themeColor)] '> {filteredProducts?.length} </span>
               <span className='font-bold  text-[var(--themeColor)] tracking-wide'> {categoryBtnValue.toLowerCase() === 'all' ? '' : `${categoryBtnValue}`}</span> Products Available
             </div>
           )}

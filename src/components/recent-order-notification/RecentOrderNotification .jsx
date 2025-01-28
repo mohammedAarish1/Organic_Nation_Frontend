@@ -27,7 +27,8 @@ const fetchRecentOrders = async () => {
 
 
 const INITIAL_DELAY = 10000; // 10 seconds
-const ROTATION_INTERVAL = 10000; // 20 seconds
+const ROTATION_INTERVAL = 10000; // 10 seconds
+
 
 
 const RecentOrderNotification = () => {

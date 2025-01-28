@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { lazy, Suspense, useEffect, useRef, useState } from "react";
 import ButtonTwo from "../button/ButtonTwo";
 import ReviewsAndRatings from "../../helper/ReviewsAndRatings";
 import axios from "axios";
@@ -8,9 +8,13 @@ import { addToCart, getAllCartItems } from "../../features/cart/cart";
 import { toast } from "react-toastify";
 // react icons
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import ReturnItemForm from "../returnItemForm/ReturnItemForm";
+// import ReturnItemForm from "../returnItemForm/ReturnItemForm";
 import Image from "../image/Image";
+import Loader from "../common/Loader";
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
+
+
+const ReturnItemForm = lazy(() => import("../returnItemForm/ReturnItemForm"))
 
 const SingleOrder = ({
   curOrder,
@@ -21,17 +25,16 @@ const SingleOrder = ({
 }) => {
   let nameUrl = curOrder["name-url"];
   const dispatch = useDispatch();
-  const [singleOrderItem, setSingleOrderItem] = useState("");
+  const [singleOrderItem, setSingleOrderItem] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [showProductReview, setShowProductReview] = useState(false);
-  // const { isLoading, productData } = useSelector((state) => state.product_data);
 
   const modalRef = useRef();
 
   const getCurOrderItem = async () => {
     try {
       const response = await axios.get(
-        `${apiUrl}/category/organic-honey/${nameUrl}`
+        `${apiUrl}/products/organic-honey/${nameUrl}`
       );
       if (response.data.product) {
         setSingleOrderItem(response.data.product);
@@ -82,9 +85,9 @@ const SingleOrder = ({
             <Image
               src={{
                 // sm: leftImage.sm,
-                sm: Array.isArray(singleOrderItem.img) ? singleOrderItem.img.filter((path) => path.sm.toLowerCase().includes("front") )[0].sm  : null,
-                md: Array.isArray(singleOrderItem.img) ? singleOrderItem.img.filter((path) => path.md.toLowerCase().includes("front") )[0].md  : null,
-                lg: Array.isArray(singleOrderItem.img) ? singleOrderItem.img.filter((path) => path.lg.toLowerCase().includes("front") )[0].lg  : null,
+                sm: Array.isArray(singleOrderItem.img) ? singleOrderItem.img.filter((path) => path.sm.toLowerCase().includes("front"))[0].sm : null,
+                md: Array.isArray(singleOrderItem.img) ? singleOrderItem.img.filter((path) => path.md.toLowerCase().includes("front"))[0].md : null,
+                lg: Array.isArray(singleOrderItem.img) ? singleOrderItem.img.filter((path) => path.lg.toLowerCase().includes("front"))[0].lg : null,
                 // md: leftImage.md,
                 // lg: leftImage.lg
               }}
@@ -151,10 +154,10 @@ const SingleOrder = ({
             <button
               type="submit"
               className={`${curOrder.quantity === curOrder.returnInfo.returnedQuantity ||
-                  isReturnDisabled ||
-                  orderStatus !== "completed"
-                  ? "opacity-50 "
-                  : ""
+                isReturnDisabled ||
+                orderStatus !== "completed"
+                ? "opacity-50 "
+                : ""
                 } btn-97 `}
               disabled={
                 curOrder.quantity === curOrder.returnInfo.returnedQuantity ||
@@ -198,9 +201,9 @@ const SingleOrder = ({
 
       <div className="text-end text-white text-sm italic">
         <p>{`${curOrder.returnInfo.returnedQuantity < curOrder.quantity &&
-            curOrder.returnInfo.returnedQuantity > 0
-            ? `* ${curOrder.returnInfo.returnedQuantity} Quantity of this item is returned by you`
-            : ""
+          curOrder.returnInfo.returnedQuantity > 0
+          ? `* ${curOrder.returnInfo.returnedQuantity} Quantity of this item is returned by you`
+          : ""
           }`}</p>
       </div>
 
@@ -238,19 +241,21 @@ const SingleOrder = ({
                 </li>
               </ul>
             </div>
+            <Suspense fallback={<Loader height='50px' />}>
+              <ReturnItemForm
+                product={curOrder}
+                returnedQuantity={curOrder.returnInfo.returnedQuantity || 0}
+                paymentMethod={paymentMethod}
+                amountPaid={Math.round(
+                  singleOrderItem.price -
+                  (singleOrderItem.price * singleOrderItem.discount) / 100
+                )}
+                invoiceNumber={invoiceNumber}
+                onSubmit={() => setIsFormVisible(false)}
+                onCancel={handleFormCancel}
+              />
+            </Suspense>
 
-            <ReturnItemForm
-              product={curOrder}
-              returnedQuantity={curOrder.returnInfo.returnedQuantity || 0}
-              paymentMethod={paymentMethod}
-              amountPaid={Math.round(
-                singleOrderItem.price -
-                (singleOrderItem.price * singleOrderItem.discount) / 100
-              )}
-              invoiceNumber={invoiceNumber}
-              onSubmit={() => setIsFormVisible(false)}
-              onCancel={handleFormCancel}
-            />
           </div>
         </div>
       )}
