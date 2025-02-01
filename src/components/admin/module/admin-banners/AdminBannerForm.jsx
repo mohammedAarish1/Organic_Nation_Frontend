@@ -3,6 +3,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from 'react-redux';
 import { addNewBannerInDatabase } from '../../../../features/admin/adminData';
+import { toast } from 'react-toastify';
 
 
 const AdminBannerForm = () => {
@@ -51,7 +52,6 @@ const AdminBannerForm = () => {
                     if (result.error?.message === 'Rejected') {
                         toast.error(result.payload)
                     } else {
-                        getMainBanners()
                         toast.success(result.payload?.message);
                     }
                 })

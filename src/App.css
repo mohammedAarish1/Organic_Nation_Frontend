@@ -3,7 +3,7 @@
    ==============
 */
 
-@import url("https://fonts.googleapis.com/css2?family=Jersey+10&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Jersey+10&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"); */
 
 body {
   font-family: "Roboto", sans-serif;
@@ -52,14 +52,13 @@ body {
 */
 
 /* Add these styles to your CSS file */
-.bannerCustomCss .swiper-slide img {
+/* .bannerCustomCss .swiper-slide img {
   display: block;
   width: 100%;
   height: auto;
   object-fit: contain;
 }
 
-/* If you have CORS-enabled images, add this for better performance */
 .bannerCustomCss img {
   crossorigin: "anonymous";
 }
@@ -69,12 +68,9 @@ body {
 }
 
 .bannerCustomCss .swiper-pagination-bullet {
-  /* border:2px solid white; */
-  /* padding: 5px; */
   width: 12px;
   height: 12px;
   background-color: var(--themeColor);
-  /* background-color: transparent; */
   border-radius: 50%;
   margin: 0 6px;
 }
@@ -83,7 +79,7 @@ body {
   .bannerCustomCss .swiper-pagination-bullet {
     display: none;
   }
-}
+} */
 
 /* ================================================== 
    hide scrollbar width in 'you may also like section'
@@ -105,14 +101,14 @@ body {
    ============================
 */
 
-.figure {
+/* .figure {
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
   overflow: hidden;
   transition: all 0.5s linear;
-}
+} */
 
 /* .figure::before {
   content: "";
@@ -173,7 +169,7 @@ body {
    ================================================
 */
 
-@media screen and (-webkit-min-device-pixel-ratio: 0) {
+/* @media screen and (-webkit-min-device-pixel-ratio: 0) {
   input[type="range"] {
     -webkit-appearance: none;
     background-color: #712522;
@@ -194,24 +190,24 @@ body {
     background: white;
     -webkit-appearance: none;
   }
-}
+} */
 
 /* For Firefox */
 
-input[type="range"] {
+/* input[type="range"] {
   -moz-appearance: none;
   appearance: none;
   background-color: #712522;
   border-radius: 10px;
-  height: 5px; /* Set a default height */
-  width: 60%; /* Make sure the range input takes full width */
+  height: 5px; 
+  width: 60%; 
 }
 
 input[type="range"]::-moz-range-track {
   -moz-appearance: none;
   appearance: none;
   height: 5px;
-  background-color: #712522; /* Adjust track color */
+  background-color: #712522; 
 }
 
 input[type="range"]::-moz-range-thumb {
@@ -222,8 +218,8 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 50%;
   cursor: pointer;
   background: white;
-  margin-top: -8px; /* Adjust thumb position */
-}
+  margin-top: -8px;
+} */
 
 /* =============== 
    css for loaders
@@ -680,7 +676,7 @@ input[type="range"]::-moz-range-thumb {
 
 
 
-.products-grid {
+/* .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 1rem;
@@ -697,7 +693,7 @@ input[type="range"]::-moz-range-thumb {
   .products-grid {
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   }
-}
+} */
 
 
 /* ==============================  **** end **** ==================================================  */

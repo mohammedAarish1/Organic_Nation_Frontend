@@ -98,8 +98,8 @@ const PopupBanner = () => {
   const imageLoadedRef = useRef(false);
 
   // Image URLs
-  const desktopImage = "https://organicnationmages.s3.ap-south-1.amazonaws.com/main_banners/additionalDiscount.png";
-  const mobileImage = "https://organicnationmages.s3.ap-south-1.amazonaws.com/popUp_additional_Dis_mobile.png";
+  const desktopImage = "https://organicnationmages.s3.ap-south-1.amazonaws.com/holi_offer_desktop.webp";
+  const mobileImage = "https://organicnationmages.s3.ap-south-1.amazonaws.com/holi_offer_mobile.webp";
 
   const handleClosePopup = () => {
     setIsAnimated(false);
