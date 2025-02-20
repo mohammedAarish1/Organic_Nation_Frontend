@@ -6,9 +6,8 @@ import { fetchCategoryWiseData } from '../../../features/filter/filterSlice';
 
 const YouMayAlsoLike = ({ categoryUrl }) => {
     const dispatch = useDispatch()
-    const filterProduct = useSelector((state) => state.filterData.data);
+    const {filteredProducts} = useSelector((state) => state.filterData);
     const { categoryBtnValue } = useSelector((state) => state.filterData);
-
 
 
     useEffect(() => {
@@ -23,7 +22,7 @@ const YouMayAlsoLike = ({ categoryUrl }) => {
             <div className='hidden-scrollbar flex justify-start items-center gap-5 py-4  overflow-x-auto  w-[90%] mx-auto'>
 
 
-                {filterProduct?.map((product) => (
+                {filteredProducts?.map((product) => (
                     <Link to={`/shop/${categoryBtnValue}/${product['name-url']}`} key={product._id} >
                         <div className='flex flex-col justify-center items-center gap-5 shadow-xl px-8 py-4 cursor-pointer hover:scale-90 hover:bg-[#dcd3b9] transition-all duration-500  min-h-[350px] w-80'>
 
