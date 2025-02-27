@@ -17,21 +17,16 @@ const YouMayAlsoLike = ({ categoryUrl }) => {
 
     return (
         <section className='mt-20'>
-            <h2 className='text-center text-2xl tracking-widest font-serif'>You may also like</h2>
+            <h2 className='text-center text-2xl tracking-widest'>You may also like</h2>
 
             <div className='hidden-scrollbar flex justify-start items-center gap-5 py-4  overflow-x-auto  w-[90%] mx-auto'>
 
 
                 {filteredProducts?.map((product) => (
                     <Link to={`/shop/${categoryBtnValue}/${product['name-url']}`} key={product._id} >
-                        <div className='flex flex-col justify-center items-center gap-5 shadow-xl px-8 py-4 cursor-pointer hover:scale-90 hover:bg-[#dcd3b9] transition-all duration-500  min-h-[350px] w-80'>
+                        <div className='flex flex-col justify-center items-center gap-5 shadow-xl px-8 py-4 cursor-pointer hover:scale-95 hover:bg-[#dcd3b9] transition-all duration-500  min-h-[350px] w-80'>
 
                             <div className=''>
-                                {/* <img
-                src={Array.isArray(product.img) ? product.img.filter(path => path.toLowerCase().includes('front'))[0] : null}
-                alt="product-image"
-                className='min-w-32 h-40 object-contain max-h-[240px] rounded-xl'
-              /> */}
 
                                 <Image
                                     src={{

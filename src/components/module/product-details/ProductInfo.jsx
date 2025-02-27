@@ -21,7 +21,7 @@ const ProductInfo = ({product}) => {
   };
 
   return (
-    <div className="md:w-[50%] max-h-[600px]  flex md:justify-start justify-center items-center gap-4 py-6 xs:pr-10 px-4 xs:pl-10 md:pl-0 font-sans  ">
+    <div className="md:w-[50%] max-h-[600px]  flex md:justify-start justify-center items-center gap-4 py-6 xs:pr-10 px-4 xs:pl-10 md:pl-0 font-s  ">
     <div className='flex flex-col lg:gap-3 gap-1 tracking-wide'>
       <h2 className='md:block hidden font-medium md:text-4xl text-xl text-[var(--themeColor)]' >{product.details.name}</h2>
       <p className=''><span className='font-semibold'>Brand: </span><span>ORGANIC NATION</span> </p>

@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 
 const FormInput = ({ label, name, type = 'text', disabled, value, onChange, error, touched, prefix }) => (
   <div>
-    <label className="block text-sm font-medium italic mb-2">{label}</label>
+    <label className="block text-sm font-medium  mb-2">{label}</label>
     <div className={prefix ? 'flex items-center' : ''}>
       {prefix && (
         <span className={`
@@ -62,10 +62,10 @@ const SaveButton = ({ isSubmitting, loading }) => (
 );
 
 const InfoCard = ({ title, isEditing, onEdit, onCancel, children }) => (
-  <div className="bg-custom-gradient text-white border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300">
+  <div className="border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300">
     <div className="p-6">
       <div className="flex justify-between items-center mb-4">
-        <h3 className="xs:text-lg font-semibold ">{title}</h3>
+        <h3 className="xs:text-lg">{title}:</h3>
         <button
           type="button"
           onClick={isEditing ? onCancel : onEdit}

@@ -46,17 +46,17 @@ const feedbacks = [
 const TestimonialSlider = ({  }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => 
-      prevIndex === feedbacks.length - 1 ? 0 : prevIndex + 1
-    );
-  };
+  // const nextSlide = () => {
+  //   setCurrentIndex((prevIndex) => 
+  //     prevIndex === feedbacks.length - 1 ? 0 : prevIndex + 1
+  //   );
+  // };
 
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) => 
-      prevIndex === 0 ? feedbacks.length - 1 : prevIndex - 1
-    );
-  };
+  // const prevSlide = () => {
+  //   setCurrentIndex((prevIndex) => 
+  //     prevIndex === 0 ? feedbacks.length - 1 : prevIndex - 1
+  //   );
+  // };
 
   const goToSlide = (index) => {
     setCurrentIndex(index);
@@ -80,8 +80,8 @@ const TestimonialSlider = ({  }) => {
     }, [feedbacks.length]);
 
   return (
-    <div className="relative w-full sm:max-w-4xl mx-auto text-white px-5">
-      <div className="bg-custom-gradient rounded-lg shadow-lg p-8 text-center">
+    <div className="relative w-full sm:max-w-4xl mx-auto  px-5">
+      <div className=" rounded-lg shadow-lg p-8 text-center">
         {/* Slide Content */}
         <div className="flex items-center justify-center mb-4">
           {feedbacks[currentIndex].customerPicture}
@@ -92,7 +92,7 @@ const TestimonialSlider = ({  }) => {
         </div>
 
         <h3 className="text-xl font-semibold text-gray-600 ">
-          {feedbacks[currentIndex].customerName}
+          -{feedbacks[currentIndex].customerName}
         </h3>
       </div>
 
@@ -102,7 +102,7 @@ const TestimonialSlider = ({  }) => {
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={` w-3 h-3 rounded-full transition-all ${currentIndex === index ? 'bg-blue-600 w-6'  : 'bg-gray-300 hover:bg-gray-400'}
+            className={` w-3 h-3 rounded-full transition-all ${currentIndex === index ? 'bg-[var(--themeColor)] w-6'  : 'bg-gray-300 hover:bg-gray-400'}
             `}
           />
         ))}

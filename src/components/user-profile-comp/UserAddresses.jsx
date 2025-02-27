@@ -78,7 +78,7 @@ const UserAddresses = () => {
         {user.addresses.length > 0 && user.addresses.map((address) => (
           <div
             key={address._id}
-            className=" text-white bg-custom-gradient border border-gray-100 p-6 hover:shadow-md transition-shadow duration-300"
+            className="border border-gray-100 p-6 hover:shadow-md transition-shadow duration-300"
           >
             <div className="flex justify-between items-start mb-4">
               <span className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-green-700 text-sm font-medium capitalize">

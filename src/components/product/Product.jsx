@@ -431,7 +431,7 @@ const Product = memo(({ gridView, product }) => {
         }
       `}>
         <div className={`
-          bg-gray-100 rounded-lg overflow-hidden shadow-sm transition-all duration-300 
+         rounded-lg overflow-hidden shadow-sm transition-all duration-300 
           hover:shadow-lg relative
           ${gridView
             ? 'flex flex-col'
@@ -512,8 +512,8 @@ const Product = memo(({ gridView, product }) => {
           </NavLink>
           {/* Product Info */}
           <div className={`
-            flex flex-col relative z-20 bg-gray-100
-            ${gridView ? 'xs:p-4 p-1 xs:gap-2' : 'p-4 sm:p-6 flex-1 lg:gap-7'}`}>
+            flex flex-col relative z-20
+            ${gridView ? 'xs:p-2 p-1 xs:gap-2' : 'p-4 sm:p-6 flex-1 lg:gap-7'}`}>
             <NavLink
               to={`/shop/${categoryBtnValue}/${product['name-url']}`}
               className=" z-20"
@@ -536,7 +536,7 @@ const Product = memo(({ gridView, product }) => {
               >
                 <div className="flex items-baseline gap-2">
                   <span className="text-lg sm:text-xl font-semibold text-gray-700">₹{discountedPrice}</span>
-                  <span className="text-sm text-gray-500 line-through">₹{product.price}</span>
+                  <span className="text-sm text-gray-500 font-semibold line-through">₹{product.price}</span>
                 </div>
               </NavLink>
               <div className="w-full relative z-30">

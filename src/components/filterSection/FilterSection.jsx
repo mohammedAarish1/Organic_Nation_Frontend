@@ -67,7 +67,7 @@ const FilterSection = () => {
         }}>
           <input
             type="text"
-            className='py-1 pl-2 outline-none'
+            className='py-1 pl-2 outline-none border'
             placeholder='Search...'
             value={searchInputValue}
             onChange={(e) => {
@@ -107,53 +107,10 @@ const FilterSection = () => {
       {/*  sort section showing in mobile devices  */}
 
       <div className="relative md:hidden block mt-10">
-        {/* <select
-          id="sort"
-          name="sort"
-          value={sortValue}
-          onChange={(e) => {
-            // setSortValue(e.target.value)
-            dispatch(getFilteredData({ type: 'SORT', value: e.target.value }))
-            dispatch(setShowFilters('hide'))
-          }}
-          // className="w-auto block border cursor-pointer bg-white border-gray-300 hover:border-gray-500 p-2  leading-tight focus:outline-none"
-          className="outline-none block w-auto p-2.5"
-        >
-          <option defaultValue="sort" >Sort</option>
-          <option value="low_to_high">Price: Low to High</option>
-          <option value="high_to_low">Price: High to Low</option>
-          <option value="a-z">a - z</option>
-          <option value="z-a">z - a</option>
-        </select> */}
        <SortFilter isMobile={true} />
       </div>
 
-      {/* sort sections showing in mobile devices end */}
-
-      {/*  filteration based on price  */}
-      {/* <div className="filter_price md:pt-16 pt-8 pl-2">
-        <h3 className='text-xl mb-2 md:text-black text-[#ffe9a1] '>Price</h3>
-        <p className='text-[#ffe9a1] md:text-black'> ₹ {price}</p>
-        <input
-          type="range"
-          name="price"
-          value={price}
-          min={minPrice}
-          max={maxPrice}
-          onChange={(e) => {
-            // dispatch(setFilterInitialValues(products))
-            dispatch(getFilterData({ type: 'PRICE_FILTER', data: { value: e.target.value, products } }))
-            dispatch(getPricerRangeData({ price: e.target.value, products }))
-            if (window.innerWidth <= 768) {
-
-              setTimeout(() => {
-                dispatch(setShowFilters('hide'))
-              }, 1500);
-
-            }
-          }}
-        />
-      </div> */}
+     
 
       <div className='md:pt-8 pt-8 pl-2'>
         <PriceRangeFilter isMobile={true}/>

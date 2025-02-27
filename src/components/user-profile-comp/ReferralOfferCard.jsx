@@ -1,11 +1,11 @@
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import { FaClipboard } from 'react-icons/fa';  // Importing icons
 import { useSelector } from 'react-redux';
 import { FaShareAlt, FaGift } from 'react-icons/fa';  // Importing share and gift icons
 
 
 const ReferralOfferCard = () => {
-    const { user,user_loading } = useSelector(state => state.auth) || {};
+    const { user, user_loading } = useSelector(state => state.auth) || {};
 
     const [copied, setCopied] = useState(false);
 
@@ -31,12 +31,12 @@ const ReferralOfferCard = () => {
         window.open(whatsappUrl, "_blank");  // Open WhatsApp in a new tab
     };
 
-if(user_loading){
-    return <div>Loading...</div>;
-}
+    if (user_loading) {
+        return <div>Loading...</div>;
+    }
 
     return (
-        <div className="max-w-4xl w-full  rounded-lg shadow-xl bg-custom-gradient text-white overflow-hidden p-6">
+        <div className="max-w-4xl w-full  rounded-lg shadow-xl  overflow-hidden p-6">
             <div className="flex items-center justify-between mb-4">
                 {/* Title Section */}
                 <h2 className="xs:text-2xl font-semibold">
@@ -46,7 +46,7 @@ if(user_loading){
             </div>
 
             {/* Description */}
-            <p className="text-gray-200 xs:text-base text-sm mb-4">
+            <p className="text-gray-600 xs:text-base text-sm mb-4">
                 Refer a friend to our platform, and if they place an order, you'll earn a ₹100 coupon!
                 It's a win-win!
             </p>

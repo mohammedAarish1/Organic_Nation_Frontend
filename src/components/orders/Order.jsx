@@ -382,7 +382,7 @@ const OrderDetailsModal = lazy(() => import("../module/manage-orders/OrderDetail
 
 // react icons
 import { GoDotFill } from "react-icons/go";
-import { IoCheckmarkDoneCircleSharp ,IoChevronDownOutline} from "react-icons/io5";
+import { IoCheckmarkDoneCircleSharp, IoChevronDownOutline } from "react-icons/io5";
 import { MdOutlineCancel } from "react-icons/md";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { FaArrowRight } from "react-icons/fa";
@@ -458,14 +458,14 @@ const Order = ({ order }) => {
   };
 
   return (
-    <div className="shadow-xl font-mono">
+    <div className="shadow-xl">
       <OrderHeader
         order={order}
         onShowDetails={() => setShowOrderDetails(true)}
         statusIcon={<OrderStatusIcon status={order?.orderStatus} />}
       />
 
-      <div className="bg-gradient-to-r from-[#6D613B] to-[#D3BB71]">
+      <div className="">
         {order?.orderDetails.map((curOrder, index) => (
           !showAllItems && index !== 0 ? null : (
             <div key={curOrder._id} className="flex flex-col gap-10 py-7 xs:px-4 px-2">
@@ -510,8 +510,18 @@ const Order = ({ order }) => {
         />
       </Suspense>
 
+      {order.orderStatus === "completed" && (
+        <div className="text-end">
+          <button
+            className="px-2 py-1 underline"
+            onClick={() => setShowDeliveryFeedbackForm(true)}
+          >
+            Delivery Feedback</button>
+        </div>
+      )}
 
-      {order.orderStatus === "completed" && showDeliveryFeedbackForm && (
+
+      {showDeliveryFeedbackForm && (
         <div className="delivery-feedback-modal-bg active">
           <div className="text-white delivery-feedback-modal active">
             <div className="flex justify-end">

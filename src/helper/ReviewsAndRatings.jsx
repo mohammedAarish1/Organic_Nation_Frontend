@@ -2,7 +2,6 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { FaStar } from 'react-icons/fa';
-import ButtonTwo from '../components/button/ButtonTwo';
 import { useDispatch, useSelector } from 'react-redux';
 import { addReviews } from '../features/reviews/reviews';
 import { useNavigate } from 'react-router-dom';
@@ -55,7 +54,7 @@ const ReviewsAndRatings = ({ productName, insideProductDetails = false }) => {
                     <div className='flex flex-col xs:gap-5 gap-2'>
                         {/* ========ratings ========== */}
                         <div className='flex flex-col gap-2'>
-                            <label className='tracking-widest font-mono'>Rating:</label>
+                            <label className='tracking-widest'>Rating:</label>
                             <div className='flex justify-start items-center gap-2'>
                                 {[...Array(5)].map((star, index) => {
                                     const ratingValue = index + 1;
@@ -81,7 +80,7 @@ const ReviewsAndRatings = ({ productName, insideProductDetails = false }) => {
                         </div>
                         {/* ============ reviews =========== */}
                         <div className='flex flex-col gap-2'>
-                            <label htmlFor="review" className='tracking-widest font-mono'>Review:</label>
+                            <label htmlFor="review" className='tracking-widest'>Review:</label>
                             <Field
                                 as="textarea"
                                 id="review"
@@ -96,7 +95,15 @@ const ReviewsAndRatings = ({ productName, insideProductDetails = false }) => {
 
                         {/* ========submit button ========== */}
                         <div className='py-2 mt-3 flex justify-center '>
-                            <ButtonTwo text="Submit Review" />
+                            <button className="bg-gradient-to-r to-green-700 from-[var(--themeColor)] text-white font-semibold text-lg py-2 px-6 rounded-full shadow-lg transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-xl ">
+                                <span className="flex items-center gap-2">
+                                    {/* <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12h7m-3 4l3-4-3-4" />
+                                    </svg> */}
+                                    Submit Review
+                                </span>
+                            </button>
+
                         </div>
                     </div>
                 </Form>

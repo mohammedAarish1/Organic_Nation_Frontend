@@ -10,16 +10,16 @@ const Checkout = () => {
     return (
         <div className='xs:px-10 px-3 py-5'>
             <div className="font-[sans-serif]">
-                <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap- h-full">
-                    {/* left side  */}
-                        <CartDetails />
-                    {/* <div className="sticky top-[85px] z-10"> 
-                    </div> */}
+                <div className="grid lg:grid-cols-2 xl:grid-cols-3 h-full">
+
+
                     {/* right side  */}
-                    {/* <CheckoutForm /> */}
                     <Suspense fallback={<div className="h-48 animate-pulse bg-gray-100" />}>
                         <CheckoutForm />
                     </Suspense>
+                    {/* left side  */}
+                    <CartDetails />
+
                 </div>
             </div>
 

@@ -29,15 +29,15 @@ const ProfileSidebar = ({ activeMenu, setActiveMenu, isMobileMenuOpen, setIsMobi
     <div className="relative">
       {/* Desktop Sidebar */}
       <div className="hidden md:block">
-        <div className="w-80 shadow-md bg-custom-gradient text-white">
+        <div className="w-80 shadow-md ">
           <div className="p-6">
             <div className="flex items-center gap-3 mb-8">
               <div className="w-12 h-12 rounded-full bg-green-600 flex items-center justify-center">
                 <FiUser className="text-white" size={24} />
               </div>
               <div>
-                <h2 className="text-lg font-semibold capitalize">{firstName+''+lastName}</h2>
-                <p className="text-sm text-gray-300">{user.email}</p>
+                <h2 className="text-lg font-semibold capitalize">{firstName+' '+lastName}</h2>
+                <p className="text-sm text-gray-500">{user.email}</p>
               </div>
             </div>
 

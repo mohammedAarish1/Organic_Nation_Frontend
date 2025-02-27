@@ -87,11 +87,11 @@ const RecentOrderNotification = () => {
 
     return (
         <div className="fixed bottom-4 left-4 xs:right-0 right-4 animate-slide-in font-sans z-20 max-w-96">
-            <div className="bg-[var(--bgColorPrimary)]  rounded-lg shadow-lg p-4 pt-2 ">
+            <div className="bg-gradient-to-r to-green-700 from-[var(--themeColor)]  rounded-lg shadow-lg p-4 pt-2 ">
                 <div className='text-end'>
                 <button
                         onClick={() => dispatch(dismissNotifications())}
-                        className="text-gray-200 hover:text-gray-500 transition-colors"
+                        className="text-gray-100 hover:text-gray-400 transition-colors"
                         aria-label="Dismiss notification"
                     >
                         <RxCross2 className='text-2xl ' />
@@ -115,11 +115,11 @@ const RecentOrderNotification = () => {
 
 
                             </div>
-                            <div className="flex-1 min-w-0">
-                                <p className="xs:text-sm text-[10px] font-medium text-white ">
+                            <div className="flex-1 min-w-0 text-white">
+                                <p className="xs:text-sm text-[10px] font-medium  ">
                                     {currentOrder.userName} from {currentOrder.state}
                                 </p>
-                                <p className=" text-white">
+                                <p className=" ">
                                   recently  purchased '{currentOrder.itemName}'
                                     {/* {currentOrder.quantity > 1 &&
                                         ` (${currentOrder.quantity} ${currentOrder.weight})`

@@ -9,6 +9,9 @@ import SEO from '../../helper/SEO/SEO';
 // import YouMayAlsoLike from '../../components/module/product-details/YouMayAlsoLike';
 import ProductInfo from '../../components/module/product-details/ProductInfo';
 import Loader from '../../components/common/Loader'
+import ProductAdditionalInfo from '../../components/module/product-details/ProductAdditionalInfo';
+import ProductShare from '../../components/module/product-details/ProductShare';
+import Title from '../../components/title/Title';
 
 const YouMayAlsoLike = lazy(() => import('../../components/module/product-details/YouMayAlsoLike'));
 const ReviewsAndRatings = lazy(() => import('../../helper/ReviewsAndRatings'));
@@ -161,6 +164,7 @@ const ProductDetails = () => {
 
   }, [nameUrl]);
 
+
   if (!product) {
     return (
       <div className='min-h-screen flex justify-center items-center'>
@@ -201,10 +205,24 @@ const ProductDetails = () => {
         </div>
 
       </section>
+
+      <section className='xs:w-[80%] w-[100%] mx-auto'>
+        <ProductShare
+          url={window.location.href}
+          title={`Hey I have found this amazing "${product.details?.name}". Check it out!`}
+          description={product.details?.description}
+        />
+      </section>
+
       {/* ============== product general info=============  */}
-      {/* <section className='pt-20'>
-        <Accordion data={productInfo} />
-      </section> */}
+      {product?.productInfo && (
+        <section className='pt-20'>
+          <ProductAdditionalInfo data={product.productInfo} />
+        </section>
+      )}
+
+
+
       {/* =============== product info =============  */}
       {/* <section className=''>
         <h3 className='text-center text-[var(--themeColor)] text-xl font-semibold pb-10'>FAQ's</h3>
@@ -214,10 +232,10 @@ const ProductDetails = () => {
       </section> */}
       {/* =============== product reviews and ratings ========== */}
 
-      <section className='xs:py-20'>
-        <div className=' text-start xs:text-2xl tracking-widest font-serif  w-[80%]  mx-auto mb-5'>
-
-          <h3 className='text-center text-[var(--themeColor)] text-xl font-semibold pb-10'>Reviews and Ratings</h3>
+      <section className='xs:py-20 py-10'>
+        <div className=' text-center xs:text-2xl tracking-widest  w-[80%]  mx-auto mb-5'>
+          <Title text='Reviews and Ratings' />
+          {/* <h3 className='text-center text-[var(--themeColor)] text-xl font-semibold xs:pb-10'>Reviews and Ratings</h3> */}
         </div>
         <div className=' xs:w-[80%] w-[95%]   mx-auto flex flex-col gap-16'>
           {/* {loading && (<div>loading.....</div>)} */}
@@ -233,7 +251,7 @@ const ProductDetails = () => {
         <div className=' xs:w-[80%] w-[90%] mt-10 mx-auto '>
           {/* ============add reviews =========== */}
           <div>
-            <h3 className='tracking-widest font-mono mb-2'>Add Review:</h3>
+            <h3 className='tracking-widest mb-2'>Add Review:</h3>
           </div>
           <Suspense fallback={<Loader height='200px' />}>
             <ReviewsAndRatings productName={nameUrl} insideProductDetails={true} />

@@ -35,7 +35,7 @@ import { getProductsData } from './features/filter/filterSlice';
 const MainContent = memo(() => {
   return (
     <div className="bg-[var(--bgColorSecondary)] relative">
-      <Info text="Enjoy FREE SHIPPING on orders above Rs. 499 and COD on orders over Rs. 399—Shop now!" fontSize='xl' />
+      <Info text="Enjoy FREE SHIPPING on orders above Rs. 499 and COD on orders over Rs. 399—Shop now!" fontSize='[16px]' />
       <ToastContainer position='bottom-right' autoClose={1000} />
       <Header />
       <div>

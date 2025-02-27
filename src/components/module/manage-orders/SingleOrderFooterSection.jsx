@@ -11,8 +11,8 @@ const SingleOrderFooterSection = ({ order, onCancelOrder, isActive }) => {
     const discount = total - order.subTotal;
   
     return (
-      <div className="bg-[#6D613B]">
-        <div className="text-white xs:px-5 px-1 py-3 xs:text-[16px] text-[12px]">
+      <div className="">
+        <div className="xs:px-5 px-1 py-3 xs:text-[16px] text-[12px]">
           <div className="flex justify-between">
             <p className="text-end">Grand Total:</p>
             <p className="font-semibold">₹ {total}</p>
@@ -29,7 +29,7 @@ const SingleOrderFooterSection = ({ order, onCancelOrder, isActive }) => {
             <div className="flex items-center gap-2">
               <p>Total Amount Payable:</p>
               {order.couponCodeApplied.length > 0 && (
-                <div className="text-green-200 font-bold text-xs sm:block hidden">
+                <div className="text-green-500 font-bold text-xs sm:block hidden">
                   <p className="flex items-center">
                     (Coupon Code Applied) <PiSealCheckFill className="text-xl" />
                   </p>
@@ -47,7 +47,7 @@ const SingleOrderFooterSection = ({ order, onCancelOrder, isActive }) => {
           )}
         </div>
   
-        <div className={`${isActive ? "bg-[#D3BB71] hover:bg-[#e0cf9c]" : "bg-[#D3BB71]"}`}>
+        <div className={`${isActive ? "bg-[#D3BB71] hover:bg-[#e0cf9c]" : "bg-gray-200"}`}>
           <button
             className="flex w-full h-full justify-center py-3 gap-1 items-center"
             onClick={onCancelOrder}

@@ -834,7 +834,7 @@ const CheckoutForm = () => {
                 <button
                   type="submit"
                   disabled={addingNewOrder}
-                  className="flex justify-center items-center gap-2 rounded-md px-6 py-3 w-full text-sm font-semibold bg-[var(--bgColorPrimary)] text-white hover:tracking-widest transition-all duration-500"
+                  className="flex justify-center items-center gap-2 rounded-md px-6 py-3 w-full text-sm font-semibold bg-gradient-to-r to-green-700 from-[var(--themeColor)] hover:from-green-700 hover:to-green-900 text-white hover:tracking-widest transition-all duration-500 font-sans tracking-widest" 
                 >
                   {addingNewOrder ? (
                     <ImSpinner9 className="animate-spin" />

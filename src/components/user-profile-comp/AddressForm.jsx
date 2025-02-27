@@ -77,7 +77,7 @@ const AddressForm = ({ onSubmit, onCancel, address }) => {
             onSubmit={handleFormSubmit}
         >
             {({ values, errors, touched, handleChange, isSubmitting, setFieldValue }) => (
-                <Form className="bg-whit rounded-xl shadow-sm border border-gray-100 p-6 space-y-6">
+                <Form className="rounded-xl shadow-sm border border-gray-100 p-6 space-y-6">
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Address</label>
                         <input
@@ -85,7 +85,7 @@ const AddressForm = ({ onSubmit, onCancel, address }) => {
                             name="mainAddress"
                             value={values.mainAddress}
                             onChange={handleChange}
-                            className="w-full px-4 py-3 rounded-lg  focus:border-green-600 focus:ring-2 focus:ring-green-300 outline-none"
+                            className="w-full px-4 py-3 rounded-lg border  focus:border-green-600 focus:ring-2 focus:ring-green-300 outline-none"
                         />
                         {errors.mainAddress && touched.mainAddress && (
                             <div className="text-red-500 text-sm mt-1">{errors.mainAddress}</div>
@@ -99,7 +99,7 @@ const AddressForm = ({ onSubmit, onCancel, address }) => {
                             name="optionalAddress"
                             value={values.optionalAddress}
                             onChange={handleChange}
-                            className="w-full px-4 py-3 rounded-lg outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200"
+                            className="w-full px-4 py-3 rounded-lg outline-none border focus:border-green-500 focus:ring-2 focus:ring-green-200"
                         />
                     </div>
 
@@ -111,7 +111,7 @@ const AddressForm = ({ onSubmit, onCancel, address }) => {
                                 name="city"
                                 value={values.city}
                                 onChange={handleChange}
-                                className="w-full px-4 py-3 rounded-lg outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200"
+                                className="w-full px-4 py-3 rounded-lg outline-none border focus:border-green-500 focus:ring-2 focus:ring-green-200"
                             />
                             {errors.city && touched.city && (
                                 <div className="text-red-500 text-sm mt-1">{errors.city}</div>
@@ -126,7 +126,7 @@ const AddressForm = ({ onSubmit, onCancel, address }) => {
                                 id="state"
                                 value={values.state}
                                 onChange={handleChange}
-                                className="w-full px-4 py-3 rounded-lg outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200"
+                                className="w-full px-4 py-3 rounded-lg outline-none border focus:border-green-500 focus:ring-2 focus:ring-green-200"
 
                             >
                                 <option value="select-state">Select State</option>
@@ -166,7 +166,7 @@ const AddressForm = ({ onSubmit, onCancel, address }) => {
                                         );
                                     }
                                 }}
-                                className={`w-full px-4 py-3 rounded-lg outline-none ${!isAvailable && isAvailable!==null && 'outline-red-600 border-red-500'} focus:border-green-500 focus:ring-2 focus:ring-green-200`}
+                                className={`w-full px-4 py-3 rounded-lg border outline-none ${!isAvailable && isAvailable!==null && 'outline-red-600 border-red-500'} focus:border-green-500 focus:ring-2 focus:ring-green-200`}
 
                             />
                             {errors.pinCode && touched.pinCode && (
@@ -181,7 +181,7 @@ const AddressForm = ({ onSubmit, onCancel, address }) => {
                                 name="addressType"
                                 value={values.addressType}
                                 onChange={handleChange}
-                                className="w-full px-4 py-3 rounded-lg outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200"
+                                className="w-full px-4 py-3 rounded-lg outline-none border focus:border-green-500 focus:ring-2 focus:ring-green-200"
                             />
                             {errors.addressType && touched.addressType && (
                                 <div className="text-red-500 text-sm mt-1">{errors.addressType}</div>

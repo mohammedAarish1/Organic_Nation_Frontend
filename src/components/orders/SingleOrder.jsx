@@ -96,7 +96,7 @@ const SingleOrder = ({
               alt="product-image"
             />
           </div>
-          <div className="flex flex-col justify-start xs:gap-3 gap-1 text-sm xs:text-[16px] text-white ">
+          <div className="flex flex-col justify-start xs:gap-3 gap-1 text-sm xs:text-[16px]  ">
             <p>{singleOrderItem.name}</p>
             <p>Quantity : {curOrder.quantity} Pcs.</p>
             <p>

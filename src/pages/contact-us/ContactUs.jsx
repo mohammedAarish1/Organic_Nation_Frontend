@@ -69,7 +69,7 @@ const ContactUs = () => {
   ], []);
 
   return (
-    <section className="xs:px-10 px-2 pb-20 mt-5 sm:mt-0 font-mono">
+    <section className="xs:px-10 px-2 pb-20 mt-5 sm:mt-0">
       <SEO
         title="Contact Us | Organic Nation"
         description="Our commitment to quality extends beyond honey and preserves. As a prominent trader and supplier, we offer a diverse range of organic & Natural products."
@@ -111,7 +111,7 @@ const ContactUs = () => {
                   {socialLinks.map(({ href, icon, size }, index) => (
                     <a key={index} href={href} target="_blank" rel="noopener noreferrer">
                       {React.cloneElement(icon, {
-                        className: `text-[${size}px] hover:text-[var(--bgColorSecondary)] hover:text-white`,
+                        className: `text-[25px] hover:text-[var(--bgColorSecondary)] hover:text-white`,
                       })}
                     </a>
                   ))}

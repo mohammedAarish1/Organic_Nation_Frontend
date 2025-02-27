@@ -29,7 +29,7 @@ const OrderDetailsModal = ({ isOpen, onClose, order, statusIcon }) => {
           {detailRows.map(({ label, value, icon, className }) => (
             <div key={label} className="flex justify-between items-center border-gray-400 border-b-2 py-2">
               <span>{label}</span>
-              <span className={`text-gray-400 ${className || ''}`}>
+              <span className={`text-gray-400 flex ${className || ''}`}>
                 {value} {icon}
               </span>
             </div>

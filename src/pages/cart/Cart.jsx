@@ -567,7 +567,7 @@ const Cart = () => {
         </div>
 
         <div className="flex lg:w-[80%] w-[90%] mx-auto mt-10 sm:justify-end justify-center font-sans uppercase text-sm tracking-widest">
-          <div className="bg-[var(--hoverEffect)] flex flex-col gap-4 p-5 md:w-[35%]">
+          <div className="shadow-md flex flex-col gap-4 p-5 md:w-[35%]">
             <div className="flex justify-between items-center gap-10">
               <span>Grand Total:</span>
               <span>₹ {Math.round(MRPTotal)}</span>
@@ -624,7 +624,7 @@ const Cart = () => {
                 className={`flex justify-center items-center gap-2 transition-all duration-700 text-white rounded-md ${
                   cartItemsList?.length === 0
                     ? "bg-green-400"
-                    : "bg-green-500 hover:bg-green-700"
+                    : "bg-gradient-to-r to-green-700 from-[var(--themeColor)] hover:from-green-700 hover:to-green-900"
                 }`}
                 data-tooltip-id="checkout-tooltip"
                 data-tooltip-content="Your cart is Empty!"

@@ -23,15 +23,15 @@ const CartDetails = () => {
 
 
     return (
-        <div className={`bg-gradient-to-r from-[#6D613B] to-[#D3BB71] lg:h-screen ${!showSummary && 'sticky top-[85px] z-10'}`}>
+        <div className={`order-first lg:order-none lg:h-screen ${!showSummary && 'sticky top-[70px] z-10'}`}>
             <div className="relative h-full">
-                <div className="xs:p-8 p-4 lg:overflow-auto lg:h-[calc(100vh-60px)]" >
+                <div className="p-4 lg:overflow-auto lg:h-[calc(100vh-60px)] bg-gray-50" >
                     <div className=' flex items-center justify-between'>
 
-                        <h2 className="text-2xl font-bold text-white ">Order Summary</h2>
+                        <h2 className="text-2xl font-bold ">Order Summary</h2>
                         {/* icon  */}
                         <div className=" mr-5 flex h-10 w-full max-w-[40px] items-center justify-center rounded-lg bg-primary/5 text-primary dark:bg-white/5" onClick={toggleInfo}>
-                            <IoChevronDownOutline className={`fill-primary text-xl stroke-primary duration-200 ease-in-out ${showSummary ? "rotate-180" : ""
+                            <IoChevronDownOutline className={`fill-primary border w-full h-full rounded-lg cursor-pointer text-xl stroke-primary duration-200 ease-in-out ${showSummary ? "rotate-180" : ""
                                 }`} />
                         </div>
                         {/* icon  */}
@@ -39,7 +39,7 @@ const CartDetails = () => {
                     </div>
                     <div className={` space-y-6 mt-10 ${!showSummary && 'lg:block hidden'} ${showSummary && 'block'} `}>
                         {cartItemsList?.map((product) => (
-                            <div key={product?._id} className="grid grid-cols-2 items-center xs:gap-4 ">
+                            <div key={product?._id} className="grid grid-cols-2 ">
                                 <div className="p shrink-0 ">
                                     {/* <img
                                         src={Array.isArray(product.img) ? product.img.filter(path => path.includes('front'))[0] : null}
@@ -60,8 +60,8 @@ const CartDetails = () => {
                                     />
                                 </div>
                                 <div>
-                                    <h3 className="text-base font-bold text-white">{product.name}</h3>
-                                    <ul className="text-[10px] text-white xs:space-y-3 xs:mt-4">
+                                    <h3 className="text-base font-bold ">{product.name}</h3>
+                                    <ul className="text-[10px]  xs:space-y-3 xs:mt-4">
                                         <li className="flex flex-wrap gap-4">Weight <span className="ml-auto">{product.weight}</span></li>
                                         <li className="flex flex-wrap gap-4">Quantity <span className="ml-auto">{product.quantity} Pcs.</span></li>
                                         <li className="flex flex-wrap gap-4">Total Price (including taxes) <span className="ml-auto font-bold">₹ {Math.round((product.price - (product.price * product.discount / 100)) * product.quantity)}</span></li>

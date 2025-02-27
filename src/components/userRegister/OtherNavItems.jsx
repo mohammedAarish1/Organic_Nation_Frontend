@@ -83,7 +83,7 @@ const OtherNavItems = () => {
   }, [dispatch, navigate, user, user_loading]);
 
   return (
-    <nav className="text-[var(--themeColor)] font-sans">
+    <nav className="text-[var(--themeColor)]">
       <ul className="flex justify-center items-center sm:gap-4 gap-3 font-medium">
         <li>
           <CartButton totalCartItems={totalCartItems} />

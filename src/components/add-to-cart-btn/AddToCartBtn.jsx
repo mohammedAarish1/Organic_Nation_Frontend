@@ -156,19 +156,16 @@ const AddToCartBtn = ({ item, qty = 1 }) => {
         onClick={handleAddingItemsToCart}
         className={`
           relative z-30 w-full flex justify-center items-center gap-2
-          sm:py-2 py-1.5 xs:px-4 rounded-lg
-          text-white text-sm sm:text-base font-medium
-          transition-all duration-300
-          ${isOutOfStock 
-            ? 'bg-gray-400 cursor-not-allowed' 
-            : 'bg-[#712522] hover:bg-[var(--bgColorPrimary)]'
-          }
+          sm:py-2 py-1.5 xs:px-4 
+           text-sm font-medium
+          transition-all duration-500 tracking-tight
+          ${isOutOfStock ? 'bg-gray-400 cursor-not-allowed'  : ' hover:bg-[var(--bgColorPrimary)] hover:text-white border border-black' }
         `}
       >
         <BsCart4 
-          className={`text-white ${!isOutOfStock && 'animate-bounce'}`} 
+          className={`text-whit ${!isOutOfStock && 'animate-bounce'}`} 
         />
-        Add to Cart
+        ADD TO CART
       </button>
 
       {isOutOfStock && (

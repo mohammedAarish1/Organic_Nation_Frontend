@@ -384,9 +384,9 @@ const Image = memo(({ src, alt, className }) => {
 // Optimized section components
 const BetterImagesSection = memo(({ images }) => (
     <div className='xs:pt-20 pt-10 pb-20 px-10'>
-    <div className='bg-[var(--hoverEffect)] flex flex-wrap justify-center xs:gap-20 gap-5 items-center py-7'>
+    <div className='bg-[var(--hoverEffect)] flex flex-wrap justify-center xs:gap-20 gap-5 py-7'>
         {images.map((item) => (
-            <div key={item.img} className='flex flex-col justify-center items-center'>
+            <div key={item.img} className='flex flex-col justify- items-center '>
                 <Image
                     src={item.img}
                     alt={item.text}

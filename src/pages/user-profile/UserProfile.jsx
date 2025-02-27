@@ -16,7 +16,7 @@ const currentActiveMenu = location.pathname.split('/').filter(Boolean).pop();
 
 
     return (
-        <div className="min-h-screen font-sans ">
+        <div className="min-h-screen">
             {/* Overlay for mobile menu */}
             {isMobileMenuOpen && (
                 <div

@@ -45,7 +45,7 @@ const PriceRangeFilter = ({ isMobile }) => {
 
   return (
     <div>
-      <h2 className='text-xl xs:text-gray-800 text-gray-300 font-bold mb-2'>Price</h2>
+      <h2 className='text-xl xs:text-gray-800 text-gray-300 mb-2'>Price</h2>
       <div>
         {priceRanges.map((range) => (
           <div key={range.value}>
