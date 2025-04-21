@@ -203,7 +203,7 @@ const Banner = () => {
         setMainBanners(sortedBanners);
       }
     } catch (error) {
-      console.error('Banner fetch error:', error);
+      throw error
     } finally {
       setIsLoading(false);
     }
@@ -218,7 +218,7 @@ const Banner = () => {
     if (mainBanners.length > 1) {
       intervalRef.current = setInterval(() => {
         setCurrentIndex(prev => (prev + 1) % mainBanners.length);
-      }, 3000);
+      }, 5000);
     }
 
     return () => {

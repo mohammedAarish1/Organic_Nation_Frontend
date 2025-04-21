@@ -29,7 +29,7 @@ import CouponList from "../couponCodeList/CouponList";
 // import { handleSavingLocalAdd } from "../../features/check-delivery/checkDelivery";
 // import { saveLocalUserInfo } from "../../features/auth/auth";
 
-const InputField = ({ name, label, icon, errors, touched,autoFocus =false }) => {
+const InputField = ({ name, label, icon, errors, touched, autoFocus = false }) => {
   const inputRef = useRef(null);
   const { user } = useSelector((state) => state.auth);
 
@@ -74,7 +74,7 @@ const CheckoutForm = () => {
   const { user } = useSelector((state) => state.auth);
   const { cartItemsList, totalCartAmount, totalTax, couponCodeApplied } = useSelector((state) => state.cart);
   const { addingNewOrder } = useSelector((state) => state.orders);
-  const { shippingFee, userCity, userPincode, userState,error } = useSelector((state) => state.delivery);
+  const { shippingFee, userCity, userPincode, userState, error } = useSelector((state) => state.delivery);
 
   const addresses = user?.addresses || [];
 
@@ -143,8 +143,9 @@ const CheckoutForm = () => {
       billingAddress: values.billingAddress,
       shippingAddress: values.shippingAddress,
       orderDetails: orderDetails,
-      subTotal: values.paymentMethod === "cash_on_delivery" ? totalCartAmount : totalCartAmount - discountAmount,
-      taxAmount: values.paymentMethod === "cash_on_delivery" ? totalTax : totalTax - taxDiscount,
+      // subTotal: values.paymentMethod === "cash_on_delivery" ? totalCartAmount : totalCartAmount - discountAmount,
+      subTotal: totalCartAmount,
+      taxAmount: totalTax,
       shippingFee: totalCartAmount < 499 ? shippingFee : 0,
       paymentMethod: values.paymentMethod,
       paymentStatus: "pending",
@@ -169,7 +170,8 @@ const CheckoutForm = () => {
             dispatch(
               initiatePayment({
                 number: values?.phoneNumber.slice(3),
-                amount: totalCartAmount - discountAmount + (totalCartAmount < 499 ? shippingFee : 0),
+                // amount: totalCartAmount - discountAmount + (totalCartAmount < 499 ? shippingFee : 0),
+                amount: totalCartAmount + (totalCartAmount < 499 ? shippingFee : 0),
                 merchantTransactionId: merchantTransactionId,
               })
             );
@@ -807,25 +809,25 @@ const CheckoutForm = () => {
                     </div>
                   )}
 
-                  <div className="text-[var(--themeColor)] font-bold">
+                  {/* <div className="text-[var(--themeColor)] font-bold">
                     <p>( Pay Online and Get 5% additional discount )</p>
-                  </div>
+                  </div> */}
                   {errors?.paymentMethod && touched?.paymentMethod ? (
                     <p className="text-red-600">*{errors?.paymentMethod}</p>
                   ) : null}
                 </div>
                 {totalCartAmount < 399 && (
-                    <div className="flex flex-wrap  text-gray-500  xs:justify-center items-center gap-2  rounded-lg  xs:text-[16px] mt-4 text-sm italic ">
-                      *CASH ON DELIVERY (COD) is available on all orders above  ₹ 399 !
+                  <div className="flex flex-wrap  text-gray-500  xs:justify-center items-center gap-2  rounded-lg  xs:text-[16px] mt-4 text-sm italic ">
+                    *CASH ON DELIVERY (COD) is available on all orders above  ₹ 399 !
                     <Link
                       to="/shop/all"
                       className="flex xs:justify-center items-center gap-2"
-                    > 
+                    >
                       <FaArrowLeftLong />
                       <span className="text-orange-400 hover:text-orange-500 underline-hover">Continue Shopping</span>
                     </Link>
                   </div>
-                  )}
+                )}
               </div>
               {/* complete btn  */}
               <div className="flex  gap-10 max-sm:flex-col mt-10">
@@ -834,7 +836,7 @@ const CheckoutForm = () => {
                 <button
                   type="submit"
                   disabled={addingNewOrder}
-                  className="flex justify-center items-center gap-2 rounded-md px-6 py-3 w-full text-sm font-semibold bg-gradient-to-r to-green-700 from-[var(--themeColor)] hover:from-green-700 hover:to-green-900 text-white hover:tracking-widest transition-all duration-500 font-sans tracking-widest" 
+                  className="flex justify-center items-center gap-2 rounded-md px-6 py-3 w-full text-sm font-semibold bg-gradient-to-r to-green-700 from-[var(--themeColor)] hover:from-green-700 hover:to-green-900 text-white hover:tracking-widest transition-all duration-500 font-sans tracking-widest"
                 >
                   {addingNewOrder ? (
                     <ImSpinner9 className="animate-spin" />

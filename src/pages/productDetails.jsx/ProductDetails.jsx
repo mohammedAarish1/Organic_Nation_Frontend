@@ -12,6 +12,7 @@ import Loader from '../../components/common/Loader'
 import ProductAdditionalInfo from '../../components/module/product-details/ProductAdditionalInfo';
 import ProductShare from '../../components/module/product-details/ProductShare';
 import Title from '../../components/title/Title';
+import ClearanceSaleText from '../../components/ClearanceSaleText';
 
 const YouMayAlsoLike = lazy(() => import('../../components/module/product-details/YouMayAlsoLike'));
 const ReviewsAndRatings = lazy(() => import('../../helper/ReviewsAndRatings'));
@@ -190,6 +191,9 @@ const ProductDetails = () => {
         twitterSite="Organic Nation"
         twitterCreator="organicnation_"
       />
+
+<ClearanceSaleText/>
+
       <div>
         <OfferBanner />
       </div>

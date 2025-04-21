@@ -536,7 +536,7 @@ const Product = memo(({ gridView, product }) => {
               >
                 <div className="flex items-baseline gap-2">
                   <span className="text-lg sm:text-xl font-semibold text-gray-700">₹{discountedPrice}</span>
-                  <span className="text-sm text-gray-500 font-semibold line-through">₹{product.price}</span>
+                 {product.discount!==0 &&  <span className="text-sm text-gray-500 font-semibold line-through">₹{product.price}</span>}
                 </div>
               </NavLink>
               <div className="w-full relative z-30">

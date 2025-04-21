@@ -320,6 +320,7 @@ import PopupBanner from '../../components/popup-banner/PopupBanner';
 import CategoryCarousel from '../../components/productCategories/CategoryCarousel';
 import Search from '../../components/search/Search';
 import { addReviews } from '../../features/reviews/reviews';
+import ClearanceSaleText from '../../components/ClearanceSaleText'
 
 // Lazy loaded components
 const BlogSection = lazy(() => import('../../components/blog-section/BlogSection'));
@@ -333,37 +334,37 @@ const MemoizedPopupBanner = memo(PopupBanner);
 
 // Constants moved outside component
 const BETTER_IMAGES = [
-         {
-             img: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/how_we_are_better/noArtificialColor.png',
-             text: "No Added Colour"
-         },
-         {
-             img: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/how_we_are_better/natural.png',
-             text: "100% Naturally Organic"
-         },
-         {
-             img: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/how_we_are_better/authentic.png',
-             text: "Authentic Indian Recipes"
-         },
-         {
-             img: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/how_we_are_better/homestyle.png',
-             text: "Homestyle Prepared"
-         },
-         {
-             img: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/how_we_are_better/minimallyProcessed.png',
-             text: "Minimally Processed"
-         },
-     ];
+    {
+        img: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/how_we_are_better/noArtificialColor.png',
+        text: "No Added Colour"
+    },
+    {
+        img: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/how_we_are_better/natural.png',
+        text: "100% Naturally Organic"
+    },
+    {
+        img: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/how_we_are_better/authentic.png',
+        text: "Authentic Indian Recipes"
+    },
+    {
+        img: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/how_we_are_better/homestyle.png',
+        text: "Homestyle Prepared"
+    },
+    {
+        img: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/how_we_are_better/minimallyProcessed.png',
+        text: "Minimally Processed"
+    },
+];
 
 const CERTIFICATES = [
-         'https://organicnationmages.s3.ap-south-1.amazonaws.com/certificates/usoca.png',
-         'https://organicnationmages.s3.ap-south-1.amazonaws.com/certificates/fssi.webp',
-         // 'https://organicnationmages.s3.ap-south-1.amazonaws.com/certificates/haccp.webp',
-         'https://organicnationmages.s3.ap-south-1.amazonaws.com/certificates/jaivik.webp',
-         'https://organicnationmages.s3.ap-south-1.amazonaws.com/certificates/organic.webp',
-         'https://organicnationmages.s3.ap-south-1.amazonaws.com/certificates/usda.webp',
-     ]
-    
+    'https://organicnationmages.s3.ap-south-1.amazonaws.com/certificates/usoca.png',
+    'https://organicnationmages.s3.ap-south-1.amazonaws.com/certificates/fssi.webp',
+    // 'https://organicnationmages.s3.ap-south-1.amazonaws.com/certificates/haccp.webp',
+    'https://organicnationmages.s3.ap-south-1.amazonaws.com/certificates/jaivik.webp',
+    'https://organicnationmages.s3.ap-south-1.amazonaws.com/certificates/organic.webp',
+    'https://organicnationmages.s3.ap-south-1.amazonaws.com/certificates/usda.webp',
+]
+
 
 // Optimized Image component
 const Image = memo(({ src, alt, className }) => {
@@ -384,18 +385,18 @@ const Image = memo(({ src, alt, className }) => {
 // Optimized section components
 const BetterImagesSection = memo(({ images }) => (
     <div className='xs:pt-20 pt-10 pb-20 px-10'>
-    <div className='bg-[var(--hoverEffect)] flex flex-wrap justify-center xs:gap-20 gap-5 py-7'>
-        {images.map((item) => (
-            <div key={item.img} className='flex flex-col justify- items-center '>
-                <Image
-                    src={item.img}
-                    alt={item.text}
-                    className='xs:w-40 w-16 mb-2'
-                />
-                <span className='whitespace text-center w-28'>{item.text}</span>
-            </div>
-        ))}
-    </div>
+        <div className='bg-[var(--hoverEffect)] flex flex-wrap justify-center xs:gap-20 gap-5 py-7'>
+            {images.map((item) => (
+                <div key={item.img} className='flex flex-col justify- items-center '>
+                    <Image
+                        src={item.img}
+                        alt={item.text}
+                        className='xs:w-40 w-16 mb-2'
+                    />
+                    <span className='whitespace text-center w-28'>{item.text}</span>
+                </div>
+            ))}
+        </div>
     </div>
 ));
 
@@ -428,7 +429,7 @@ const LazyLoadSection = memo(({ children }) => {
 
     useEffect(() => {
         const observer = new IntersectionObserver(observerCallback, { threshold: 0.1 });
-        
+
         if (sectionRef.current) {
             observer.observe(sectionRef.current);
         }
@@ -449,7 +450,7 @@ const Home = memo(() => {
 
     useEffect(() => {
         const reviewsAndRating = sessionStorage.getItem('reviews&rating');
-        
+
         if (reviewsAndRating) {
             try {
                 const parsedReviews = JSON.parse(reviewsAndRating);
@@ -469,7 +470,7 @@ const Home = memo(() => {
 
     return (
         <>
-             <SEO
+            <SEO
                 title="Buy Organic and Healthy Products Online| Organic Nation"
                 description="Organic Nation - We take pride in offering you a delightful culinary journey, showcasing the finest and most authentic flavors sourced from the heart of nature Explore our range of wholesome and sustainable food products, thoughtfully crafted to bring the essence of the Himalayas to your plate in Delhi-NCR & PAN India. ✓Organic products  ✓500+ Products"
                 canonicalUrl="https://organicnation.co.in/"
@@ -485,21 +486,26 @@ const Home = memo(() => {
                 twitterSite="Organic Nation"
                 twitterCreator="organicnation_"
             />
-             <MemoizedPopupBanner />
-            
+
+
+
+            <ClearanceSaleText />
+
+            <MemoizedPopupBanner />
+
             <div className='pb-4 px-1 sm:px-10 md:hidden block'>
                 <Search />
             </div>
-            
+
             <Banner />
-            
+
             <div className='max-w-2xl font-semibold mx-auto font-sans py-4 italic px-2 text-[10px] xs:text-base'>
                 <p className="text-[var(--themeColor)] text-center">
-                    Refer a friend, and earn a coupon worth ₹100 when they place an order. Share the love! 
+                    Refer a friend, and earn a coupon worth ₹100 when they place an order. Share the love!
                     <Link to='/profile/coupons' className='text-green-800 underline'> Share now</Link>
                 </p>
             </div>
-            
+
             <CategoryCarousel />
             <SpotlightSection />
 

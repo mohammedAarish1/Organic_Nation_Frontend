@@ -444,6 +444,8 @@ import {
 } from "../../features/cart/cart";
 import { setIsAvailable } from "../../features/check-delivery/checkDelivery";
 import { resetCheckoutStatus } from "../../features/manageOrders/manageOrders";
+// import CheckoutModal from "../../components/CheckoutModal";
+import ClearanceSaleText from "../../components/ClearanceSaleText";
 
 // Lazy loaded components
 const SingleCartItem = lazy(() => import("../../components/module/cart/SingleCartItem"));
@@ -521,6 +523,7 @@ const Cart = () => {
 
   return (
     <div>
+      <ClearanceSaleText/>
       {totalCartAmount < 399 && totalCartAmount > 0 && (
         <div className="md:mt-0 mt-5 sm:px-0 px-5 text-center italic text-orange-500 md:text-xl font-sans font-bold">
           *CASH ON DELIVERY (COD) is available on all orders above ₹ 399!
@@ -659,6 +662,11 @@ const Cart = () => {
           </div>
         </div>
       </div>
+      {/* <CheckoutModal 
+        isOpen={true}
+        // onClose={() => setIsCheckoutOpen(false)}
+        logo="/api/placeholder/120/40"
+      /> */}
     </div>
   );
 };

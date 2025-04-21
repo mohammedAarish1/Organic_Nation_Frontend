@@ -89,7 +89,7 @@ const BlogDetail = () => {
                                     {/* <p className="text-gray-500">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint necessitatibus molestias explicabo.</p> */}
 
                                     <div>
-                                        <Link to={`/blogs/${recentBlog._id}`} className="active:text-rose-700 font-semibold text-[var(--themeColor)] transition duration-100 hover:text-rose-600">Read more</Link>
+                                        <Link to={`/blogs/${recentBlog['title-url']}`} className="active:text-rose-700 font-semibold text-[var(--themeColor)] transition duration-100 hover:text-rose-600">Read more</Link>
                                     </div>
                                 </div>
                             </article>

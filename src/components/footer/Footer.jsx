@@ -290,7 +290,7 @@ const Footer = () => {
         }));
     }, [categoryList]);
     return (
-        <footer className="relative bg-gradient-to-r to-green-700 from-[var(--themeColor)] text-white xs:px-10 px-1 py-6 text-sm text-[var(--themeColor)]">
+        <footer className="relative bg-[var(--hoverEffect)] xs:px-10 px-1 py-6 text-sm text-[var(--themeColor)]">
             <div className="lg:container mx-auto px-4">
                 <div className='mb-4 flex flex-wrap gap-8 justify-between items-center lg:pr-28'>
                     <Logo />

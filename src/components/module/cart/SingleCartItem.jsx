@@ -5,6 +5,7 @@ import ProductQty from '../../productQty/ProductQty';
 import { MdDelete } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
 import { getAllCartItems, removeFromCart, updateQty } from '../../../features/cart/cart';
+import { toast } from 'react-toastify';
 
 const SingleCartItem =  memo(({ curItem, index }) => {
     const dispatch=useDispatch();

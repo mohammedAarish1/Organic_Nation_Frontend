@@ -60,15 +60,16 @@ const ProductInfo = ({product}) => {
       </div>
 
       <div className='flex gap-3  items-center '>
-        <p className='text-2xl text-red-600'>-{product.details.discount}%</p>
+        {product.details.discount!==0 &&  <p className='text-2xl text-red-600'>-{product.details.discount}%</p> }
+      
         <p className='flex items-start'>
           <FaIndianRupeeSign className='text-sm' />
           <span className='text-3xl font-medium'>{Math.round(product.details.price - (product.details.price * product.details.discount / 100))}</span>
         </p>
         <p className='text-gray-600 text-sm self-end'>(Incl. of all taxes)</p>
       </div>
-      <p><span className='font-semibold text-sm'>MRP:</span> <span className='line-through'> ₹{product.details.price}</span> </p>
-
+     {product.details.discount !==0 &&  <p><span className='font-semibold text-sm'>MRP:</span> <span className='line-through'> ₹{product.details.price}</span> </p>
+    }
 
 
 

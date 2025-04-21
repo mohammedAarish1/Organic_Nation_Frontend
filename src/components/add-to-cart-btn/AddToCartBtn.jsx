@@ -159,7 +159,7 @@ const AddToCartBtn = ({ item, qty = 1 }) => {
           sm:py-2 py-1.5 xs:px-4 
            text-sm font-medium
           transition-all duration-500 tracking-tight
-          ${isOutOfStock ? 'bg-gray-400 cursor-not-allowed'  : ' hover:bg-[var(--bgColorPrimary)] hover:text-white border border-black' }
+          ${isOutOfStock ? 'bg-gray-400 cursor-not-allowed opacity-50'  : ' hover:bg-[var(--bgColorPrimary)] hover:text-white border border-black' }
         `}
       >
         <BsCart4 

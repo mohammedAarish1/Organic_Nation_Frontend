@@ -9,6 +9,7 @@ import { setCurrentPage } from '../../features/pagination/pagination';
 import { productCategoriesData } from '../../helper/SEO/SEOdata';
 import SEO from '../../helper/SEO/SEO';
 import OfferBanner from '../../components/offerBanner/OfferBanner';
+import ClearanceSaleText from '../../components/ClearanceSaleText';
 
 
 
@@ -63,6 +64,7 @@ const Shop = () => {
         twitterSite="Organic Nation"
         twitterCreator="organicnation_"
       />
+      <ClearanceSaleText/>
       <div className='pb-8'>
         <OfferBanner />
       </div>
