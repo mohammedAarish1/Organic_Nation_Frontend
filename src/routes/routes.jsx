@@ -33,6 +33,7 @@ import {
 } from '../imports';
 import ManageReturns from '../pages/manage-returns/ManageReturns';
 import GoogleLoginHandler from '../pages/login-signup/GoogleLoginHandler';
+import OrderSuccessMessage from '../components/checkout/OrderSuccessMessage';
 
 
 
@@ -183,10 +184,15 @@ const getRoutes = () => {
             path='/otp-submit'
             element={!user && <OtpSubmit />}
         />,
+        // <Route
+        //     key="order-confirmed"
+        //     path='/order-confirmed/:orderId'
+        //     element={<OrderConfirm />}
+        // />,
         <Route
             key="order-confirmed"
             path='/order-confirmed/:orderId'
-            element={<OrderConfirm />}
+            element={<OrderSuccessMessage />}
         />,
         <Route
             key="payment-status"

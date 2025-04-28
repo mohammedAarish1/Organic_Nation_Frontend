@@ -1,547 +1,4 @@
-// import React, { useState, useRef, useEffect } from 'react';
-// import { Formik, Form, Field, ErrorMessage } from 'formik';
-// import * as Yup from 'yup';
-// import {
-//     FaShoppingCart,
-//     FaChevronDown,
-//     FaChevronUp,
-//     FaTimes,
-//     FaTag,
-//     FaHome,
-//     FaBriefcase,
-//     FaMapMarkerAlt,
-//     FaMoneyBillWave,
-//     FaCreditCard,
-//     FaPercent
-// } from 'react-icons/fa';
-// import { RxCross2 } from "react-icons/rx";
-
-// const CheckoutModal = ({ isOpen, onClose }) => {
-//     const [step, setStep] = useState(1);
-//     const [orderSummaryOpen, setOrderSummaryOpen] = useState(false);
-//     const [couponOpen, setCouponOpen] = useState(false);
-//     const [phoneVerified, setPhoneVerified] = useState(false);
-//     const [addressType, setAddressType] = useState('Home');
-//     const [paymentMethod, setPaymentMethod] = useState('');
-//     const [showOtpInput, setShowOtpInput] = useState(false);
-//     const otpInputs = Array(4).fill(0).map(() => useRef(null));
-
-//     const handlePhoneSubmit = () => {
-//         setShowOtpInput(true);
-//     };
-
-//     const handleOtpSubmit = () => {
-//         setPhoneVerified(true);
-//         setStep(2);
-//     };
-
-//     const handleOtpChange = (index, value) => {
-//         if (value.length === 1 && index < 3) {
-//             otpInputs[index + 1].current.focus();
-//         }
-//     };
-
-//     const handleOtpKeyDown = (e, index) => {
-//         if (e.key === 'Backspace' && index > 0 && otpInputs[index].current.value === '') {
-//             otpInputs[index - 1].current.focus();
-//         }
-//     };
-
-//     const handleOtpPaste = (e) => {
-//         e.preventDefault();
-//         const pastedData = e.clipboardData.getData('text');
-//         if (pastedData.length === 4 && /^\d+$/.test(pastedData)) {
-//             for (let i = 0; i < 4; i++) {
-//                 otpInputs[i].current.value = pastedData[i];
-//             }
-//             setTimeout(handleOtpSubmit, 500);
-//         }
-//     };
-
-//     // Demo data
-//     const cartItems = [
-//         {
-//             id: 1,
-//             name: 'Wireless Headphones',
-//             price: 129.99,
-//             quantity: 1,
-//             image: '/api/placeholder/80/80'
-//         },
-//         {
-//             id: 2,
-//             name: 'Smartphone Case',
-//             price: 24.99,
-//             quantity: 2,
-//             image: '/api/placeholder/80/80'
-//         }
-//     ];
-
-//     const coupons = [
-//         { code: 'WELCOME10', discount: '10% off', description: 'For new customers' },
-//         { code: 'FREESHIP', discount: 'Free shipping', description: 'On orders above $50' },
-//         { code: 'SUMMER25', discount: '25% off', description: 'Season special' }
-//     ];
-
-//     const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-//     const shippingFee = 5.99;
-//     const total = subtotal + shippingFee;
-
-//     const phoneSchema = Yup.object().shape({
-//         phone: Yup.string()
-//             .matches(/^\d{10}$/, 'Phone number must be 10 digits')
-//             .required('Phone number is required')
-//     });
-
-//     const checkoutSchema = Yup.object().shape({
-//         phone: Yup.string()
-//             .matches(/^\d{10}$/, 'Phone number must be 10 digits')
-//             .required('Phone number is required'),
-//         fullName: Yup.string()
-//             .required('Full name is required')
-//             .min(3, 'Name must be at least 3 characters'),
-//         email: Yup.string()
-//             .email('Invalid email address')
-//             .required('Email is required'),
-//         address: Yup.string()
-//             .required('Address is required')
-//             .min(5, 'Address is too short'),
-//         pincode: Yup.string()
-//             .matches(/^\d{6}$/, 'Pincode must be 6 digits')
-//             .required('Pincode is required'),
-//         city: Yup.string()
-//             .required('City is required'),
-//         state: Yup.string()
-//             .required('State is required'),
-//     });
-
-//     if (!isOpen) return null;
-
-//     const modalAnimation = 'animate-fadeIn';
-//     const slideInAnimation = 'animate-slideInRight';
-
-//     return (
-//         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-//             <div className={`bg-white rounded-lg shadow-xl w-full max-w-md md:max-w-lg relative ${modalAnimation}`}>
-//                 {/* Close button */}
-//                 <div className='text-end mr-2 mt-1 '>
-//                     <button
-//                         onClick={onClose}
-//                         className=" text-gray-500 hover:text-gray-700 transition-colors  hover:bg-gray-100 p-2 rounded-full"
-//                     >
-//                         <RxCross2 size={20} />
-//                     </button>
-//                 </div>
-
-//                 {/* Header */}
-//                 <div className="flex justify-between items-center px-4 pb-4 border-b">
-//                     <div className="flex items-center">
-//                         <img src='https://organicnationmages.s3.ap-south-1.amazonaws.com/logo/logo.png' alt="Company Logo" className="h-10" />
-//                     </div>
-//                     <div className="text-right">
-//                         {/* <p className="text-sm text-gray-500">Total</p> */}
-//                         <p className="text-xl font-bold">${total.toFixed(2)}</p>
-//                     </div>
-//                 </div>
-
-//                 {/* Body */}
-//                 <div className="p-4 max-h-[70vh] overflow-y-auto">
-//                     {/* Order Summary */}
-//                     <div className="mb-4">
-//                         <button
-//                             className="w-full flex justify-between items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
-//                             onClick={() => setOrderSummaryOpen(!orderSummaryOpen)}
-//                         >
-//                             <span className="font-medium flex items-center">
-//                                 <FaShoppingCart className="mr-2" />
-//                                 Order Summary
-//                             </span>
-//                             {orderSummaryOpen ? <FaChevronUp /> : <FaChevronDown />}
-//                         </button>
-
-//                         {orderSummaryOpen && (
-//                             <div className="mt-2 p-3 bg-gray-50 rounded-lg animate-expandVertical">
-//                                 {cartItems.map(item => (
-//                                     <div key={item.id} className="flex items-center mb-3 pb-3 border-b border-gray-200 last:border-b-0 last:mb-0 last:pb-0">
-//                                         <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded mr-3" />
-//                                         <div className="flex-1">
-//                                             <h4 className="font-medium">{item.name}</h4>
-//                                             <p className="text-gray-500">Qty: {item.quantity}</p>
-//                                         </div>
-//                                         <p className="font-medium">${(item.price * item.quantity).toFixed(2)}</p>
-//                                     </div>
-//                                 ))}
-
-//                                 <div className="mt-3 pt-3 border-t border-gray-200">
-//                                     <div className="flex justify-between mb-1">
-//                                         <span>Subtotal</span>
-//                                         <span>${subtotal.toFixed(2)}</span>
-//                                     </div>
-//                                     <div className="flex justify-between mb-1">
-//                                         <span>Shipping</span>
-//                                         <span>${shippingFee.toFixed(2)}</span>
-//                                     </div>
-//                                     <div className="flex justify-between font-bold text-lg mt-2">
-//                                         <span>Total</span>
-//                                         <span>${total.toFixed(2)}</span>
-//                                     </div>
-//                                 </div>
-//                             </div>
-//                         )}
-//                     </div>
-
-//                     {/* Coupon */}
-//                     <div className="mb-4 relative">
-//                         <button
-//                             className="w-full flex justify-between items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
-//                             onClick={() => setCouponOpen(!couponOpen)}
-//                         >
-//                             <span className="font-medium flex items-center">
-//                                 <FaTag className="mr-2" />
-//                                 Apply Coupon
-//                             </span>
-//                             {couponOpen ? <FaChevronUp /> : <FaChevronDown />}
-//                         </button>
-
-//                         {couponOpen && (
-//                             <div className="mt-2 p-3 bg-white border border-gray-200 rounded-lg shadow-md animate-expandVertical">
-//                                 <h3 className="text-lg font-bold mb-3">Available Coupons</h3>
-//                                 <div className="space-y-3">
-//                                     {coupons.map(coupon => (
-//                                         <div key={coupon.code} className="border border-gray-200 rounded-lg p-3 hover:border-blue-500 transition-colors">
-//                                             <div className="flex justify-between mb-1">
-//                                                 <span className="font-bold text-blue-600">{coupon.code}</span>
-//                                                 <span className="text-green-600 font-medium">{coupon.discount}</span>
-//                                             </div>
-//                                             <p className="text-sm text-gray-500">{coupon.description}</p>
-//                                             <button
-//                                                 className="mt-2 w-full py-1 bg-blue-100 text-blue-600 rounded font-medium hover:bg-blue-200 transition-colors"
-//                                                 onClick={() => {
-//                                                     // Apply coupon logic
-//                                                     setCouponOpen(false);
-//                                                 }}
-//                                             >
-//                                                 Apply
-//                                             </button>
-//                                         </div>
-//                                     ))}
-//                                 </div>
-//                             </div>
-//                         )}
-//                     </div>
-
-//                     {/* Phone Verification */}
-//                     {step === 1 && !phoneVerified && (
-//                         <div className="mb-4">
-//                             <h3 className="font-medium mb-2">Enter your phone number</h3>
-//                             <Formik
-//                                 initialValues={{ phone: '' }}
-//                                 validationSchema={phoneSchema}
-//                                 onSubmit={handlePhoneSubmit}
-//                             >
-//                                 {({ isSubmitting }) => (
-//                                     <Form>
-//                                         <div className="mb-3">
-//                                             <Field
-//                                                 type="text"
-//                                                 name="phone"
-//                                                 placeholder="10-digit phone number"
-//                                                 className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-//                                             />
-//                                             <ErrorMessage name="phone" component="div" className="text-red-500 text-sm mt-1" />
-//                                         </div>
-
-//                                         <button
-//                                             type="submit"
-//                                             disabled={isSubmitting}
-//                                             className="w-full bg-blue-600 text-white font-medium py-3 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-blue-300"
-//                                         >
-//                                             {isSubmitting ? 'Sending OTP...' : 'Get OTP'}
-//                                         </button>
-//                                     </Form>
-//                                 )}
-//                             </Formik>
-//                         </div>
-//                     )}
-
-//                     {/* OTP Verification */}
-//                     {step === 1 && showOtpInput && !phoneVerified && (
-//                         <div className="mb-4 animate-fadeIn">
-//                             <h3 className="font-medium mb-2">Enter OTP sent to your phone</h3>
-//                             <div className="flex justify-center gap-5 mb-3">
-//                                 {Array(4).fill(0).map((_, index) => (
-//                                     <input
-//                                         key={index}
-//                                         ref={otpInputs[index]}
-//                                         type="text"
-//                                         maxLength={1}
-//                                         className="w-14 h-14 text-center text-xl font-bold border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-//                                         onChange={(e) => handleOtpChange(index, e.target.value)}
-//                                         onKeyDown={(e) => handleOtpKeyDown(e, index)}
-//                                         onPaste={index === 0 ? handleOtpPaste : null}
-//                                         inputMode="numeric"
-//                                     />
-//                                 ))}
-//                             </div>
-//                             <div className="text-center">
-//                                 <button
-//                                     onClick={handleOtpSubmit}
-//                                     className="bg-blue-600 text-white font-medium py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors"
-//                                 >
-//                                     Verify OTP
-//                                 </button>
-//                                 <p className="text-sm text-gray-500 mt-2">
-//                                     Didn't receive the code? <button className="text-blue-600">Resend</button>
-//                                 </p>
-//                             </div>
-//                         </div>
-//                     )}
-
-//                     {/* Checkout Form */}
-//                     {step === 2 && (
-//                         <div className="animate-fadeIn">
-//                             <Formik
-//                                 initialValues={{
-//                                     phone: '1234567890', // Pre-filled phone number
-//                                     fullName: '',
-//                                     email: '',
-//                                     address: '',
-//                                     pincode: '',
-//                                     city: '',
-//                                     state: '',
-//                                 }}
-//                                 validationSchema={checkoutSchema}
-//                                 onSubmit={(values) => {
-//                                     // Handle form submission
-//                                     console.log(values, addressType, paymentMethod);
-//                                     if (paymentMethod === 'online') {
-//                                         // Redirect to payment gateway
-//                                     } else {
-//                                         // Process COD order
-//                                     }
-//                                 }}
-//                             >
-//                                 {({ isSubmitting }) => (
-//                                     <Form>
-//                                         <div className="space-y-4 mb-4">
-//                                             <div>
-//                                                 <label className="block text-sm font-medium mb-1">Phone Number</label>
-//                                                 <Field
-//                                                     type="text"
-//                                                     name="phone"
-//                                                     disabled={true}
-//                                                     className="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg"
-//                                                 />
-//                                             </div>
-
-//                                             <div>
-//                                                 <label className="block text-sm font-medium mb-1">Full Name</label>
-//                                                 <Field
-//                                                     type="text"
-//                                                     name="fullName"
-//                                                     placeholder="Enter your full name"
-//                                                     className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-//                                                 />
-//                                                 <ErrorMessage name="fullName" component="div" className="text-red-500 text-sm mt-1" />
-//                                             </div>
-
-//                                             <div>
-//                                                 <label className="block text-sm font-medium mb-1">Email</label>
-//                                                 <Field
-//                                                     type="email"
-//                                                     name="email"
-//                                                     placeholder="Enter your email"
-//                                                     className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-//                                                 />
-//                                                 <ErrorMessage name="email" component="div" className="text-red-500 text-sm mt-1" />
-//                                             </div>
-
-//                                             <div>
-//                                                 <label className="block text-sm font-medium mb-1">Address</label>
-//                                                 <Field
-//                                                     as="textarea"
-//                                                     name="address"
-//                                                     placeholder="Enter your address"
-//                                                     className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 h-20"
-//                                                 />
-//                                                 <ErrorMessage name="address" component="div" className="text-red-500 text-sm mt-1" />
-//                                             </div>
-
-//                                             <div className="grid grid-cols-2 gap-4">
-//                                                 <div>
-//                                                     <label className="block text-sm font-medium mb-1">Pincode</label>
-//                                                     <Field
-//                                                         type="text"
-//                                                         name="pincode"
-//                                                         placeholder="6-digit pincode"
-//                                                         className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-//                                                     />
-//                                                     <ErrorMessage name="pincode" component="div" className="text-red-500 text-sm mt-1" />
-//                                                 </div>
-
-//                                                 <div>
-//                                                     <label className="block text-sm font-medium mb-1">City</label>
-//                                                     <Field
-//                                                         type="text"
-//                                                         name="city"
-//                                                         placeholder="City"
-//                                                         className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-//                                                     />
-//                                                     <ErrorMessage name="city" component="div" className="text-red-500 text-sm mt-1" />
-//                                                 </div>
-//                                             </div>
-
-//                                             <div>
-//                                                 <label className="block text-sm font-medium mb-1">State</label>
-//                                                 <Field
-//                                                     type="text"
-//                                                     name="state"
-//                                                     placeholder="State"
-//                                                     className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-//                                                 />
-//                                                 <ErrorMessage name="state" component="div" className="text-red-500 text-sm mt-1" />
-//                                             </div>
-
-//                                             <div>
-//                                                 <label className="block text-sm font-medium mb-1">Save Address As</label>
-//                                                 <div className="flex space-x-3">
-//                                                     <button
-//                                                         type="button"
-//                                                         className={`flex-1 py-2 px-3 rounded-lg border flex items-center justify-center ${addressType === 'Home' ? 'bg-blue-50 border-blue-500 text-blue-700' : 'border-gray-300'
-//                                                             }`}
-//                                                         onClick={() => setAddressType('Home')}
-//                                                     >
-//                                                         <FaHome className="mr-2" /> Home
-//                                                     </button>
-//                                                     <button
-//                                                         type="button"
-//                                                         className={`flex-1 py-2 px-3 rounded-lg border flex items-center justify-center ${addressType === 'Office' ? 'bg-blue-50 border-blue-500 text-blue-700' : 'border-gray-300'
-//                                                             }`}
-//                                                         onClick={() => setAddressType('Office')}
-//                                                     >
-//                                                         <FaBriefcase className="mr-2" /> Office
-//                                                     </button>
-//                                                     <button
-//                                                         type="button"
-//                                                         className={`flex-1 py-2 px-3 rounded-lg border flex items-center justify-center ${addressType === 'Other' ? 'bg-blue-50 border-blue-500 text-blue-700' : 'border-gray-300'
-//                                                             }`}
-//                                                         onClick={() => setAddressType('Other')}
-//                                                     >
-//                                                         <FaMapMarkerAlt className="mr-2" /> Other
-//                                                     </button>
-//                                                 </div>
-//                                             </div>
-
-//                                             <div>
-//                                                 <label className="block text-sm font-medium mb-2">Payment Method</label>
-//                                                 <div className="space-y-3">
-//                                                     <button
-//                                                         type="button"
-//                                                         className={`w-full p-3 rounded-lg border flex items-center justify-between ${paymentMethod === 'cod' ? 'bg-blue-50 border-blue-500 text-blue-700' : 'border-gray-300'
-//                                                             }`}
-//                                                         onClick={() => setPaymentMethod('cod')}
-//                                                     >
-//                                                         <div className="flex items-center">
-//                                                             <FaMoneyBillWave className="mr-3 text-green-600" size={18} />
-//                                                             <span>Cash on Delivery</span>
-//                                                         </div>
-//                                                     </button>
-
-//                                                     <button
-//                                                         type="button"
-//                                                         className={`w-full p-3 rounded-lg border flex items-center justify-between relative ${paymentMethod === 'online' ? 'bg-blue-50 border-blue-500 text-blue-700' : 'border-gray-300'
-//                                                             }`}
-//                                                         onClick={() => setPaymentMethod('online')}
-//                                                     >
-//                                                         <div className="flex items-center">
-//                                                             <FaCreditCard className="mr-3 text-blue-600" size={18} />
-//                                                             <span>Online Payment</span>
-//                                                         </div>
-//                                                         <div className="absolute right-0 top-0 bg-green-500 text-white text-xs px-2 py-1 rounded-bl-lg rounded-tr-lg flex items-center">
-//                                                             <FaPercent className="mr-1" size={10} />
-//                                                             10% off
-//                                                         </div>
-//                                                     </button>
-//                                                 </div>
-//                                             </div>
-//                                         </div>
-
-//                                         <button
-//                                             type="submit"
-//                                             disabled={isSubmitting || !paymentMethod}
-//                                             className="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-blue-300 mt-4"
-//                                         >
-//                                             {paymentMethod === 'online' ? 'Proceed to Pay' : 'Place Order'}
-//                                         </button>
-//                                     </Form>
-//                                 )}
-//                             </Formik>
-//                         </div>
-//                     )}
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// };
-
-// // Add custom animations to tailwind
-// const customStyles = `
-//   @keyframes fadeIn {
-//     from { opacity: 0; }
-//     to { opacity: 1; }
-//   }
-  
-//   @keyframes slideInRight {
-//     from { transform: translateX(100%); }
-//     to { transform: translateX(0); }
-//   }
-  
-//   @keyframes expandVertical {
-//     from { max-height: 0; opacity: 0; }
-//     to { max-height: 500px; opacity: 1; }
-//   }
-  
-//   .animate-fadeIn {
-//     animation: fadeIn 0.3s ease-out forwards;
-//   }
-  
-//   .animate-slideInRight {
-//     animation: slideInRight 0.3s ease-out forwards;
-//   }
-  
-//   .animate-expandVertical {
-//     animation: expandVertical 0.3s ease-out forwards;
-//     overflow: hidden;
-//   }
-// `;
-
-// // Usage example
-// const App = () => {
-//     const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
-
-//     return (
-//         <div className="p-4">
-//             <style>{customStyles}</style>
-//             <button
-//                 onClick={() => setIsCheckoutOpen(true)}
-//                 className="bg-blue-600 text-white px-4 py-2 rounded"
-//             >
-//                 Open Checkout
-//             </button>
-
-//             <CheckoutModal
-//                 isOpen={isCheckoutOpen}
-//                 onClose={() => setIsCheckoutOpen(false)}
-//                 logo="/api/placeholder/120/40"
-//             />
-//         </div>
-//     );
-// };
-
-// export default App;
-
-
-
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -550,124 +7,303 @@ import {
   FaCreditCard, FaPercent
 } from 'react-icons/fa';
 import { RxCross2 } from "react-icons/rx";
+import { motion, AnimatePresence } from 'framer-motion';
+import { useDispatch, useSelector } from 'react-redux';
+import CouponCodeList from './couponCodeList/CouponCodeList';
+import OtpLogin from '../pages/login-signup/OtpLogin';
+import OtpVerification from './auth/OtpVerification';
+import { getAllCartItems, mergeCart } from '../features/cart/cart';
+import { verifyOTP } from '../features/auth/auth';
+import { toast } from 'react-toastify';
+import NewCheckoutForm from './checkout/NewCheckoutForm';
 
-// CSS-in-JS for animations, properly scoped using a unique class
-const CheckoutModalAnimations = () => (
-  <style jsx global>{`
-    .checkout-animations .fade-in {
-      animation: fadeIn 0.4s ease-out forwards;
+// Animation variants
+const fadeIn = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.3 } }
+};
+
+const slideUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 400,
+      damping: 30
     }
-    
-    .checkout-animations .slide-in {
-      animation: slideIn 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-    }
-    
-    .checkout-animations .expand {
-      animation: expand 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
-      overflow: hidden;
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    
-    @keyframes slideIn {
-      from { transform: translateY(20px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-    
-    @keyframes expand {
-      from { max-height: 0; opacity: 0; }
-      to { max-height: 800px; opacity: 1; }
-    }
-    
-    .checkout-animations .pulse-btn {
-      transition: all 0.3s;
-    }
-    
-    .checkout-animations .pulse-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    }
-  `}</style>
-);
+  }
+};
+
+// Accordion component for collapsible sections
+const Accordion = ({ title, icon, isOpen, setIsOpen, children }) => {
+  const IconComponent = icon;
+
+  return (
+    <div className="mb-4 text-gray-500">
+      <button
+        className="w-full flex justify-between items-center p-3.5 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors shadow-sm"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span className="font-medium flex items-center">
+          <IconComponent className="mr-2 text-blue-600" />
+          {title}
+        </span>
+        <motion.div
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <FaChevronDown />
+        </motion.div>
+      </button>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{
+              opacity: 1,
+              height: "auto",
+              transition: {
+                height: {
+                  type: "spring",
+                  stiffness: 500,
+                  damping: 30,
+                  duration: 0.4
+                },
+                opacity: { duration: 0.25 }
+              }
+            }}
+            exit={{
+              opacity: 0,
+              height: 0,
+              transition: {
+                height: { duration: 0.3 },
+                opacity: { duration: 0.25 }
+              }
+            }}
+            className="mt-3 bg-gray-50 rounded-lg overflow-hidden"
+          >
+            <motion.div
+              className="p-4"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                transition: { delay: 0.1, duration: 0.2 }
+              }}
+              exit={{ opacity: 0, transition: { duration: 0.15 } }}
+            >
+              {children}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
 
 // Single Cart Item Component
-const CartItem = ({ item }) => (
-  <div className="flex items-center mb-3 pb-3 border-b border-gray-200 last:border-b-0 last:mb-0 last:pb-0">
-    <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded-lg mr-3 border border-gray-100" />
-    <div className="flex-1">
-      <h4 className="font-medium">{item.name}</h4>
-      <p className="text-gray-500 text-sm">Qty: {item.quantity}</p>
-    </div>
-    <p className="font-medium">${(item.price * item.quantity).toFixed(2)}</p>
-  </div>
-);
-
-// Coupon Component
-const CouponItem = ({ coupon, onApply }) => (
-  <div className="border border-gray-200 rounded-lg p-3 hover:border-blue-500 transition-colors bg-white hover:bg-blue-50">
-    <div className="flex justify-between mb-1">
-      <span className="font-bold text-blue-600">{coupon.code}</span>
-      <span className="text-green-600 font-medium">{coupon.discount}</span>
-    </div>
-    <p className="text-sm text-gray-500">{coupon.description}</p>
-    <button
-      className="mt-2 w-full py-1.5 bg-blue-100 text-blue-600 rounded font-medium hover:bg-blue-200 transition-colors pulse-btn"
-      onClick={() => onApply(coupon)}
+const CartItem = ({ item, index }) => {
+  console.log('item', item)
+  return (
+    <motion.div
+      key={item.id}
+      initial={{ opacity: 0, x: -10 }}
+      animate={{
+        opacity: 1,
+        x: 0,
+        transition: { delay: 0.05 * index, duration: 0.3 }
+      }}
+      className="flex items-center mb-3 pb-3 border-b border-gray-200 last:border-b-0 last:mb-0 last:pb-0"
     >
-      Apply
-    </button>
-  </div>
-);
+      <img src={Array.isArray(item.img) ? item.img.filter(path => path.lg.includes('front'))[0].lg : null} alt='product image' className="w-16 h-16 object-cover rounded-lg mr-3 border border-gray-100 shadow-sm" />
+      <div className="flex-1">
+        <h4 className="font-medium">{item.name}</h4>
+        <p className="text-gray-500 text-sm">Qty: {item.quantity}</p>
+      </div>
+      <p className="font-medium">₹ {Math.round((item.price - (item.price * item.discount / 100)) * item.quantity)}</p>
+    </motion.div>
+  )
+};
 
-// OTP Input Component
+// Coupon Item Component
+// const CouponItem = ({ coupon, onApply, index }) => (
+//   <motion.div
+//     key={coupon.code}
+//     initial={{ opacity: 0, y: 20, scale: 0.95 }}
+//     animate={{ opacity: 1, y: 0, scale: 1 }}
+//     transition={{
+//       delay: 0.1 * (index + 1),
+//       duration: 0.5,
+//       type: "spring",
+//       stiffness: 400,
+//       damping: 25
+//     }}
+//     whileHover={{
+//       scale: 1.02,
+//       boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+//       transition: { duration: 0.2 }
+//     }}
+//     className="border border-gray-200 rounded-lg p-3 bg-white"
+//   >
+//     <div className="flex justify-between mb-1">
+//       <span className="font-bold text-blue-600">{coupon.code}</span>
+//       <span className="text-green-600 font-medium">{coupon.discount}</span>
+//     </div>
+//     <p className="text-sm text-gray-500">{coupon.description}</p>
+//     <motion.button
+//       className="mt-2 w-full py-1.5 bg-blue-100 text-blue-600 rounded font-medium"
+//       whileHover={{
+//         backgroundColor: "rgba(37, 99, 235, 0.2)",
+//         scale: 1.02
+//       }}
+//       whileTap={{ scale: 0.98 }}
+//       onClick={() => onApply(coupon)}
+//     >
+//       Apply
+//     </motion.button>
+//   </motion.div>
+// );
+
+// FormField component for consistent form inputs
+// const FormField = ({ label, name, type = "text", placeholder, disabled = false, as }) => (
+//   <div>
+//     <label className="block text-sm font-medium mb-1">{label}</label>
+//     <Field
+//       type={type}
+//       name={name}
+//       as={as}
+//       placeholder={placeholder}
+//       disabled={disabled}
+//       className={`w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm ${disabled ? 'bg-gray-100' : ''
+//         } ${as === 'textarea' ? 'h-20' : ''}`}
+//     />
+//     <ErrorMessage name={name} component="div" className="text-red-500 text-sm mt-1" />
+//   </div>
+// );
+
+// OTP Input component
 const OtpInput = ({ otpInputs, handleOtpChange, handleOtpKeyDown, handleOtpPaste }) => (
   <div className="flex justify-center gap-3 mb-3">
     {Array(4).fill(0).map((_, index) => (
-      <input
+      <motion.div
         key={index}
-        ref={otpInputs[index]}
-        type="text"
-        maxLength={1}
-        className="w-14 h-14 text-center text-xl font-bold border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
-        onChange={(e) => handleOtpChange(index, e.target.value)}
-        onKeyDown={(e) => handleOtpKeyDown(e, index)}
-        onPaste={index === 0 ? handleOtpPaste : null}
-        inputMode="numeric"
-      />
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: index * 0.15, duration: 0.3 }}
+      >
+        <input
+          ref={otpInputs[index]}
+          type="text"
+          maxLength={1}
+          className="w-14 h-14 text-center text-xl font-bold border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+          onChange={(e) => handleOtpChange(index, e.target.value)}
+          onKeyDown={(e) => handleOtpKeyDown(e, index)}
+          onPaste={index === 0 ? handleOtpPaste : null}
+          inputMode="numeric"
+        />
+      </motion.div>
     ))}
   </div>
 );
 
+// Selection Button component
+const SelectionButton = ({ icon, label, selected, onClick }) => {
+  const IconComponent = icon;
+  return (
+    <button
+      type="button"
+      className={`flex-1 py-2.5 px-3 rounded-lg border flex items-center justify-center transition-all ${selected
+        ? 'bg-blue-50 border-blue-500 text-blue-700 shadow-sm'
+        : 'border-gray-300 hover:border-gray-400'
+        }`}
+      onClick={onClick}
+    >
+      <IconComponent className="mr-2" /> {label}
+    </button>
+  );
+};
+
+// Payment Method Button component
+const PaymentMethodButton = ({ icon, label, selected, onClick, discount = null }) => {
+  const IconComponent = icon;
+  return (
+    <button
+      type="button"
+      className={`w-full p-3.5 rounded-lg border flex items-center justify-between relative transition-all ${selected
+        ? 'bg-blue-50 border-blue-500 text-blue-700 shadow-sm'
+        : 'border-gray-300 hover:border-gray-400'
+        }`}
+      onClick={onClick}
+    >
+      <div className="flex items-center">
+        <IconComponent className={`mr-3 ${label.includes('Cash') ? 'text-green-600' : 'text-blue-600'}`} size={18} />
+        <span>{label}</span>
+      </div>
+      {discount && (
+        <motion.div
+          className="absolute right-0 top-0 bg-green-500 text-white text-xs px-2 py-1 rounded-bl-lg rounded-tr-lg flex items-center"
+          initial={{ scale: 1 }}
+          animate={{ scale: [1, 1.1, 1] }}
+          transition={{ duration: 1.5, repeat: Infinity }}
+        >
+          <FaPercent className="mr-1" size={10} />
+          {discount}
+        </motion.div>
+      )}
+    </button>
+  );
+};
+
+// Button Component
+const Button = ({ children, onClick, type = 'button', disabled = false, className = '' }) => (
+  <motion.button
+    type={type}
+    onClick={onClick}
+    disabled={disabled}
+    className={`w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium py-3.5 rounded-lg hover:opacity-90 transition-all disabled:opacity-70 ${className}`}
+    whileHover={{ scale: 1.02, boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)" }}
+    whileTap={{ scale: 0.98 }}
+  >
+    {children}
+  </motion.button>
+);
+
 // Main CheckoutModal Component
 const CheckoutModal = ({ isOpen, onClose }) => {
+  const dispatch = useDispatch();
+  const { user } = useSelector(state => state.auth)
+  console.log('user', user)
   const [step, setStep] = useState(1);
   const [orderSummaryOpen, setOrderSummaryOpen] = useState(false);
   const [couponOpen, setCouponOpen] = useState(false);
   const [phoneVerified, setPhoneVerified] = useState(false);
-  const [addressType, setAddressType] = useState('Home');
-  const [paymentMethod, setPaymentMethod] = useState('');
+  // const [addressType, setAddressType] = useState('Home');
+  // const [paymentMethod, setPaymentMethod] = useState('');
   const [showOtpInput, setShowOtpInput] = useState(false);
   const [appliedCoupon, setAppliedCoupon] = useState(null);
-  
+  const [phoneNumber, setPhoneNumber] = useState(null)
   const otpInputs = Array(4).fill(0).map(() => useRef(null));
 
+  const { cartItems, cartItemsList, totalCartAmount, totalTax, couponCodeApplied } = useSelector((state) => state.cart);
+  const { checking, shippingFee } = useSelector(state => state.delivery)
+
   // Data
-  const cartItems = [
-    { id: 1, name: 'Wireless Headphones', price: 129.99, quantity: 1, image: '/api/placeholder/80/80' },
-    { id: 2, name: 'Smartphone Case', price: 24.99, quantity: 2, image: '/api/placeholder/80/80' }
-  ];
+  // const cartItems = [
+  //   { id: 1, name: 'Wireless Headphones', price: 129.99, quantity: 1, image: '/api/placeholder/80/80' },
+  //   { id: 2, name: 'Smartphone Case', price: 24.99, quantity: 2, image: '/api/placeholder/80/80' }
+  // ];
 
   const coupons = [
-    { code: 'WELCOME10', discount: '10% off', description: 'For new customers' },
-    { code: 'FREESHIP', discount: 'Free shipping', description: 'On orders above $50' },
-    { code: 'SUMMER25', discount: '25% off', description: 'Season special' }
+    { code: 'BUY4PICKLES', description: 'Get Any Four Pickles at Flat ₹999' },
+    { code: 'FOODSBAY5YEARS', description: 'Get additional 10% off on all orders above ₹ 1299' },
   ];
 
+  // Calculations
   const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const shippingFee = 5.99;
+  // const shippingFee = 5.99;
   const discount = appliedCoupon ? (appliedCoupon.code === 'WELCOME10' ? subtotal * 0.1 : 0) : 0;
   const total = subtotal + shippingFee - discount;
 
@@ -703,14 +339,85 @@ const CheckoutModal = ({ isOpen, onClose }) => {
   // Handlers
   const handlePhoneSubmit = () => setShowOtpInput(true);
 
+
+  const getDataAfterLogin = () => {
+    // dispatch(getAllOrders())
+    const localCart = JSON.parse(localStorage.getItem("cart") || "[]");
+    if (localCart.length > 0) {
+      const cart = {
+        items: localCart,
+        totalCartAmount: totalCartAmount,
+        totalTaxes: totalTax,
+        couponCodeApplied: couponCodeApplied
+      }
+
+
+      dispatch(mergeCart({ cart })).then(() => {
+        // localStorage.removeItem("cart");
+        setPhoneVerified(true);
+        setStep(2);
+        dispatch(getAllCartItems());
+        // if (checkoutStatus) {
+        //   navigate("/cart/checkout");
+        // } else {
+        //   navigate("/");
+        // }
+      });
+    }
+    //  else {
+    //   navigate("/");
+    // }
+
+  };
+
+
   const handleOtpSubmit = () => {
+    console.log('hello verify', otpInputs)
     setPhoneVerified(true);
     setStep(2);
   };
 
+  // const handleOtpChange = (index, value) => {
+  //   console.log('value',value)
+  //   if (value.length === 1 && index < 3) {
+  //     otpInputs[index + 1].current.focus();
+  //   }
+  // };
+
+
+
   const handleOtpChange = (index, value) => {
-    if (value.length === 1 && index < 3) {
-      otpInputs[index + 1].current.focus();
+    if (value.length === 1) {
+      // Store the value in the current input
+      otpInputs[index].current.value = value;
+
+      if (index < 3) {
+        // Move to next input if not the last one
+        otpInputs[index + 1].current.focus();
+      } else if (index === 3) {
+        // If it's the last digit, collect the full OTP and verify
+        const otpValue = otpInputs.map(input => input.current.value).join('');
+        if (otpValue.length === 4) {
+          const payload = {
+            phoneNumber: phoneNumber,
+            otp: otpValue
+          }
+          dispatch(verifyOTP(payload))
+            .then((value) => {
+              if (value.meta.requestStatus === "fulfilled") {
+                const token = value.payload.accessToken;
+                if (token) {
+                  getDataAfterLogin();
+                  setPhoneVerified(true);
+                  setStep(2);
+                }
+              } else {
+                toast.error(value.payload);
+              }
+            }
+            );
+        }
+      }
     }
   };
 
@@ -731,368 +438,416 @@ const CheckoutModal = ({ isOpen, onClose }) => {
     }
   };
 
-  const handleApplyCoupon = (coupon) => {
-    setAppliedCoupon(coupon);
-    setCouponOpen(false);
-  };
+  // const handleApplyCoupon = (coupon) => {
+  //   setAppliedCoupon(coupon);
+  //   setCouponOpen(false);
+  // };
+
+  // const handleCheckoutSubmit = (values) => {
+  //   // Process checkout logic
+  //   if (paymentMethod === 'online') {
+  //     // Redirect to payment gateway
+  //     console.log("Redirecting to payment gateway", values, addressType, paymentMethod);
+  //   } else {
+  //     // Process COD order
+  //     console.log("Processing COD order", values, addressType, paymentMethod);
+  //   }
+  // };
+
+
+   // Add this in the CheckoutModal component
+   useEffect(() => {
+    // If user is already logged in, skip to step 2
+    if (user) {
+      setPhoneVerified(true);
+      setStep(2);
+    }
+  }, [user]);
 
   if (!isOpen) return null;
 
+  // Order Summary Content
+  const renderOrderSummary = () => (
+    <>
+      {cartItemsList.map((item, index) => (
+        <CartItem key={item._id} item={item} index={index} />
+      ))}
+
+      <motion.div
+        className="mt-4 pt-3 border-t border-gray-200"
+        initial={{ opacity: 0 }}
+        animate={{
+          opacity: 1,
+          transition: { delay: 0.2, duration: 0.3 }
+        }}
+      >
+        <div className="flex justify-between mb-1 text-sm">
+          <span>Subtotal</span>
+          <span>₹ {totalCartAmount}</span>
+        </div>
+        <div className="flex justify-between mb-1 text-sm">
+          <span>Shipping</span>
+          <span>₹ {shippingFee}</span>
+        </div>
+        {discount > 0 && (
+          <div className="flex justify-between mb-1 text-sm text-green-600">
+            <span>Discount</span>
+            <span>-${discount.toFixed(2)}</span>
+          </div>
+        )}
+        <div className="flex justify-between font-bold text-lg mt-2">
+          <span>Total</span>
+          <span>₹ {totalCartAmount + shippingFee}</span>
+        </div>
+      </motion.div>
+    </>
+  );
+
+  // Coupon Content
+  // const renderCoupons = () => (
+  //   <>
+  //     <h3 className="text-lg font-bold mb-3">Available Coupons</h3>
+  //     <div className="space-y-3">
+  //       {coupons.map((coupon, index) => (
+  //         <CouponItem
+  //           key={coupon.code}
+  //           coupon={coupon}
+  //           onApply={handleApplyCoupon}
+  //           index={index}
+  //         />
+  //       ))}
+  //     </div>
+  //   </>
+  // );
+
+  // Phone Form Content
+  // const renderPhoneForm = () => (
+  //   <div className="mb-6">
+  //     <h3 className="font-medium mb-3 text-lg">Enter your phone number</h3>
+  //     <Formik
+  //       initialValues={{ phone: '' }}
+  //       validationSchema={phoneSchema}
+  //       onSubmit={handlePhoneSubmit}
+  //     >
+  //       {({ isSubmitting }) => (
+  //         <Form>
+  //           <div className="mb-4">
+  //             <Field
+  //               type="text"
+  //               name="phone"
+  //               placeholder="10-digit phone number"
+  //               className="w-full p-3.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+  //             />
+  //             <ErrorMessage name="phone" component="div" className="text-red-500 text-sm mt-1" />
+  //           </div>
+
+  //           <Button type="submit" disabled={isSubmitting}>
+  //             {isSubmitting ? 'Sending OTP...' : 'Add Address'}
+  //           </Button>
+  //         </Form>
+  //       )}
+  //     </Formik>
+  //   </div>
+  // );
+
+  // OTP Verification Content
+  // const renderOtpVerification = () => (
+  //   <motion.div
+  //     className="mb-6"
+  //     variants={slideUp}
+  //     initial="hidden"
+  //     animate="visible"
+  //   >
+  //     <h3 className="font-medium mb-3 text-lg">Enter OTP sent to your phone</h3>
+  //     <OtpInput
+  //       otpInputs={otpInputs}
+  //       handleOtpChange={handleOtpChange}
+  //       handleOtpKeyDown={handleOtpKeyDown}
+  //       handleOtpPaste={handleOtpPaste}
+  //     />
+  //     <motion.div
+  //       className="text-center mt-4"
+  //       initial={{ opacity: 0 }}
+  //       animate={{ opacity: 1 }}
+  //       transition={{ delay: 0.6, duration: 0.3 }}
+  //     >
+  //       <Button onClick={handleOtpSubmit}>
+  //         Verify OTP
+  //       </Button>
+  //       <motion.p
+  //         className="text-sm text-gray-500 mt-3"
+  //         initial={{ opacity: 0 }}
+  //         animate={{ opacity: 1 }}
+  //         transition={{ delay: 0.8, duration: 0.3 }}
+  //       >
+  //         Didn't receive the code? <motion.button
+  //           className="text-blue-600 font-medium"
+  //           whileHover={{ scale: 1.05 }}
+  //           whileTap={{ scale: 0.95 }}
+  //         >Resend</motion.button>
+  //       </motion.p>
+  //     </motion.div>
+  //   </motion.div>
+  // );
+
+  // Checkout Form Content
+  // const renderCheckoutForm = () => (
+  //   <div className="slide-in">
+  //     <Formik
+  //       initialValues={{
+  //         phone: '1234567890',
+  //         fullName: '',
+  //         email: '',
+  //         address: '',
+  //         pincode: '',
+  //         city: '',
+  //         state: '',
+  //       }}
+  //       validationSchema={checkoutSchema}
+  //       onSubmit={handleCheckoutSubmit}
+  //     >
+  //       {({ isSubmitting }) => (
+  //         <Form className="space-y-4">
+  //           <FormField
+  //             label="Phone Number"
+  //             name="phone"
+  //             disabled={true}
+  //           />
+
+  //           <FormField
+  //             label="Full Name"
+  //             name="fullName"
+  //             placeholder="Enter your full name"
+  //           />
+
+  //           <FormField
+  //             label="Email"
+  //             name="email"
+  //             type="email"
+  //             placeholder="Enter your email"
+  //           />
+
+  //           <FormField
+  //             label="Address"
+  //             name="address"
+  //             as="textarea"
+  //             placeholder="Enter your address"
+  //           />
+
+  //           <div className="grid grid-cols-2 gap-4">
+  //             <FormField
+  //               label="Pincode"
+  //               name="pincode"
+  //               placeholder="6-digit pincode"
+  //             />
+
+  //             <FormField
+  //               label="City"
+  //               name="city"
+  //               placeholder="City"
+  //             />
+  //           </div>
+
+  //           <FormField
+  //             label="State"
+  //             name="state"
+  //             placeholder="State"
+  //           />
+
+  //           <div>
+  //             <label className="block text-sm font-medium mb-1">Save Address As</label>
+  //             <div className="flex space-x-2">
+  //               <SelectionButton
+  //                 icon={FaHome}
+  //                 label="Home"
+  //                 selected={addressType === 'Home'}
+  //                 onClick={() => setAddressType('Home')}
+  //               />
+  //               <SelectionButton
+  //                 icon={FaBriefcase}
+  //                 label="Office"
+  //                 selected={addressType === 'Office'}
+  //                 onClick={() => setAddressType('Office')}
+  //               />
+  //               <SelectionButton
+  //                 icon={FaMapMarkerAlt}
+  //                 label="Other"
+  //                 selected={addressType === 'Other'}
+  //                 onClick={() => setAddressType('Other')}
+  //               />
+  //             </div>
+  //           </div>
+
+  //           <div>
+  //             <label className="block text-sm font-medium mb-2">Payment Method</label>
+  //             <div className="space-y-3">
+  //               <PaymentMethodButton
+  //                 icon={FaMoneyBillWave}
+  //                 label="Cash on Delivery"
+  //                 selected={paymentMethod === 'cod'}
+  //                 onClick={() => setPaymentMethod('cod')}
+  //               />
+
+  //               <PaymentMethodButton
+  //                 icon={FaCreditCard}
+  //                 label="Online Payment"
+  //                 selected={paymentMethod === 'online'}
+  //                 onClick={() => setPaymentMethod('online')}
+  //                 discount="10% off"
+  //               />
+  //             </div>
+  //           </div>
+
+  //           <Button
+  //             type="submit"
+  //             disabled={isSubmitting || !paymentMethod}
+  //             className="mt-6"
+  //           >
+  //             {paymentMethod === 'online' ? 'Proceed to Pay' : 'Place Order'}
+  //           </Button>
+  //         </Form>
+  //       )}
+  //     </Formik>
+  //   </div>
+  // );
+
+
+ 
+
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 checkout-animations">
-      <CheckoutModalAnimations />
-      
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-md md:max-w-lg relative fade-in">
-        {/* Close button */}
-        <div className="flex justify-end p-2">
-          <button
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          className="fixed inset-0 z-50 flex items-center justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          {/* Backdrop with separate animation */}
+          <motion.div
+            className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700 transition-colors hover:bg-gray-100 p-2 rounded-full"
+          />
+
+          <motion.div
+            className="bg-white rounded-xl shadow-2xl w-full max-w-md md:max-w-lg relative z-10"
+            initial={{ scale: 0.8, y: 50, opacity: 0 }}
+            animate={{ scale: 1, y: 0, opacity: 1 }}
+            exit={{ scale: 0.8, y: 30, opacity: 0 }}
+            transition={{
+              type: "spring",
+              stiffness: 400,
+              damping: 30,
+              mass: 1
+            }}
           >
-            <RxCross2 size={20} />
-          </button>
-        </div>
-
-        {/* Header */}
-        <div className="flex justify-between items-center px-6 pb-4 border-b mb-4">
-          <div className="flex items-center">
-            <img src='https://organicnationmages.s3.ap-south-1.amazonaws.com/logo/logo.png' alt="Company Logo" className="h-10" />
-          </div>
-          <div className="text-right">
-            <p className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              ${total.toFixed(2)}
-            </p>
-          </div>
-        </div>
-
-        {/* Body */}
-        <div className="px-6 pb-6 max-h-[70vh] overflow-y-auto">
-          {/* Order Summary */}
-          <div className="mb-4">
-            <button
-              className="w-full flex justify-between items-center p-3.5 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors shadow-sm"
-              onClick={() => setOrderSummaryOpen(!orderSummaryOpen)}
-            >
-              <span className="font-medium flex items-center">
-                <FaShoppingCart className="mr-2 text-blue-600" />
-                Order Summary
-              </span>
-              {orderSummaryOpen ? <FaChevronUp /> : <FaChevronDown />}
-            </button>
-
-            {orderSummaryOpen && (
-              <div className="mt-3 p-4 bg-gray-50 rounded-lg expand">
-                {cartItems.map(item => (
-                  <CartItem key={item.id} item={item} />
-                ))}
-
-                <div className="mt-4 pt-3 border-t border-gray-200">
-                  <div className="flex justify-between mb-1 text-sm">
-                    <span>Subtotal</span>
-                    <span>${subtotal.toFixed(2)}</span>
-                  </div>
-                  <div className="flex justify-between mb-1 text-sm">
-                    <span>Shipping</span>
-                    <span>${shippingFee.toFixed(2)}</span>
-                  </div>
-                  {discount > 0 && (
-                    <div className="flex justify-between mb-1 text-sm text-green-600">
-                      <span>Discount</span>
-                      <span>-${discount.toFixed(2)}</span>
-                    </div>
-                  )}
-                  <div className="flex justify-between font-bold text-lg mt-2">
-                    <span>Total</span>
-                    <span>${total.toFixed(2)}</span>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Coupon */}
-          <div className="mb-6 relative">
-            <button
-              className="w-full flex justify-between items-center p-3.5 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors shadow-sm"
-              onClick={() => setCouponOpen(!couponOpen)}
-            >
-              <span className="font-medium flex items-center">
-                <FaTag className="mr-2 text-purple-600" />
-                {appliedCoupon ? `Applied: ${appliedCoupon.code}` : 'Apply Coupon'}
-              </span>
-              {couponOpen ? <FaChevronUp /> : <FaChevronDown />}
-            </button>
-
-            {couponOpen && (
-              <div className="mt-3 p-4 bg-gray-50 rounded-lg shadow-md expand">
-                <h3 className="text-lg font-bold mb-3">Available Coupons</h3>
-                <div className="space-y-3">
-                  {coupons.map(coupon => (
-                    <CouponItem 
-                      key={coupon.code} 
-                      coupon={coupon} 
-                      onApply={handleApplyCoupon} 
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Phone Verification */}
-          {step === 1 && !phoneVerified && (
-            <div className="mb-6 slide-in">
-              <h3 className="font-medium mb-3 text-lg">Enter your phone number</h3>
-              <Formik
-                initialValues={{ phone: '' }}
-                validationSchema={phoneSchema}
-                onSubmit={handlePhoneSubmit}
+            {/* Close button */}
+            <div className="flex justify-end p-2">
+              <motion.button
+                onClick={onClose}
+                className="text-gray-500 hover:text-gray-700 transition-colors hover:bg-gray-100 p-2 rounded-full"
+                whileHover={{ scale: 1.1, backgroundColor: "rgba(239, 246, 255, 0.6)" }}
+                whileTap={{ scale: 0.95 }}
               >
-                {({ isSubmitting }) => (
-                  <Form>
-                    <div className="mb-4">
-                      <Field
-                        type="text"
-                        name="phone"
-                        placeholder="10-digit phone number"
-                        className="w-full p-3.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
-                      />
-                      <ErrorMessage name="phone" component="div" className="text-red-500 text-sm mt-1" />
-                    </div>
-
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium py-3.5 rounded-lg hover:opacity-90 transition-all pulse-btn disabled:opacity-70"
-                    >
-                      {isSubmitting ? 'Sending OTP...' : 'Get OTP'}
-                    </button>
-                  </Form>
-                )}
-              </Formik>
+                <RxCross2 size={20} />
+              </motion.button>
             </div>
-          )}
 
-          {/* OTP Verification */}
-          {step === 1 && showOtpInput && !phoneVerified && (
-            <div className="mb-6 fade-in">
-              <h3 className="font-medium mb-3 text-lg">Enter OTP sent to your phone</h3>
-              <OtpInput 
-                otpInputs={otpInputs}
-                handleOtpChange={handleOtpChange}
-                handleOtpKeyDown={handleOtpKeyDown}
-                handleOtpPaste={handleOtpPaste}
-              />
-              <div className="text-center mt-4">
-                <button
-                  onClick={handleOtpSubmit}
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium py-2.5 px-8 rounded-lg hover:opacity-90 transition-all pulse-btn"
+            {/* Header */}
+            <div className="flex justify-between items-center px-6 pb-4 border-b mb-4">
+              <div className="flex items-center">
+                <img src='https://organicnationmages.s3.ap-south-1.amazonaws.com/logo/logo.png' alt="Company Logo" className="h-10" />
+              </div>
+              <div className="text-right">
+                <p
+                  className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
                 >
-                  Verify OTP
-                </button>
-                <p className="text-sm text-gray-500 mt-3">
-                  Didn't receive the code? <button className="text-blue-600 font-medium">Resend</button>
+                  ₹ {totalCartAmount + shippingFee}
                 </p>
               </div>
             </div>
-          )}
 
-          {/* Checkout Form */}
-          {step === 2 && (
-            <div className="slide-in">
-              <Formik
-                initialValues={{
-                  phone: '1234567890',
-                  fullName: '',
-                  email: '',
-                  address: '',
-                  pincode: '',
-                  city: '',
-                  state: '',
-                }}
-                validationSchema={checkoutSchema}
-                onSubmit={(values) => {
-                  // console.log(values, addressType, paymentMethod);
-                  if (paymentMethod === 'online') {
-                    // Redirect to payment gateway
-                  } else {
-                    // Process COD order
-                  }
-                }}
+            {/* Body */}
+            <div className="px-6 pb-6 max-h-[70vh] overflow-y-auto">
+              {/* ======================================== Order Summary  ======================================= */}
+              <Accordion
+                title="Order Summary"
+                icon={FaShoppingCart}
+                isOpen={orderSummaryOpen}
+                setIsOpen={setOrderSummaryOpen}
               >
-                {({ isSubmitting }) => (
-                  <Form className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Phone Number</label>
-                      <Field
-                        type="text"
-                        name="phone"
-                        disabled={true}
-                        className="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg shadow-sm"
-                      />
-                    </div>
+                {renderOrderSummary()}
+              </Accordion>
 
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Full Name</label>
-                      <Field
-                        type="text"
-                        name="fullName"
-                        placeholder="Enter your full name"
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
-                      />
-                      <ErrorMessage name="fullName" component="div" className="text-red-500 text-sm mt-1" />
-                    </div>
+              {/* =========================================== Coupon ============================================= */}
+              <Accordion
+                title={appliedCoupon ? `Applied: ${appliedCoupon.code}` : 'Apply Coupon'}
+                icon={FaTag}
+                isOpen={couponOpen}
+                setIsOpen={setCouponOpen}
+              >
+                {/* {renderCoupons()} */}
+                <CouponCodeList
+                  cartItems={cartItems}
+                  totalCartAmount={totalCartAmount}
+                  totalTax={totalTax}
+                  couponCodeApplied={couponCodeApplied}
+                />
 
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Email</label>
-                      <Field
-                        type="email"
-                        name="email"
-                        placeholder="Enter your email"
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
-                      />
-                      <ErrorMessage name="email" component="div" className="text-red-500 text-sm mt-1" />
-                    </div>
+              </Accordion>
 
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Address</label>
-                      <Field
-                        as="textarea"
-                        name="address"
-                        placeholder="Enter your address"
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 h-20 shadow-sm"
-                      />
-                      <ErrorMessage name="address" component="div" className="text-red-500 text-sm mt-1" />
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium mb-1">Pincode</label>
-                        <Field
-                          type="text"
-                          name="pincode"
-                          placeholder="6-digit pincode"
-                          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
-                        />
-                        <ErrorMessage name="pincode" component="div" className="text-red-500 text-sm mt-1" />
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium mb-1">City</label>
-                        <Field
-                          type="text"
-                          name="city"
-                          placeholder="City"
-                          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
-                        />
-                        <ErrorMessage name="city" component="div" className="text-red-500 text-sm mt-1" />
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium mb-1">State</label>
-                      <Field
-                        type="text"
-                        name="state"
-                        placeholder="State"
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
-                      />
-                      <ErrorMessage name="state" component="div" className="text-red-500 text-sm mt-1" />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Save Address As</label>
-                      <div className="flex space-x-2">
-                        <button
-                          type="button"
-                          className={`flex-1 py-2.5 px-3 rounded-lg border flex items-center justify-center transition-all ${
-                            addressType === 'Home' 
-                              ? 'bg-blue-50 border-blue-500 text-blue-700 shadow-sm' 
-                              : 'border-gray-300 hover:border-gray-400'
-                          }`}
-                          onClick={() => setAddressType('Home')}
-                        >
-                          <FaHome className="mr-2" /> Home
-                        </button>
-                        <button
-                          type="button"
-                          className={`flex-1 py-2.5 px-3 rounded-lg border flex items-center justify-center transition-all ${
-                            addressType === 'Office' 
-                              ? 'bg-blue-50 border-blue-500 text-blue-700 shadow-sm' 
-                              : 'border-gray-300 hover:border-gray-400'
-                          }`}
-                          onClick={() => setAddressType('Office')}
-                        >
-                          <FaBriefcase className="mr-2" /> Office
-                        </button>
-                        <button
-                          type="button"
-                          className={`flex-1 py-2.5 px-3 rounded-lg border flex items-center justify-center transition-all ${
-                            addressType === 'Other' 
-                              ? 'bg-blue-50 border-blue-500 text-blue-700 shadow-sm' 
-                              : 'border-gray-300 hover:border-gray-400'
-                          }`}
-                          onClick={() => setAddressType('Other')}
-                        >
-                          <FaMapMarkerAlt className="mr-2" /> Other
-                        </button>
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Payment Method</label>
-                      <div className="space-y-3">
-                        <button
-                          type="button"
-                          className={`w-full p-3.5 rounded-lg border flex items-center justify-between transition-all ${
-                            paymentMethod === 'cod' 
-                              ? 'bg-blue-50 border-blue-500 text-blue-700 shadow-sm' 
-                              : 'border-gray-300 hover:border-gray-400'
-                          }`}
-                          onClick={() => setPaymentMethod('cod')}
-                        >
-                          <div className="flex items-center">
-                            <FaMoneyBillWave className="mr-3 text-green-600" size={18} />
-                            <span>Cash on Delivery</span>
-                          </div>
-                        </button>
-
-                        <button
-                          type="button"
-                          className={`w-full p-3.5 rounded-lg border flex items-center justify-between relative transition-all ${
-                            paymentMethod === 'online' 
-                              ? 'bg-blue-50 border-blue-500 text-blue-700 shadow-sm' 
-                              : 'border-gray-300 hover:border-gray-400'
-                          }`}
-                          onClick={() => setPaymentMethod('online')}
-                        >
-                          <div className="flex items-center">
-                            <FaCreditCard className="mr-3 text-blue-600" size={18} />
-                            <span>Online Payment</span>
-                          </div>
-                          <div className="absolute right-0 top-0 bg-green-500 text-white text-xs px-2 py-1 rounded-bl-lg rounded-tr-lg flex items-center">
-                            <FaPercent className="mr-1" size={10} />
-                            10% off
-                          </div>
-                        </button>
-                      </div>
-                    </div>
-
-                    <button
-                      type="submit"
-                      disabled={isSubmitting || !paymentMethod}
-                      className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-3.5 rounded-lg hover:opacity-90 transition-all pulse-btn disabled:opacity-70 mt-6"
-                    >
-                      {paymentMethod === 'online' ? 'Proceed to Pay' : 'Place Order'}
-                    </button>
-                  </Form>
+              {/* Phone Verification */}
+              <AnimatePresence mode="wait">
+                {step === 1 && !phoneVerified && !showOtpInput && (
+                  <motion.div
+                    key="phone-form"
+                    variants={fadeIn}
+                    initial="hidden"
+                    animate="visible"
+                    exit="hidden"
+                  >
+                    {/* {renderPhoneForm()} */}
+                    <OtpLogin isCheckout={true} setShowOtpInput={setShowOtpInput} setPhoneNumber={setPhoneNumber} />
+                  </motion.div>
                 )}
-              </Formik>
+
+                {step === 1 && showOtpInput && !phoneVerified && (
+                  <motion.div
+                    key="otp-verification"
+                    variants={fadeIn}
+                    initial="hidden"
+                    animate="visible"
+                    exit="hidden"
+                  >
+                    {/* {renderOtpVerification()} */}
+                    <OtpVerification phoneNumber={phoneNumber} showOtpInput={showOtpInput} getDataAfterLogin={getDataAfterLogin} />
+                  </motion.div>
+                )}
+
+                {step === 2 && (
+                  <motion.div
+                    key="checkout-form"
+                    variants={fadeIn}
+                    initial="hidden"
+                    animate="visible"
+                    exit="hidden"
+                  >
+                    {/* {renderCheckoutForm()} */}
+                    <NewCheckoutForm close={onClose} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
-          )}
-        </div>
-      </div>
-    </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 

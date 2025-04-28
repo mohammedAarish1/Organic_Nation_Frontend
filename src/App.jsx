@@ -29,6 +29,7 @@ import AdminLogin from './pages/admin/AdminLogin';
 import { checkAuthStatus } from './features/auth/auth';
 import RecentOrderNotification from './components/recent-order-notification/RecentOrderNotification ';
 import { getProductsData } from './features/filter/filterSlice';
+import Maintanence from './pages/Maintanence';
 
 // Memoized components
 
@@ -92,23 +93,24 @@ function App() {
 
 
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Admin routes */}
-        <Route path="/admin/*" element={
-          isAdminLoggedIn || adminToken ? <AdminRoutes /> : <AdminLogin />
-        } />
+    // <BrowserRouter>
+    //   <Routes>
+    //     {/* Admin routes */}
+    //     <Route path="/admin/*" element={
+    //       isAdminLoggedIn || adminToken ? <AdminRoutes /> : <AdminLogin />
+    //     } />
 
-        {/* Normal routes */}
-        <Route path="*" element={
-          <>
-            <ScrollToTop />
-            <MainContent />
-            <RecentOrderNotification />
-          </>
-        } />
-      </Routes>
-    </BrowserRouter>
+    //     {/* Normal routes */}
+    //     <Route path="*" element={
+    //       <>
+    //         <ScrollToTop />
+    //         <MainContent />
+    //         <RecentOrderNotification />
+    //       </>
+    //     } />
+    //   </Routes>
+    // </BrowserRouter>
+    <Maintanence/>
   )
 }
 

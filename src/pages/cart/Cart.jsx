@@ -428,7 +428,7 @@
 // export default Cart;
 
 
-import React, { lazy, Suspense, useEffect, useMemo } from "react";
+import React, { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { IoIosArrowRoundForward } from "react-icons/io";
@@ -444,8 +444,9 @@ import {
 } from "../../features/cart/cart";
 import { setIsAvailable } from "../../features/check-delivery/checkDelivery";
 import { resetCheckoutStatus } from "../../features/manageOrders/manageOrders";
-// import CheckoutModal from "../../components/CheckoutModal";
+import CheckoutModal from "../../components/CheckoutModal";
 import ClearanceSaleText from "../../components/ClearanceSaleText";
+import OrderSuccessMessage from "../../components/checkout/OrderSuccessMessage";
 
 // Lazy loaded components
 const SingleCartItem = lazy(() => import("../../components/module/cart/SingleCartItem"));
@@ -469,6 +470,7 @@ const CartTableHeader = () => (
 const Cart = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false)
   const {
     cartItemsList,
     loading,
@@ -480,17 +482,17 @@ const Cart = () => {
   const [showCouponCodeList, setShowCouponCodelist] = React.useState(false);
 
   // Memoized calculations
-  const MRPTotal = useMemo(() => 
+  const MRPTotal = useMemo(() =>
     cartItemsList?.reduce((total, product) => (
       Math.round(total + product.price * product.quantity)
     ), 0) || 0
-  , [cartItemsList]);
+    , [cartItemsList]);
 
-  const totalPickleQuantity = useMemo(() => 
+  const totalPickleQuantity = useMemo(() =>
     cartItemsList
       .filter((item) => item.category.includes("Pickles"))
       .reduce((sum, item) => sum + item.quantity, 0)
-  , [cartItemsList]);
+    , [cartItemsList]);
 
   const handleClearCart = () => {
     dispatch(clearCart()).then(() => dispatch(getAllCartItems()));
@@ -503,10 +505,10 @@ const Cart = () => {
   const renderCartItems = () => (
     <Suspense fallback={<tbody className="loader"></tbody>}>
       {cartItemsList?.map((curItem, index) => (
-        <SingleCartItem 
-          key={curItem._id} 
-          curItem={curItem} 
-          index={index} 
+        <SingleCartItem
+          key={curItem._id}
+          curItem={curItem}
+          index={index}
         />
       ))}
     </Suspense>
@@ -523,7 +525,7 @@ const Cart = () => {
 
   return (
     <div>
-      <ClearanceSaleText/>
+      <ClearanceSaleText />
       {totalCartAmount < 399 && totalCartAmount > 0 && (
         <div className="md:mt-0 mt-5 sm:px-0 px-5 text-center italic text-orange-500 md:text-xl font-sans font-bold">
           *CASH ON DELIVERY (COD) is available on all orders above ₹ 399!
@@ -569,104 +571,115 @@ const Cart = () => {
           <div className="w-full h-[1px] bg-[var(--bgColorPrimary)] mt-8" />
         </div>
 
-        <div className="flex lg:w-[80%] w-[90%] mx-auto mt-10 sm:justify-end justify-center font-sans uppercase text-sm tracking-widest">
-          <div className="shadow-md flex flex-col gap-4 p-5 md:w-[35%]">
-            <div className="flex justify-between items-center gap-10">
-              <span>Grand Total:</span>
-              <span>₹ {Math.round(MRPTotal)}</span>
-            </div>
-            <div className="flex justify-between items-center gap-10 font-semibold">
-              <span>Total Discount (-):</span>
-              <span>₹ ({Math.round(MRPTotal - totalCartAmount)})</span>
-            </div>
-            <div className="flex justify-between items-center gap-10">
-              <span>Order Total:</span>
-              <span className="font-semibold">₹ {Math.round(totalCartAmount)}</span>
-            </div>
-
-            <Suspense fallback={<div>Loading...</div>}>
-              <CouponList
-                totalCartAmount={totalCartAmount}
-                totalTax={totalTax}
-                setShowCouponCodelist={setShowCouponCodelist}
-                totalPickleQuantity={totalPickleQuantity}
-                couponCodeApplied={couponCodeApplied}
-                showCouponCodeList={showCouponCodeList}
-                showList={() => setShowCouponCodelist(true)}
-                hideList={() => setShowCouponCodelist(false)}
-              />
-            </Suspense>
-
-            <hr />
-
-            {totalCartAmount < 499 && totalCartAmount > 0 && (
-              <div className="text-center mt-2 font-bold">
-                <p className="text-[12px] text-green-700 capitalize">
-                  ( Add ₹ {499 - totalCartAmount} worth of products more to get FREE SHIPPING !!)
-                </p>
+        {cartItemsList?.length !== 0 && (
+          <div className="flex lg:w-[80%] w-[90%] mx-auto mt-10 sm:justify-end justify-center font-sans uppercase text-sm tracking-widest">
+            <div className="shadow-md flex flex-col gap-4 p-5 md:w-[35%]">
+              <div className="flex justify-between items-center gap-10">
+                <span>Grand Total:</span>
+                <span>₹ {Math.round(MRPTotal)}</span>
               </div>
-            )}
-
-            {couponCodeApplied?.length > 0 && (
-              <div className="text-green-700 font-bold text-xs">
-                <p className="flex items-center gap-1">
-                  Coupon Code Applied <PiSealCheckFill className="text-xl" />
-                </p>
+              <div className="flex justify-between items-center gap-10 font-semibold">
+                <span>Total Discount (-):</span>
+                <span>₹ ({Math.round(MRPTotal - totalCartAmount)})</span>
               </div>
-            )}
+              <div className="flex justify-between items-center gap-10">
+                <span>Order Total:</span>
+                <span className="font-semibold">₹ {Math.round(totalCartAmount)}</span>
+              </div>
 
-            <Suspense fallback={<div className="loader" />}>
-              <CheckDeliveryAvailability />
-            </Suspense>
+              <Suspense fallback={<div>Loading...</div>}>
+                <CouponList
+                  totalCartAmount={totalCartAmount}
+                  totalTax={totalTax}
+                  setShowCouponCodelist={setShowCouponCodelist}
+                  totalPickleQuantity={totalPickleQuantity}
+                  couponCodeApplied={couponCodeApplied}
+                  showCouponCodeList={showCouponCodeList}
+                  showList={() => setShowCouponCodelist(true)}
+                  hideList={() => setShowCouponCodelist(false)}
+                />
+              </Suspense>
 
-            <Link
-              to={user ? "/cart/checkout" : "/otp-login"}
-              onClick={() => dispatch(resetCheckoutStatus(true))}
-            >
-              <div
-                className={`flex justify-center items-center gap-2 transition-all duration-700 text-white rounded-md ${
-                  cartItemsList?.length === 0
+              <hr />
+
+              {totalCartAmount < 499 && totalCartAmount > 0 && (
+                <div className="text-center mt-2 font-bold">
+                  <p className="text-[12px] text-green-700 capitalize">
+                    ( Add ₹ {499 - totalCartAmount} worth of products more to get FREE SHIPPING !!)
+                  </p>
+                </div>
+              )}
+
+              {couponCodeApplied?.length > 0 && (
+                <div className="text-green-700 font-bold text-xs">
+                  <p className="flex items-center gap-1">
+                    Coupon Code Applied <PiSealCheckFill className="text-xl" />
+                  </p>
+                </div>
+              )}
+
+              <Suspense fallback={<div className="loader" />}>
+                <CheckDeliveryAvailability />
+              </Suspense>
+
+              <Link
+                to={user ? "/cart/checkout" : "/otp-login"}
+                onClick={() => dispatch(resetCheckoutStatus(true))}
+              >
+                <div
+                  className={`flex justify-center items-center gap-2 transition-all duration-700 text-white rounded-md ${cartItemsList?.length === 0
                     ? "bg-green-400"
                     : "bg-gradient-to-r to-green-700 from-[var(--themeColor)] hover:from-green-700 hover:to-green-900"
-                }`}
-                data-tooltip-id="checkout-tooltip"
-                data-tooltip-content="Your cart is Empty!"
-                data-tooltip-place="bottom"
-              >
-                <button
-                  type="button"
-                  className="py-3"
-                  disabled={cartItemsList?.length === 0}
+                    }`}
+                  data-tooltip-id="checkout-tooltip"
+                  data-tooltip-content="Your cart is Empty!"
+                  data-tooltip-place="bottom"
                 >
-                  Proceed to Checkout
-                </button>
-                <IoIosArrowRoundForward className="text-3xl" />
-              </div>
+                  <button
+                    type="button"
+                    className="py-3"
+                    disabled={cartItemsList?.length === 0}
+                  >
+                    Proceed to Checkout
+                  </button>
+                  <IoIosArrowRoundForward className="text-3xl" />
+                </div>
 
-              {cartItemsList?.length === 0 && (
-                <Tooltip
-                  id="checkout-tooltip"
-                  style={{
-                    backgroundColor: "gray",
-                    color: "#ffffff",
-                    borderRadius: "10px",
-                    padding: "20px",
-                  }}
-                  place="bottom"
-                  animation="fade"
-                  delayShow={200}
-                  delayHide={300}
-                />
-              )}
-            </Link>
+                {cartItemsList?.length === 0 && (
+                  <Tooltip
+                    id="checkout-tooltip"
+                    style={{
+                      backgroundColor: "gray",
+                      color: "#ffffff",
+                      borderRadius: "10px",
+                      padding: "20px",
+                    }}
+                    place="bottom"
+                    animation="fade"
+                    delayShow={200}
+                    delayHide={300}
+                  />
+                )}
+              </Link>
+              <button
+                type="button"
+                className={`py-1 flex justify-center items-center gap-2 transition-all duration-700 text-white rounded-md ${cartItemsList?.length === 0
+                  ? "bg-green-400"
+                  : " hover:from-green-700 hover:to-green-900 bg-black"
+                  }`}
+                onClick={() => setIsCheckoutOpen(true)}
+              >CHECKOUT  <IoIosArrowRoundForward className="text-3xl" /></button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
-      {/* <CheckoutModal 
-        isOpen={true}
-        // onClose={() => setIsCheckoutOpen(false)}
+      <CheckoutModal
+        isOpen={isCheckoutOpen}
+        onClose={() => setIsCheckoutOpen(false)}
         logo="/api/placeholder/120/40"
-      /> */}
+      />
+
+      {/* <OrderSuccessMessage/> */}
     </div>
   );
 };
