@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 const Maintanence = () => {
   // Set your launch date here (25th May 2025, midnight)
-  const launchDate = new Date(2025, 4, 3, 0, 0, 0); // Note: Months are 0-indexed in JavaScript
+  const launchDate = new Date(2025, 4, 6, 0, 0, 0); // Note: Months are 0-indexed in JavaScript
 
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -70,7 +70,7 @@ const Maintanence = () => {
           </div>
 
           <div className="mt-8 space-y-4">
-            <p className="text-gray-600">All features will remain available during this transition.</p>
+            {/* <p className="text-gray-600">All features will remain available during this transition.</p> */}
             <div className="animate-pulse">
               <span className="inline-block bg-[var(--themeColor)] text-white font-medium py-3 px-6 rounded-full">
                 Stay Tuned!

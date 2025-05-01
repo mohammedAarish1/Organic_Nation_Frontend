@@ -14,6 +14,7 @@ import { clearCart } from '../../features/cart/cart';
 import { initiatePayment } from '../../features/orderPayment/payment';
 import { addOrders } from '../../features/manageOrders/manageOrders';
 import { useNavigate } from 'react-router-dom';
+import { getUserData } from '../../features/auth/auth';
 
 
 const SavedAddressCard = ({
@@ -23,6 +24,20 @@ const SavedAddressCard = ({
     onAddNew,
     onEdit
 }) => {
+    console.log('selectedAddress', selectedAddress)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        if (selectedAddress) {
+            const address = addresses.filter(address => address._id === selectedAddress)
+            console.log('address', address)
+            const pinCode = address[0].pinCode
+
+            checkDeliveryAndCalculateShippingFee(pinCode, dispatch)
+
+        }
+    }, [selectedAddress])
+
     return (
         <div className="mb-6">
             <h3 className="font-medium mb-3 text-lg">Select Delivery Address</h3>
@@ -32,8 +47,8 @@ const SavedAddressCard = ({
                     <motion.div
                         key={address._id}
                         className={`border rounded-lg p-4 cursor-pointer transition-all ${selectedAddress === address._id
-                                ? 'border-blue-500 bg-blue-50 shadow-md'
-                                : 'border-gray-200 hover:border-gray-300 hover:shadow-sm'
+                            ? 'border-blue-500 bg-blue-50 shadow-md'
+                            : 'border-gray-200 hover:border-gray-300 hover:shadow-sm'
                             }`}
                         onClick={() => onSelect(address._id)}
                         whileHover={{ scale: 1.01 }}
@@ -50,10 +65,10 @@ const SavedAddressCard = ({
                                 <div className="flex justify-between items-center mb-1">
                                     <p className="font-medium text-gray-800">{'Aarish'}</p>
                                     <span className={`text-xs px-2 py-1 rounded-full ${address.addressType === 'Home'
-                                            ? 'bg-green-100 text-green-700'
-                                            : address.addressType === 'Office'
-                                                ? 'bg-blue-100 text-blue-700'
-                                                : 'bg-purple-100 text-purple-700'
+                                        ? 'bg-green-100 text-green-700'
+                                        : address.addressType === 'Office'
+                                            ? 'bg-blue-100 text-blue-700'
+                                            : 'bg-purple-100 text-purple-700'
                                         }`}>
                                         {address.addressType}
                                     </span>
@@ -77,7 +92,7 @@ const SavedAddressCard = ({
 
             <motion.button
                 onClick={onAddNew}
-                className="mt-4 w-full py-3 px-4 border border-dashed border-blue-400 rounded-lg flex items-center justify-center text-blue-600 hover:bg-blue-50 transition-colors"
+                className="mt-4 w-full py-1 px-4 border border-dashed border-blue-400 rounded-lg flex items-center justify-center text-blue-600 hover:bg-blue-50 transition-colors"
                 whileHover={{ scale: 1.01, backgroundColor: "rgba(239, 246, 255, 0.6)" }}
                 whileTap={{ scale: 0.99 }}
             >
@@ -151,9 +166,11 @@ const PaymentMethodButton = ({ icon, label, selected, onClick, discount = null }
 };
 
 // FormField component for consistent form inputs
-const FormField = ({ setFieldValue = null, label, name, type = "text", placeholder, disabled = false, as }) => {
+const FormField = ({ setFieldValue = null, label, name, type = "text", placeholder, disabled = false, autoFocus = false, as }) => {
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const inputRef = useRef(null);
+    const { user } = useSelector((state) => state.auth);
     const { shippingFee, userCity, userPincode, userState, error } = useSelector((state) => state.delivery);
 
     const handleOnChange = (e,) => {
@@ -174,12 +191,20 @@ const FormField = ({ setFieldValue = null, label, name, type = "text", placehold
         setFieldValue('state', userState)
     }
 
+
+    useEffect(() => {
+        if (autoFocus && inputRef.current && (!user || !user[name])) {
+            inputRef.current.focus();
+        }
+    }, [autoFocus, name, user]);
+
     return (
         <div>
             <label className="block text-sm font-medium mb-1">{label}</label>
             <Field
                 type={type}
                 name={name}
+                innerRef={inputRef}
                 as={as}
                 placeholder={placeholder}
                 disabled={disabled}
@@ -203,7 +228,7 @@ const NewCheckoutForm = ({ close }) => {
     const { addingNewOrder } = useSelector((state) => state.orders);
     const { shippingFee, userCity, userPincode, userState, error } = useSelector((state) => state.delivery);
 
-
+    console.log('user', user)
     const [addressType, setAddressType] = useState('Home');
     const [paymentMethod, setPaymentMethod] = useState('');
 
@@ -242,23 +267,11 @@ const NewCheckoutForm = ({ close }) => {
         pinCode: '',
         city: '',
         state: '',
-    }
-
-    const handleCheckoutSubmit = (values) => {
-        console.log('values', values)
-        // // Process checkout logic
-        // if (paymentMethod === 'online') {
-        //   // Redirect to payment gateway
-        //   console.log("Redirecting to payment gateway", values, addressType, paymentMethod);
-        // } else {
-        //   // Process COD order
-        //   console.log("Processing COD order", values, addressType, paymentMethod);
-        // }
     };
 
 
-
     const processOrder = (shippingInfo) => {
+
         const merchantTransactionId = generateTransactionID();
         const { discountAmount, taxDiscount } = additionalDiscountforOnlinePayment(totalCartAmount, totalTax);
 
@@ -295,15 +308,19 @@ const NewCheckoutForm = ({ close }) => {
             couponCodeApplied: couponCodeApplied || user?.cart?.couponCodeApplied,
         };
 
+
         if (user && cartItemsList.length > 0) {
+            console.log('check')
             if (paymentMethod === "cash_on_delivery") {
                 dispatch(addOrders(checkoutData)).then((value) => {
                     if (value.type === "manageOrders/addOrders/fulfilled") {
                         close();
+                        dispatch(getUserData())
                         navigate(`/order-confirmed/${value.payload.orderId}`);
                     }
                 });
             } else {
+                console.log('check')
                 dispatch(addOrders(checkoutData)).then((value) => {
                     if (value.type === "manageOrders/addOrders/fulfilled") {
                         dispatch(
@@ -422,9 +439,9 @@ const NewCheckoutForm = ({ close }) => {
         if (!addressToUse || !paymentMethod) return;
 
         const shippingInfo = {
-            fullName: addressToUse.fullName,
+            fullName: user?.fullName,
             email: user?.email,
-            phoneNumber: addressToUse.phoneNumber,
+            phoneNumber: user?.phoneNumber,
             addressType: addressToUse.addressType,
             address: addressToUse.address,
             pinCode: addressToUse.pinCode,
@@ -441,6 +458,7 @@ const NewCheckoutForm = ({ close }) => {
             setSavedAddresses(user.addresses);
             setSelectedAddress(user.addresses[0]._id); // Select first address by default
         } else {
+            console.log('hhhdhdhdhd')
             // No saved addresses, show the form
             setShowAddressForm(true);
         }
@@ -472,8 +490,8 @@ const NewCheckoutForm = ({ close }) => {
                             <PaymentMethodButton
                                 icon={FaCreditCard}
                                 label="Online Payment"
-                                selected={paymentMethod === 'online'}
-                                onClick={() => setPaymentMethod('online')}
+                                selected={paymentMethod === 'online_payment'}
+                                onClick={() => setPaymentMethod('online_payment')}
                                 discount="10% off"
                             />
                         </div>
@@ -484,7 +502,7 @@ const NewCheckoutForm = ({ close }) => {
                         disabled={!paymentMethod || !selectedAddress}
                         className="mt-6"
                     >
-                        {paymentMethod === 'online' ? 'Proceed to Pay' : 'Place Order'}
+                        {paymentMethod === 'online_payment' ? 'Proceed to Pay' : 'Place Order'}
                     </Button>
                 </>
             ) : (
@@ -519,6 +537,8 @@ const NewCheckoutForm = ({ close }) => {
                                     label="Full Name"
                                     name="fullName"
                                     placeholder="Enter your full name"
+                                    autoFocus={true}
+                                    disabled={user?.fullName}
                                 />
 
                                 <FormField
@@ -527,6 +547,7 @@ const NewCheckoutForm = ({ close }) => {
                                     name="email"
                                     type="email"
                                     placeholder="Enter your email"
+                                    disabled={user?.email}
                                 />
 
                                 <FormField
@@ -597,8 +618,8 @@ const NewCheckoutForm = ({ close }) => {
                                         <PaymentMethodButton
                                             icon={FaCreditCard}
                                             label="Online Payment"
-                                            selected={paymentMethod === 'online'}
-                                            onClick={() => setPaymentMethod('online')}
+                                            selected={paymentMethod === 'online_payment'}
+                                            onClick={() => setPaymentMethod('online_payment')}
                                             discount="10% off"
                                         />
                                     </div>
@@ -609,7 +630,7 @@ const NewCheckoutForm = ({ close }) => {
                                     disabled={isSubmitting || !paymentMethod}
                                     className="mt-6"
                                 >
-                                    {paymentMethod === 'online' ? 'Proceed to Pay' : 'Place Order'}
+                                    {paymentMethod === 'online_payment' ? 'Proceed to Pay' : 'Place Order'}
                                 </Button>
                             </Form>
                         )}

@@ -23,18 +23,18 @@ const fadeIn = {
   visible: { opacity: 1, transition: { duration: 0.3 } }
 };
 
-const slideUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: "spring",
-      stiffness: 400,
-      damping: 30
-    }
-  }
-};
+// const slideUp = {
+//   hidden: { opacity: 0, y: 20 },
+//   visible: {
+//     opacity: 1,
+//     y: 0,
+//     transition: {
+//       type: "spring",
+//       stiffness: 400,
+//       damping: 30
+//     }
+//   }
+// };
 
 // Accordion component for collapsible sections
 const Accordion = ({ title, icon, isOpen, setIsOpen, children }) => {
@@ -184,92 +184,92 @@ const CartItem = ({ item, index }) => {
 //   </div>
 // );
 
-// OTP Input component
-const OtpInput = ({ otpInputs, handleOtpChange, handleOtpKeyDown, handleOtpPaste }) => (
-  <div className="flex justify-center gap-3 mb-3">
-    {Array(4).fill(0).map((_, index) => (
-      <motion.div
-        key={index}
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: index * 0.15, duration: 0.3 }}
-      >
-        <input
-          ref={otpInputs[index]}
-          type="text"
-          maxLength={1}
-          className="w-14 h-14 text-center text-xl font-bold border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
-          onChange={(e) => handleOtpChange(index, e.target.value)}
-          onKeyDown={(e) => handleOtpKeyDown(e, index)}
-          onPaste={index === 0 ? handleOtpPaste : null}
-          inputMode="numeric"
-        />
-      </motion.div>
-    ))}
-  </div>
-);
+// // OTP Input component
+// const OtpInput = ({ otpInputs, handleOtpChange, handleOtpKeyDown, handleOtpPaste }) => (
+//   <div className="flex justify-center gap-3 mb-3">
+//     {Array(4).fill(0).map((_, index) => (
+//       <motion.div
+//         key={index}
+//         initial={{ opacity: 0, y: 10 }}
+//         animate={{ opacity: 1, y: 0 }}
+//         transition={{ delay: index * 0.15, duration: 0.3 }}
+//       >
+//         <input
+//           ref={otpInputs[index]}
+//           type="text"
+//           maxLength={1}
+//           className="w-14 h-14 text-center text-xl font-bold border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+//           onChange={(e) => handleOtpChange(index, e.target.value)}
+//           onKeyDown={(e) => handleOtpKeyDown(e, index)}
+//           onPaste={index === 0 ? handleOtpPaste : null}
+//           inputMode="numeric"
+//         />
+//       </motion.div>
+//     ))}
+//   </div>
+// );
 
-// Selection Button component
-const SelectionButton = ({ icon, label, selected, onClick }) => {
-  const IconComponent = icon;
-  return (
-    <button
-      type="button"
-      className={`flex-1 py-2.5 px-3 rounded-lg border flex items-center justify-center transition-all ${selected
-        ? 'bg-blue-50 border-blue-500 text-blue-700 shadow-sm'
-        : 'border-gray-300 hover:border-gray-400'
-        }`}
-      onClick={onClick}
-    >
-      <IconComponent className="mr-2" /> {label}
-    </button>
-  );
-};
+// // Selection Button component
+// const SelectionButton = ({ icon, label, selected, onClick }) => {
+//   const IconComponent = icon;
+//   return (
+//     <button
+//       type="button"
+//       className={`flex-1 py-2.5 px-3 rounded-lg border flex items-center justify-center transition-all ${selected
+//         ? 'bg-blue-50 border-blue-500 text-blue-700 shadow-sm'
+//         : 'border-gray-300 hover:border-gray-400'
+//         }`}
+//       onClick={onClick}
+//     >
+//       <IconComponent className="mr-2" /> {label}
+//     </button>
+//   );
+// };
 
-// Payment Method Button component
-const PaymentMethodButton = ({ icon, label, selected, onClick, discount = null }) => {
-  const IconComponent = icon;
-  return (
-    <button
-      type="button"
-      className={`w-full p-3.5 rounded-lg border flex items-center justify-between relative transition-all ${selected
-        ? 'bg-blue-50 border-blue-500 text-blue-700 shadow-sm'
-        : 'border-gray-300 hover:border-gray-400'
-        }`}
-      onClick={onClick}
-    >
-      <div className="flex items-center">
-        <IconComponent className={`mr-3 ${label.includes('Cash') ? 'text-green-600' : 'text-blue-600'}`} size={18} />
-        <span>{label}</span>
-      </div>
-      {discount && (
-        <motion.div
-          className="absolute right-0 top-0 bg-green-500 text-white text-xs px-2 py-1 rounded-bl-lg rounded-tr-lg flex items-center"
-          initial={{ scale: 1 }}
-          animate={{ scale: [1, 1.1, 1] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-        >
-          <FaPercent className="mr-1" size={10} />
-          {discount}
-        </motion.div>
-      )}
-    </button>
-  );
-};
+// // Payment Method Button component
+// const PaymentMethodButton = ({ icon, label, selected, onClick, discount = null }) => {
+//   const IconComponent = icon;
+//   return (
+//     <button
+//       type="button"
+//       className={`w-full p-3.5 rounded-lg border flex items-center justify-between relative transition-all ${selected
+//         ? 'bg-blue-50 border-blue-500 text-blue-700 shadow-sm'
+//         : 'border-gray-300 hover:border-gray-400'
+//         }`}
+//       onClick={onClick}
+//     >
+//       <div className="flex items-center">
+//         <IconComponent className={`mr-3 ${label.includes('Cash') ? 'text-green-600' : 'text-blue-600'}`} size={18} />
+//         <span>{label}</span>
+//       </div>
+//       {discount && (
+//         <motion.div
+//           className="absolute right-0 top-0 bg-green-500 text-white text-xs px-2 py-1 rounded-bl-lg rounded-tr-lg flex items-center"
+//           initial={{ scale: 1 }}
+//           animate={{ scale: [1, 1.1, 1] }}
+//           transition={{ duration: 1.5, repeat: Infinity }}
+//         >
+//           <FaPercent className="mr-1" size={10} />
+//           {discount}
+//         </motion.div>
+//       )}
+//     </button>
+//   );
+// };
 
 // Button Component
-const Button = ({ children, onClick, type = 'button', disabled = false, className = '' }) => (
-  <motion.button
-    type={type}
-    onClick={onClick}
-    disabled={disabled}
-    className={`w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium py-3.5 rounded-lg hover:opacity-90 transition-all disabled:opacity-70 ${className}`}
-    whileHover={{ scale: 1.02, boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)" }}
-    whileTap={{ scale: 0.98 }}
-  >
-    {children}
-  </motion.button>
-);
+// const Button = ({ children, onClick, type = 'button', disabled = false, className = '' }) => (
+//   <motion.button
+//     type={type}
+//     onClick={onClick}
+//     disabled={disabled}
+//     className={`w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium py-3.5 rounded-lg hover:opacity-90 transition-all disabled:opacity-70 ${className}`}
+//     whileHover={{ scale: 1.02, boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)" }}
+//     whileTap={{ scale: 0.98 }}
+//   >
+//     {children}
+//   </motion.button>
+// );
 
 // Main CheckoutModal Component
 const CheckoutModal = ({ isOpen, onClose }) => {
@@ -285,7 +285,7 @@ const CheckoutModal = ({ isOpen, onClose }) => {
   const [showOtpInput, setShowOtpInput] = useState(false);
   const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState(null)
-  const otpInputs = Array(4).fill(0).map(() => useRef(null));
+  // const otpInputs = Array(4).fill(0).map(() => useRef(null));
 
   const { cartItems, cartItemsList, totalCartAmount, totalTax, couponCodeApplied } = useSelector((state) => state.cart);
   const { checking, shippingFee } = useSelector(state => state.delivery)
@@ -305,39 +305,39 @@ const CheckoutModal = ({ isOpen, onClose }) => {
   const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   // const shippingFee = 5.99;
   const discount = appliedCoupon ? (appliedCoupon.code === 'WELCOME10' ? subtotal * 0.1 : 0) : 0;
-  const total = subtotal + shippingFee - discount;
+  // const total = subtotal + shippingFee - discount;
 
   // Form validation schemas
-  const phoneSchema = Yup.object().shape({
-    phone: Yup.string()
-      .matches(/^\d{10}$/, 'Phone number must be 10 digits')
-      .required('Phone number is required')
-  });
+  // const phoneSchema = Yup.object().shape({
+  //   phone: Yup.string()
+  //     .matches(/^\d{10}$/, 'Phone number must be 10 digits')
+  //     .required('Phone number is required')
+  // });
 
-  const checkoutSchema = Yup.object().shape({
-    phone: Yup.string()
-      .matches(/^\d{10}$/, 'Phone number must be 10 digits')
-      .required('Phone number is required'),
-    fullName: Yup.string()
-      .required('Full name is required')
-      .min(3, 'Name must be at least 3 characters'),
-    email: Yup.string()
-      .email('Invalid email address')
-      .required('Email is required'),
-    address: Yup.string()
-      .required('Address is required')
-      .min(5, 'Address is too short'),
-    pincode: Yup.string()
-      .matches(/^\d{6}$/, 'Pincode must be 6 digits')
-      .required('Pincode is required'),
-    city: Yup.string()
-      .required('City is required'),
-    state: Yup.string()
-      .required('State is required'),
-  });
+  // const checkoutSchema = Yup.object().shape({
+  //   phone: Yup.string()
+  //     .matches(/^\d{10}$/, 'Phone number must be 10 digits')
+  //     .required('Phone number is required'),
+  //   fullName: Yup.string()
+  //     .required('Full name is required')
+  //     .min(3, 'Name must be at least 3 characters'),
+  //   email: Yup.string()
+  //     .email('Invalid email address')
+  //     .required('Email is required'),
+  //   address: Yup.string()
+  //     .required('Address is required')
+  //     .min(5, 'Address is too short'),
+  //   pincode: Yup.string()
+  //     .matches(/^\d{6}$/, 'Pincode must be 6 digits')
+  //     .required('Pincode is required'),
+  //   city: Yup.string()
+  //     .required('City is required'),
+  //   state: Yup.string()
+  //     .required('State is required'),
+  // });
 
   // Handlers
-  const handlePhoneSubmit = () => setShowOtpInput(true);
+  // const handlePhoneSubmit = () => setShowOtpInput(true);
 
 
   const getDataAfterLogin = () => {
@@ -371,11 +371,11 @@ const CheckoutModal = ({ isOpen, onClose }) => {
   };
 
 
-  const handleOtpSubmit = () => {
-    console.log('hello verify', otpInputs)
-    setPhoneVerified(true);
-    setStep(2);
-  };
+  // const handleOtpSubmit = () => {
+  //   console.log('hello verify', otpInputs)
+  //   setPhoneVerified(true);
+  //   setStep(2);
+  // };
 
   // const handleOtpChange = (index, value) => {
   //   console.log('value',value)
@@ -386,57 +386,57 @@ const CheckoutModal = ({ isOpen, onClose }) => {
 
 
 
-  const handleOtpChange = (index, value) => {
-    if (value.length === 1) {
-      // Store the value in the current input
-      otpInputs[index].current.value = value;
+  // const handleOtpChange = (index, value) => {
+  //   if (value.length === 1) {
+  //     // Store the value in the current input
+  //     otpInputs[index].current.value = value;
 
-      if (index < 3) {
-        // Move to next input if not the last one
-        otpInputs[index + 1].current.focus();
-      } else if (index === 3) {
-        // If it's the last digit, collect the full OTP and verify
-        const otpValue = otpInputs.map(input => input.current.value).join('');
-        if (otpValue.length === 4) {
-          const payload = {
-            phoneNumber: phoneNumber,
-            otp: otpValue
-          }
-          dispatch(verifyOTP(payload))
-            .then((value) => {
-              if (value.meta.requestStatus === "fulfilled") {
-                const token = value.payload.accessToken;
-                if (token) {
-                  getDataAfterLogin();
-                  setPhoneVerified(true);
-                  setStep(2);
-                }
-              } else {
-                toast.error(value.payload);
-              }
-            }
-            );
-        }
-      }
-    }
-  };
+  //     if (index < 3) {
+  //       // Move to next input if not the last one
+  //       otpInputs[index + 1].current.focus();
+  //     } else if (index === 3) {
+  //       // If it's the last digit, collect the full OTP and verify
+  //       const otpValue = otpInputs.map(input => input.current.value).join('');
+  //       if (otpValue.length === 4) {
+  //         const payload = {
+  //           phoneNumber: phoneNumber,
+  //           otp: otpValue
+  //         }
+  //         dispatch(verifyOTP(payload))
+  //           .then((value) => {
+  //             if (value.meta.requestStatus === "fulfilled") {
+  //               const token = value.payload.accessToken;
+  //               if (token) {
+  //                 getDataAfterLogin();
+  //                 setPhoneVerified(true);
+  //                 setStep(2);
+  //               }
+  //             } else {
+  //               toast.error(value.payload);
+  //             }
+  //           }
+  //           );
+  //       }
+  //     }
+  //   }
+  // };
 
-  const handleOtpKeyDown = (e, index) => {
-    if (e.key === 'Backspace' && index > 0 && otpInputs[index].current.value === '') {
-      otpInputs[index - 1].current.focus();
-    }
-  };
+  // const handleOtpKeyDown = (e, index) => {
+  //   if (e.key === 'Backspace' && index > 0 && otpInputs[index].current.value === '') {
+  //     otpInputs[index - 1].current.focus();
+  //   }
+  // };
 
-  const handleOtpPaste = (e) => {
-    e.preventDefault();
-    const pastedData = e.clipboardData.getData('text');
-    if (pastedData.length === 4 && /^\d+$/.test(pastedData)) {
-      for (let i = 0; i < 4; i++) {
-        otpInputs[i].current.value = pastedData[i];
-      }
-      setTimeout(handleOtpSubmit, 500);
-    }
-  };
+  // const handleOtpPaste = (e) => {
+  //   e.preventDefault();
+  //   const pastedData = e.clipboardData.getData('text');
+  //   if (pastedData.length === 4 && /^\d+$/.test(pastedData)) {
+  //     for (let i = 0; i < 4; i++) {
+  //       otpInputs[i].current.value = pastedData[i];
+  //     }
+  //     setTimeout(handleOtpSubmit, 500);
+  //   }
+  // };
 
   // const handleApplyCoupon = (coupon) => {
   //   setAppliedCoupon(coupon);

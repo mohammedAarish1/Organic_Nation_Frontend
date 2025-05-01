@@ -28,7 +28,7 @@ import {
     OrderConfirm,
     NoPageFound,
     OtpSubmit,
-    PaymentStatus,
+    // PaymentStatus,
     UserProfile
 } from '../imports';
 import ManageReturns from '../pages/manage-returns/ManageReturns';
@@ -197,7 +197,7 @@ const getRoutes = () => {
         <Route
             key="payment-status"
             path='/payment-status'
-            element={<PaymentStatus />}
+            element={<OrderSuccessMessage />}
         />,
         <Route
             key="no-page-found"

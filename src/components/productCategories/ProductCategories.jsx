@@ -9,7 +9,7 @@ const ProductCategories = () => {
     // Categories images
     const categoriesImages = [
         { 'Organic-Honey': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories_new/1Honey.webp' },
-        { 'Authentic-Pickles': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories_new/2Pickle.webp' },
+        { 'Homestyle-Pickles': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories_new/2Pickle.webp' },
         { 'Chutney-&-Dip': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories_new/3ChutneyAndDip.webp' },
         { 'Fruit-Preserves': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories_new/4FruitPreserves.webp' },
         { 'Seasonings-&-Herbs': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories_new/5SeasoningsAndHerbs.webp' },
