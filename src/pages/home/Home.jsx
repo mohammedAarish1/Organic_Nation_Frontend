@@ -320,7 +320,6 @@ import PopupBanner from '../../components/popup-banner/PopupBanner';
 import CategoryCarousel from '../../components/productCategories/CategoryCarousel';
 import Search from '../../components/search/Search';
 import { addReviews } from '../../features/reviews/reviews';
-import ClearanceSaleText from '../../components/ClearanceSaleText'
 
 // Lazy loaded components
 const BlogSection = lazy(() => import('../../components/blog-section/BlogSection'));
@@ -489,7 +488,6 @@ const Home = memo(() => {
 
 
 
-            <ClearanceSaleText />
 
             <MemoizedPopupBanner />
 

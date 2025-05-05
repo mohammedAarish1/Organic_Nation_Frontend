@@ -445,7 +445,6 @@ import {
 import { setIsAvailable } from "../../features/check-delivery/checkDelivery";
 import { resetCheckoutStatus } from "../../features/manageOrders/manageOrders";
 import CheckoutModal from "../../components/CheckoutModal";
-import ClearanceSaleText from "../../components/ClearanceSaleText";
 import OrderSuccessMessage from "../../components/checkout/OrderSuccessMessage";
 
 // Lazy loaded components
@@ -525,7 +524,6 @@ const Cart = () => {
 
   return (
     <div>
-      <ClearanceSaleText />
       {totalCartAmount < 399 && totalCartAmount > 0 && (
         <div className="md:mt-0 mt-5 sm:px-0 px-5 text-center italic text-orange-500 md:text-xl font-sans font-bold">
           *CASH ON DELIVERY (COD) is available on all orders above ₹ 399!
@@ -622,7 +620,7 @@ const Cart = () => {
                 <CheckDeliveryAvailability />
               </Suspense>
 
-              <Link
+              {/* <Link
                 to={user ? "/cart/checkout" : "/otp-login"}
                 onClick={() => dispatch(resetCheckoutStatus(true))}
               >
@@ -660,12 +658,12 @@ const Cart = () => {
                     delayHide={300}
                   />
                 )}
-              </Link>
+              </Link> */}
               <button
                 type="button"
                 className={`py-1 flex justify-center items-center gap-2 transition-all duration-700 text-white rounded-md ${cartItemsList?.length === 0
                   ? "bg-green-400"
-                  : " hover:from-green-700 hover:to-green-900 bg-black"
+                  : " hover:bg-[var(--accent-color)] bg-custom-gradient hover:brightness-110"
                   }`}
                 onClick={() => setIsCheckoutOpen(true)}
               >CHECKOUT  <IoIosArrowRoundForward className="text-3xl" /></button>

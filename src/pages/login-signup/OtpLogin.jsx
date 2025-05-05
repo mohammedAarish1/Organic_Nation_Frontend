@@ -13,33 +13,65 @@ import { motion } from 'framer-motion';
 import { FaArrowRight } from "react-icons/fa6";
 import { requestOTP } from '../../features/auth/auth';
 import axios from 'axios';
+import OtpVerification from '../../components/auth/OtpVerification';
+import { getAllCartItems, mergeCart } from '../../features/cart/cart';
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
 
 const Button = ({ children, onClick, type = 'button', disabled = false, className = '' }) => (
     <motion.button
-      type={type}
-      onClick={onClick}
-      disabled={disabled}
-      className={`w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium py-3.5 rounded-lg hover:opacity-90 transition-all disabled:opacity-70 ${className}`}
-      whileHover={{ scale: 1.02, boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)" }}
-      whileTap={{ scale: 0.98 }}
+        type={type}
+        onClick={onClick}
+        disabled={disabled}
+        className={`w-full bg-custom-gradient text-white font-medium py-3.5 rounded-lg hover:opacity-90 transition-all disabled:opacity-70 ${className}`}
+        whileHover={{ scale: 1.02, boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)" }}
+        whileTap={{ scale: 0.98 }}
     >
-      {children}
+        {children}
     </motion.button>
-  );
+);
 
 
 
-const OtpLogin = ({ isCheckout,setShowOtpInput, setPhoneNumber}) => {
+const OtpLogin = ({ isCheckout = false, setShowOtpInput, setPhoneNumber }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [submittedPhoneNumber, setSubmittedPhoneNumber] = useState('')
     const [showReferralCode, setShowReferralCode] = useState(false);
 
+    const [showOTPFields, setShowOTPFields] = useState(false);
+    const { cartItems, cartItemsList, totalCartAmount, totalTax, couponCodeApplied } = useSelector((state) => state.cart);
 
     const { sendingOTP } = useSelector(state => state.auth);
+
+    const getDataAfterLogin = () => {
+        const localCart = JSON.parse(localStorage.getItem("cart") || "[]");
+        if (localCart.length > 0) {
+            const cart = {
+                items: localCart,
+                totalCartAmount: totalCartAmount,
+                totalTaxes: totalTax,
+                couponCodeApplied: couponCodeApplied
+            }
+
+
+            dispatch(mergeCart({ cart })).then(() => {
+                dispatch(getAllCartItems());
+                // if (checkoutStatus) {
+                //   navigate("/cart/checkout");
+                // } else {
+                //   navigate("/");
+                // }
+            });
+        }
+        //  else {
+        //   navigate("/");
+        // }
+
+    };
+
+
 
     // Initial values now include referral code
     const initialValues = {
@@ -51,11 +83,11 @@ const OtpLogin = ({ isCheckout,setShowOtpInput, setPhoneNumber}) => {
     const phoneRegExp = /^(\+\d{1,3}[- ]?)?\d{10}$/;
 
 
- const phoneSchema = Yup.object().shape({
-    phone: Yup.string()
-      .matches(/^\d{10}$/, 'Phone number must be 10 digits')
-      .required('Phone number is required')
-  });
+    //  const phoneSchema = Yup.object().shape({
+    //     phone: Yup.string()
+    //       .matches(/^\d{10}$/, 'Phone number must be 10 digits')
+    //       .required('Phone number is required')
+    //   });
 
     // Validation schema with optional referral code
     const phoneNumberSchema = Yup.object({
@@ -82,14 +114,14 @@ const OtpLogin = ({ isCheckout,setShowOtpInput, setPhoneNumber}) => {
 
     // Handle form submission
     const handlePhoneNumberSubmit = (values) => {
-        console.log('values',values)
+        console.log('values', values)
         let phoneNumber = '+91' + values.phoneNumber;
         setSubmittedPhoneNumber(phoneNumber);
-        if(isCheckout){
+        if (isCheckout) {
 
             setPhoneNumber(phoneNumber);
         }
-        console.log('phnenumber',phoneNumber)
+        console.log('phnenumber', phoneNumber)
 
         // Prepare data to send, including referral code if provided
         const payload = { phoneNumber, ...(showReferralCode && { referralCode: values.referralCode }) }
@@ -124,7 +156,8 @@ const OtpLogin = ({ isCheckout,setShowOtpInput, setPhoneNumber}) => {
                     if (isCheckout) {
                         setShowOtpInput(true)
                     } else {
-                        navigate('/otp-submit', { state: payload })
+                        // navigate('/otp-submit', { state: payload })
+                        setShowOTPFields(true)
                     }
                 }
             })
@@ -137,32 +170,32 @@ const OtpLogin = ({ isCheckout,setShowOtpInput, setPhoneNumber}) => {
     }
     if (isCheckout) {
         return (
-              <div className="mb-6">
-                  <h3 className="font-medium mb-3 text-lg">Enter your phone number</h3>
-                  <Formik
+            <div className="mb-6">
+                <h3 className="font-medium mb-3 text-lg">Enter your phone number</h3>
+                <Formik
                     initialValues={initialValues}
                     // validationSchema={phoneNumberSchema}
                     onSubmit={handlePhoneNumberSubmit}
-                  >
+                >
                     {({ isSubmitting }) => (
-                      <Form>
-                        <div className="mb-4">
-                          <Field
-                            type="text"
-                            name="phoneNumber"
-                            placeholder="10-digit phone number"
-                            className="w-full p-3.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
-                          />
-                          <ErrorMessage name="phoneNumber" component="div" className="text-red-500 text-sm mt-1" />
-                        </div>
-            
-                        <Button type="submit" disabled={isSubmitting}>
-                          {isSubmitting ? 'Sending OTP...' : 'Add Address'}
-                        </Button>
-                      </Form>
+                        <Form>
+                            <div className="mb-4">
+                                <Field
+                                    type="text"
+                                    name="phoneNumber"
+                                    placeholder="10-digit phone number"
+                                    className="w-full p-3.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                                />
+                                <ErrorMessage name="phoneNumber" component="div" className="text-red-500 text-sm mt-1" />
+                            </div>
+
+                            <Button type="submit" disabled={isSubmitting}>
+                                {isSubmitting ? 'Sending OTP...' : 'Add Address'}
+                            </Button>
+                        </Form>
                     )}
-                  </Formik>
-                </div>
+                </Formik>
+            </div>
         )
     } else {
         return (
@@ -189,99 +222,109 @@ const OtpLogin = ({ isCheckout,setShowOtpInput, setPhoneNumber}) => {
                         {/* Right side - Form Section */}
                         <div className='sm:w-[60%]'>
                             <div className="sm:w-[80%] mx-auto">
-                                <Formik
-                                    initialValues={initialValues}
-                                    validationSchema={phoneNumberSchema}
-                                    onSubmit={handlePhoneNumberSubmit}
-                                >
-                                    {({ values }) => (
-                                        <Form>
-                                            <div className='flex flex-col gap-5'>
-                                                {/* Phone Number Field */}
-                                                <div className='flex flex-col gap-1'>
-                                                    <label
-                                                        htmlFor="phoneNumber"
-                                                        className='text-[var(--bgColorSecondary)]'
-                                                    >
-                                                        Enter Your 10 digit Phone Number
-                                                    </label>
-                                                    <div className='flex items-center gap-2 border border-[var(--bgColorSecondary)] rounded-md'>
-                                                        <div className='flex justify-center items-center pl-2 pr-1 gap-1 text-[var(--bgColorSecondary)]'>
-                                                            <img src='https://organicnationmages.s3.ap-south-1.amazonaws.com/other_images/flag.png' alt="country_flag" className='w-8' />
-                                                            <span>+91</span>
-                                                        </div>
-                                                        <div className='w-full'>
-                                                            <Field
-                                                                type="text"
-                                                                placeholder='123-4567-890'
-                                                                name='phoneNumber'
-                                                                className='outline-none w-full bg-transparent py-2 text-[var(--bgColorSecondary)] tracking-widest'
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                    <ErrorMessage name="phoneNumber" component="div" className='text-red-600 text-[14px]' />
-                                                </div>
+                                {showOTPFields ? (
+                                    <OtpVerification
+                                    isCheckout={true}
+                                        phoneNumber={submittedPhoneNumber}
+                                        showOtpInput={showOTPFields}
+                                        getDataAfterLogin={getDataAfterLogin}
+                                    />
 
-                                                {/* Referral Code Toggle */}
-                                                <div className='flex items-center gap-2'>
-                                                    <input
-                                                        type="checkbox"
-                                                        id="hasReferralCode"
-                                                        checked={showReferralCode}
-                                                        onChange={toggleReferralCode}
-                                                        className='text-gray-500'
-                                                    />
-                                                    <label
-                                                        htmlFor="hasReferralCode"
-                                                        className='text-gray-500'
-                                                    >
-                                                        Have a referral code? (optional)
-                                                    </label>
-                                                </div>
-
-                                                {/* Conditional Referral Code Field */}
-                                                {showReferralCode && (
+                                ) : (
+                                    <Formik
+                                        initialValues={initialValues}
+                                        validationSchema={phoneNumberSchema}
+                                        onSubmit={handlePhoneNumberSubmit}
+                                    >
+                                        {({ values }) => (
+                                            <Form>
+                                                <div className='flex flex-col gap-5'>
+                                                    {/* Phone Number Field */}
                                                     <div className='flex flex-col gap-1'>
                                                         <label
-                                                            htmlFor="referralCode"
+                                                            htmlFor="phoneNumber"
                                                             className='text-[var(--bgColorSecondary)]'
                                                         >
-                                                            Enter Referral Code
+                                                            Enter Your 10 digit Phone Number
                                                         </label>
-                                                        <Field
-                                                            type="text"
-                                                            // placeholder='Enter referral code'
-                                                            name='referralCode'
-                                                            className='outline-none w-full bg-transparent py-2 px-2 border border-[var(--bgColorSecondary)] rounded-md text-[var(--bgColorSecondary)] tracking-widest'
-                                                        />
-                                                        <ErrorMessage name="referralCode" component="div" className='text-red-600 text-[14px]' />
+                                                        <div className='flex items-center gap-2 border border-[var(--bgColorSecondary)] rounded-md'>
+                                                            <div className='flex justify-center items-center pl-2 pr-1 gap-1 text-[var(--bgColorSecondary)]'>
+                                                                <img src='https://organicnationmages.s3.ap-south-1.amazonaws.com/other_images/flag.png' alt="country_flag" className='w-8' />
+                                                                <span>+91</span>
+                                                            </div>
+                                                            <div className='w-full'>
+                                                                <Field
+                                                                    type="text"
+                                                                    placeholder='123-4567-890'
+                                                                    name='phoneNumber'
+                                                                    className='outline-none w-full bg-transparent py-2 text-[var(--bgColorSecondary)] tracking-widest'
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        <ErrorMessage name="phoneNumber" component="div" className='text-red-600 text-[14px]' />
                                                     </div>
-                                                )}
 
-                                                {/* Submit Button */}
-                                                <div>
-                                                    <button
-                                                        type="submit"
-                                                        className='p-2 text-[#712522] bg-[var(--bgColorSecondary)] hover:bg-green-500 hover:text-white transition-all duration-300 w-full flex justify-center items-center gap-2 rounded-md'
-                                                    >
-                                                        Send OTP
-                                                        {sendingOTP ? (
-                                                            <ImSpinner9 className='animate-spin' />
-                                                        ) : (
-                                                            <FaArrowRight />
-                                                        )}
-                                                    </button>
+                                                    {/* Referral Code Toggle */}
+                                                    <div className='flex items-center gap-2'>
+                                                        <input
+                                                            type="checkbox"
+                                                            id="hasReferralCode"
+                                                            checked={showReferralCode}
+                                                            onChange={toggleReferralCode}
+                                                            className='text-gray-500'
+                                                        />
+                                                        <label
+                                                            htmlFor="hasReferralCode"
+                                                            className='text-gray-500'
+                                                        >
+                                                            Have a referral code? (optional)
+                                                        </label>
+                                                    </div>
+
+                                                    {/* Conditional Referral Code Field */}
+                                                    {showReferralCode && (
+                                                        <div className='flex flex-col gap-1'>
+                                                            <label
+                                                                htmlFor="referralCode"
+                                                                className='text-[var(--bgColorSecondary)]'
+                                                            >
+                                                                Enter Referral Code
+                                                            </label>
+                                                            <Field
+                                                                type="text"
+                                                                // placeholder='Enter referral code'
+                                                                name='referralCode'
+                                                                className='outline-none w-full bg-transparent py-2 px-2 border border-[var(--bgColorSecondary)] rounded-md text-[var(--bgColorSecondary)] tracking-widest'
+                                                            />
+                                                            <ErrorMessage name="referralCode" component="div" className='text-red-600 text-[14px]' />
+                                                        </div>
+                                                    )}
+
+                                                    {/* Submit Button */}
+                                                    <div>
+                                                        <button
+                                                            type="submit"
+                                                            className='p-2 text-[#712522] bg-[var(--bgColorSecondary)] hover:bg-green-500 hover:text-white transition-all duration-300 w-full flex justify-center items-center gap-2 rounded-md'
+                                                        >
+                                                            Send OTP
+                                                            {sendingOTP ? (
+                                                                <ImSpinner9 className='animate-spin' />
+                                                            ) : (
+                                                                <FaArrowRight />
+                                                            )}
+                                                        </button>
+                                                    </div>
+
+                                                    {/* Resend OTP */}
+                                                    {/* <ResendOTP
+                                                        phoneNumber={submittedPhoneNumber}
+                                                        handleResendOTP={handlePhoneNumberSubmit}
+                                                    /> */}
                                                 </div>
-
-                                                {/* Resend OTP */}
-                                                <ResendOTP
-                                                    phoneNumber={submittedPhoneNumber}
-                                                    handleResendOTP={handlePhoneNumberSubmit}
-                                                />
-                                            </div>
-                                        </Form>
-                                    )}
-                                </Formik>
+                                            </Form>
+                                        )}
+                                    </Formik>
+                                )}
                             </div>
                         </div>
                     </div>

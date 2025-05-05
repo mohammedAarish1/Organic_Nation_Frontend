@@ -10,7 +10,7 @@ export default {
         "xs":"450px"
       },
       backgroundImage: {
-        'custom-gradient': 'linear-gradient(to right, #6D613B, #D3BB71)',
+        'custom-gradient': 'linear-gradient(135deg, #7A2E1D, #9B7A2F)',
       },
       // keyframes:{
       //   'slide-in': {

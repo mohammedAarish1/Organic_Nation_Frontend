@@ -47,7 +47,7 @@ const Accordion = ({ title, icon, isOpen, setIsOpen, children }) => {
         onClick={() => setIsOpen(!isOpen)}
       >
         <span className="font-medium flex items-center">
-          <IconComponent className="mr-2 text-blue-600" />
+          <IconComponent className="mr-2 text-[var(--accent-color)]" />
           {title}
         </span>
         <motion.div
@@ -276,6 +276,7 @@ const CheckoutModal = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(state => state.auth)
   console.log('user', user)
+  console.log('isOpen', isOpen)
   const [step, setStep] = useState(1);
   const [orderSummaryOpen, setOrderSummaryOpen] = useState(false);
   const [couponOpen, setCouponOpen] = useState(false);
@@ -766,7 +767,7 @@ const CheckoutModal = ({ isOpen, onClose }) => {
               </div>
               <div className="text-right">
                 <p
-                  className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+                  className="text-xl font-bold bg-[var(--text-color)] bg-clip-text text-transparent"
                 >
                   ₹ {totalCartAmount + shippingFee}
                 </p>

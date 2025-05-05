@@ -856,7 +856,7 @@ console.log('paymentStatus',paymentStatus)
                     }}
                 >
                     {/* Success header with gradient background */}
-                    <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-6 sm:py-8 px-4 sm:px-6 relative overflow-hidden flex-shrink-0">
+                    <div className="bg-custom-gradient text-white py-6 sm:py-8 px-4 sm:px-6 relative overflow-hidden flex-shrink-0">
                         {/* Success content with improved animations */}
                         <div className="relative z-10">
                             <motion.div
@@ -923,11 +923,11 @@ console.log('paymentStatus',paymentStatus)
                                     whileHover={{ boxShadow: "0 4px 12px rgba(37, 99, 235, 0.15)" }}
                                 >
                                     <div className="flex items-center mb-3">
-                                        <FaRegClock className="text-blue-600 mr-2" />
+                                        <FaRegClock className="text-[var(--accent-color)] mr-2" />
                                         <h3 className="font-medium text-sm sm:text-base">Estimated Delivery</h3>
                                     </div>
 
-                                    <p className="font-bold text-blue-600 mb-4 text-sm sm:text-base">
+                                    <p className="font-bold text-[var(--text-color)] mb-4 text-sm sm:text-base">
                                         {getEstimatedDeliveryDate(orderDetails.createdAt)}
                                     </p>
 
@@ -1008,7 +1008,7 @@ console.log('paymentStatus',paymentStatus)
                                 >
                                     <span className="text-gray-600 text-sm">Order Amount</span>
                                     <motion.span
-                                        className="font-bold text-lg sm:text-xl text-blue-700"
+                                        className="font-bold text-lg sm:text-xl text-[var(--text-color)]"
                                         initial={{ scale: 1 }}
                                         animate={{ scale: [1, 1.05, 1] }}
                                         transition={{ delay: 1, duration: 0.5 }}
@@ -1028,7 +1028,7 @@ console.log('paymentStatus',paymentStatus)
                         transition={{ delay: 0.8 }}
                     >
                         <motion.button
-                            className="py-3 border border-blue-600 text-blue-600 rounded-lg font-medium flex items-center justify-center gap-2 w-full"
+                            className="py-3 border border-[var(--accent-color)] text-[var(--accent-color)] rounded-lg font-medium flex items-center justify-center gap-2 w-full"
                             whileHover={{ scale: 1.02, boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)" }}
                             whileTap={{ scale: 0.98 }}
                             onClick={() => navigate('/shop/all')}
@@ -1036,7 +1036,7 @@ console.log('paymentStatus',paymentStatus)
                             Continue Shopping
                         </motion.button>
                         <motion.button
-                            className="py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-medium flex items-center justify-center gap-2 w-full shadow-md"
+                            className="py-3 bg-custom-gradient text-white rounded-lg font-medium flex items-center justify-center gap-2 w-full shadow-md"
                             whileHover={{
                                 scale: 1.02,
                                 boxShadow: "0 10px 15px -3px rgba(37, 99, 235, 0.2)"

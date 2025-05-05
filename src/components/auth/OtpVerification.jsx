@@ -44,7 +44,7 @@ const OtpInput = ({ otpInputs, handleOtpChange, handleOtpKeyDown, handleOtpPaste
                     ref={otpInputs[index]}
                     type="text"
                     maxLength={1}
-                    className="w-14 h-14 text-center text-xl font-bold border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+                    className="w-14 h-14 text-center text-xl font-bold border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)] shadow-sm"
                     onChange={(e) => handleOtpChange(index, e.target.value)}
                     onKeyDown={(e) => handleOtpKeyDown(e, index)}
                     onPaste={index === 0 ? handleOtpPaste : null}
@@ -57,7 +57,7 @@ const OtpInput = ({ otpInputs, handleOtpChange, handleOtpKeyDown, handleOtpPaste
 
 
 
-const OtpVerification = ({phoneNumber,showOtpInput,getDataAfterLogin}) => {
+const  OtpVerification = ({isCheckout=false,phoneNumber,showOtpInput,getDataAfterLogin}) => {
 
     const dispatch=useDispatch()
     const otpInputs = Array(4).fill(0).map(() => useRef(null));
@@ -149,7 +149,7 @@ const OtpVerification = ({phoneNumber,showOtpInput,getDataAfterLogin}) => {
             initial="hidden"
             animate="visible"
         >
-            <h3 className="font-medium mb-3 text-lg">Enter OTP sent to your phone</h3>
+            <h3 className={`font-medium mb-3 text-lg ${isCheckout && 'text-gray-400 text-center text-[var(--text-color)]'}`}>Enter OTP sent to your phone</h3>
             <OtpInput
                 otpInputs={otpInputs}
                 handleOtpChange={handleOtpChange}
@@ -172,7 +172,7 @@ const OtpVerification = ({phoneNumber,showOtpInput,getDataAfterLogin}) => {
                     transition={{ delay: 0.8, duration: 0.3 }}
                 >
                     Didn't receive the code? <motion.button
-                        className="text-blue-600 font-medium"
+                        className="text-[var(--text-color)] font-medium"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                     >Resend</motion.button>

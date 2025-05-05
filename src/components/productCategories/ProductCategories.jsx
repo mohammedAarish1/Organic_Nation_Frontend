@@ -15,7 +15,7 @@ const ProductCategories = () => {
         { 'Seasonings-&-Herbs': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories_new/5SeasoningsAndHerbs.webp' },
         { 'Organic-Tea': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories_new/6Tea.webp' },
         { Salt: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories_new/7PureSalt.webp' },
-        { Sweetners: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories_new/8sweetners.webp' },
+        { Sweeteners: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories_new/8sweetners.webp' },
         { 'Organic-Oils': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories_new/9OrganicOil.webp' },
         { Oats: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories_new/10oats.webp' },
         { Vegan: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/categories_new/11vegan.webp' },

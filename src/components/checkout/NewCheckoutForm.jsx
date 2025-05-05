@@ -59,7 +59,7 @@ const SavedAddressCard = ({
                                 type="radio"
                                 checked={selectedAddress === address._id}
                                 onChange={() => onSelect(address._id)}
-                                className="mr-3 h-4 w-4 text-blue-600"
+                                className="mr-3 h-4 w-4 text-[var(--accent-color)]"
                             />
                             <div className="flex-1">
                                 <div className="flex justify-between items-center mb-1">
@@ -92,7 +92,7 @@ const SavedAddressCard = ({
 
             <motion.button
                 onClick={onAddNew}
-                className="mt-4 w-full py-1 px-4 border border-dashed border-blue-400 rounded-lg flex items-center justify-center text-blue-600 hover:bg-blue-50 transition-colors"
+                className="mt-4 w-full py-1 px-4 border border-dashed border-blue-400 rounded-lg flex items-center justify-center text-[var(--text-color)] hover:bg-blue-50 transition-colors"
                 whileHover={{ scale: 1.01, backgroundColor: "rgba(239, 246, 255, 0.6)" }}
                 whileTap={{ scale: 0.99 }}
             >
@@ -108,7 +108,7 @@ const Button = ({ children, onClick, type = 'button', disabled = false, classNam
         type={type}
         onClick={onClick}
         disabled={disabled}
-        className={`w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium py-3.5 rounded-lg hover:opacity-90 transition-all disabled:opacity-70 ${className}`}
+        className={`w-full bg-custom-gradient text-white font-medium py-3.5 rounded-lg hover:opacity-90 transition-all disabled:opacity-70 ${className}`}
         whileHover={{ scale: 1.02, boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)" }}
         whileTap={{ scale: 0.98 }}
     >
@@ -123,7 +123,7 @@ const SelectionButton = ({ icon, label, selected, onClick }) => {
         <button
             type="button"
             className={`flex-1 py-2.5 px-3 rounded-lg border flex items-center justify-center transition-all ${selected
-                ? 'bg-blue-50 border-blue-500 text-blue-700 shadow-sm'
+                ? 'bg-blue-50 border-[var(--accent-color)] shadow-sm'
                 : 'border-gray-300 hover:border-gray-400'
                 }`}
             onClick={onClick}
@@ -141,7 +141,7 @@ const PaymentMethodButton = ({ icon, label, selected, onClick, discount = null }
         <button
             type="button"
             className={`w-full p-3.5 rounded-lg border flex items-center justify-between relative transition-all ${selected
-                ? 'bg-blue-50 border-blue-500 text-blue-700 shadow-sm'
+                ? 'bg-blue-50 border-[var(--accent-color)]  shadow-sm'
                 : 'border-gray-300 hover:border-gray-400'
                 }`}
             onClick={onClick}
@@ -210,7 +210,7 @@ const FormField = ({ setFieldValue = null, label, name, type = "text", placehold
                 disabled={disabled}
                 onChange={handleOnChange}
                 onBlur={name === 'pinCode' ? handlePincodeBlur : undefined}
-                className={`w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm ${disabled ? 'bg-gray-100' : ''
+                className={`w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)] shadow-sm ${disabled ? 'bg-gray-100' : ''
                     } ${as === 'textarea' ? 'h-20' : ''}`}
             />
             <ErrorMessage name={name} component="div" className="text-red-500 text-sm mt-1" />
@@ -465,7 +465,7 @@ const NewCheckoutForm = ({ close }) => {
     }, [user]);
 
     return (
-        <div className="slide-in">
+        <div className="slide-in text-[var(--text-color)]">
             {savedAddresses.length > 0 && !showAddressForm ? (
                 <>
                     <SavedAddressCard
@@ -511,7 +511,7 @@ const NewCheckoutForm = ({ close }) => {
                     {savedAddresses.length > 0 && (
                         <motion.button
                             onClick={() => setShowAddressForm(false)}
-                            className="flex items-center text-blue-600 mb-4 hover:underline"
+                            className="flex items-center text-[var(--accent-color)] mb-4 hover:underline"
                             whileHover={{ x: -3 }}
                             whileTap={{ scale: 0.97 }}
                         >

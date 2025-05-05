@@ -17,7 +17,7 @@ body {
 }
 
 :root {
-  --themeColor: #712522;
+  /* --themeColor: #712522; */
   --bgColorPrimary: #1b381a;
   /* --bgColorSecondary: #f0ece0; */
   --bgColorSecondary: #ffffff;
@@ -26,6 +26,16 @@ body {
   --paraTextColor: #6d613b;
   --otherTextColor: #000000;
   --gradient: linear-gradient(#6d613b, #d3bb71);
+
+/* new colors  */
+  --themeColor: #7A2E1D;       /* Deep Maroon */
+  --accent-color: #9B7A2F;        /* Earthy Gold */
+  --background-color: #F5EFE6;    /* Soft Beige */
+  --text-color: #3E2C1B;          /* Tree Bark Brown */
+  --text-light-color: #FFFFFF;    /* Pure White */
+  --secondary-color: #6B8E23;     /* Olive Green (optional) */
+  --neutral-color: #DCD2C0;       /* Muted Sand (optional) */
+  --alert-color: #D87C45;  
 }
 
 /* ============== 

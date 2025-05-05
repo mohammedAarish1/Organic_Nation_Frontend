@@ -16,7 +16,7 @@ const icons = [
     { name:'Oils',category: 'Organic-Oils', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/oils.webp' },
     { name:'Preserves',category: 'Fruit-Preserves', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/preserves.webp' },
     { name:'Vegan',category: 'Vegan', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/soyaChaap.webp' },
-    { name:'Sweetners',category: 'Sweetners', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/sugar.webp' },
+    { name:'Sweeteners',category: 'Sweeteners', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/sugar.webp' },
     { name:'Tea',category: 'Organic-Tea', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/tea.webp' },
 ];
 
