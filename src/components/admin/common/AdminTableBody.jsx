@@ -145,8 +145,8 @@ const AdminTableBody = memo(({
                     switch (header.label) {
                         case 'Total':
                             return <td key={header.label} className="p-3">{data[header.key] + data['shippingFee']}</td>;
-                        case 'Receiver':
-                            return <td key={header.label} className="p-3">{data[header.key]?.name}</td>;
+                        // case 'Receiver':
+                        //     return <td key={header.label} className="p-3">{data[header.key]?.name}</td>;
                         case 'Date':
                             return <td key={header.label} className="p-3">{new Date(data[header.key]).toLocaleDateString()}</td>;
                         case 'Time':

@@ -87,7 +87,7 @@ const RecentOrderNotification = () => {
 
     return (
         <div className="fixed bottom-4 left-4 xs:right-0 right-4 animate-slide-in font-sans z-20 max-w-96">
-            <div className="bg-gradient-to-r to-green-700 from-[var(--themeColor)]  rounded-lg shadow-lg p-4 pt-2 ">
+            <div className="bg-custom-gradient  rounded-lg shadow-lg p-4 pt-2 ">
                 <div className='text-end'>
                 <button
                         onClick={() => dispatch(dismissNotifications())}

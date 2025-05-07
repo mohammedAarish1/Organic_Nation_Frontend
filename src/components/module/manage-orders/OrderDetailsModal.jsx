@@ -9,7 +9,7 @@ const OrderDetailsModal = ({ isOpen, onClose, order, statusIcon }) => {
     { label: "Order Number", value: `#${order?.orderNo}` },
     { label: "Order Date", value: new Date(order?.createdAt).toDateString(), className: "capitalize" },
     { label: "Email", value: order?.userEmail, className: "lowercase" },
-    { label: "Phone", value: order?.receiverDetails.phoneNumber },
+    { label: "Phone", value: order?.phoneNumber },
     { label: "Payment Method", value: order?.paymentMethod },
     { label: "Shipping Address", value: address(order?.shippingAddress), className: "sm:w-1/3 text-end" },
     { label: "Total Price (including shippingFee)", value: `₹${order?.subTotal + order?.shippingFee}` }

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 // import { useDispatch } from 'react-redux';
 
 const icons = [
-    { name:'Pickles',category: 'Authentic-Pickles', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/pickle.webp' },
+    { name:'Pickles',category: 'Homestyle-Pickles', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/pickle.webp' },
     { name:'Honey',category: 'Organic-Honey', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/honey.webp' },
     { name:'Seasonings',category: 'Seasonings-&-Herbs', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/seasonings.webp' },
     { name:'Salt',category: 'Salt', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/salt.webp' },

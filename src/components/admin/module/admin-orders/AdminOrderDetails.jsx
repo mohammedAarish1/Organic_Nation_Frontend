@@ -58,10 +58,9 @@ const AdminOrderDetails = ({ order }) => {
                         <h2 className="text-2xl font-bold mb-4">Order Details</h2>
                         <p><strong>Order No:</strong> {selectedOrder.orderNo}</p>
                         <UpdateInvoiceNo selectedOrder={selectedOrder} />
-                        <p><strong>Receiver:</strong> {selectedOrder.receiverDetails.name}</p>
+                        <p><strong>Receiver:</strong> {selectedOrder.userName}</p>
                         <p><strong>Phone:</strong> {selectedOrder.phoneNumber}</p>
                         <p><strong>Email:</strong> {selectedOrder.userEmail}</p>
-                        <p><strong>Billing Address:</strong> {address(selectedOrder.billingAddress)}</p>
                         <p><strong>Shipping Address:</strong> {address(selectedOrder.shippingAddress)}</p>
                         <p><strong>Payment Method:</strong> {selectedOrder.paymentMethod}</p>
                         <p><strong>Payment Status:</strong> {selectedOrder.paymentStatus}</p>

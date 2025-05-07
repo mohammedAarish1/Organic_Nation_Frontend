@@ -29,7 +29,7 @@ import AdminLogin from './pages/admin/AdminLogin';
 import { checkAuthStatus } from './features/auth/auth';
 import RecentOrderNotification from './components/recent-order-notification/RecentOrderNotification ';
 import { getProductsData } from './features/filter/filterSlice';
-import Maintanence from './pages/Maintanence';
+import Maintanence from './pages/Maintanence'
 
 // Memoized components
 
@@ -110,6 +110,7 @@ function App() {
     //     } />
     //   </Routes>
     // </BrowserRouter>
+
     <Maintanence/>
   )
 }

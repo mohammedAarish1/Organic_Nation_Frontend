@@ -15,8 +15,7 @@ const ProfileSidebar = ({ activeMenu, setActiveMenu, isMobileMenuOpen, setIsMobi
   const navigate=useNavigate()
   const { user } = useSelector(state => state.auth)
 
-  const firstName=user?.firstName || 'You'
-  const lastName=user?.lastName || ''
+  const userName=user?.fullName || 'You'
 
   const menuItems = [
     { id: 'personal-info', label: 'Personal Information', icon: FiUser },
@@ -36,7 +35,7 @@ const ProfileSidebar = ({ activeMenu, setActiveMenu, isMobileMenuOpen, setIsMobi
                 <FiUser className="text-white" size={24} />
               </div>
               <div>
-                <h2 className="text-lg font-semibold capitalize">{firstName+' '+lastName}</h2>
+                <h2 className="text-lg font-semibold capitalize">{userName}</h2>
                 <p className="text-sm text-gray-500">{user.email}</p>
               </div>
             </div>
@@ -100,7 +99,7 @@ const ProfileSidebar = ({ activeMenu, setActiveMenu, isMobileMenuOpen, setIsMobi
                 <FiUser className="text-white" size={20} />
               </div>
               <div>
-                <h2 className="text-sm font-semibold text-gray-600">{firstName+' '+ lastName}</h2>
+                <h2 className="text-sm font-semibold text-gray-600">{userName}</h2>
                 <p className="text-xs text-gray-500">{user.email}</p>
               </div>
             </div>

@@ -98,7 +98,7 @@ const OtherNavItems = () => {
               aria-label="User menu"
             >
               <FaUserCircle className="text-2xl" />
-              <span className='flex gap-[1px] justify-end items-end'>{user.firstName || 'You'}<IoIosArrowDown className='mb-[3px] text-sm' /></span>
+              <span className='flex gap-[1px] justify-end items-end'>{user.fullName || 'You'}<IoIosArrowDown className='mb-[3px] text-sm' /></span>
             </button>
 
             <Suspense fallback={<Loader height='10px'/>}>

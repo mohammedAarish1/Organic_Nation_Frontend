@@ -37,7 +37,6 @@ const AdminReturnDetails = ({curReturn}) => {
                         <p><strong>Item Name:</strong> {selectedReturn.itemName}</p>
                         <p><strong>Weight:</strong> {selectedReturn.weight}</p>
                         <p><strong>Quantity:</strong> {selectedReturn.quantity}</p>
-                        {/* <p><strong>Return Status Address:</strong> {selectedReturn.billingAddress}</p> */}
                         <p><strong>Requested For:</strong> {selectedReturn.returnOptions}</p>
                         <p><strong>Return Status:</strong> {selectedReturn.returnStatus}</p>
                     </div>

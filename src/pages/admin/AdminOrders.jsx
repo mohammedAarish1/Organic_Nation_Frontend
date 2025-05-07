@@ -11,7 +11,7 @@ const AdminTable = lazy(() => import("../../components/admin/common/AdminTable")
 const ReportGenerator = lazy(() => import("../../components/admin/ReportGenerator"))
 
 const headers = [
-  { key: 'receiverDetails', label: 'Receiver' },
+  { key: 'userName', label: 'Receiver' },
   { key: 'phoneNumber', label: 'Phone' },
   { key: 'invoiceNumber', label: 'Order No' },
   { key: 'paymentStatus', label: 'Payment Status' },

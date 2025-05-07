@@ -110,15 +110,13 @@ const UserInformation = () => {
   });
 
   const validationSchema = Yup.object({
-    firstName: Yup.string().required('First name is required'),
-    lastName: Yup.string(),
+    fullName: Yup.string().required('First name is required'),
     email: Yup.string().email('Invalid email').required('Email is required'),
     phoneNumber: Yup.string().matches(/^\d{10}$/, 'Invalid phone number').required('Phone is required'),
   });
 
   const initialValues = {
-    firstName: user?.firstName || '',
-    lastName: user?.lastName || '',
+    fullName: user?.fullName || '',
     email: user?.email || '',
     phoneNumber: user?.phoneNumber?.slice(3) || '',
   };
@@ -186,24 +184,15 @@ const UserInformation = () => {
             onEdit={() => handleEdit('personal')}
             onCancel={() => handleCancel('personal')}
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1  gap-6">
               <FormInput
-                label="First Name"
-                name="firstName"
+                label="Name"
+                name="fullName"
                 disabled={!isEditing.personal}
-                value={values.firstName}
+                value={values.fullName}
                 onChange={handleChange}
-                error={errors.firstName}
-                touched={touched.firstName}
-              />
-              <FormInput
-                label="Last Name"
-                name="lastName"
-                disabled={!isEditing.personal}
-                value={values.lastName}
-                onChange={handleChange}
-                error={errors.lastName}
-                touched={touched.lastName}
+                error={errors.fullName}
+                touched={touched.fullName}
               />
             </div>
             {isEditing.personal && <SaveButton isSubmitting={isSubmitting} loading={loading} />}

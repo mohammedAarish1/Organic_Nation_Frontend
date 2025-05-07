@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 const Maintanence = () => {
   // Set your launch date here (25th May 2025, midnight)
-  const launchDate = new Date(2025, 4, 8, 0, 0, 0); // Note: Months are 0-indexed in JavaScript
+  const launchDate = new Date(2025, 4, 9, 0, 0, 0); // Note: Months are 0-indexed in JavaScript
 
   const [timeLeft, setTimeLeft] = useState({
     days: 0,

@@ -71,11 +71,11 @@ const UserMenu = ({ user, showMenu, menuRef, onLogout }) => (
         <div className="flex items-center gap-3 mb-2">
           <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
             <span className="text-2xl font-semibold text-green-600">
-              {user.firstName?.[0]?.toUpperCase() || 'U'}
+              {user.fullName?.[0]?.toUpperCase() || 'U'}
             </span>
           </div>
           <div>
-            <h3 className="font-semibold text-gray-900 capitalize">{user.firstName || 'User'}</h3>
+            <h3 className="font-semibold text-gray-900 capitalize">{user.fullName || 'User'}</h3>
             <p className="text-sm text-gray-500">{user.phoneNumber || user.email}</p>
           </div>
         </div>

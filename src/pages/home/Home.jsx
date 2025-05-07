@@ -320,7 +320,8 @@ import PopupBanner from '../../components/popup-banner/PopupBanner';
 import CategoryCarousel from '../../components/productCategories/CategoryCarousel';
 import Search from '../../components/search/Search';
 import { addReviews } from '../../features/reviews/reviews';
-
+import BetterImagesSection from '../../components/module/homepage/BetterImagesSection';
+import CertificatesSection from '../../components/module/homepage/CertificatesSection';
 // Lazy loaded components
 const BlogSection = lazy(() => import('../../components/blog-section/BlogSection'));
 const RecipeSection = lazy(() => import('../../components/recipe-section/RecipeSection'));
@@ -382,38 +383,38 @@ const Image = memo(({ src, alt, className }) => {
 });
 
 // Optimized section components
-const BetterImagesSection = memo(({ images }) => (
-    <div className='xs:pt-20 pt-10 pb-20 px-10'>
-        <div className='bg-[var(--hoverEffect)] flex flex-wrap justify-center xs:gap-20 gap-5 py-7'>
-            {images.map((item) => (
-                <div key={item.img} className='flex flex-col justify- items-center '>
-                    <Image
-                        src={item.img}
-                        alt={item.text}
-                        className='xs:w-40 w-16 mb-2'
-                    />
-                    <span className='whitespace text-center w-28'>{item.text}</span>
-                </div>
-            ))}
-        </div>
-    </div>
-));
+// const BetterImagesSection = memo(({ images }) => (
+//     <div className='xs:pt-20 pt-10 pb-20 px-10'>
+//         <div className='bg-[var(--hoverEffect)] flex flex-wrap justify-center xs:gap-20 gap-5 py-7'>
+//             {images.map((item) => (
+//                 <div key={item.img} className='flex flex-col justify- items-center '>
+//                     <Image
+//                         src={item.img}
+//                         alt={item.text}
+//                         className='xs:w-40 w-16 mb-2'
+//                     />
+//                     <span className='whitespace text-center w-28'>{item.text}</span>
+//                 </div>
+//             ))}
+//         </div>
+//     </div>
+// ));
 
-const CertificatesSection = memo(({ certificates }) => (
-    <div className='xs:pt-20 pt-10 pb-20 px-10'>
-        <div className='bg-[var(--hoverEffect)] flex flex-wrap justify-center gap-10 items-center py-7'>
-            {certificates.map((imgPath) => (
-                <div key={imgPath} className='flex flex-col justify-center items-center'>
-                    <Image
-                        src={imgPath}
-                        alt="Certificate"
-                        className='xs:w-40 w-16 mb-2'
-                    />
-                </div>
-            ))}
-        </div>
-    </div>
-));
+// const CertificatesSection = memo(({ certificates }) => (
+//     <div className='xs:pt-20 pt-10 pb-20 px-10'>
+//         <div className='bg-[var(--hoverEffect)] flex flex-wrap justify-center gap-10 items-center py-7'>
+//             {certificates.map((imgPath) => (
+//                 <div key={imgPath} className='flex flex-col justify-center items-center'>
+//                     <Image
+//                         src={imgPath}
+//                         alt="Certificate"
+//                         className='xs:w-40 w-16 mb-2'
+//                     />
+//                 </div>
+//             ))}
+//         </div>
+//     </div>
+// ));
 
 // Optimized LazyLoadSection using useCallback
 const LazyLoadSection = memo(({ children }) => {
@@ -497,12 +498,12 @@ const Home = memo(() => {
 
             <Banner />
 
-            <div className='max-w-2xl font-semibold mx-auto font-sans py-4 italic px-2 text-[10px] xs:text-base'>
+            {/* <div className='max-w-2xl font-semibold mx-auto font-sans py-4 italic px-2 text-[10px] xs:text-base'>
                 <p className="text-[var(--themeColor)] text-center">
                     Refer a friend, and earn a coupon worth ₹100 when they place an order. Share the love!
                     <Link to='/profile/coupons' className='text-green-800 underline'> Share now</Link>
                 </p>
-            </div>
+            </div> */}
 
             <CategoryCarousel />
             <SpotlightSection />

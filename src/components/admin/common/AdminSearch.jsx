@@ -18,15 +18,14 @@ const AdminSearch = ({
         if (searchTerm) {
             if (title === 'Orders') {
                 filtered = filtered.filter(order =>
-                    order.receiverDetails.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    order.receiverDetails.phoneNumber.includes(searchTerm) ||
+                    order.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    order.phoneNumber.includes(searchTerm) ||
                     order.userEmail.toLowerCase().includes(searchTerm.toLowerCase()) ||
                     order.orderNo.toLowerCase().includes(searchTerm.toLowerCase())
                 );
             } else if (title === 'Users') {
                 filtered = filtered.filter(user =>
-                    user?.firstName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    user?.lastName?.includes(searchTerm) ||
+                    user?.fullName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                     user?.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                     user.phoneNumber.toLowerCase().includes(searchTerm.toLowerCase())
                 );

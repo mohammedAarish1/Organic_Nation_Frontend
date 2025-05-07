@@ -15,16 +15,17 @@ import { initiatePayment } from '../../features/orderPayment/payment';
 import { addOrders } from '../../features/manageOrders/manageOrders';
 import { useNavigate } from 'react-router-dom';
 import { getUserData } from '../../features/auth/auth';
+import { ImSpinner9 } from 'react-icons/im';
 
 
 const SavedAddressCard = ({
+    user,
     addresses,
     selectedAddress,
     onSelect,
     onAddNew,
     onEdit
 }) => {
-    console.log('selectedAddress', selectedAddress)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -63,7 +64,7 @@ const SavedAddressCard = ({
                             />
                             <div className="flex-1">
                                 <div className="flex justify-between items-center mb-1">
-                                    <p className="font-medium text-gray-800">{'Aarish'}</p>
+                                    <p className="font-medium text-gray-800">{user?.fullName}</p>
                                     <span className={`text-xs px-2 py-1 rounded-full ${address.addressType === 'Home'
                                         ? 'bg-green-100 text-green-700'
                                         : address.addressType === 'Office'
@@ -75,7 +76,7 @@ const SavedAddressCard = ({
                                 </div>
                                 <p className="text-sm text-gray-500 mb-1">
                                     <span className="inline-block w-20">Phone:</span>
-                                    {address.phoneNumber}
+                                    {user?.phoneNumber}
                                 </p>
                                 <p className="text-sm text-gray-700">
                                     <span className="inline-block w-20">Address:</span>
@@ -310,7 +311,6 @@ const NewCheckoutForm = ({ close }) => {
 
 
         if (user && cartItemsList.length > 0) {
-            console.log('check')
             if (paymentMethod === "cash_on_delivery") {
                 dispatch(addOrders(checkoutData)).then((value) => {
                     if (value.type === "manageOrders/addOrders/fulfilled") {
@@ -320,7 +320,6 @@ const NewCheckoutForm = ({ close }) => {
                     }
                 });
             } else {
-                console.log('check')
                 dispatch(addOrders(checkoutData)).then((value) => {
                     if (value.type === "manageOrders/addOrders/fulfilled") {
                         dispatch(
@@ -416,19 +415,21 @@ const NewCheckoutForm = ({ close }) => {
 
     // Handle form submit for new address
     const handleSubmit = (values, action) => {
-        const shippingInfo = {
-            fullName: values.fullName,
-            email: values.email,
-            phoneNumber: values.phoneNumber.includes('+91') ? values.phoneNumber : `+91${values.phoneNumber}`,
-            addressType: addressType,
-            address: values.address,
-            pinCode: values.pinCode,
-            city: values.city,
-            state: values.state,
-        };
+        console.log('called')
+        // const shippingInfo = {
+        //     fullName: values.fullName,
+        //     email: values.email,
+        //     phoneNumber: values.phoneNumber.includes('+91') ? values.phoneNumber : `+91${values.phoneNumber}`,
+        //     addressType: addressType,
+        //     address: values.address,
+        //     pinCode: values.pinCode,
+        //     city: values.city,
+        //     state: values.state,
+        // };
 
-        processOrder(shippingInfo);
-        action.resetForm();
+        // processOrder(shippingInfo);
+        // action.setSubmitting(false);
+        // action.resetForm();
     };
 
 
@@ -458,7 +459,6 @@ const NewCheckoutForm = ({ close }) => {
             setSavedAddresses(user.addresses);
             setSelectedAddress(user.addresses[0]._id); // Select first address by default
         } else {
-            console.log('hhhdhdhdhd')
             // No saved addresses, show the form
             setShowAddressForm(true);
         }
@@ -469,6 +469,7 @@ const NewCheckoutForm = ({ close }) => {
             {savedAddresses.length > 0 && !showAddressForm ? (
                 <>
                     <SavedAddressCard
+                    user={user}
                         addresses={savedAddresses}
                         selectedAddress={selectedAddress}
                         onSelect={setSelectedAddress}
@@ -630,7 +631,8 @@ const NewCheckoutForm = ({ close }) => {
                                     disabled={isSubmitting || !paymentMethod}
                                     className="mt-6"
                                 >
-                                    {paymentMethod === 'online_payment' ? 'Proceed to Pay' : 'Place Order'}
+                                       {isSubmitting ? <ImSpinner9 className="animate-spin" /> : paymentMethod === 'online_payment' ? 'Proceed to Pay' : 'Place Order'}
+                                    
                                 </Button>
                             </Form>
                         )}

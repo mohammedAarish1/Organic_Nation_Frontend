@@ -585,7 +585,7 @@ const Cart = () => {
                 <span className="font-semibold">₹ {Math.round(totalCartAmount)}</span>
               </div>
 
-              <Suspense fallback={<div>Loading...</div>}>
+              {/* <Suspense fallback={<div>Loading...</div>}>
                 <CouponList
                   totalCartAmount={totalCartAmount}
                   totalTax={totalTax}
@@ -596,7 +596,7 @@ const Cart = () => {
                   showList={() => setShowCouponCodelist(true)}
                   hideList={() => setShowCouponCodelist(false)}
                 />
-              </Suspense>
+              </Suspense> */}
 
               <hr />
 

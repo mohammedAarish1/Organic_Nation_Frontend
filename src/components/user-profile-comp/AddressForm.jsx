@@ -16,8 +16,7 @@ const AddressForm = ({ onSubmit, onCancel, address }) => {
 
 
     const validationSchema = Yup.object({
-        mainAddress: Yup.string().required('Address is required'),
-        optionalAddress: Yup.string(),
+        address: Yup.string().required('Address is required'),
         city: Yup.string().required('City is required'),
         state: Yup.string().required('State is required'),
         pinCode: Yup.string().matches(/^\d{6}$/, 'Invalid PIN code').required('PIN code is required'),
@@ -25,8 +24,7 @@ const AddressForm = ({ onSubmit, onCancel, address }) => {
     });
 
     const initialValues = {
-        mainAddress: address ? address.mainAddress : '',
-        optionalAddress: address ? address.optionalAddress : '',
+        address: address ? address.address : '',
         city: address ? address.city : '',
         state: address ? address.state : '',
         pinCode: address ? address.pinCode : '',
@@ -82,26 +80,17 @@ const AddressForm = ({ onSubmit, onCancel, address }) => {
                         <label className="block text-sm font-medium text-gray-700 mb-2">Address</label>
                         <input
                             type="text"
-                            name="mainAddress"
-                            value={values.mainAddress}
+                            name="address"
+                            value={values.address}
                             onChange={handleChange}
                             className="w-full px-4 py-3 rounded-lg border  focus:border-green-600 focus:ring-2 focus:ring-green-300 outline-none"
                         />
-                        {errors.mainAddress && touched.mainAddress && (
-                            <div className="text-red-500 text-sm mt-1">{errors.mainAddress}</div>
+                        {errors.address && touched.address && (
+                            <div className="text-red-500 text-sm mt-1">{errors.address}</div>
                         )}
                     </div>
 
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Optional Address</label>
-                        <input
-                            type="text"
-                            name="optionalAddress"
-                            value={values.optionalAddress}
-                            onChange={handleChange}
-                            className="w-full px-4 py-3 rounded-lg outline-none border focus:border-green-500 focus:ring-2 focus:ring-green-200"
-                        />
-                    </div>
+                   
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>

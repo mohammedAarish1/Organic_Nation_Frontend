@@ -733,7 +733,7 @@ const CheckoutModal = ({ isOpen, onClose }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            onClick={onClose}
+            // onClick={onClose}
           />
 
           <motion.div
@@ -787,13 +787,12 @@ const CheckoutModal = ({ isOpen, onClose }) => {
               </Accordion>
 
               {/* =========================================== Coupon ============================================= */}
-              <Accordion
+              {/* <Accordion
                 title={appliedCoupon ? `Applied: ${appliedCoupon.code}` : 'Apply Coupon'}
                 icon={FaTag}
                 isOpen={couponOpen}
                 setIsOpen={setCouponOpen}
               >
-                {/* {renderCoupons()} */}
                 <CouponCodeList
                   cartItems={cartItems}
                   totalCartAmount={totalCartAmount}
@@ -801,7 +800,7 @@ const CheckoutModal = ({ isOpen, onClose }) => {
                   couponCodeApplied={couponCodeApplied}
                 />
 
-              </Accordion>
+              </Accordion> */}
 
               {/* Phone Verification */}
               <AnimatePresence mode="wait">

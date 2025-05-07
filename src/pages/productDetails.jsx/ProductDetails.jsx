@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import ProductImages from '../../components/product-images/ProductImages';
 import SingleReview from '../../components/reviews/SingleReview';
 // import ReviewsAndRatings from '../../helper/ReviewsAndRatings';
-import OfferBanner from '../../components/offerBanner/OfferBanner';
+// import OfferBanner from '../../components/offerBanner/OfferBanner';
 import SEO from '../../helper/SEO/SEO';
 // import YouMayAlsoLike from '../../components/module/product-details/YouMayAlsoLike';
 import ProductInfo from '../../components/module/product-details/ProductInfo';
@@ -192,9 +192,9 @@ const ProductDetails = () => {
       />
 
 
-      <div>
+      {/* <div>
         <OfferBanner />
-      </div>
+      </div> */}
       <section className='xs:py-20 py-5  '>
         {/* visible in mobile devices  */}
         <h2 className=' md:hidden block font-semibold xs:text-3xl text-xl xs:px-10 px-4 mb-3' >{product.details.name}</h2>
