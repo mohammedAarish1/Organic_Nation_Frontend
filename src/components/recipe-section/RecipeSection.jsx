@@ -25,8 +25,7 @@ const dispatch=useDispatch()
     return (
         <div className=''>
             <div className='flex flex-col justify-center items-center gap-2 xs:pt-32 xs:pb-20 pt-16 pb-10 px-10'>
-                <Title text="Our Recipes" />
-                <p className='sm:w-1/2 text-center text-[var(--themeColor)]'>Organic Nation offers healthy, delicious recipes made from the freshest organic ingredients. Enjoy nutritious meals that are good for you!</p>
+                <Title heading="Our Recipes"  subHeading='Organic Nation offers healthy, delicious recipes made from the freshest organic ingredients. Enjoy nutritious meals that are good for you!'/>
             </div>
             <div className='flex flex-wrap justify-center items-center gap-10 px-10 py-10'>
                 {recipes?.map(recipe => (

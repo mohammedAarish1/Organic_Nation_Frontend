@@ -490,7 +490,7 @@ const Home = memo(() => {
 
 
 
-            <MemoizedPopupBanner />
+            {/* <MemoizedPopupBanner /> */}
 
             <div className='pb-4 px-1 sm:px-10 md:hidden block'>
                 <Search />
@@ -515,25 +515,25 @@ const Home = memo(() => {
             </Suspense>
 
             <section>
-                <div className='text-center xs:pt-32 pt-16 xs:pb-20 pb-3 px-10'>
+                {/* <div className='text-center xs:pt-32 pt-16 xs:pb-20 pb-3 px-10'>
                     <Title text="How We Are Better !" />
                 </div>
                 <div className='xs:px-10 px-2'>
                     <div className='w-full h-1 bg-gradient-to-r from-[#712522] to-[#bb7d7b]' />
-                </div>
+                </div> */}
                 <LazyLoadSection>
                     <BetterImagesSection images={BETTER_IMAGES} />
                 </LazyLoadSection>
             </section>
 
             <section>
-                <div className='text-center xs:pt-32 xs:pb-20 px-10'>
+                {/* <div className='text-center xs:pt-32 xs:pb-20 px-10'>
                     <Title text="Organic" />
                     <Title text="Certifications" />
                 </div>
                 <div className='xs:px-10 px-2'>
                     <div className='w-full h-1 bg-gradient-to-r from-[#712522] to-[#bb7d7b]' />
-                </div>
+                </div> */}
                 <LazyLoadSection>
                     <CertificatesSection certificates={CERTIFICATES} />
                 </LazyLoadSection>

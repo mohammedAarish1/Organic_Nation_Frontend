@@ -10,7 +10,7 @@ const TestimonialSection = ({ showBtn = false }) => {
     return (
         <div className=' xs:pb-20 pb-10'>
             <div className='text-center xs:pt-32 pt-10 xs:pb-20 px-10'>
-                <Title text="Love From Our Customers" />
+                <Title heading="Love From Our Customers" />
                 <p>Testimonials</p>
             </div>
             <div className='flex flex-wrap justify-center items-center gap-10 px-10 py-10'>

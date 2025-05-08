@@ -236,7 +236,7 @@ const ProductDetails = () => {
 
       <section className='xs:py-20 py-10'>
         <div className=' text-center xs:text-2xl tracking-widest  w-[80%]  mx-auto mb-5'>
-          <Title text='Reviews and Ratings' />
+          <Title heading='Reviews and Ratings' />
           {/* <h3 className='text-center text-[var(--themeColor)] text-xl font-semibold xs:pb-10'>Reviews and Ratings</h3> */}
         </div>
         <div className=' xs:w-[80%] w-[95%]   mx-auto flex flex-col gap-16'>

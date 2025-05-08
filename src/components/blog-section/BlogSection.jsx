@@ -24,8 +24,7 @@ const BlogSection = ({ homePage = false }) => {
     return (
         <div className=''>
             <div className='flex flex-col justify-center items-center gap-2 xs:pt-32 xs:pb-20 pt-16 pb-10 px-10'>
-                <Title text="Our Blogs" />
-                <p className='sm:w-1/2 text-center text-[var(--themeColor)]'>Passionate about sustainable living, Organic Nation offers expert tips, eco-friendly products, and inspiring stories for a greener, healthier lifestyle.</p>
+                <Title heading="Our Blogs" subHeading='Passionate about sustainable living, Organic Nation offers expert tips, eco-friendly products, and inspiring stories for a greener, healthier lifestyle.' />
             </div>
 
             <div className='flex flex-wrap justify-center gap-10 px-10 py-10 '>

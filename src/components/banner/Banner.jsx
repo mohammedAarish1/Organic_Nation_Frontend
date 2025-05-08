@@ -280,12 +280,12 @@ const Banner = () => {
           <picture className="absolute inset-0 w-full h-full">
             <source
               media="(max-width: 640px)"
-              srcSet={banner.image.sm}
+              srcSet={banner.image.lg}
               type="image/webp"
             />
             <source
               media="(max-width: 1024px)"
-              srcSet={banner.image.md}
+              srcSet={banner.image.lg}
               type="image/webp"
             />
             <img

@@ -29,10 +29,10 @@ export const TermsAndConditions = lazy(() => import('./pages/terms&conditions/Te
 export const CsrPolicy = lazy(() => import('./pages/CSR-Policy/CsrPolicy'));
 // export const BulkOrder = lazy(() => import('./pages/bulk-order/BulkOrder'));
 export const ProductDetails = lazy(() => import('./pages/productDetails.jsx/ProductDetails'));
-export const Checkout = lazy(() => import('./pages/checkout/Checkout'));
+// export const Checkout = lazy(() => import('./pages/checkout/Checkout'));
 export const BlogDetail = lazy(() => import('./pages/blog-detail-page/BlogDetail'));
 export const OtpLogin = lazy(() => import('./pages/login-signup/OtpLogin'));
-export const OtpSubmit = lazy(() => import('./pages/login-signup/OtpSubmit'));
+// export const OtpSubmit = lazy(() => import('./pages/login-signup/OtpSubmit'));
 export const Blogs = lazy(() => import('./pages/blogs/Blogs'));
 export const ScrollToTop = lazy(() => import('./helper/ScrollToTop'));
 export const RecipeDetails = lazy(() => import('./pages/recipe-detail-page/RecipeDetails'));

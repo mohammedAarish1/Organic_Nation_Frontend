@@ -1,20 +1,21 @@
 import { useState, useCallback, memo } from 'react';
 import { motion } from 'framer-motion';
+import Title from '../../title/Title';
 
 
 const Image = memo(({ src, alt, className }) => {
-    const [isLoaded, setIsLoaded] = useState(false);
-    const handleLoad = useCallback(() => setIsLoaded(true), []);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const handleLoad = useCallback(() => setIsLoaded(true), []);
 
-    return (
-        <img
-            src={src}
-            alt={alt}
-            className={`${className} ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
-            onLoad={handleLoad}
-            loading="lazy"
-        />
-    );
+  return (
+    <img
+      src={src}
+      alt={alt}
+      className={`${className} ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+      onLoad={handleLoad}
+      loading="lazy"
+    />
+  );
 });
 
 
@@ -47,20 +48,9 @@ const CertificatesSection = memo(({ certificates, title = "Our Certifications" }
     <div className="py-12 sm:py-16 px-4 sm:px-6 lg:px-10" style={{ background: 'var(--background-color)' }}>
       <div className="max-w-6xl mx-auto">
         {/* Section header */}
-        <motion.div 
-          className="text-center mb-8 sm:mb-12"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <h2 className="text-2xl sm:text-3xl font-bold mb-3" style={{ color: 'var(--themeColor)' }}>
-            {title}
-          </h2>
-          <div className="w-16 h-1 mx-auto" style={{ backgroundColor: 'var(--accent-color)' }}></div>
-        </motion.div>
-
+        <Title heading={title} />
         {/* Certificates container */}
-        <motion.div 
+        <motion.div
           className="rounded-lg p-6 sm:p-8"
           style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
           initial="hidden"
@@ -69,20 +59,20 @@ const CertificatesSection = memo(({ certificates, title = "Our Certifications" }
         >
           <div className="flex flex-wrap justify-center gap-6 sm:gap-8 lg:gap-10 items-center">
             {certificates.map((imgPath, index) => (
-              <motion.div 
-                key={imgPath} 
+              <motion.div
+                key={imgPath}
                 className="relative"
                 variants={itemVariants}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
-                whileHover={{ 
-                  scale: 1.05, 
-                  transition: { duration: 0.2 } 
+                whileHover={{
+                  scale: 1.05,
+                  transition: { duration: 0.2 }
                 }}
               >
-                <div 
+                <div
                   className="p-3 sm:p-4 rounded-lg transition-all duration-300"
-                  style={{ 
+                  style={{
                     backgroundColor: hoveredIndex === index ? 'var(--neutral-color)' : 'transparent',
                     boxShadow: hoveredIndex === index ? '0 4px 12px rgba(0,0,0,0.08)' : 'none'
                   }}
@@ -97,9 +87,9 @@ const CertificatesSection = memo(({ certificates, title = "Our Certifications" }
             ))}
           </div>
         </motion.div>
-        
+
         {/* Optional text for trust signaling */}
-        <motion.p 
+        <motion.p
           className="text-center mt-6 text-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.8 }}

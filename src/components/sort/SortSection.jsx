@@ -16,21 +16,21 @@ import { LiaFilterSolid } from "react-icons/lia";
 import { useNavigate } from 'react-router-dom';
 import SortFilter from '../module/shop/SortFilter';
 import Search from "../../components/search/Search"
+import { FiGrid, FiList } from 'react-icons/fi';
 
 
 const SortSection = ({ setGridView, gridView }) => {
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // const [sortValue, setSortValue] = useState("sort");
-  const { categoryBtnValue,categoryList } = useSelector((state) => state.filterData);
+  const { categoryBtnValue, categoryList } = useSelector((state) => state.filterData);
   // for searching in mobile devices
   // const [searchValue, setSearchValue] = useState('');
 
   return (
     <div>
       <div className='md:hidden mb-5'>
-        <Search/>
+        <Search />
       </div>
 
       {/* search filter for mobile */}
@@ -52,11 +52,11 @@ const SortSection = ({ setGridView, gridView }) => {
         </form>
       </div> */}
 
-      <div className='flex md:flex-row flex-row-reverse flex-wrap justify-between sm:gap-0 gap-5 items-center lg:px-32 md:px-2'>
+      <div className=' flex md:flex-row flex-row-reverse flex-wrap justify-between sm:gap-0 gap-5 items-center lg:px-32 md:px-2'>
 
         {/* grid and list view  */}
         <div className=' gap-2 flex'>
-          <div>
+          {/* <div>
             <button
               className={`${!gridView ? "bg-gray-400 p-2 " : "bg-[var(--bgColorPrimary)] text-white p-2"}`}
               onClick={() => setGridView(true)}
@@ -108,7 +108,27 @@ const SortSection = ({ setGridView, gridView }) => {
             >
 
             </Tooltip >
-          </div>
+          </div> */}
+
+          {/* View mode toggle */}
+            <div className="bg-white shadow-md rounded-full p-1 flex">
+              <button
+                onClick={() => setGridView(true)}
+
+                className={`px-4 py-2 rounded-full flex items-center ${gridView ? 'bg-[#712522] text-white' : 'text-gray-600'}`}
+              >
+                <FiGrid className="mr-2" />
+                {/* <span className="hidden sm:inline">Grid View</span> */}
+              </button>
+              <button
+                onClick={() => setGridView(false)}
+
+                className={`px-4 py-2 rounded-full flex items-center ${!gridView ? 'bg-[#712522] text-white' : 'text-gray-600'}`}
+              >
+                <FiList className="mr-2" />
+                {/* <span className="hidden sm:inline">Carousel</span> */}
+              </button>
+            </div>
         </div>
 
 
@@ -120,23 +140,7 @@ const SortSection = ({ setGridView, gridView }) => {
 
         {/* sort options  */}
         <div className="relative md:block hidden">
-          {/* <select
-            id="sort"
-            name="sort"
-            value={sortValue}
-            onChange={(e) => {
-              dispatch(setCategoryBtnValue('all'))
-              dispatch(getFilteredData({ type: 'SORT', value: e.target.value }))
-            }}
-            className="outline-none block w-auto p-2.5"
-          >
-            <option defaultValue="sort" >Sort</option>
-            <option value="low_to_high">Price: Low to High</option>
-            <option value="high_to_low">Price: High to Low</option>
-            <option value="a-z">a - z</option>
-            <option value="z-a">z - a</option>
-          </select> */}
-          <SortFilter/>
+          <SortFilter />
         </div>
 
 

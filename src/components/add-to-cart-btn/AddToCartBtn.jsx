@@ -163,7 +163,7 @@ const AddToCartBtn = ({ item, qty = 1 }) => {
         `}
       >
         <BsCart4 
-          className={`text-whit ${!isOutOfStock && 'animate-bounce'}`} 
+          className={` ${!isOutOfStock && 'animate-bounce'}`} 
         />
         ADD TO CART
       </button>

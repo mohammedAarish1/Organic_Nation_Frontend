@@ -1,10 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import {
-  FaShoppingCart, FaChevronDown, FaChevronUp, FaTag,
-  FaHome, FaBriefcase, FaMapMarkerAlt, FaMoneyBillWave,
-  FaCreditCard, FaPercent
+  FaShoppingCart, FaChevronDown, 
 } from 'react-icons/fa';
 import { RxCross2 } from "react-icons/rx";
 import { motion, AnimatePresence } from 'framer-motion';
@@ -13,8 +10,8 @@ import CouponCodeList from './couponCodeList/CouponCodeList';
 import OtpLogin from '../pages/login-signup/OtpLogin';
 import OtpVerification from './auth/OtpVerification';
 import { getAllCartItems, mergeCart } from '../features/cart/cart';
-import { verifyOTP } from '../features/auth/auth';
-import { toast } from 'react-toastify';
+// import { verifyOTP } from '../features/auth/auth';
+// import { toast } from 'react-toastify';
 import NewCheckoutForm from './checkout/NewCheckoutForm';
 
 // Animation variants
@@ -167,22 +164,7 @@ const CartItem = ({ item, index }) => {
 //   </motion.div>
 // );
 
-// FormField component for consistent form inputs
-// const FormField = ({ label, name, type = "text", placeholder, disabled = false, as }) => (
-//   <div>
-//     <label className="block text-sm font-medium mb-1">{label}</label>
-//     <Field
-//       type={type}
-//       name={name}
-//       as={as}
-//       placeholder={placeholder}
-//       disabled={disabled}
-//       className={`w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm ${disabled ? 'bg-gray-100' : ''
-//         } ${as === 'textarea' ? 'h-20' : ''}`}
-//     />
-//     <ErrorMessage name={name} component="div" className="text-red-500 text-sm mt-1" />
-//   </div>
-// );
+
 
 // // OTP Input component
 // const OtpInput = ({ otpInputs, handleOtpChange, handleOtpKeyDown, handleOtpPaste }) => (
@@ -372,89 +354,6 @@ const CheckoutModal = ({ isOpen, onClose }) => {
   };
 
 
-  // const handleOtpSubmit = () => {
-  //   console.log('hello verify', otpInputs)
-  //   setPhoneVerified(true);
-  //   setStep(2);
-  // };
-
-  // const handleOtpChange = (index, value) => {
-  //   console.log('value',value)
-  //   if (value.length === 1 && index < 3) {
-  //     otpInputs[index + 1].current.focus();
-  //   }
-  // };
-
-
-
-  // const handleOtpChange = (index, value) => {
-  //   if (value.length === 1) {
-  //     // Store the value in the current input
-  //     otpInputs[index].current.value = value;
-
-  //     if (index < 3) {
-  //       // Move to next input if not the last one
-  //       otpInputs[index + 1].current.focus();
-  //     } else if (index === 3) {
-  //       // If it's the last digit, collect the full OTP and verify
-  //       const otpValue = otpInputs.map(input => input.current.value).join('');
-  //       if (otpValue.length === 4) {
-  //         const payload = {
-  //           phoneNumber: phoneNumber,
-  //           otp: otpValue
-  //         }
-  //         dispatch(verifyOTP(payload))
-  //           .then((value) => {
-  //             if (value.meta.requestStatus === "fulfilled") {
-  //               const token = value.payload.accessToken;
-  //               if (token) {
-  //                 getDataAfterLogin();
-  //                 setPhoneVerified(true);
-  //                 setStep(2);
-  //               }
-  //             } else {
-  //               toast.error(value.payload);
-  //             }
-  //           }
-  //           );
-  //       }
-  //     }
-  //   }
-  // };
-
-  // const handleOtpKeyDown = (e, index) => {
-  //   if (e.key === 'Backspace' && index > 0 && otpInputs[index].current.value === '') {
-  //     otpInputs[index - 1].current.focus();
-  //   }
-  // };
-
-  // const handleOtpPaste = (e) => {
-  //   e.preventDefault();
-  //   const pastedData = e.clipboardData.getData('text');
-  //   if (pastedData.length === 4 && /^\d+$/.test(pastedData)) {
-  //     for (let i = 0; i < 4; i++) {
-  //       otpInputs[i].current.value = pastedData[i];
-  //     }
-  //     setTimeout(handleOtpSubmit, 500);
-  //   }
-  // };
-
-  // const handleApplyCoupon = (coupon) => {
-  //   setAppliedCoupon(coupon);
-  //   setCouponOpen(false);
-  // };
-
-  // const handleCheckoutSubmit = (values) => {
-  //   // Process checkout logic
-  //   if (paymentMethod === 'online') {
-  //     // Redirect to payment gateway
-  //     console.log("Redirecting to payment gateway", values, addressType, paymentMethod);
-  //   } else {
-  //     // Process COD order
-  //     console.log("Processing COD order", values, addressType, paymentMethod);
-  //   }
-  // };
-
 
    // Add this in the CheckoutModal component
    useEffect(() => {
@@ -488,7 +387,7 @@ const CheckoutModal = ({ isOpen, onClose }) => {
         </div>
         <div className="flex justify-between mb-1 text-sm">
           <span>Shipping</span>
-          <span>₹ {shippingFee}</span>
+          <span>₹ {totalCartAmount < 499 ? shippingFee : "FREE"}</span>
         </div>
         {discount > 0 && (
           <div className="flex justify-between mb-1 text-sm text-green-600">
@@ -498,222 +397,11 @@ const CheckoutModal = ({ isOpen, onClose }) => {
         )}
         <div className="flex justify-between font-bold text-lg mt-2">
           <span>Total</span>
-          <span>₹ {totalCartAmount + shippingFee}</span>
+          <span>₹ {totalCartAmount + (totalCartAmount < 499 ? shippingFee : 0)}</span>
         </div>
       </motion.div>
     </>
   );
-
-  // Coupon Content
-  // const renderCoupons = () => (
-  //   <>
-  //     <h3 className="text-lg font-bold mb-3">Available Coupons</h3>
-  //     <div className="space-y-3">
-  //       {coupons.map((coupon, index) => (
-  //         <CouponItem
-  //           key={coupon.code}
-  //           coupon={coupon}
-  //           onApply={handleApplyCoupon}
-  //           index={index}
-  //         />
-  //       ))}
-  //     </div>
-  //   </>
-  // );
-
-  // Phone Form Content
-  // const renderPhoneForm = () => (
-  //   <div className="mb-6">
-  //     <h3 className="font-medium mb-3 text-lg">Enter your phone number</h3>
-  //     <Formik
-  //       initialValues={{ phone: '' }}
-  //       validationSchema={phoneSchema}
-  //       onSubmit={handlePhoneSubmit}
-  //     >
-  //       {({ isSubmitting }) => (
-  //         <Form>
-  //           <div className="mb-4">
-  //             <Field
-  //               type="text"
-  //               name="phone"
-  //               placeholder="10-digit phone number"
-  //               className="w-full p-3.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
-  //             />
-  //             <ErrorMessage name="phone" component="div" className="text-red-500 text-sm mt-1" />
-  //           </div>
-
-  //           <Button type="submit" disabled={isSubmitting}>
-  //             {isSubmitting ? 'Sending OTP...' : 'Add Address'}
-  //           </Button>
-  //         </Form>
-  //       )}
-  //     </Formik>
-  //   </div>
-  // );
-
-  // OTP Verification Content
-  // const renderOtpVerification = () => (
-  //   <motion.div
-  //     className="mb-6"
-  //     variants={slideUp}
-  //     initial="hidden"
-  //     animate="visible"
-  //   >
-  //     <h3 className="font-medium mb-3 text-lg">Enter OTP sent to your phone</h3>
-  //     <OtpInput
-  //       otpInputs={otpInputs}
-  //       handleOtpChange={handleOtpChange}
-  //       handleOtpKeyDown={handleOtpKeyDown}
-  //       handleOtpPaste={handleOtpPaste}
-  //     />
-  //     <motion.div
-  //       className="text-center mt-4"
-  //       initial={{ opacity: 0 }}
-  //       animate={{ opacity: 1 }}
-  //       transition={{ delay: 0.6, duration: 0.3 }}
-  //     >
-  //       <Button onClick={handleOtpSubmit}>
-  //         Verify OTP
-  //       </Button>
-  //       <motion.p
-  //         className="text-sm text-gray-500 mt-3"
-  //         initial={{ opacity: 0 }}
-  //         animate={{ opacity: 1 }}
-  //         transition={{ delay: 0.8, duration: 0.3 }}
-  //       >
-  //         Didn't receive the code? <motion.button
-  //           className="text-blue-600 font-medium"
-  //           whileHover={{ scale: 1.05 }}
-  //           whileTap={{ scale: 0.95 }}
-  //         >Resend</motion.button>
-  //       </motion.p>
-  //     </motion.div>
-  //   </motion.div>
-  // );
-
-  // Checkout Form Content
-  // const renderCheckoutForm = () => (
-  //   <div className="slide-in">
-  //     <Formik
-  //       initialValues={{
-  //         phone: '1234567890',
-  //         fullName: '',
-  //         email: '',
-  //         address: '',
-  //         pincode: '',
-  //         city: '',
-  //         state: '',
-  //       }}
-  //       validationSchema={checkoutSchema}
-  //       onSubmit={handleCheckoutSubmit}
-  //     >
-  //       {({ isSubmitting }) => (
-  //         <Form className="space-y-4">
-  //           <FormField
-  //             label="Phone Number"
-  //             name="phone"
-  //             disabled={true}
-  //           />
-
-  //           <FormField
-  //             label="Full Name"
-  //             name="fullName"
-  //             placeholder="Enter your full name"
-  //           />
-
-  //           <FormField
-  //             label="Email"
-  //             name="email"
-  //             type="email"
-  //             placeholder="Enter your email"
-  //           />
-
-  //           <FormField
-  //             label="Address"
-  //             name="address"
-  //             as="textarea"
-  //             placeholder="Enter your address"
-  //           />
-
-  //           <div className="grid grid-cols-2 gap-4">
-  //             <FormField
-  //               label="Pincode"
-  //               name="pincode"
-  //               placeholder="6-digit pincode"
-  //             />
-
-  //             <FormField
-  //               label="City"
-  //               name="city"
-  //               placeholder="City"
-  //             />
-  //           </div>
-
-  //           <FormField
-  //             label="State"
-  //             name="state"
-  //             placeholder="State"
-  //           />
-
-  //           <div>
-  //             <label className="block text-sm font-medium mb-1">Save Address As</label>
-  //             <div className="flex space-x-2">
-  //               <SelectionButton
-  //                 icon={FaHome}
-  //                 label="Home"
-  //                 selected={addressType === 'Home'}
-  //                 onClick={() => setAddressType('Home')}
-  //               />
-  //               <SelectionButton
-  //                 icon={FaBriefcase}
-  //                 label="Office"
-  //                 selected={addressType === 'Office'}
-  //                 onClick={() => setAddressType('Office')}
-  //               />
-  //               <SelectionButton
-  //                 icon={FaMapMarkerAlt}
-  //                 label="Other"
-  //                 selected={addressType === 'Other'}
-  //                 onClick={() => setAddressType('Other')}
-  //               />
-  //             </div>
-  //           </div>
-
-  //           <div>
-  //             <label className="block text-sm font-medium mb-2">Payment Method</label>
-  //             <div className="space-y-3">
-  //               <PaymentMethodButton
-  //                 icon={FaMoneyBillWave}
-  //                 label="Cash on Delivery"
-  //                 selected={paymentMethod === 'cod'}
-  //                 onClick={() => setPaymentMethod('cod')}
-  //               />
-
-  //               <PaymentMethodButton
-  //                 icon={FaCreditCard}
-  //                 label="Online Payment"
-  //                 selected={paymentMethod === 'online'}
-  //                 onClick={() => setPaymentMethod('online')}
-  //                 discount="10% off"
-  //               />
-  //             </div>
-  //           </div>
-
-  //           <Button
-  //             type="submit"
-  //             disabled={isSubmitting || !paymentMethod}
-  //             className="mt-6"
-  //           >
-  //             {paymentMethod === 'online' ? 'Proceed to Pay' : 'Place Order'}
-  //           </Button>
-  //         </Form>
-  //       )}
-  //     </Formik>
-  //   </div>
-  // );
-
-
- 
 
 
   return (
@@ -769,7 +457,7 @@ const CheckoutModal = ({ isOpen, onClose }) => {
                 <p
                   className="text-xl font-bold bg-[var(--text-color)] bg-clip-text text-transparent"
                 >
-                  ₹ {totalCartAmount + shippingFee}
+                  ₹ {totalCartAmount + (totalCartAmount < 499 ? shippingFee : 0)}
                 </p>
               </div>
             </div>

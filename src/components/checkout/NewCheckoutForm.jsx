@@ -2,11 +2,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import {
-    FaShoppingCart, FaChevronDown, FaChevronUp, FaTag,
+ FaChevronDown,
     FaHome, FaBriefcase, FaMapMarkerAlt, FaMoneyBillWave,
     FaCreditCard, FaPercent
 } from 'react-icons/fa';
-import { RxCross2 } from "react-icons/rx";
 import { motion } from 'framer-motion';
 import { additionalDiscountforOnlinePayment, checkDeliveryAndCalculateShippingFee, generateTransactionID } from '../../helper/helperFunctions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -109,7 +108,7 @@ const Button = ({ children, onClick, type = 'button', disabled = false, classNam
         type={type}
         onClick={onClick}
         disabled={disabled}
-        className={`w-full bg-custom-gradient text-white font-medium py-3.5 rounded-lg hover:opacity-90 transition-all disabled:opacity-70 ${className}`}
+        className={`w-full bg-custom-gradient text-white font-medium py-3.5 rounded-lg hover:opacity-90 transition-all disabled:opacity-70 flex items-center justify-center ${className}`}
         whileHover={{ scale: 1.02, boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)" }}
         whileTap={{ scale: 0.98 }}
     >
@@ -300,8 +299,8 @@ const NewCheckoutForm = ({ close }) => {
                 state: shippingInfo.state,
             },
             orderDetails: orderDetails,
-            subTotal: totalCartAmount,
-            taxAmount: totalTax,
+            subTotal: paymentMethod === "cash_on_delivery" ? totalCartAmount : totalCartAmount - discountAmount,
+            taxAmount: paymentMethod === "cash_on_delivery" ? totalTax : totalTax - taxDiscount,
             shippingFee: totalCartAmount < 499 ? shippingFee : 0,
             paymentMethod: paymentMethod,
             paymentStatus: "pending",
@@ -325,7 +324,7 @@ const NewCheckoutForm = ({ close }) => {
                         dispatch(
                             initiatePayment({
                                 number: shippingInfo.phoneNumber.replace('+91', ''),
-                                amount: totalCartAmount + (totalCartAmount < 499 ? shippingFee : 0),
+                                amount:totalCartAmount - discountAmount + (totalCartAmount < 499 ? shippingFee : 0),
                                 merchantTransactionId: merchantTransactionId,
                             })
                         );
@@ -415,21 +414,20 @@ const NewCheckoutForm = ({ close }) => {
 
     // Handle form submit for new address
     const handleSubmit = (values, action) => {
-        console.log('called')
-        // const shippingInfo = {
-        //     fullName: values.fullName,
-        //     email: values.email,
-        //     phoneNumber: values.phoneNumber.includes('+91') ? values.phoneNumber : `+91${values.phoneNumber}`,
-        //     addressType: addressType,
-        //     address: values.address,
-        //     pinCode: values.pinCode,
-        //     city: values.city,
-        //     state: values.state,
-        // };
+        const shippingInfo = {
+            fullName: values.fullName,
+            email: values.email,
+            phoneNumber: values.phoneNumber.includes('+91') ? values.phoneNumber : `+91${values.phoneNumber}`,
+            addressType: addressType,
+            address: values.address,
+            pinCode: values.pinCode,
+            city: values.city,
+            state: values.state,
+        };
 
-        // processOrder(shippingInfo);
-        // action.setSubmitting(false);
-        // action.resetForm();
+        processOrder(shippingInfo);
+        action.setSubmitting(false);
+        action.resetForm();
     };
 
 
@@ -469,7 +467,7 @@ const NewCheckoutForm = ({ close }) => {
             {savedAddresses.length > 0 && !showAddressForm ? (
                 <>
                     <SavedAddressCard
-                    user={user}
+                        user={user}
                         addresses={savedAddresses}
                         selectedAddress={selectedAddress}
                         onSelect={setSelectedAddress}
@@ -493,7 +491,7 @@ const NewCheckoutForm = ({ close }) => {
                                 label="Online Payment"
                                 selected={paymentMethod === 'online_payment'}
                                 onClick={() => setPaymentMethod('online_payment')}
-                                discount="10% off"
+                                discount="5% off"
                             />
                         </div>
                     </div>
@@ -621,7 +619,7 @@ const NewCheckoutForm = ({ close }) => {
                                             label="Online Payment"
                                             selected={paymentMethod === 'online_payment'}
                                             onClick={() => setPaymentMethod('online_payment')}
-                                            discount="10% off"
+                                            discount="5% off"
                                         />
                                     </div>
                                 </div>
@@ -631,8 +629,8 @@ const NewCheckoutForm = ({ close }) => {
                                     disabled={isSubmitting || !paymentMethod}
                                     className="mt-6"
                                 >
-                                       {isSubmitting ? <ImSpinner9 className="animate-spin" /> : paymentMethod === 'online_payment' ? 'Proceed to Pay' : 'Place Order'}
-                                    
+                                    {isSubmitting ? <ImSpinner9 className="animate-spin" /> : paymentMethod === 'online_payment' ? 'Proceed to Pay' : 'Place Order'}
+
                                 </Button>
                             </Form>
                         )}

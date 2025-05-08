@@ -529,8 +529,6 @@ input[type="range"]::-moz-range-thumb {
   position: relative;
   display: inline-block;
   padding: 20px 30px;
-  /* color: var(--titleTextColor); */
-  /* text-decoration: none; */
   text-transform: uppercase;
   transition: 0.5s;
   letter-spacing: 4px;
@@ -548,7 +546,7 @@ input[type="range"]::-moz-range-thumb {
 @media screen and (max-width: 940px) {
   .btn {
     display: inline-block;
-    padding: 15px 10px;
+    padding: 7px 10px;
     text-decoration: none;
     text-transform: uppercase;
     transition: 0.5s;

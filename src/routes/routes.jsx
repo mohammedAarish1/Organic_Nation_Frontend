@@ -18,7 +18,7 @@ import {
     TermsAndConditions,
     CsrPolicy,
     ProductDetails,
-    Checkout,
+    // Checkout,
     BlogDetail,
     OtpLogin,
     Blogs,
@@ -27,7 +27,7 @@ import {
     ManageOrders,
     OrderConfirm,
     NoPageFound,
-    OtpSubmit,
+    // OtpSubmit,
     // PaymentStatus,
     UserProfile
 } from '../imports';
@@ -139,11 +139,11 @@ const getRoutes = () => {
             path='/shop/:category/:nameUrl'
             element={<ProductDetails />}
         />,
-        <Route
-            key="checkout"
-            path='/cart/checkout'
-            element={user && cartItemsList?.length > 0 ? < Checkout /> : <Cart />}
-        />,
+        // <Route
+        //     key="checkout"
+        //     path='/cart/checkout'
+        //     element={user && cartItemsList?.length > 0 ? < Checkout /> : <Cart />}
+        // />,
         <Route
             key="google-signup"
             path='/collect-phone-number'
@@ -179,11 +179,11 @@ const getRoutes = () => {
             path='/otp-login'
             element={!user && <OtpLogin />}
         />,
-        <Route
-            key="otp-submit"
-            path='/otp-submit'
-            element={!user && <OtpSubmit />}
-        />,
+        // <Route
+        //     key="otp-submit"
+        //     path='/otp-submit'
+        //     element={!user && <OtpSubmit />}
+        // />,
         // <Route
         //     key="order-confirmed"
         //     path='/order-confirmed/:orderId'
