@@ -4,20 +4,20 @@ import { FaCheckCircle, FaShieldAlt, FaStar, FaLeaf } from 'react-icons/fa';
 import Title from '../../title/Title';
 
 
-const Image = memo(({ src, alt, className }) => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const handleLoad = useCallback(() => setIsLoaded(true), []);
+// const Image = memo(({ src, alt, className }) => {
+//   const [isLoaded, setIsLoaded] = useState(false);
+//   const handleLoad = useCallback(() => setIsLoaded(true), []);
 
-  return (
-    <img
-      src={src}
-      alt={alt}
-      className={`${className} ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
-      onLoad={handleLoad}
-      loading="lazy"
-    />
-  );
-});
+//   return (
+//     <img
+//       src={src}
+//       alt={alt}
+//       className={`${className} ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+//       onLoad={handleLoad}
+//       loading="lazy"
+//     />
+//   );
+// });
 
 const BetterImagesSection = memo(({ images }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -37,29 +37,29 @@ const BetterImagesSection = memo(({ images }) => {
   }, [setVisibility]);
 
   // Memoized animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.2
-      }
-    }
-  };
+  // const containerVariants = {
+  //   hidden: { opacity: 0 },
+  //   visible: {
+  //     opacity: 1,
+  //     transition: {
+  //       staggerChildren: 0.15,
+  //       delayChildren: 0.2
+  //     }
+  //   }
+  // };
 
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: 'spring',
-        stiffness: 80,
-        damping: 14
-      }
-    }
-  };
+  // const itemVariants = {
+  //   hidden: { y: 20, opacity: 0 },
+  //   visible: {
+  //     y: 0,
+  //     opacity: 1,
+  //     transition: {
+  //       type: 'spring',
+  //       stiffness: 80,
+  //       damping: 14
+  //     }
+  //   }
+  // };
 
   // Memoized TrustBadge component
   const TrustBadge = memo(({ type }) => {
@@ -112,14 +112,14 @@ const BetterImagesSection = memo(({ images }) => {
         <motion.div
           initial="hidden"
           animate={isVisible ? "visible" : "hidden"}
-          variants={containerVariants}
+          // variants={containerVariants}
           className="relative z-10"
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 lg:gap-8">
             {images.map((item, index) => (
               <motion.div
                 key={item.img}
-                variants={itemVariants}
+                // variants={itemVariants}
                 whileHover={{
                   y: -8,
                   transition: { duration: 0.2 }
@@ -135,11 +135,20 @@ const BetterImagesSection = memo(({ images }) => {
                     </div>
                     <div className="bg-gray-50 rounded-lg p-4 flex items-center justify-center h-32 overflow-hidden"
                       style={{ backgroundColor: 'var(--neutral-color)', opacity: 0.7 }}>
-                      <Image
+
+                      <img
                         src={item.img}
                         alt={item.text}
                         className="w-20 sm:w-24 h-auto object-contain transition-all duration-300 group-hover:scale-110"
+                        loading="lazy"
+
                       />
+
+                      {/* <Image
+                        src={item.img}
+                        alt={item.text}
+                        className="w-20 sm:w-24 h-auto object-contain transition-all duration-300 group-hover:scale-110"
+                      /> */}
                     </div>
                   </div>
                   <div className="flex-grow">

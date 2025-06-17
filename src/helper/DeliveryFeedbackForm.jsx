@@ -4,10 +4,11 @@ import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { addDeliveryFeedback } from '../features/reviews/reviews';
 import { toast } from 'react-toastify';
+import SubmitButton from '../components/button/SubmitButton';
 
-const DeliveryFeedbackForm = ({invoiceNumber,setShowDeliveryFeedbackForm}) => {
+const DeliveryFeedbackForm = ({ invoiceNumber, setShowDeliveryFeedbackForm }) => {
 
-const dispatch=useDispatch()
+  const dispatch = useDispatch()
 
   const options = [
     { id: '1', label: 'Satisfied' },
@@ -23,24 +24,24 @@ const dispatch=useDispatch()
   });
 
 
-const handleFormSubmission=(values, { setSubmitting,resetForm  },action)=>{
-    const payload={...values,invoiceNumber}
+  const handleFormSubmission = (values, { setSubmitting, resetForm }, action) => {
+    const payload = { ...values, invoiceNumber }
     try {
-        dispatch(addDeliveryFeedback(payload))
-        .then(()=>{
-            setShowDeliveryFeedbackForm(false)
-            toast.info('Submitted Successfully')
+      dispatch(addDeliveryFeedback(payload))
+        .then(() => {
+          setShowDeliveryFeedbackForm(false)
+          toast.info('Submitted Successfully')
         })
     } catch (error) {
-        
-    }
-setSubmitting(false);
-resetForm()
 
-}
+    }
+    setSubmitting(false);
+    resetForm()
+
+  }
 
   return (
-    <div className="max-w-md py-4  rounded-lg shadow-md font-serif">
+    <div className="max-w-md py-2  rounded-lg shadow-md font-serif">
       <Formik
         initialValues={{
           selectedOption: '',
@@ -50,7 +51,7 @@ resetForm()
         onSubmit={handleFormSubmission}
       >
         {({ isSubmitting }) => (
-          <Form className="space-y-6">
+          <Form className="space-y-1">
             <div>
               <h2 className="text-lg font-semibold mb-3">Select an option:</h2>
               <div className="space-y-2">
@@ -87,13 +88,17 @@ resetForm()
               />
             </div>
 
-            <button
+            <SubmitButton
+              isSubmitting={isSubmitting}
+              text='Submit'
+            />
+            {/* <button
               type="submit"
               disabled={isSubmitting}
               className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors disabled:bg-green-400"
             >
               {isSubmitting ? 'Submitting...' : 'Submit'}
-            </button>
+            </button> */}
           </Form>
         )}
       </Formik>

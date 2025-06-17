@@ -1,5 +1,5 @@
-import { useState } from "react";
-import AddressForm from "./AddressForm";
+import { lazy, Suspense, useState } from "react";
+// import AddressForm from "./AddressForm";
 import {
   FiMapPin,
   FiEdit2,
@@ -10,6 +10,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { handleDeletingAddress } from "../../features/user-profile/userProfile";
 import { toast } from "react-toastify";
 import { getUserData } from "../../features/auth/auth";
+import Loader from "../common/Loader";
+
+const AddressForm = lazy(() => import('./AddressForm'))
 
 const UserAddresses = () => {
 
@@ -40,10 +43,10 @@ const UserAddresses = () => {
 
   const handleAddressDelete = (addressId) => {
     dispatch(handleDeletingAddress(addressId))
-    .then(()=>{
-      dispatch(getUserData())
-      toast.info('Address Deleted Successfully')
-    })
+      .then(() => {
+        dispatch(getUserData())
+        toast.info('Address Deleted Successfully')
+      })
   }
 
   return (
@@ -52,11 +55,13 @@ const UserAddresses = () => {
 
       {showAddForm && (
         <div className="mt-6">
-          <AddressForm
-            onSubmit={handleAddAddress}
-            onCancel={() => setShowAddForm(false)}
-            address={selectedAddress}
-          />
+          <Suspense fallback={<Loader height='200px' />}>
+            <AddressForm
+              onSubmit={handleAddAddress}
+              onCancel={() => setShowAddForm(false)}
+              address={selectedAddress}
+            />
+          </Suspense>
         </div>
       )}
 
@@ -74,7 +79,7 @@ const UserAddresses = () => {
         </button>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols- gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols- gap-6 bg-white rounded-lg">
         {user.addresses.length > 0 && user.addresses.map((address) => (
           <div
             key={address._id}
@@ -95,9 +100,9 @@ const UserAddresses = () => {
                 >
                   <FiEdit2 size={18} />
                 </button>
-                <button 
-                className="p-2 text-red-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200"
-                onClick={()=>handleAddressDelete(address._id)}
+                <button
+                  className="p-2 text-red-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200"
+                  onClick={() => handleAddressDelete(address._id)}
                 >
                   <FiTrash2 size={18} />
                 </button>

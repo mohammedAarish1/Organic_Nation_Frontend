@@ -170,6 +170,22 @@ const getCouponDetails = async (couponId) => {
 
 
 
+// Carousel controls
+  const scrollToSlide = (ref,direction) => {
+    const container = ref.current;
+    if (!container) return;
+
+    const cardWidth = 280;
+    const scrollAmount = direction === 'next' ? cardWidth : -cardWidth;
+
+    container.scrollBy({
+      left: scrollAmount,
+      behavior: 'smooth'
+    });
+  };
+
+
+
 export {
   generateTransactionID,
   address,
@@ -178,5 +194,6 @@ export {
   // handleDocumentDeleteFromDatabase,
   checkDeliveryAndCalculateShippingFee,
   additionalDiscountforOnlinePayment,
-  getCouponDetails
+  getCouponDetails,
+  scrollToSlide
 }

@@ -33,9 +33,9 @@ const BlogDetail = () => {
     return (
         <div>
 
-            <main className='relative '>
+            <main className='relative bg-[var(--background-color)] '>
                 <img className="h-96 w-full object-cover" src={singleBlog.image} alt="" />
-                <article className="mx-auto max-w-screen-lg rounded-t-lg bg-[#e3dfcf] shadow-lg -translate-y-32 pt-5">
+                <article className="mx-auto max-w-screen-lg rounded-t-lg bg-white  shadow-lg -translate-y-32 pt-5">
                     <div>
                         <div className='text-center'>
                             <p className="text-gray-500">Published on {new Date(singleBlog?.date).toDateString()}</p>
@@ -49,7 +49,7 @@ const BlogDetail = () => {
 
 
                         <div
-                            className="mx-auto max-w-screen-lg space-y-12 rounded-b-lg px-8 pt-10 pb-20 font-serif sm:text-lg tracking-wide  sm:shadow-lg text-sm">
+                            className="mx-auto max-w-screen-lg space-y-12 rounded-b-lg px-8 pt-10 pb-20 sm:text-lg tracking-wide  sm:shadow-lg text-sm">
                             <ReactMarkdown>{singleBlog.description?.replace(/\\n/g, '\n')}</ReactMarkdown>
                         </div>
                     </div>

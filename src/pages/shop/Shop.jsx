@@ -46,10 +46,11 @@ const Shop = () => {
   )
 
   return (
-    <div>
+    <div className="bg-[var(--background-color)] min-h-screen py-2" >
       <SEO
         title={curCategorySeoData.title}
         description={curCategorySeoData.description}
+        keywords={curCategorySeoData.keywords}
         canonicalUrl={curCategorySeoData.canonicalUrl}
         ogTitle={curCategorySeoData.title}
         ogDescription={curCategorySeoData.description}
@@ -76,11 +77,15 @@ const Shop = () => {
               </p>
             </div>
           ) : (
-            <div className='uppercase  text-center xs:text-2xl md:pb-10 md:mt-0 mt-5 font-thin px-2 font-sans '>
-              Total
-              <span className='font-bold  text-[var(--themeColor)] '> {filteredProducts?.length} </span>
-              <span className='font-bold  text-[var(--themeColor)] tracking-wide'> {categoryBtnValue.toLowerCase() === 'all' ? '' : `${categoryBtnValue}`}</span> Products Available
+            <div className='text-center md:pb-10 md:mt-0 mt-5 font-thin px-2 font-sans '>
+              
+              {/* <span className='font-bold  text-[var(--themeColor)] '> {filteredProducts?.length} </span>
+              <span className='font-bold  text-[var(--themeColor)] tracking-wide'> {categoryBtnValue.toLowerCase() === 'all' ? '' : `${categoryBtnValue}`}</span> Products Available */}
+               <p className="text-[var(--text-color)] font-medium">
+                Showing {filteredProducts?.length} product(s)
+              </p>
             </div>
+            
           )}
         </div>
       )}

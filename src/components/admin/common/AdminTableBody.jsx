@@ -186,7 +186,7 @@ const AdminTableBody = memo(({
                                         />
                                         <AdminPaymentStatus
                                             curStatus={data.paymentStatus}
-                                            handleOnChange={(curValue) => handleStatusChange('Payment', data._id, curValue)}
+                                            handleOnChange={(curValue) => handleStatusChange('Payment', data._id, curValue.toUpperCase())}
                                         />
                                     </>
                                 )}

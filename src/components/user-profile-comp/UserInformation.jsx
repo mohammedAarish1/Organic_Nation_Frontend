@@ -62,7 +62,7 @@ const SaveButton = ({ isSubmitting, loading }) => (
 );
 
 const InfoCard = ({ title, isEditing, onEdit, onCancel, children }) => (
-  <div className="border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300">
+  <div className="bg-white rounded-lg overflow-hidden hover:shadow-md transition-shadow duration-300">
     <div className="p-6">
       <div className="flex justify-between items-center mb-4">
         <h3 className="xs:text-lg">{title}:</h3>

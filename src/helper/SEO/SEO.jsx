@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 const SEO = ({
     title,
     description,
+    keywords='',
     canonicalUrl,
     ogTitle,
     ogDescription,
@@ -21,7 +22,9 @@ const SEO = ({
     return (
         <Helmet>
             <title>{title}</title>
+            <meta name="title" content={title} />
             <meta name="description" content={description} />
+            <meta name="keywords" content={keywords} />
             <meta name="author" content="Organic Nation" />
             <link rel="canonical" href={canonicalUrl} />
 
@@ -47,7 +50,10 @@ const SEO = ({
             {/* Other tags */}
             <link rel="icon" type="image/svg+xml" href={favicon} />
             <meta name="robots" content="max-image-preview:standard" />
-
+            <meta name="robots" content="index, follow" />
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <meta name="language" content="English" />
+            <meta name="revisit-after" content="10 days" />
         </Helmet>
     );
 };

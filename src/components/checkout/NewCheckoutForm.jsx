@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import {
- FaChevronDown,
+    FaChevronDown,
     FaHome, FaBriefcase, FaMapMarkerAlt, FaMoneyBillWave,
     FaCreditCard, FaPercent
 } from 'react-icons/fa';
@@ -15,6 +15,7 @@ import { addOrders } from '../../features/manageOrders/manageOrders';
 import { useNavigate } from 'react-router-dom';
 import { getUserData } from '../../features/auth/auth';
 import { ImSpinner9 } from 'react-icons/im';
+import SubmitButton from '../button/SubmitButton';
 
 
 const SavedAddressCard = ({
@@ -30,7 +31,6 @@ const SavedAddressCard = ({
     useEffect(() => {
         if (selectedAddress) {
             const address = addresses.filter(address => address._id === selectedAddress)
-            console.log('address', address)
             const pinCode = address[0].pinCode
 
             checkDeliveryAndCalculateShippingFee(pinCode, dispatch)
@@ -228,7 +228,6 @@ const NewCheckoutForm = ({ close }) => {
     const { addingNewOrder } = useSelector((state) => state.orders);
     const { shippingFee, userCity, userPincode, userState, error } = useSelector((state) => state.delivery);
 
-    console.log('user', user)
     const [addressType, setAddressType] = useState('Home');
     const [paymentMethod, setPaymentMethod] = useState('');
 
@@ -324,7 +323,7 @@ const NewCheckoutForm = ({ close }) => {
                         dispatch(
                             initiatePayment({
                                 number: shippingInfo.phoneNumber.replace('+91', ''),
-                                amount:totalCartAmount - discountAmount + (totalCartAmount < 499 ? shippingFee : 0),
+                                amount: totalCartAmount - discountAmount + (totalCartAmount < 499 ? shippingFee : 0),
                                 merchantTransactionId: merchantTransactionId,
                             })
                         );
@@ -479,12 +478,15 @@ const NewCheckoutForm = ({ close }) => {
                     <div className="mt-6">
                         <label className="block text-sm font-medium mb-2">Payment Method</label>
                         <div className="space-y-3">
-                            <PaymentMethodButton
-                                icon={FaMoneyBillWave}
-                                label="Cash on Delivery"
-                                selected={paymentMethod === 'cash_on_delivery'}
-                                onClick={() => setPaymentMethod('cash_on_delivery')}
-                            />
+
+                            {totalCartAmount > 399 && (
+                                <PaymentMethodButton
+                                    icon={FaMoneyBillWave}
+                                    label="Cash on Delivery"
+                                    selected={paymentMethod === 'cash_on_delivery'}
+                                    onClick={() => setPaymentMethod('cash_on_delivery')}
+                                />
+                            )}
 
                             <PaymentMethodButton
                                 icon={FaCreditCard}
@@ -496,13 +498,20 @@ const NewCheckoutForm = ({ close }) => {
                         </div>
                     </div>
 
-                    <Button
+
+                    <SubmitButton
+                        // isSubmitting={isSubmitting}
+                        text={paymentMethod === 'online_payment' ? 'Proceed to Pay' : 'Place Order'}
+                        action={handleSavedAddressCheckout}
+                    />
+
+                    {/* <Button
                         onClick={handleSavedAddressCheckout}
                         disabled={!paymentMethod || !selectedAddress}
                         className="mt-6"
                     >
                         {paymentMethod === 'online_payment' ? 'Proceed to Pay' : 'Place Order'}
-                    </Button>
+                    </Button> */}
                 </>
             ) : (
                 <>
@@ -607,12 +616,16 @@ const NewCheckoutForm = ({ close }) => {
                                 <div>
                                     <label className="block text-sm font-medium mb-2">Payment Method</label>
                                     <div className="space-y-3">
-                                        <PaymentMethodButton
-                                            icon={FaMoneyBillWave}
-                                            label="Cash on Delivery"
-                                            selected={paymentMethod === 'cash_on_delivery'}
-                                            onClick={() => setPaymentMethod('cash_on_delivery')}
-                                        />
+
+                                        {totalCartAmount > 399 && (
+                                            <PaymentMethodButton
+                                                icon={FaMoneyBillWave}
+                                                label="Cash on Delivery"
+                                                selected={paymentMethod === 'cash_on_delivery'}
+                                                onClick={() => setPaymentMethod('cash_on_delivery')}
+                                            />
+                                        )}
+
 
                                         <PaymentMethodButton
                                             icon={FaCreditCard}
@@ -623,15 +636,18 @@ const NewCheckoutForm = ({ close }) => {
                                         />
                                     </div>
                                 </div>
-
-                                <Button
+                                <SubmitButton
+                                    isSubmitting={isSubmitting}
+                                    text={paymentMethod === 'online_payment' ? 'Proceed to Pay' : 'Place Order'}
+                                />
+                                {/* <Button
                                     type="submit"
                                     disabled={isSubmitting || !paymentMethod}
                                     className="mt-6"
                                 >
                                     {isSubmitting ? <ImSpinner9 className="animate-spin" /> : paymentMethod === 'online_payment' ? 'Proceed to Pay' : 'Place Order'}
 
-                                </Button>
+                                </Button> */}
                             </Form>
                         )}
                     </Formik>

@@ -57,7 +57,7 @@ const UserMenu = ({ user, showMenu, menuRef, onLogout }) => (
     <div 
       ref={menuRef}
       className={`
-        absolute xs:right-0 -right-16 w-72 mt-2 bg-white rounded-2xl shadow-xl
+        absolute sm:right-0 -right-32 w-72 mt-2 bg-white rounded-2xl shadow-xl
         border border-gray-100 overflow-hidden
         transition-all duration-300 transform
         ${showMenu 

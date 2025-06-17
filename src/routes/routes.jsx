@@ -23,16 +23,16 @@ import {
     OtpLogin,
     Blogs,
     RecipeDetails,
-    GoogleSignup,
+    // GoogleSignup,
     ManageOrders,
-    OrderConfirm,
+    // OrderConfirm,
     NoPageFound,
     // OtpSubmit,
     // PaymentStatus,
     UserProfile
 } from '../imports';
 import ManageReturns from '../pages/manage-returns/ManageReturns';
-import GoogleLoginHandler from '../pages/login-signup/GoogleLoginHandler';
+// import GoogleLoginHandler from '../pages/login-signup/GoogleLoginHandler';
 import OrderSuccessMessage from '../components/checkout/OrderSuccessMessage';
 
 
@@ -144,16 +144,16 @@ const getRoutes = () => {
         //     path='/cart/checkout'
         //     element={user && cartItemsList?.length > 0 ? < Checkout /> : <Cart />}
         // />,
-        <Route
-            key="google-signup"
-            path='/collect-phone-number'
-            element={<GoogleSignup />}
-        />,
-        <Route
-            key="google-login"
-            path='/auth/google/login'
-            element={<GoogleLoginHandler />}
-        />,
+        // <Route
+        //     key="google-signup"
+        //     path='/collect-phone-number'
+        //     element={<GoogleSignup />}
+        // />,
+        // <Route
+        //     key="google-login"
+        //     path='/auth/google/login'
+        //     element={<GoogleLoginHandler />}
+        // />,
         <Route
             key="manage-orders"
             path='/manage-orders'

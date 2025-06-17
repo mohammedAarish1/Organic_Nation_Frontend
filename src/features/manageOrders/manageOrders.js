@@ -217,7 +217,7 @@ const manageOrders = createSlice({
                     error: null,
                     ordersByStatus: {
                         ...state.ordersByStatus,
-                        orderData: action.payload,
+                        orderData: action.payload || [],
                     }
                 }
             })

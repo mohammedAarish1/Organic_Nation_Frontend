@@ -30,7 +30,7 @@ const Pagination = ({ totalPost, postPerPage }) => {
             {/* number buttons  */}
             {pages.map((pageNo, index) => {
                 return <button
-                    className={`hover:bg-[var(--bgColorPrimary)] hover:text-white px-3 py-1 border rounded-lg ${currentPage == pageNo ? "bg-[var(--bgColorPrimary)] text-white" : ""} `}
+                    className={`hover:bg-[var(--themeColor)] hover:text-white px-3 py-1 border rounded-lg ${currentPage == pageNo ? "bg-[var(--themeColor)] text-white" : ""} `}
                     onClick={() => {
                         dispatch(setCurrentPage(pageNo));
                         window.scrollTo(0, 0);

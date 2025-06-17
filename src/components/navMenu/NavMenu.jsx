@@ -240,6 +240,7 @@ import { FaBlog, FaRegUser, FaLeaf } from "react-icons/fa";
 import { LiaGiftsSolid } from "react-icons/lia";
 import { LuChefHat } from "react-icons/lu";
 import { motion, AnimatePresence } from 'framer-motion';
+import CloseButton from '../button/CloseButton';
 
 const NAV_ITEMS = [
     { path: '/', icon: MdOutlineHome, label: 'Home' },
@@ -289,7 +290,7 @@ const MobileMenuItem = memo(({ item, onClick, index }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <motion.li 
+        <motion.li
             className="overflow-hidden"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -477,26 +478,26 @@ const NavMenu = () => {
     return (
         <>
             {/* Desktop Navigation */}
-            <nav className="flex order-last md:-order-none text-[var(--themeColor)]">
+            <nav className="flex order-last md:-order-none ">
                 <motion.button
                     type="button"
-                    className="md:hidden flex items-center justify-center h-10 w-10 rounded-full bg-[var(--background-color)] shadow-md"
+                    className="md:hidden flex items-center justify-center h-10 w-10 rounded-full "
                     aria-label="Toggle Menu"
                     onClick={() => dispatch(setShowSidebar())}
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                 >
-                    <RiMenu3Fill className="text-2xl text-[var(--themeColor)]" />
+                    <RiMenu3Fill size={20} />
                 </motion.button>
 
-                <ul className="hidden md:flex items-center lg:gap-1 font-medium">
+                <ul className="hidden md:flex items-center lg:gap-1 font-medium text-[var(--themeColor)]">
                     {NAV_ITEMS.filter(item => !item.mobileOnly).map(item => (
                         <li key={item.path} className={`${item.label==='Shop' && 'shop'}`}>
                             <NavLink
                                 to={item.path}
                                 className={({ isActive }) => `flex flex-col items-center lg:p-4 min-w-[86px] rounded-md hover:underline hover:underline-offset-4 transition-all ${isActive ? 'underline underline-offset-4' : ''}`}
                             >
-                                <item.icon className="text-xl" />
+                                {/* <item.icon className="text-xl" /> */}
                                 <span className="flex items-center">
                                     {item.label}
                                     {item.hasDropdown && <MdKeyboardArrowDown className="mt-[3px] text-[18px]" />}
@@ -551,7 +552,7 @@ const NavMenu = () => {
                                     <FaLeaf className="text-[var(--secondary-color)] text-xl" />
                                     <Logo />
                                 </div>
-                                <motion.button
+                                {/* <motion.button
                                     type="button"
                                     className="flex items-center justify-center w-10 h-10 rounded-full bg-[rgba(122,46,29,0.1)] text-[var(--themeColor)] hover:bg-[rgba(122,46,29,0.2)] transition-colors"
                                     onClick={() => dispatch(setShowSidebar(false))}
@@ -559,7 +560,8 @@ const NavMenu = () => {
                                     whileTap={{ scale: 0.9 }}
                                 >
                                     <IoCloseSharp className="text-2xl" />
-                                </motion.button>
+                                </motion.button> */}
+                                <CloseButton action={() => dispatch(setShowSidebar(false))} />
                             </motion.div>
 
                             <div className="p-5 h-[calc(100%-70px)] overflow-y-auto custom-scrollbar">

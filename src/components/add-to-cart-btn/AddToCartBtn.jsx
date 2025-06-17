@@ -29,7 +29,7 @@
 
 //     dispatch(addToCart({ productId: item._id, quantity: qty, productName: item['name-url'] }))
 //       .then(() => {
-       
+
 //         dispatch(getAllCartItems());
 //         toast.info('Item Added to the Cart')
 //       })
@@ -109,14 +109,17 @@ import { addToCart, getAllCartItems } from '../../features/cart/cart';
 import { toast } from 'react-toastify';
 import { Tooltip } from 'react-tooltip';
 import { BsCart4 } from 'react-icons/bs';
+import { useCartNotification } from '../../context/CartNotificationContext';
+import { FaShoppingCart } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 
 const AddToCartBtn = ({ item, qty = 1 }) => {
   const dispatch = useDispatch();
   const { cartItemsList } = useSelector((state) => state.cart);
-  
+  const { showCartNotification } = useCartNotification();
   // Generate a unique ID for each button's tooltip
   const tooltipId = useMemo(() => `addToCart-tooltip-${item._id}`, [item._id]);
-  
+
   const currentQtyInCart = cartItemsList?.find(cartItem => cartItem._id === item._id)?.quantity || 0;
 
   const handleAddingItemsToCart = (e) => {
@@ -128,45 +131,55 @@ const AddToCartBtn = ({ item, qty = 1 }) => {
       return;
     }
 
-    dispatch(addToCart({ 
-      productId: item._id, 
-      quantity: qty, 
-      productName: item['name-url'] 
+    dispatch(addToCart({
+      productId: item._id,
+      quantity: qty,
+      productName: item['name-url']
     }))
-    .then(() => {
-      dispatch(getAllCartItems());
-      toast.info('Item Added to the Cart');
-    });
+      .then(() => {
+        dispatch(getAllCartItems());
+        // toast.info('Item Added to the Cart');
+        // Show cart notification instead of toast
+        showCartNotification();
+      });
   };
 
   const isOutOfStock = item.availability === 0;
 
   return (
-    <div 
+    <div
       className="relative z-30 w-full"
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
       }}
     >
-      <button
-        type="button"
+      <motion.button
+        // type="button"
         disabled={isOutOfStock}
         data-tooltip-id={isOutOfStock ? tooltipId : undefined}
         onClick={handleAddingItemsToCart}
-        className={`
-          relative z-30 w-full flex justify-center items-center gap-2
-          sm:py-2 py-1.5 xs:px-4 
-           text-sm font-medium
-          transition-all duration-500 tracking-tight
-          ${isOutOfStock ? 'bg-gray-400 cursor-not-allowed opacity-50'  : ' hover:bg-[var(--bgColorPrimary)] hover:text-white border border-black' }
-        `}
+        // className={`
+        //   relative z-30 w-full flex justify-center items-center gap-2
+        //   sm:py-2 py-1.5 xs:px-4 
+        //    text-sm font-medium
+        //   transition-all duration-500 tracking-tight
+        //   ${isOutOfStock ? 'bg-gray-400 cursor-not-allowed opacity-50'  : ' hover:bg-[var(--bgColorPrimary)] hover:text-white border border-black' }
+        // `}
+
+        className={`flex-1 py-2 xs:px-8 rounded-2xl font-bold xs:text-lg text-white flex items-center justify-center space-x-3 shadow-lg transition-all duration-300 w-full bg-[var(--themeColor)] ${isOutOfStock ? 'bg-gray-400 cursor-not-allowed opacity-50'  : '' }`}
+        whileHover={!isOutOfStock && {
+          scale: 1.02,
+          backgroundColor: '#9B7A2F',
+          boxShadow: "0 10px 30px rgba(122, 46, 29, 0.3)"
+        }}
+        whileTap={{ scale: 0.98 }}
       >
-        <BsCart4 
-          className={` ${!isOutOfStock && 'animate-bounce'}`} 
+        <FaShoppingCart
+        // className={` ${!isOutOfStock && 'animate-bounce'}`} 
         />
-        ADD TO CART
-      </button>
+        <span>Add to Cart</span>
+      </motion.button>
 
       {isOutOfStock && (
         <Tooltip

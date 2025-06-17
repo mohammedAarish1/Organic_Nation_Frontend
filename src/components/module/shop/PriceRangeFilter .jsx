@@ -56,7 +56,7 @@ const PriceRangeFilter = ({ isMobile }) => {
               checked={selectedRanges?.includes(range.value)}
               onChange={() => handleCheckboxChange(range.value)}
             />
-            <label className='text-sm xs:text-[var(--themeColor)] text-white' htmlFor={range.value}> {range.label}</label>
+            <label className=' xs:text-[var(--text-color)] text-white' htmlFor={range.value}> {range.label}</label>
           </div>
         ))}
       </div>

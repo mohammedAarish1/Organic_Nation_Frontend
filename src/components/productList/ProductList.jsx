@@ -8,7 +8,7 @@ const Pagination = lazy(() => import('../pagination/Pagination'))
 
 const ProductList = ({ gridView }) => {
 
-  const {filteredProducts,loading} = useSelector((state) => state.filterData)
+  const { filteredProducts, loading } = useSelector((state) => state.filterData)
   const { currentPage } = useSelector((state) => state.pagination)
 
 
@@ -24,8 +24,13 @@ const ProductList = ({ gridView }) => {
 
   return (
     <div className=' mt-5  '>
+      {/* <div className='text-center font-thin px-2 font-sans'>
+        <p className="text-[var(--text-color)] font-medium">
+          Showing {filteredProducts?.length} product(s)
+        </p>
+      </div> */}
       <div
-        className={`${gridView && "flex-row  items-center"} flex flex-wrap justify-center sm:gap-10 xs:gap-2 gap-x-1 gap-y-8 py-2 xs:py-8`}
+        className={`${gridView && "flex-row  items-center"} flex flex-wrap justify-center sm:gap-10 xs:gap-2 gap-x-6 gap-y-8 py-2`}
       // className={`products-grid bg-gray-200`}
       >
         {currentPageData?.map((product) => (

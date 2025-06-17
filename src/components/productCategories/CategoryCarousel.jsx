@@ -54,7 +54,7 @@ const CategoryCarousel = () => {
     };
 
     return (
-        <div className="max-w-6xl mx-auto px-4 xs:py-12 py-6">
+        <div className="max-w-6xl mx-auto px-4 sm:pt-16 pt-8">
             <div className="flex items-center gap-2">
                 {/* Left Arrow */}
                 <button
@@ -124,3 +124,5 @@ const CategoryCarousel = () => {
 };
 
 export default CategoryCarousel;
+
+

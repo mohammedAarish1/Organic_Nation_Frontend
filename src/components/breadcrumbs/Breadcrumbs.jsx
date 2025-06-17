@@ -2,7 +2,7 @@ import React, { memo } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { MdOutlineHome } from "react-icons/md";
 import { FaAngleRight } from "react-icons/fa";
-
+import { motion } from 'framer-motion';
 
 const Breadcrumbs = () => {
 
@@ -37,24 +37,28 @@ const Breadcrumbs = () => {
     }).filter(Boolean); // Filter out null values
     let breadcrumbPath = '';
 
-
-
     return (
-        <div className={`${pathNames.length > 0 && 'pt-8 pb-2'}  max-w-max sm:px-10 px-2`}>
-            <div className='flex  items-center justify-center'>
+        <div className='bg-[var(--background-color)] '>
+            <div className={`${pathNames.length > 0 && 'pt-8 pb-2'}  max-w-7xl mx-auto sm:px-10 px-2 text-sm text-[#3E2C1B]`}>
+                <motion.nav
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className=''
+                >
 
-                {pathNames.length > 0 && (<Link to='/'><MdOutlineHome className='text-[var(--themeColor)] text-xl' /></Link>)}
+                    {pathNames.length > 0 && (<Link to='/'>Home</Link>)}
 
-                {pathNames.map((path, index) => {
-                    breadcrumbPath += `/${path}`;
-                    const isLast = index === pathNames.length - 1;
-                    if (path === 'shop') {
-                        return (<Link key={breadcrumbPath} to={breadcrumbPath} className='text-[var(--themeColor)] text-xl' ></Link>)
-                    }
+                    {pathNames.map((path, index) => {
+                        breadcrumbPath += `/${path}`;
+                        const isLast = index === pathNames.length - 1;
+                        if (path === 'shop') {
+                            return (<Link key={breadcrumbPath} to={breadcrumbPath} className='text-[var(--themeColor)] text-xl' ></Link>)
+                        }
 
-                    return isLast ? <span key={breadcrumbPath} className='flex justify-center text-xs xs:text-sm items-center capitalize text-gray-400 '> <FaAngleRight /> {path}</span> :
-                        <Link to={breadcrumbPath} key={breadcrumbPath} ><span className='flex  items-center capitalize hover:underline underline-offset-4'><FaAngleRight /> {path}</span></Link>
-                })}
+                        return isLast ? <span key={breadcrumbPath} className='text-sm capitalize font-semibold text-[var(--themeColor)] '>  <span className="mx-2">/</span> {path.replaceAll('-',' ')}</span> :
+                            <Link to={breadcrumbPath} key={breadcrumbPath} ><span className=' capitalize hover:underline underline-offset-4'>  <span className="mx-2">/</span> {path}</span></Link>
+                    })}
+                </motion.nav>
             </div>
         </div>
     )

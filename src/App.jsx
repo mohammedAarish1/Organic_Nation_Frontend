@@ -29,13 +29,15 @@ import AdminLogin from './pages/admin/AdminLogin';
 import { checkAuthStatus } from './features/auth/auth';
 import RecentOrderNotification from './components/recent-order-notification/RecentOrderNotification ';
 import { getProductsData } from './features/filter/filterSlice';
+import { CartNotificationProvider } from './context/CartNotificationContext';
+import CartNotification from './components/module/cart/CartNotification';
 
 // Memoized components
 
 const MainContent = memo(() => {
   return (
     <div className="bg-[var(--bgColorSecondary)] relative">
-      <Info text="Enjoy FREE SHIPPING on orders above Rs. 499 and COD on orders over Rs. 399—Shop now!" fontSize='[16px]' />
+      <Info text="Free shipping on orders over Rs. 499 | COD on orders over Rs. 399—Shop now!" fontSize='[10px]' />
       <ToastContainer position='bottom-right' autoClose={1000} />
       <Header />
       <div>
@@ -54,7 +56,7 @@ const MainContent = memo(() => {
           <WhatsApp />
         </div>
       </div>
-      <Info text="Organic Nation © All rights reserved." fontSize='xs' />
+      {/* <Info text="Organic Nation © All rights reserved." fontSize='xs' /> */}
     </div>
   );
 });
@@ -92,6 +94,7 @@ function App() {
 
 
   return (
+     <CartNotificationProvider>
     <BrowserRouter>
       <Routes>
         {/* Admin routes */}
@@ -104,11 +107,13 @@ function App() {
           <>
             <ScrollToTop />
             <MainContent />
+            <CartNotification />
             {/* <RecentOrderNotification /> */}
           </>
         } />
       </Routes>
     </BrowserRouter>
+    </CartNotificationProvider>
   )
 }
 

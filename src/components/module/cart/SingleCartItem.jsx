@@ -10,23 +10,23 @@ import { toast } from 'react-toastify';
 const SingleCartItem =  memo(({ curItem, index }) => {
     const dispatch=useDispatch();
 
-    const handleIncreaseQty = useCallback( () => {
-      if (curItem.quantity === curItem.availability) {
-        toast.error('No Quantity left in stock.');
-        return;
-      }
-       dispatch(updateQty({
-        productName: curItem['name-url'],
-        type: 'increase'
-      })).then(()=>dispatch(getAllCartItems()))
-    }, [curItem.quantity, curItem.availability, curItem['name-url'], dispatch]);
+    // const handleIncreaseQty = useCallback( () => {
+    //   if (curItem.quantity === curItem.availability) {
+    //     toast.error('No Quantity left in stock.');
+    //     return;
+    //   }
+    //    dispatch(updateQty({
+    //     productName: curItem['name-url'],
+    //     type: 'increase'
+    //   })).then(()=>dispatch(getAllCartItems()))
+    // }, [curItem.quantity, curItem.availability, curItem['name-url'], dispatch]);
   
-    const handleDecreaseQty = useCallback( () => {
-       dispatch(updateQty({
-        productName: curItem['name-url'],
-        type: 'decrease'
-      })).then(()=>dispatch(getAllCartItems()));
-    }, [curItem['name-url'], dispatch]);
+    // const handleDecreaseQty = useCallback( () => {
+    //    dispatch(updateQty({
+    //     productName: curItem['name-url'],
+    //     type: 'decrease'
+    //   })).then(()=>dispatch(getAllCartItems()));
+    // }, [curItem['name-url'], dispatch]);
 
   return (
     <tbody className=" divide-y divide-gray-200">
@@ -63,46 +63,17 @@ const SingleCartItem =  memo(({ curItem, index }) => {
         </Link>
       </td>
       <td className="text-center whitespace-nowrap lg:table-cell hidden">
-        {/* <div className=" text-gray-900 px-6 py-4"> */}
           ₹{" "}
           {Math.round(
             curItem.price - (curItem.price * curItem.discount) / 100
           )}
-        {/* </div> */}
       </td>
       <td className=" text-center whitespace-nowrap px-6 py-4">
-        {/* <div className=" text-gray-900 flex justify-center items-center "><ProductQty qty={curItem.qty} increaseQty={() => dispatch(increaseProductQty(curItem.id))} decreaseQty={() => dispatch(decreaseProductQty(curItem.id))} /></div> */}
-          {/* <ProductQty
-            qty={curItem.quantity}
-            increaseQty={() => {
-              if (curItem.quantity === curItem.availability) {
-                toast.error(`No Quanity left in stock.`);
-                return;
-              }
-              dispatch(
-                updateQty({
-                  productName: curItem['name-url'],
-                  type: "increase",
-                })
-              ).then(() => {
-                dispatch(getAllCartItems());
-              });
-            }}
-            decreaseQty={() =>
-              dispatch(
-                updateQty({
-                  productName: curItem['name-url'],
-                  type: "decrease",
-                })
-              ).then(() => {
-                dispatch(getAllCartItems());
-              })
-            }
-          /> */}
            <ProductQty
-            qty={curItem.quantity}
-            increaseQty={handleIncreaseQty}
-            decreaseQty={handleDecreaseQty}
+           curItem={curItem}
+            // qty={curItem.quantity}
+            // increaseQty={handleIncreaseQty}
+            // decreaseQty={handleDecreaseQty}
           />
       </td>
       <td className=" text-center whitespace-nowrap ">

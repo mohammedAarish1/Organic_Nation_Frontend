@@ -3,11 +3,10 @@ import React, { lazy, Suspense } from 'react'
 // import UserAddresses from './UserAddresses';
 import { useParams } from 'react-router-dom';
 import Loader from '../common/Loader';
-// import UserCoupons from './UserCoupons';
 
 const UserInformation = lazy(() => import('./UserInformation'))
 const UserAddresses = lazy(() => import('./UserAddresses'))
-const UserCoupons = lazy(() => import('./UserCoupons'))
+// const UserCoupons = lazy(() => import('./UserCoupons'))
 
 const ProfileMainSection = ({ activeMenu }) => {
 
@@ -20,9 +19,8 @@ const ProfileMainSection = ({ activeMenu }) => {
                 return <UserInformation />;
             case 'addresses':
                 return <UserAddresses />;
-            case 'coupons':
-                // Handle logout logic here
-                return <UserCoupons />;
+            // case 'coupons':
+            //     return <UserCoupons />;
             default:
                 return <UserInformation />;
         }

@@ -1,22 +1,25 @@
 // UserProfile.jsx
-import React, { useState } from 'react';
-import ProfileSidebar from '../../components/user-profile-comp/ProfileSidebar';
-import ProfileMainSection from '../../components/user-profile-comp/ProfileMainSection';
+import React, { lazy, Suspense, useState } from 'react';
+// import ProfileSidebar from '../../components/user-profile-comp/ProfileSidebar';
+// import ProfileMainSection from '../../components/user-profile-comp/ProfileMainSection';
 import { useLocation } from 'react-router-dom';
+import Loader from '../../components/common/Loader';
 
+const ProfileSidebar = lazy(() => import('../../components/user-profile-comp/ProfileSidebar'))
+const ProfileMainSection = lazy(() => import('../../components/user-profile-comp/ProfileMainSection'))
 
 const UserProfile = () => {
 
-const location=useLocation();
+    const location = useLocation();
 
-const currentActiveMenu = location.pathname.split('/').filter(Boolean).pop();
+    const currentActiveMenu = location.pathname.split('/').filter(Boolean).pop();
 
     const [activeMenu, setActiveMenu] = useState(currentActiveMenu);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
 
     return (
-        <div className="min-h-screen">
+        <div className="min-h-screen bg-[var(--background-color)]">
             {/* Overlay for mobile menu */}
             {isMobileMenuOpen && (
                 <div
@@ -28,16 +31,19 @@ const currentActiveMenu = location.pathname.split('/').filter(Boolean).pop();
             <div className="w-full px-4 sm:px-6 lg:px-8 py-8">
                 <div className="flex flex-col md:flex-row gap-8">
                     {/* Sidebar */}
-                    <ProfileSidebar
-                        activeMenu={activeMenu}
-                        setActiveMenu={setActiveMenu}
-                        isMobileMenuOpen={isMobileMenuOpen}
-                        setIsMobileMenuOpen={setIsMobileMenuOpen}
-                    />
-
+                    <Suspense fallback={<Loader height='100px' />} >
+                        <ProfileSidebar
+                            activeMenu={activeMenu}
+                            setActiveMenu={setActiveMenu}
+                            isMobileMenuOpen={isMobileMenuOpen}
+                            setIsMobileMenuOpen={setIsMobileMenuOpen}
+                        />
+                    </Suspense>
                     {/* Main Content */}
                     <div className="md:flex-1 w-full md:ml-4">
-                        <ProfileMainSection activeMenu={activeMenu} />
+                        <Suspense fallback={<Loader height='400px' />} >
+                            <ProfileMainSection activeMenu={activeMenu} />
+                        </Suspense>
                     </div>
                 </div>
             </div>

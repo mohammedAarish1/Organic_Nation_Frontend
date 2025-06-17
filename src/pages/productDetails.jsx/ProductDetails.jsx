@@ -1,21 +1,30 @@
 import React, { lazy, Suspense, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import ProductImages from '../../components/product-images/ProductImages';
-import SingleReview from '../../components/reviews/SingleReview';
+import { MdOutlineArrowDownward } from "react-icons/md";
+// import ProductImages from '../../components/product-images/ProductImages';
+// import SingleReview from '../../components/reviews/SingleReview';
 // import ReviewsAndRatings from '../../helper/ReviewsAndRatings';
 // import OfferBanner from '../../components/offerBanner/OfferBanner';
 import SEO from '../../helper/SEO/SEO';
 // import YouMayAlsoLike from '../../components/module/product-details/YouMayAlsoLike';
-import ProductInfo from '../../components/module/product-details/ProductInfo';
+// import ProductInfo from '../../components/module/product-details/ProductInfo';
 import Loader from '../../components/common/Loader'
-import ProductAdditionalInfo from '../../components/module/product-details/ProductAdditionalInfo';
+// import ProductAdditionalInfo from '../../components/module/product-details/ProductAdditionalInfo';
 import ProductShare from '../../components/module/product-details/ProductShare';
-import Title from '../../components/title/Title';
+// import Title from '../../components/title/Title';
+import ProductDetailsPage from './ProductDetailsPage';
 
 const YouMayAlsoLike = lazy(() => import('../../components/module/product-details/YouMayAlsoLike'));
+const SingleReview = lazy(() => import('../../components/reviews/SingleReview'));
 const ReviewsAndRatings = lazy(() => import('../../helper/ReviewsAndRatings'));
+const ReviewSection = lazy(() => import('./ReviewSection'));
+const ProductAdditionalInfo = lazy(() => import('../../components/module/product-details/ProductAdditionalInfo'));
+
+
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
+
+
 
 
 // const productInfo = [
@@ -177,6 +186,7 @@ const ProductDetails = () => {
       <SEO
         title={curProductSeoData?.title || ''}
         description={curProductSeoData?.description || ''}
+        keywords={curProductSeoData?.keywords || ''}
         canonicalUrl={curProductSeoData?.canonicalUrl || ''}
         ogTitle={curProductSeoData?.title || ''}
         ogDescription={curProductSeoData?.description || ''}
@@ -195,78 +205,60 @@ const ProductDetails = () => {
       {/* <div>
         <OfferBanner />
       </div> */}
-      <section className='xs:py-20 py-5  '>
-        {/* visible in mobile devices  */}
-        <h2 className=' md:hidden block font-semibold xs:text-3xl text-xl xs:px-10 px-4 mb-3' >{product.details.name}</h2>
-        {/* visible in mobile devices  */}
-        <div className='flex md:flex-row flex-col'>
-          {/* left side  */}
-          <ProductImages productImgs={product.details?.img?.length >= 1 && product.details?.img} />
-          {/* right side  */}
-          <ProductInfo product={product} />
-        </div>
-
-      </section>
-
-      <section className='xs:w-[80%] w-[100%] mx-auto'>
-        <ProductShare
-          url={window.location.href}
-          title={`Hey I have found this amazing "${product.details?.name}". Check it out!`}
-          description={product.details?.description}
-        />
-      </section>
-
-      {/* ============== product general info=============  */}
-      {product?.productInfo && (
-        <section className='pt-20'>
-          <ProductAdditionalInfo data={product.productInfo} />
+      <div style={{ backgroundColor: '#F5EFE6' }}>
+        <section className='xs:py-5 py-5 '>
+          <ProductDetailsPage product={product} />
         </section>
-      )}
+
+        <section className='xs:w-[80%] w-[100%] mx-auto'>
+          <ProductShare
+            url={window.location.href}
+            title={`Hey I have found this amazing "${product.details?.name}". Check it out!`}
+            description={product.details?.description}
+          />
+        </section>
+
+        {/* ============== product general info=============  */}
+        {product?.productInfo && (
+          <Suspense fallback={<Loader height='300px' />}>
+            <section className='pt-20'>
+              <ProductAdditionalInfo data={product.productInfo} />
+            </section>
+          </Suspense>
+        )}
 
 
 
-      {/* =============== product info =============  */}
-      {/* <section className=''>
+        {/* =============== product info =============  */}
+        {/* <section className=''>
         <h3 className='text-center text-[var(--themeColor)] text-xl font-semibold pb-10'>FAQ's</h3>
         <div>
           <Accordion data={faq} />
         </div>
       </section> */}
-      {/* =============== product reviews and ratings ========== */}
 
-      <section className='xs:py-20 py-10'>
-        <div className=' text-center xs:text-2xl tracking-widest  w-[80%]  mx-auto mb-5'>
-          <Title heading='Reviews and Ratings' />
-          {/* <h3 className='text-center text-[var(--themeColor)] text-xl font-semibold xs:pb-10'>Reviews and Ratings</h3> */}
-        </div>
-        <div className=' xs:w-[80%] w-[95%]   mx-auto flex flex-col gap-16'>
-          {/* {loading && (<div>loading.....</div>)} */}
-          {product.reviews?.length > 0 && (
-            product.reviews.map((reviews) => (
+        {/* =============== you may also like section ========== */}
+        <Suspense fallback={<Loader height='300px' />}>
+          <YouMayAlsoLike categoryUrl={product.details['category-url'].toLowerCase()} />
+        </Suspense>
 
-              <SingleReview key={reviews._id} reviews={reviews} />
+        {/* =============== product reviews and ratings ========== */}
 
-            ))
-          )}
-
-        </div>
-        <div className=' xs:w-[80%] w-[90%] mt-10 mx-auto '>
-          {/* ============add reviews =========== */}
-          <div>
-            <h3 className='tracking-widest mb-2'>Add Review:</h3>
-          </div>
-          <Suspense fallback={<Loader height='200px' />}>
-            <ReviewsAndRatings productName={nameUrl} insideProductDetails={true} />
+        <section>
+          <Suspense fallback={<Loader height='100px' />} >
+            <ReviewSection product={product} />
           </Suspense>
-        </div>
-      </section>
+
+          <div className=' xs:w-[80%] w-[90%] mt-10 mx-auto '>
+            {/* ============add reviews =========== */}
+            <Suspense fallback={<Loader height='200px' />}>
+              <ReviewsAndRatings productName={nameUrl} insideProductDetails={true} />
+            </Suspense>
+          </div>
+        </section>
 
 
-      {/* =============== you may also like section ========== */}
-      <Suspense fallback={<Loader height='300px' />}>
-        <YouMayAlsoLike categoryUrl={product.details['category-url'].toLowerCase()} />
-      </Suspense>
-
+      </div>
     </div>
   )
 }

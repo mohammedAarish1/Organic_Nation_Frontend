@@ -627,7 +627,6 @@ export const cartSlice = createSlice({
             })
             .addCase(applyPickleCouponCode.fulfilled, (state, action) => {
                 if (action.payload) {
-                    console.log('actionpayload pickle', action.payload)
                     return {
                         ...state,
                         validatingCouponCode: false,

@@ -1,17 +1,18 @@
 import React, { useCallback, useEffect, useRef, memo, lazy, Suspense } from 'react';
-import {  NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearUserOrders, resetCheckoutStatus } from '../../features/manageOrders/manageOrders';
 import { clearLocalCart, getAllCartItems } from '../../features/cart/cart';
 import { logout } from '../../features/auth/auth';
 import { toast } from 'react-toastify';
-import { IoIosArrowDown } from "react-icons/io";
+// import { IoIosArrowDown } from "react-icons/io";
 
 // Icons
-import { FaUserCircle } from "react-icons/fa";
-import { IoMdLogIn } from "react-icons/io";
-import { BsCart } from "react-icons/bs";
+// import { FaUserCircle } from "react-icons/fa";
+// import { IoMdLogIn } from "react-icons/io";
+// import { BsCart } from "react-icons/bs";
 import Loader from '../common/Loader';
+import { FiLogIn, FiShoppingCart, FiUser } from 'react-icons/fi';
 
 
 const UserMenu = lazy(() => import('../module/navigation-menu/UserMenu'))
@@ -25,13 +26,19 @@ const CartButton = memo(({ totalCartItems }) => (
       ${isActive ? 'underline underline-offset-4' : ''}
     `}
   >
-    <div className="relative transition-transform group-hover:scale-105">
+    {/* <div className="relative transition-transform group-hover:scale-105">
       <BsCart className="text-3xl" />
       <span className="absolute -top-1 -right-2 bg-yellow-400 text-xs w-5 h-5 rounded-full flex items-center justify-center">
         {totalCartItems}
       </span>
     </div>
-    <span>Cart</span>
+    <span>Cart</span> */}
+    <button className="text-[#3E2C1B] hover:text-[#9B7A2F] relative">
+      <FiShoppingCart size={20} />
+      <span className="absolute -top-2 -right-2 bg-[#D87C45] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+        {totalCartItems}
+      </span>
+    </button>
   </NavLink>
 ));
 
@@ -85,13 +92,11 @@ const OtherNavItems = () => {
   return (
     <nav className="text-[var(--themeColor)]">
       <ul className="flex justify-center items-center sm:gap-4 gap-3 font-medium">
-        <li>
-          <CartButton totalCartItems={totalCartItems} />
-        </li>
+       
 
         {user && !user_loading ? (
           <li className="relative">
-            <button
+            {/* <button
               className="flex flex-col items-center sm:p-3 p-1 hover:opacity-80 transition-opacity"
               onClick={() => setShowUserMenu(prev => !prev)}
               aria-expanded={showUserMenu}
@@ -99,9 +104,18 @@ const OtherNavItems = () => {
             >
               <FaUserCircle className="text-2xl" />
               <span className='flex gap-[1px] justify-end items-end'>{user.fullName || 'You'}<IoIosArrowDown className='mb-[3px] text-sm' /></span>
+            </button> */}
+
+            <button
+              className="text-[#3E2C1B] hover:text-[#9B7A2F]"
+              onClick={() => setShowUserMenu(prev => !prev)}
+              aria-expanded={showUserMenu}
+              aria-label="User menu"
+            >
+              <FiUser size={20} />
             </button>
 
-            <Suspense fallback={<Loader height='10px'/>}>
+            <Suspense fallback={<Loader height='10px' />}>
               <UserMenu
                 user={user}
                 showMenu={showUserMenu}
@@ -115,17 +129,24 @@ const OtherNavItems = () => {
           <li>
             <NavLink
               to="register"
-              className={({ isActive }) => `
-                flex flex-col items-center sm:p-4 p-1 
-                hover:underline hover:underline-offset-4
-                ${isActive ? 'underline underline-offset-4' : ''}
-              `}
+              // className={({ isActive }) => `
+              //   flex flex-col items-center sm:p-4 p-1 
+              //   hover:underline hover:underline-offset-4
+              //   ${isActive ? 'underline underline-offset-4' : ''}
+              // `}
+              className="text-[#3E2C1B] hover:text-[#9B7A2F]"
+
             >
-              <IoMdLogIn className="text-2xl" />
-              <span>Login</span>
+              {/* <IoMdLogIn className="text-2xl" /> */}
+              <FiLogIn size={20} />
+              {/* <span>Login</span> */}
             </NavLink>
           </li>
         )}
+
+         <li>
+          <CartButton totalCartItems={totalCartItems} />
+        </li>
       </ul>
     </nav>
   );

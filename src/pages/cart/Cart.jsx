@@ -1,475 +1,74 @@
-// import React, { lazy, Suspense, useEffect, useState } from "react";
-// // import ProductQty from "../../components/productQty/ProductQty";
-// import { useDispatch, useSelector } from "react-redux";
-// // react icons
-// import { IoIosArrowRoundForward } from "react-icons/io";
-// import { BsEmojiAstonished } from "react-icons/bs";
-// // import { MdDelete } from "react-icons/md";
-// import { FaArrowLeftLong } from "react-icons/fa6";
-// // import { ImSpinner9 } from "react-icons/im";
-// import { PiSealCheckFill } from "react-icons/pi";
-// // product image tempoeary
-// import { Link } from "react-router-dom";
-// import {
-//   getAllCartItems,
-//   clearCart,
-//   // removeFromCart,
-//   // updateQty,
-// } from "../../features/cart/cart";
-// // import { ErrorMessage, Field, Form, Formik } from "formik";
-// // import * as Yup from "yup";
-// import {
-//   // calculateShippingFee,
-//   // checkDeliveryAvailability,
-//   setIsAvailable,
-// } from "../../features/check-delivery/checkDelivery";
-// import { resetCheckoutStatus } from "../../features/manageOrders/manageOrders";
-// // import { toast } from "react-toastify";
-// import { Tooltip } from "react-tooltip";
-// // import OfferBanner from "../../components/offerBanner/OfferBanner";
-// import CouponList from "../../components/couponCodeList/CouponList";
-// // import Image from '../../components/image/Image';
-// // import SingleCartItem from "../../components/module/cart/SingleCartItem";
-// // import CheckDeliveryAvailability from "../../components/delivery-availability/CheckDeliveryAvailability";
-// const SingleCartItem=lazy(()=>import("../../components/module/cart/SingleCartItem"));
-// const CheckDeliveryAvailability = lazy(() => import("../../components/module/cart/CheckDeliveryAvailability"));
-
-// const Cart = () => {
-//   const { user } = useSelector((state) => state.auth);
-//   const [showCouponCodeList, setShowCouponCodelist] = useState(false);
-
-//   const {
-//     cartItemsList,
-//     loading,
-//     totalCartAmount,
-//     totalTax,
-//     couponCodeApplied,
-//   } = useSelector((state) => state.cart);
-
-//   const dispatch = useDispatch();
-//   const MRPTotal = cartItemsList?.reduce((total, product) => {
-//     const price = product.price;
-//     return Math.round(total + price * product.quantity);
-//   }, 0);
-
-
-//   const totalPickleQuantity = cartItemsList
-//     .filter((item) => item.category.includes("Pickles"))
-//     .reduce((sum, item) => sum + item.quantity, 0);
-
-
-//   useEffect(() => {
-//     dispatch(setIsAvailable());
-//   }, [setIsAvailable]);
-
-//   return (
-//     <div>
-//       {/* <div>
-//         <OfferBanner />
-//       </div> */}
-//       {totalCartAmount < 399 && totalCartAmount > 0 && (
-//         <div className="md:mt-0 mt-5 sm:px-0 px-5 text-center italic text-orange-500 md:text-xl font-sans font-bold">
-//           <span>*CASH ON DELIVERY (COD) is available on all orders above  ₹ 399 !</span>
-//         </div>
-//       )}
-
-//       <div className=" py-10">
-//         {/* shopping btn and clear cart  */}
-//         <div className="flex justify-between items-center mb-3 lg:w-[80%] w-[90%] mx-auto ">
-//           <div>
-//             <Link
-//               to="/shop/all"
-//               className=" flex underline-hover text-[var(--bgColorPrimary)] hover:text-orange-500 justify-center items-center gap-2 py-1   font-semibold rounded-lg  uppercase "
-//             >
-//               {" "}
-//               <FaArrowLeftLong />
-//               <span className="text-sm sm:text-[16px]">Continue Shopping</span>
-//             </Link>
-//           </div>
-//           {cartItemsList?.length !== 0 && (
-//             <div>
-//               <button
-//                 className="bg-red-500 text-sm px-4 py-2 text-white hover:bg-red-600"
-//                 onClick={() => {
-//                   dispatch(clearCart()).then(() => dispatch(getAllCartItems()));
-//                   // dispatch(getAllCartItems())
-//                 }}
-//               >
-//                 CLEAR CART
-//               </button>
-//             </div>
-//           )}
-//         </div>
-//         {/* shopping btn and clear cart end */}
-//         <div className="overflow-x-auto lg:w-[80%] w-[90%] mx-auto">
-//           <table className="table-auto min-w-full divide-y divide-gray-200">
-//             {/*============= heading start ===================== */}
-//             <thead className="bg-[var(--bgColorPrimary)] text-white">
-//               <tr>
-//                 <th className="px-6 py-3 text-center text-xs font-medium  uppercase tracking-wider ">
-//                   S No.
-//                 </th>
-//                 <th className="px-6 py-3 text-center text-xs font-medium  uppercase tracking-wider lg:table-cell hidden">
-//                   Image
-//                 </th>
-//                 <th className="px-6  py-3 text-center text-xs font-medium  uppercase tracking-wider">
-//                   Products
-//                 </th>
-//                 <th className="px-6 py-3 text-center text-xs font-medium  uppercase tracking-wider lg:table-cell hidden">
-//                   Price
-//                 </th>
-//                 <th className="px-6 py-3   text-xs font-medium  uppercase tracking-wider">
-//                   Quantity
-//                 </th>
-//                 <th className="px-6 py-3 text-center text-xs font-medium  uppercase tracking-wider ">
-//                   Subtotal
-//                 </th>
-//                 <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider">
-//                   Remove
-//                 </th>
-//               </tr>
-//             </thead>
-//             {/*========================== heading start end ========================*/}
-
-//             {/* cart items start */}
-//             {/* {cartItems?.map((curItem, index) => (<SingleCartItem key={curItem.productId} curItem={curItem} index={index} />))} */}
-//             <Suspense fallback={<tbody className="loader"></tbody>}>
-//               {cartItemsList?.map((curItem, index) => (
-//                 // <tbody key={curItem._id} className=" divide-y divide-gray-200">
-//                 //   <tr>
-//                 //     <td className=" text-center whitespace-nowrap ">
-//                 //       <div className=" text-gray-900 px-6 py-4 ">{index + 1}.</div>
-//                 //     </td>
-//                 //     <td className=" text-center whitespace-nowrap lg:table-cell hidden">
-//                 //       <Link to={`/shop/${curItem['category-url'].toLowerCase()}/${curItem['name-url']}`}>
-
-//                 //         <div className="font-semibold text-gray-900 px-6 py-4">
-//                 //           {/* <img
-//                 //             src={
-//                 //               Array.isArray(curItem.img) ? curItem.img.filter((path) => path.includes("front") )[0] : null
-//                 //             }
-//                 //             className="w-20 max-h-24 object-contain"
-//                 //             alt={curItem.name}
-//                 //           /> */}
-//                 //           <Image
-//                 //             src={{
-//                 //               // sm: leftImage.sm,
-//                 //               sm: Array.isArray(curItem.img) ? curItem.img.filter((path) => path.sm.includes("front"))[0].sm : null,
-//                 //               md: Array.isArray(curItem.img) ? curItem.img.filter((path) => path.md.includes("front"))[0].md : null,
-//                 //               lg: Array.isArray(curItem.img) ? curItem.img.filter((path) => path.lg.includes("front"))[0].lg : null,
-//                 //               // md: leftImage.md,
-//                 //               // lg: leftImage.lg
-//                 //             }}
-//                 //             // blurSrc={leftImage.blur}
-//                 //             alt={curItem.name}
-//                 //             className="w-20 max-h-24 object-contain"
-//                 //           />
-//                 //         </div>
-//                 //       </Link>
-//                 //     </td>
-//                 //     <td className=" text-center whitespace-nowrap">
-//                 //       <Link to={`/shop/${curItem['category-url'].toLowerCase()}/${curItem['name-url']}`}>
-//                 //         <div className="font-semibold text-gray-900 px-6 py-4 ">
-//                 //           {curItem.name}
-//                 //         </div>
-//                 //       </Link>
-//                 //     </td>
-//                 //     <td className="text-center whitespace-nowrap lg:table-cell hidden">
-//                 //       <div className=" text-gray-900 px-6 py-4">
-//                 //         ₹{" "}
-//                 //         {Math.round(
-//                 //           curItem.price - (curItem.price * curItem.discount) / 100
-//                 //         )}
-//                 //       </div>
-//                 //     </td>
-//                 //     <td className=" text-center   whitespace-nowrap">
-//                 //       {/* <div className=" text-gray-900 flex justify-center items-center "><ProductQty qty={curItem.qty} increaseQty={() => dispatch(increaseProductQty(curItem.id))} decreaseQty={() => dispatch(decreaseProductQty(curItem.id))} /></div> */}
-//                 //       <div className=" text-gray-900 flex justify-center items-center px-6 py-4">
-//                 //         <ProductQty
-//                 //           qty={curItem.quantity}
-//                 //           increaseQty={() => {
-//                 //             if (curItem.quantity === curItem.availability) {
-//                 //               toast.error(`No Quanity left in stock.`);
-//                 //               return;
-//                 //             }
-//                 //             dispatch(
-//                 //               updateQty({
-//                 //                 productName: curItem['name-url'],
-//                 //                 type: "increase",
-//                 //               })
-//                 //             ).then(() => {
-//                 //               dispatch(getAllCartItems());
-//                 //             });
-//                 //           }}
-//                 //           decreaseQty={() =>
-//                 //             dispatch(
-//                 //               updateQty({
-//                 //                 productName: curItem['name-url'],
-//                 //                 type: "decrease",
-//                 //               })
-//                 //             ).then(() => {
-//                 //               dispatch(getAllCartItems());
-//                 //             })
-//                 //           }
-//                 //         />
-//                 //       </div>
-//                 //     </td>
-//                 //     <td className=" text-center whitespace-nowrap ">
-//                 //       <div className=" text-gray-900 px-6 py-4">
-//                 //         ₹{" "}
-//                 //         {Math.round(
-//                 //           (curItem.price -
-//                 //             (curItem.price * curItem.discount) / 100) *
-//                 //           curItem.quantity
-//                 //         )}
-//                 //       </div>
-//                 //     </td>
-//                 //     <td className=" text-center whitespace-nowrap">
-//                 //       <button
-//                 //         onClick={() => {
-//                 //           dispatch(removeFromCart(curItem['name-url'])).then(() =>
-//                 //             dispatch(getAllCartItems())
-//                 //           );
-//                 //         }}
-//                 //         className="text-red-500 hover:text-red-700 px-6 py-4 "
-//                 //       >
-//                 //         <MdDelete className="text-xl" />
-//                 //       </button>
-//                 //     </td>
-//                 //   </tr>
-//                 // </tbody>
-//                 <SingleCartItem key={curItem._id} curItem={curItem} index={index} />
-//               ))}
-//             </Suspense>
-//             {/* cart items end */}
-//           </table>
-
-//           {loading && cartItemsList?.length === 0 && (
-//             <div className="flex items-center justify-center sm:text-4xl text-xl mt-5 py-5  w-full">
-//               <div className="flex justify-center items-center gap-5">
-//                 <p>Loading..</p>
-//               </div>
-//             </div>
-//           )}
-
-//           {/* cart empty message section start */}
-//           {cartItemsList?.length === 0 && !loading && (
-//             <div className="flex items-center justify-center sm:text-4xl text-xl mt-5 py-5  w-full">
-//               <div className="flex justify-center items-center gap-5">
-//                 <p>Your Cart is Empty</p>
-//                 <span>
-//                   {" "}
-//                   <BsEmojiAstonished />
-//                 </span>
-//               </div>
-//             </div>
-//           )}
-//           {/* cart empty message section end */}
-
-//           <div className="w-full h-[1px] bg-[var(--bgColorPrimary)] mt-8"></div>
-//         </div>
-
-//         {/*================================ total price section starts =====================*/}
-//         <div className="flex  lg:w-[80%] w-[90%] mx-auto mt-10 sm:justify-end justify-center font-sans uppercase text-sm tracking-widest">
-//           <div className="bg-[var(--hoverEffect)] flex flex-col  gap-4 p-5 md:w-[35%] ">
-//             <div className="flex justify-between items-center gap-10">
-//               <span>Grand Total:</span>
-//               <span>₹ {Math.round(MRPTotal || 0)}</span>
-//             </div>
-//             <div className="flex justify-between items-center gap-10 font-semibold">
-//               <span>Total Discount (-):</span>
-//               <span>₹ ({Math.round(MRPTotal - totalCartAmount || 0)})</span>
-//             </div>
-//             <div className="flex justify-between items-center gap-10">
-//               <span>Order Total:</span>
-//               <span className="font-semibold">₹ {Math.round(totalCartAmount || 0)}</span>
-//             </div>
-
-//             <CouponList
-//               totalCartAmount={totalCartAmount}
-//               totalTax={totalTax}
-//               setShowCouponCodelist={setShowCouponCodelist}
-//               totalPickleQuantity={totalPickleQuantity}
-//               couponCodeApplied={couponCodeApplied}
-//               showCouponCodeList={showCouponCodeList}
-//               showList={() => setShowCouponCodelist(true)}
-//               hideList={() => setShowCouponCodelist(false)}
-
-//             />
-
-//             {/* coupon  */}
-//             <hr />
-//             <div>
-
-//               {totalCartAmount < 499 && totalCartAmount > 0 && (
-//                 <div className="text-center mt-2 font-bold">
-//                   <p className="text-[12px] text-green-700 capitalize">
-//                     ( Add  ₹ <span>{499 - totalCartAmount}</span> worth of products more to get FREE SHIPPING !!)
-//                   </p>
-//                 </div>
-//               )}
-//               <div className=" text-green-700 font-bold text-xs">
-//                 {couponCodeApplied?.length > 0 && (
-//                   <p className="flex  items-center gap-1">
-//                     Coupon Code Applied <PiSealCheckFill className="text-xl" />
-//                   </p>
-//                 )}
-//               </div>
-//             </div>
-
-//             {/* pin code availability check  */}
-//             <Suspense fallback={<div className="loader"></div>}>
-//               <CheckDeliveryAvailability />
-//             </Suspense>
-//             {/* <div className="flex flex-col gap-2">
-//               <h3>Check Delivery Availability:</h3>
-//               <div>
-//                 <Formik
-//                   initialValues={{ pincode: "" }}
-//                   validationSchema={validationSchema}
-//                   onSubmit={handleSubmit}
-//                 >
-//                   {({ }) => (
-//                     <Form>
-//                       <div className="flex items-center ">
-//                         <Field
-//                           type="text"
-//                           name="pincode"
-//                           placeholder="Enter pin code"
-//                           className="border border-gray-300 rounded-tl-md rounded-bl-md px-2 py-1 outline-none tracking-wide w-full "
-//                         />
-//                         <button
-//                           type="submit"
-//                           className="px-4 py-1 rounded-tr-md rounded-br-md bg-orange-400 hover:bg-orange-500"
-//                         >
-//                           {checking ? (
-//                             <ImSpinner9 className="animate-spin" />
-//                           ) : (
-//                             "Check"
-//                           )}
-//                         </button>
-//                       </div>
-//                       <ErrorMessage
-//                         name="pincode"
-//                         component="div"
-//                         className="text-red-600 text-[14px]"
-//                       />
-//                       <div className="max-w-1/3">
-//                         {isAvailable ? (
-//                           <p className="text-center text-green-700 text-[13px] py-1 break-all">
-//                             {message}
-//                           </p>
-//                         ) : (
-//                           <p className="text-center text-red-500 text-[13px] py-1 break-all">
-//                             {error}
-//                           </p>
-//                         )}
-//                       </div>
-//                     </Form>
-//                   )}
-//                 </Formik>
-//               </div>
-//             </div> */}
-//             {/* chec button  */}
-//             <Link
-//               to={user ? "/cart/checkout" : "/otp-login"}
-//               onClick={() => dispatch(resetCheckoutStatus(true))}
-//             >
-//               <div
-//                 className={`${cartItemsList?.length === 0
-//                   ? "bg-green-400"
-//                   : " bg-green-500 hover:bg-green-700"
-//                   } flex justify-center items-center gap-2    transition-all duration-700 text-white rounded-md`}
-//                 data-tooltip-id="checkout-tooltip"
-//                 data-tooltip-content="Your cart is Empty !"
-//                 data-tooltip-place="bottom"
-//               >
-//                 <button
-//                   type="button"
-//                   className="py-3"
-//                   disabled={cartItemsList?.length === 0}
-//                 >
-//                   Proceed to Checkout
-//                 </button>
-//                 <IoIosArrowRoundForward className="text-3xl" />
-//               </div>
-
-//               {/* tooltip  */}
-
-//               {cartItemsList?.length === 0 && (
-//                 <Tooltip
-//                   id="checkout-tooltip"
-//                   style={{
-//                     backgroundColor: "gray",
-//                     color: "#ffffff",
-//                     borderRadius: "10px",
-//                     padding: "20px",
-//                   }}
-//                   place="bottom"
-//                   animation="fade"
-//                   delayShow={200} // delay before showing in ms
-//                   delayHide={300} // delay before hiding in ms
-//                 // offset={10} // distance in pixels
-//                 // arrow={true}
-//                 // arrowColor="#25D366"
-//                 ></Tooltip>
-//               )}
-
-//               {/* tooltip end */}
-//             </Link>
-//           </div>
-//         </div>
-//         {/* total price section end */}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Cart;
-
-
-import React, { lazy, Suspense, useEffect, useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect, useMemo } from 'react';
+import { motion } from 'framer-motion';
+import { FiTrash2, FiPlus, FiMinus, FiArrowLeft, FiArrowRight, FiShoppingBag, FiHeart } from 'react-icons/fi';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
-import { IoIosArrowRoundForward } from "react-icons/io";
-import { BsEmojiAstonished } from "react-icons/bs";
-import { FaArrowLeftLong } from "react-icons/fa6";
-import { PiSealCheckFill } from "react-icons/pi";
-import { Tooltip } from "react-tooltip";
+import Image from '../../components/image/Image';
+import ProductQty from '../../components/productQty/ProductQty';
+import { getAllCartItems, removeFromCart } from '../../features/cart/cart';
+import CheckoutModal from '../../components/CheckoutModal'; 
+import SubmitButton from '../../components/button/SubmitButton';
+import CheckDeliveryAvailability from '../../components/module/cart/CheckDeliveryAvailability';
+import CODEligibility from '../../components/module/cart/CODEligibility';
+import FreeShippingAlert from '../../components/module/cart/FreeShippingAlert';
 
-// Redux actions
-import {
-  getAllCartItems,
-  clearCart,
-} from "../../features/cart/cart";
-import { setIsAvailable } from "../../features/check-delivery/checkDelivery";
-import { resetCheckoutStatus } from "../../features/manageOrders/manageOrders";
-import CheckoutModal from "../../components/CheckoutModal";
-import OrderSuccessMessage from "../../components/checkout/OrderSuccessMessage";
+// Demo product data
+// const demoProducts = [
+//   {
+//     id: 1,
+//     name: "Handcrafted Wooden Bowl",
+//     price: 59.99,
+//     image: "/api/placeholder/300/300",
+//     quantity: 2,
+//     inStock: 5
+//   },
+//   {
+//     id: 2,
+//     name: "Organic Cotton Throw Pillow",
+//     price: 34.99,
+//     image: "/api/placeholder/300/300",
+//     quantity: 1,
+//     inStock: 8
+//   },
+//   {
+//     id: 3,
+//     name: "Artisan Ceramic Mug Set",
+//     price: 49.99,
+//     image: "/api/placeholder/300/300",
+//     quantity: 1,
+//     inStock: 3
+//   }
+// ];
 
-// Lazy loaded components
-const SingleCartItem = lazy(() => import("../../components/module/cart/SingleCartItem"));
-const CheckDeliveryAvailability = lazy(() => import("../../components/module/cart/CheckDeliveryAvailability"));
-const CouponList = lazy(() => import("../../components/couponCodeList/CouponList"));
+// Animation variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
 
-const CartTableHeader = () => (
-  <thead className="bg-[var(--bgColorPrimary)] text-white">
-    <tr>
-      <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider">S No.</th>
-      <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider lg:table-cell hidden">Image</th>
-      <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider">Products</th>
-      <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider lg:table-cell hidden">Price</th>
-      <th className="px-6 py-3 text-xs font-medium uppercase tracking-wider">Quantity</th>
-      <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider">Subtotal</th>
-      <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider">Remove</th>
-    </tr>
-  </thead>
-);
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 100 }
+  }
+};
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
-  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false)
+  // const [cartItems, setCartItems] = useState(demoProducts);
+  // const [promoCode, setPromoCode] = useState('');
+  // const [discountApplied, setDiscountApplied] = useState(false);
+  // const [shippingMethod, setShippingMethod] = useState('standard');
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const { checking, shippingFee } = useSelector(state => state.delivery)
+
   const {
     cartItemsList,
     loading,
@@ -478,7 +77,12 @@ const Cart = () => {
     couponCodeApplied,
   } = useSelector((state) => state.cart);
 
-  const [showCouponCodeList, setShowCouponCodelist] = React.useState(false);
+  // Calculate order summary
+  // const subtotal = cartItemsList.reduce((total, item) => total + (item.price * item.quantity), 0);
+  // const discount = discountApplied ? subtotal * 0.1 : 0;
+  // const shipping = shippingMethod === 'express' ? 12.99 : 4.99;
+  // const tax = (subtotal - discount) * 0.07;
+  // const total = subtotal - discount + shipping + tax;
 
   // Memoized calculations
   const MRPTotal = useMemo(() =>
@@ -487,199 +91,359 @@ const Cart = () => {
     ), 0) || 0
     , [cartItemsList]);
 
-  const totalPickleQuantity = useMemo(() =>
-    cartItemsList
-      .filter((item) => item.category.includes("Pickles"))
-      .reduce((sum, item) => sum + item.quantity, 0)
-    , [cartItemsList]);
 
-  const handleClearCart = () => {
-    dispatch(clearCart()).then(() => dispatch(getAllCartItems()));
+  // Handle quantity change
+  // const updateQuantity = (id, newQuantity) => {
+  //   if (newQuantity < 1) return;
+
+  //   const updatedCart = cartItems.map(item => {
+  //     if (item.id === id) {
+  //       return {
+  //         ...item,
+  //         quantity: Math.min(newQuantity, item.inStock)
+  //       };
+  //     }
+  //     return item;
+  //   });
+
+  //   setCartItems(updatedCart);
+  // };
+
+  // Remove item from cart
+  // const removeItem = (id) => {
+  //   const updatedCart = cartItems.filter(item => item.id !== id);
+  //   setCartItems(updatedCart);
+  // };
+
+  // Apply promo code
+  // const applyPromoCode = () => {
+  //   if (promoCode.toLowerCase() === 'discount10') {
+  //     setDiscountApplied(true);
+  //   }
+  // };
+
+  // Move to wishlist (stub function)
+  // const moveToWishlist = (id) => {
+  //   // In a real app, this would move the item to wishlist
+  //   removeItem(id);
+  // };
+
+  // Format price with comma separators
+  const formatPrice = (price) => {
+    return price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
-  useEffect(() => {
-    dispatch(setIsAvailable());
-  }, [dispatch]);
-
-  const renderCartItems = () => (
-    <Suspense fallback={<tbody className="loader"></tbody>}>
-      {cartItemsList?.map((curItem, index) => (
-        <SingleCartItem
-          key={curItem._id}
-          curItem={curItem}
-          index={index}
-        />
-      ))}
-    </Suspense>
-  );
-
-  const renderEmptyCartMessage = () => (
-    <div className="flex items-center justify-center sm:text-4xl text-xl mt-5 py-5 w-full">
-      <div className="flex justify-center items-center gap-5">
-        <p>Your Cart is Empty</p>
-        <BsEmojiAstonished />
-      </div>
-    </div>
-  );
-
   return (
-    <div>
-      {totalCartAmount < 399 && totalCartAmount > 0 && (
-        <div className="md:mt-0 mt-5 sm:px-0 px-5 text-center italic text-orange-500 md:text-xl font-sans font-bold">
-          *CASH ON DELIVERY (COD) is available on all orders above ₹ 399!
+    <div className="bg-[#F5EFE6] min-h-screen pb-24">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-[var(--themeColor)] to-[var(--accent-color)] text-[#FFFFFF] py-4 px-4 md:px-6">
+        <div className="container mx-auto">
+          <h1 className="text-xl md:text-2xl font-bold">Your Shopping Cart</h1>
+          <p className="text-sm opacity-80">Review and modify your items before checkout</p>
         </div>
-      )}
+      </div>
 
-      <div className="py-10">
-        <div className="flex justify-between items-center mb-3 lg:w-[80%] w-[90%] mx-auto">
-          <Link
-            to="/shop/all"
-            className="flex underline-hover text-[var(--bgColorPrimary)] hover:text-orange-500 items-center gap-2 py-1 font-semibold rounded-lg uppercase"
+      {/* Main content */}
+      <div className="container mx-auto px-4 md:px-6 mt-6">
+        {/* Back to shopping link */}
+        <Link
+          to="/shop/all"
+          className="flex items-center text-[#3E2C1B] mb-6 hover:text-[#7A2E1D] transition-colors"
+          // whileHover={{ x: -5 }}
+        >
+          <FiArrowLeft className="mr-2" /> Continue Shopping
+        </Link>
+
+        {cartItemsList.length === 0 ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-16"
           >
-            <FaArrowLeftLong />
-            <span className="text-sm sm:text-[16px]">Continue Shopping</span>
-          </Link>
-
-          {cartItemsList?.length > 0 && (
-            <button
-              className="bg-red-500 text-sm px-4 py-2 text-white hover:bg-red-600"
-              onClick={handleClearCart}
+            <div className="flex justify-center mb-4">
+              <FiShoppingBag className="w-16 h-16 text-[#DCD2C0]" />
+            </div>
+            <h2 className="text-2xl text-[#3E2C1B] font-semibold mb-2">Your cart is empty</h2>
+            <p className="text-[#3E2C1B] opacity-70 mb-8">Looks like you haven't added any items to your cart yet.</p>
+            <Link
+              to="/shop/all"
+              className="bg-[#7A2E1D] text-[#FFFFFF] px-8 py-3 rounded-md inline-block hover:bg-opacity-90 transition-colors"
             >
-              CLEAR CART
-            </button>
-          )}
-        </div>
-
-        <div className="overflow-x-auto lg:w-[80%] w-[90%] mx-auto">
-          <table className="table-auto min-w-full divide-y divide-gray-200">
-            <CartTableHeader />
-            {renderCartItems()}
-          </table>
-
-          {loading && cartItemsList?.length === 0 && (
-            <div className="flex items-center justify-center sm:text-4xl text-xl mt-5 py-5 w-full">
-              <div className="flex justify-center items-center gap-5">
-                <p>Loading..</p>
-              </div>
-            </div>
-          )}
-
-          {cartItemsList?.length === 0 && !loading && renderEmptyCartMessage()}
-
-          <div className="w-full h-[1px] bg-[var(--bgColorPrimary)] mt-8" />
-        </div>
-
-        {cartItemsList?.length !== 0 && (
-          <div className="flex lg:w-[80%] w-[90%] mx-auto mt-10 sm:justify-end justify-center font-sans uppercase text-sm tracking-widest">
-            <div className="shadow-md flex flex-col gap-4 p-5 md:w-[35%]">
-              <div className="flex justify-between items-center gap-10">
-                <span>Grand Total:</span>
-                <span>₹ {Math.round(MRPTotal)}</span>
-              </div>
-              <div className="flex justify-between items-center gap-10 font-semibold">
-                <span>Total Discount (-):</span>
-                <span>₹ ({Math.round(MRPTotal - totalCartAmount)})</span>
-              </div>
-              <div className="flex justify-between items-center gap-10">
-                <span>Order Total:</span>
-                <span className="font-semibold">₹ {Math.round(totalCartAmount)}</span>
-              </div>
-
-              {/* <Suspense fallback={<div>Loading...</div>}>
-                <CouponList
-                  totalCartAmount={totalCartAmount}
-                  totalTax={totalTax}
-                  setShowCouponCodelist={setShowCouponCodelist}
-                  totalPickleQuantity={totalPickleQuantity}
-                  couponCodeApplied={couponCodeApplied}
-                  showCouponCodeList={showCouponCodeList}
-                  showList={() => setShowCouponCodelist(true)}
-                  hideList={() => setShowCouponCodelist(false)}
-                />
-              </Suspense> */}
-
-              <hr />
-
-              {totalCartAmount < 499 && totalCartAmount > 0 && (
-                <div className="text-center mt-2 font-bold">
-                  <p className="text-[12px] text-green-700 capitalize">
-                    ( Add ₹ {499 - totalCartAmount} worth of products more to get FREE SHIPPING !!)
-                  </p>
+              Explore Products
+            </Link>
+          </motion.div>
+        ) : (
+          <div className="flex flex-col lg:flex-row gap-8">
+            {/* Cart items section */}
+            <motion.div
+              className="lg:w-2/3"
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+                {/* Header row (desktop only) */}
+                <div className="hidden md:grid grid-cols-12 gap-4 p-4 bg-[#DCD2C0] bg-opacity-30 text-[#3E2C1B] font-medium">
+                  <div className="col-span-6">Product</div>
+                  <div className="col-span-2 text-center">Price</div>
+                  <div className="col-span-2 text-center">Quantity</div>
+                  <div className="col-span-2 text-right">Subtotal</div>
                 </div>
-              )}
 
-              {couponCodeApplied?.length > 0 && (
-                <div className="text-green-700 font-bold text-xs">
-                  <p className="flex items-center gap-1">
-                    Coupon Code Applied <PiSealCheckFill className="text-xl" />
-                  </p>
-                </div>
-              )}
-
-              <Suspense fallback={<div className="loader" />}>
-                <CheckDeliveryAvailability />
-              </Suspense>
-
-              {/* <Link
-                to={user ? "/cart/checkout" : "/otp-login"}
-                onClick={() => dispatch(resetCheckoutStatus(true))}
-              >
-                <div
-                  className={`flex justify-center items-center gap-2 transition-all duration-700 text-white rounded-md ${cartItemsList?.length === 0
-                    ? "bg-green-400"
-                    : "bg-gradient-to-r to-green-700 from-[var(--themeColor)] hover:from-green-700 hover:to-green-900"
-                    }`}
-                  data-tooltip-id="checkout-tooltip"
-                  data-tooltip-content="Your cart is Empty!"
-                  data-tooltip-place="bottom"
-                >
-                  <button
-                    type="button"
-                    className="py-3"
-                    disabled={cartItemsList?.length === 0}
+                {/* Cart items */}
+                {cartItemsList.map((item) => (
+                  <motion.div
+                    key={item._id}
+                    className="border-b border-[#DCD2C0] last:border-b-0 p-4"
+                    variants={itemVariants}
                   >
-                    Proceed to Checkout
-                  </button>
-                  <IoIosArrowRoundForward className="text-3xl" />
-                </div>
+                    <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+                      {/* Product image and info */}
+                      <div className="md:col-span-6">
+                        <div className="flex items-center">
+                          <div className="w-20 h-20 mr-4 rounded-md overflow-hidden bg-[#DCD2C0] bg-opacity-20 flex-shrink-0">
+                            <Image
+                              src={{
+                                sm: Array.isArray(item.img) ? item.img.filter((path) => path.sm.includes("front"))[0].sm : null,
+                                md: Array.isArray(item.img) ? item.img.filter((path) => path.md.includes("front"))[0].md : null,
+                                lg: Array.isArray(item.img) ? item.img.filter((path) => path.lg.includes("front"))[0].lg : null,
+                              }}
+                              // blurSrc={leftImage.blur}
+                              alt={item.name}
+                              className="w-20 max-h-24 object-contain"
+                            />
+                          </div>
+                          <div>
+                            <h3 className="font-medium text-[#3E2C1B]">{item.name}</h3>
+                            <div className="md:hidden mt-1 mb-2 text-[#3E2C1B] font-semibold space-x-2">
+                              {item.discount > 0 ? (
+                                <>
+                                  <span className="text-lg font-semibold ">
+                                    ₹{Math.round(item.price - (item.price * item.discount) / 100)}
+                                  </span>
+                                  <span className="line-through text-xs text-gray-500">
+                                    ₹{item.price}
+                                  </span>
+                                </>
+                              ) : (
+                                <span className="text-lg font-semibold">₹{item.price}</span>
+                              )}
+                              {/* {item.discount > 0 && (
+                          <span className="ml-2 bg-red-100 text-red-600 text-xs font-medium px-2 py-1 rounded-full">
+                            {item.discount}% OFF
+                          </span>
+                        )} */}
+                            </div>
+                            <div className="flex mt-2 space-x-3 text-sm">
+                              <button
+                                onClick={() => {
+                                  dispatch(removeFromCart(item['name-url'])).then(() =>
+                                    dispatch(getAllCartItems())
+                                  );
+                                }}
+                                className="flex items-center text-[#D87C45] hover:text-[#7A2E1D] transition-colors"
+                              >
+                                <FiTrash2 className="mr-1" /> Remove
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
-                {cartItemsList?.length === 0 && (
-                  <Tooltip
-                    id="checkout-tooltip"
-                    style={{
-                      backgroundColor: "gray",
-                      color: "#ffffff",
-                      borderRadius: "10px",
-                      padding: "20px",
-                    }}
-                    place="bottom"
-                    animation="fade"
-                    delayShow={200}
-                    delayHide={300}
-                  />
+                      {/* Price (desktop) */}
+                      {/* <div className="hidden md:flex md:col-span-2 items-center justify-center text-[#3E2C1B]">
+                        {item.discount > 0 && Math.round(item.price - (item.price * item.discount) / 100)}  <span className={`${item.discount > 0 && 'line-through text-xs'}`}>₹{item.price}</span>
+                      </div> */}
+
+                      <div className="hidden md:flex md:col-span-2 items-center justify-center text-[#3E2C1B] space-x-2">
+                        {item.discount > 0 ? (
+                          <>
+                            <span className="text-lg font-semibold ">
+                              ₹{Math.round(item.price - (item.price * item.discount) / 100)}
+                            </span>
+                            <span className="line-through text-xs text-gray-500">
+                              ₹{item.price}
+                            </span>
+                          </>
+                        ) : (
+                          <span className="text-lg font-semibold">₹{item.price}</span>
+                        )}
+                        {/* {item.discount > 0 && (
+                          <span className="ml-2 bg-red-100 text-red-600 text-xs font-medium px-2 py-1 rounded-full">
+                            {item.discount}% OFF
+                          </span>
+                        )} */}
+                      </div>
+
+                      {/* Quantity */}
+                      <div className="md:col-span-2 flex justify-start md:justify-center">
+                        <ProductQty
+                          curItem={item}
+                        />
+                        {item.quantity >= item.availability && (
+                          <span className="text-xs text-[#D87C45] ml-2 mt-2">
+                            Max quantity
+                          </span>
+                        )}
+                      </div>
+
+
+                      {/* Subtotal */}
+                      <div className="md:col-span-2 flex items-center justify-end md:text-right text-[#3E2C1B] font-semibold">
+                        ₹{item.discount > 0 ? formatPrice(item.price - (item.price * item.discount) / 100) * item.quantity : formatPrice(item.price * item.quantity)}
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Order summary section */}
+            <motion.div
+              className="lg:w-1/3"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              <div className="bg-white rounded-lg shadow-sm p-6">
+                <h2 className="text-lg font-semibold text-[#3E2C1B] mb-4">Order Summary</h2>
+
+                {/* Check Delivery Availability */}
+                {/* <CheckDeliveryAvailability /> */}
+
+
+                {/* Free Shipping Alert */}
+                {totalCartAmount < 499 && totalCartAmount > 0 && (
+                  <FreeShippingAlert totalCartAmount={totalCartAmount} />
                 )}
-              </Link> */}
-              <button
-                type="button"
-                className={`py-1 flex justify-center items-center gap-2 transition-all duration-700 text-white rounded-md ${cartItemsList?.length === 0
-                  ? "bg-green-400"
-                  : " hover:bg-[var(--accent-color)] bg-custom-gradient hover:brightness-110"
-                  }`}
-                onClick={() => setIsCheckoutOpen(true)}
-              >CHECKOUT  <IoIosArrowRoundForward className="text-3xl" /></button>
-            </div>
+
+                {/* COD Eligibility */}
+                {totalCartAmount < 399 && totalCartAmount > 0 && (
+                  <CODEligibility />
+                )}
+
+                {/* Promo code */}
+                {/* <div className="mb-6">
+                  <div className="flex">
+                    <input
+                      type="text"
+                      value={promoCode}
+                      onChange={(e) => setPromoCode(e.target.value)}
+                      placeholder="Promo code"
+                      className="flex-grow px-3 py-2 bg-[#F5EFE6] border border-[#DCD2C0] rounded-l-md text-[#3E2C1B] placeholder-[#3E2C1B] placeholder-opacity-50 focus:outline-none focus:ring-1 focus:ring-[#9B7A2F]"
+                    />
+                    <motion.button
+                      onClick={applyPromoCode}
+                      className="bg-[#9B7A2F] text-[#FFFFFF] px-4 py-2 rounded-r-md"
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      Apply
+                    </motion.button>
+                  </div>
+                  {discountApplied && (
+                    <p className="text-[#6B8E23] text-sm mt-2">Promo code applied: 10% off</p>
+                  )}
+                  <p className="text-xs text-[#3E2C1B] opacity-70 mt-2">
+                    Try code: "DISCOUNT10" for 10% off
+                  </p>
+                </div> */}
+
+                {/* Shipping options */}
+                {/* <div className="mb-6">
+                  <h3 className="text-sm font-medium text-[#3E2C1B] mb-3">Shipping</h3>
+                  <div className="space-y-2">
+                    <label className="flex items-center cursor-pointer">
+                      <input
+                        type="radio"
+                        value="standard"
+                        checked={shippingMethod === 'standard'}
+                        onChange={() => setShippingMethod('standard')}
+                        className="form-radio text-[#7A2E1D] focus:ring-[#7A2E1D]"
+                      />
+                      <span className="ml-2 text-[#3E2C1B] text-sm">Standard Shipping - ₹4.99</span>
+                    </label>
+                    <label className="flex items-center cursor-pointer">
+                      <input
+                        type="radio"
+                        value="express"
+                        checked={shippingMethod === 'express'}
+                        onChange={() => setShippingMethod('express')}
+                        className="form-radio text-[#7A2E1D] focus:ring-[#7A2E1D]"
+                      />
+                      <span className="ml-2 text-[#3E2C1B] text-sm">Express Shipping - ₹12.99</span>
+                    </label>
+                  </div>
+                </div> */}
+
+                {/* Order calculations */}
+                <div className="border-t border-[#DCD2C0] pt-4 mb-6">
+                  <div className="flex justify-between py-2">
+                    <span className="text-[#3E2C1B]">Subtotal</span>
+                    <span className="text-[#3E2C1B] font-medium">₹{formatPrice(totalCartAmount)}</span>
+                  </div>
+                  {/* {discountApplied && (
+                    <div className="flex justify-between py-2">
+                      <span className="text-[#6B8E23]">Discount (10%)</span>
+                      <span className="text-[#6B8E23]">-₹{formatPrice(discount)}</span>
+                    </div>
+                  )} */}
+                  <div className="flex justify-between py-2">
+                    <span className="text-[#3E2C1B]">Shipping</span>
+                    <span className="text-[#3E2C1B]">₹{formatPrice(shippingFee)}</span>
+                  </div>
+                  {/* <div className="flex justify-between py-2">
+                    <span className="text-[#3E2C1B]">Estimated Tax</span>
+                    <span className="text-[#3E2C1B]">₹{formatPrice(tax)}</span>
+                  </div> */}
+                  <div className="flex justify-between py-3 text-lg font-semibold border-t border-[#DCD2C0] mt-2">
+                    <span className="text-[#3E2C1B]">Total</span>
+                    <span className="text-[#7A2E1D]">₹{formatPrice(totalCartAmount)}</span>
+                  </div>
+                </div>
+                {/* Checkout button */}
+                {/* <motion.button
+                  className="w-full bg-[#7A2E1D] text-[#FFFFFF] py-3 rounded-md font-medium flex items-center justify-center"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => setIsCheckoutOpen(true)}
+                >
+                Proceed to Checkout
+                  <FiArrowRight className="ml-2" />
+                </motion.button> */}
+
+                <SubmitButton text='Proceed to Checkout' action={() => setIsCheckoutOpen(true)} />
+
+                {/* Additional info */}
+                <div className="mt-6 text-xs text-[#3E2C1B] opacity-70">
+                  <p>*Shipping will be calculated  on next step based on delivery address.</p>
+                  {/* <p>Shipping calculated based on delivery address.</p> */}
+                  {/* <p className="mt-1">Taxes calculated based on applicable state and local laws.</p> */}
+                </div>
+              </div>
+
+              {/* Payment methods */}
+              <div className="mt-4 p-4 bg-white rounded-lg shadow-sm">
+                <h3 className="text-sm font-medium text-[#3E2C1B] mb-2">Accepted Payment Methods</h3>
+                <div className="flex space-x-2 mt-2">
+                  {["Debit Card", "Credit Card", "UPI",].map((method) => (
+                    <div key={method} className="px-2 py-1 bg-[#DCD2C0] text-xs rounded text-[#3E2C1B]">
+                      {method}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
           </div>
         )}
       </div>
       <CheckoutModal
         isOpen={isCheckoutOpen}
         onClose={() => setIsCheckoutOpen(false)}
-        logo="/api/placeholder/120/40"
       />
 
-      {/* <OrderSuccessMessage/> */}
     </div>
   );
-};
+}
+
 
 export default Cart;

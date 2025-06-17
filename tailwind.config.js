@@ -11,6 +11,7 @@ export default {
       },
       backgroundImage: {
         'custom-gradient': 'linear-gradient(135deg, #7A2E1D, #9B7A2F)',
+        'gradient-color': 'linear-gradient(to right, var(--themeColor), var(--accent-color))',
       },
       // keyframes:{
       //   'slide-in': {

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import * as Yup from 'yup';
 import {
-  FaShoppingCart, FaChevronDown, 
+  FaShoppingCart, FaChevronDown,
 } from 'react-icons/fa';
 import { RxCross2 } from "react-icons/rx";
 import { motion, AnimatePresence } from 'framer-motion';
@@ -13,6 +13,8 @@ import { getAllCartItems, mergeCart } from '../features/cart/cart';
 // import { verifyOTP } from '../features/auth/auth';
 // import { toast } from 'react-toastify';
 import NewCheckoutForm from './checkout/NewCheckoutForm';
+import FreeShippingAlert from './module/cart/FreeShippingAlert';
+import CODEligibility from './module/cart/CODEligibility';
 
 // Animation variants
 const fadeIn = {
@@ -103,7 +105,6 @@ const Accordion = ({ title, icon, isOpen, setIsOpen, children }) => {
 
 // Single Cart Item Component
 const CartItem = ({ item, index }) => {
-  console.log('item', item)
   return (
     <motion.div
       key={item.id}
@@ -257,8 +258,6 @@ const CartItem = ({ item, index }) => {
 const CheckoutModal = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(state => state.auth)
-  console.log('user', user)
-  console.log('isOpen', isOpen)
   const [step, setStep] = useState(1);
   const [orderSummaryOpen, setOrderSummaryOpen] = useState(false);
   const [couponOpen, setCouponOpen] = useState(false);
@@ -355,8 +354,8 @@ const CheckoutModal = ({ isOpen, onClose }) => {
 
 
 
-   // Add this in the CheckoutModal component
-   useEffect(() => {
+  // Add this in the CheckoutModal component
+  useEffect(() => {
     // If user is already logged in, skip to step 2
     if (user) {
       setPhoneVerified(true);
@@ -421,7 +420,7 @@ const CheckoutModal = ({ isOpen, onClose }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            // onClick={onClose}
+          // onClick={onClose}
           />
 
           <motion.div
@@ -465,6 +464,17 @@ const CheckoutModal = ({ isOpen, onClose }) => {
             {/* Body */}
             <div className="px-6 pb-6 max-h-[70vh] overflow-y-auto">
               {/* ======================================== Order Summary  ======================================= */}
+
+              {/* Free Shipping Alert */}
+              {totalCartAmount < 499 && totalCartAmount > 0 && (
+                <FreeShippingAlert totalCartAmount={totalCartAmount} />
+              )}
+
+               {/* COD Eligibility */}
+                {totalCartAmount < 399 && totalCartAmount > 0 && (
+                 <CODEligibility/>
+                )}
+
               <Accordion
                 title="Order Summary"
                 icon={FaShoppingCart}

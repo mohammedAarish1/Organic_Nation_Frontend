@@ -133,20 +133,29 @@
 // export default ManageOrders2
 
 
+// ManageOrders.js
+import React, { lazy, Suspense, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllOrders, getOrdersByStatus } from '../../features/manageOrders/manageOrders';
+// import Order from '../../components/orders/Order';
 
 // StatusButton.js
 import { FaAngleDown } from "react-icons/fa6";
 import { IoCubeOutline } from "react-icons/io5";
 
-const StatusButton = ({ 
-  isActive, 
-  count, 
-  label, 
-  onClick, 
-  borderColor, 
-  iconBgColor, 
-  iconColor, 
-  shadowColor 
+// lazy loading
+
+const Order = lazy(() => import('../../components/orders/Order'))
+
+const StatusButton = ({
+  isActive,
+  count,
+  label,
+  onClick,
+  borderColor,
+  iconBgColor,
+  iconColor,
+  shadowColor
 }) => (
   <div
     className={`${isActive && `border-${borderColor} border-[1px]`} 
@@ -172,13 +181,14 @@ const StatusButton = ({
 // NoOrders.js
 import { Link } from 'react-router-dom';
 import { FaArrowLeftLong } from "react-icons/fa6";
+import Loader from '../../components/common/Loader';
 
 const NoOrders = () => (
   <div className='flex flex-col gap-8 justify-center items-start xs:text-2xl font-mono'>
     <p>You have no orders !!!</p>
     <div>
-      <Link 
-        to="/shop/all" 
+      <Link
+        to="/shop/all"
         className="flex underline-hover text-[var(--bgColorPrimary)] max-w-max 
           hover:text-orange-500 justify-center items-center gap-2 py-1 
           font-semibold rounded-lg uppercase"
@@ -202,11 +212,7 @@ const OrdersHeader = () => (
   </div>
 );
 
-// ManageOrders.js
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAllOrders, getOrdersByStatus } from '../../features/manageOrders/manageOrders';
-import Order from '../../components/orders/Order';
+
 
 const STATUS_BUTTONS = [
   {
@@ -261,6 +267,7 @@ const ManageOrders = () => {
   const { orders, ordersByStatus } = useSelector(state => state.orders);
   const { user } = useSelector(state => state.auth);
 
+
   useEffect(() => {
     if (user) {
       dispatch(getAllOrders());
@@ -268,35 +275,39 @@ const ManageOrders = () => {
   }, [user, dispatch]);
 
   return (
-    <div className='mt-3 mb-20 lg:w-[80%] w-[95%] mx-auto'>
-      <OrdersHeader />
-      
-      <div className='py-5 font-serif'>
-        <div className='flex flex-wrap sm:gap-10 gap-2'>
-          {STATUS_BUTTONS.map(button => (
-            <StatusButton
-              key={button.id}
-              isActive={ordersByStatus.orderStatusTab === button.id}
-              count={button.getCount(orders)}
-              label={button.label}
-              onClick={() => dispatch(getOrdersByStatus(button.id))}
-              borderColor={button.borderColor}
-              iconBgColor={button.iconBgColor}
-              iconColor={button.iconColor}
-              shadowColor={button.shadowColor}
-            />
-          ))}
-        </div>
-      </div>
+    <div className='bg-[var(--background-color)] pt-3'>
+      <div className='pb-20 lg:w-[80%] w-[95%] mx-auto '>
+        <OrdersHeader />
 
-      <div className='mt-6 flex flex-col gap-20'>
-        {ordersByStatus.orderData?.length === 0 ? (
-          <NoOrders />
-        ) : (
-          ordersByStatus.orderData?.map((order) => (
-            <Order key={order._id} order={order} />
-          ))
-        )}
+        <div className='py-5 font-serif'>
+          <div className='flex flex-wrap sm:gap-10 gap-2'>
+            {STATUS_BUTTONS.map(button => (
+              <StatusButton
+                key={button.id}
+                isActive={ordersByStatus.orderStatusTab === button.id}
+                count={button.getCount(orders)}
+                label={button.label}
+                onClick={() => dispatch(getOrdersByStatus(button.id))}
+                borderColor={button.borderColor}
+                iconBgColor={button.iconBgColor}
+                iconColor={button.iconColor}
+                shadowColor={button.shadowColor}
+              />
+            ))}
+          </div>
+        </div>
+        <Suspense fallback={<Loader height='200px' />}>
+          <div className='mt-6 flex flex-col gap-20'>
+            {ordersByStatus.orderData?.length === 0 ? (
+              <NoOrders />
+            ) : (
+              ordersByStatus.orderData?.map((order) => (
+
+                <Order key={order._id} order={order} />
+              ))
+            )}
+          </div>
+        </Suspense>
       </div>
     </div>
   );

@@ -1,67 +1,80 @@
 const productCategoriesData = {
     all: {
-        title: "Premium Quality Organic Products in India| Organic Nation",
-        description: "Discover our premium organic products, perfect for a healthy and delicious lifestyle. Try our honey, pickles, and more.",
+        title: "Shop Organic Honey, Pickles, Jaggery & More at Organic Nation",
+        description: "Buy our organic honey, homestyle pickles, jaggery, oats, chutney, dips, and oils. Healthy, natural, and delicious products at Organic Nation.",
+        keywords: "homestyle picklesorganic jaggeryorganic oatsorganic chutneyorganic diporganic oilOrganic Nation pickleshealthy organic foodsbest organic products India",
         canonicalUrl: "https://organicnation.co.in/shop/all",
     },
     'organic-honey': {
         title: "Buy Organic Honey Online | Pure Honey | Organic Nation",
-        description: "Buy organic honey online at the best prices. Explore our wide range of best honey products which include ✓Jamun Honey ✓Litchi Honey ✓Multi Floral Honey ✓Raw Honey ✓Wild Forest Honey.",
+        description: "Buy organic honey online at the best prices. Explore our wide range of best honey products which include ✓Jamun Honey ✓Light Floral Honey ✓Kashmir  Honey ✓Wild Forest Honey.",
+        keywords: 'Natural sweetener, Raw honey, Unprocessed honey,  Honey Original , Sustainable honey, Honey nutrition, Pure honey, Honey benefits, Honey for health, Wildflower honey, Local honey, Kashmir Honey, Light Flora Honey',
         canonicalUrl: "https://organicnation.co.in/shop/organic-honey",
     },
-    'authentic-pickles': {
+    'homestyle-pickles': {
         title: "Buy Pickles Online at Best Prices in India | Organic Nation",
-        description: "Experience a variety of genuine Indian pickles crafted with organic online. Discover our Authentic Pickles at unbeatable prices in India today!",
-        canonicalUrl: "https://organicnation.co.in/shop/authentic-pickles",
+        description: "Experience a variety of genuine Indian pickles crafted with organic online. Discover our Homestyle Pickles at unbeatable prices in India today!",
+        keywords: 'sweet mango pickle, ginger pickle, green chilli pickle,lemon chilli pickle ,sweet lemon pickle,red chilli pickle,spicy pickles,pickling vinegar,sour pickles,best pickles,mango pickle,pickle in a bag,sweet pickles,pickles online,organic pickles,pickles near me achar,homemade pickles,sweet and spicy pickles mustard pickles homestylepickles',
+        canonicalUrl: "https://organicnation.co.in/shop/homestyle-pickles",
     },
     'chutney-&-dip': {
-        title: "Buy Organic Chutney Online At Best Prices | Organic Nation",
-        description: "Organic Nation's range of chutneys, including Schezwan, Mango, Tamarind, Salsa, and garlic. Shop these chutneys online at unbeatable prices today!",
+        title: "Buy Chutney & Dips  Online At Best Prices | Organic Nation",
+        description: "Enhance your dishes with Organic Nation' range of Organic chutneys, including Schezwan, Mango, Tamarind, Tomato , Salsa and garlic. Shop these delectable chutneys online at unbeatable prices today!",
+        keywords: 'organic chutney,organic dips,healthy chutney online,homemade chutney,farm-fresh dips,best organic chutney India,Organic Nation chutney & dip,buy organic condiments,natural chutneys,authentic Indian dips',
         canonicalUrl: "https://organicnation.co.in/shop/chutney-&-dip",
     },
     'fruit-preserves': {
-        title: "Buy Organic Jams Spreads Fruit Preserves | Organic Nation",
-        description: "Shop the most delicious jams and spreads of Fruit Preserves online in India. Explore 100% organic preservatives from Organic Nation.",
+        title: "Buy Organic Jams and Spreads Online | Fruit Preserves | Organic Nation",
+        description: "Shop the most delicious jams and spreads Fruit Preserves online in India. Explore 100% organic and chemical-free options with no artificial colors or preservatives from Organic Nation.",
+        keywords: 'organic fruit preserves, natural fruit preserves, buy organic jam online, healthy fruit spreads, farm-fresh preserves, no additive preserves, Organic Nation preserves, organic fruit jams, homemade preserves, authentic organic spreads',
         canonicalUrl: "https://organicnation.co.in/shop/fruit-preserves",
     },
     'seasonings-&-herbs': {
-        title: "Buy Seasoning & Herbs in India | Organic Nation",
+        title: "Buy Seasoning & Herbs | Best Quality Spices in India | Organic Nation",
         description: "Buy Seasoning & Herbs online in India, crafted from organic ingredients. Shop at Organic Nation for the finest prices on Seasoning & Herbs.",
+        keywords: 'organic seasonings, organic herbs, fresh organic spices, buy organic seasonings online, best organic herbs India, pure herbs & spices, natural seasonings, Organic Nation herbs, healthy seasoning blends, aromatic organic spices',
         canonicalUrl: "https://organicnation.co.in/shop/seasonings-&-herbs",
     },
     'organic-tea': {
         title: "Buy Organic & Herbal Tea Online | Organic Nation",
-        description: "Shop Organic Tea and indulge in the soothing flavours of Herbal, Natural, Green tea, and Kashmir Kahwa. Experience the essence of Nature at Organic Nation.",
+        description: "Shop Organic Tea and indulge in the soothing flavours of Herbal, Natural, Green tea, and Kashmir Kahwa. Experience the essence of nature at Organic Nation.",
+        keywords: 'organic tea, pure tea blends, buy organic tea online, natural tea leaves, best organic tea India, herbal tea blends, Organic Nation tea, premium green tea, fresh organic tea, healthy tea online',
         canonicalUrl: "https://organicnation.co.in/shop/organic-tea",
     },
     salt: {
-        title: "Buy Organic Himalayan Pink Rock Online | Organic Nation",
-        description: "Harvested from pristine Himalayan sources, this exquisite salt boasts a delicate pink hue and a subtle, clean taste.",
+        title: "Buy Organic Himalayan Pink Rock Salt Online | Organic Nation",
+        description: "Harvested from pristine Himalayan sources, this exquisite salt boasts a delicate pink hue and a subtle, clean taste. Rich in essential minerals like iron, magnesium, and potassium, it offers a healthier alternative to regular table salt.",
+        keywords: 'organic salt, natural salt, mineral-rich salt, healthy cooking salt, Organic Nation salt, pure sea salt, buy organic salt online, farm-harvested salt, organic rock salt, premium Himalayan salt',
         canonicalUrl: "https://organicnation.co.in/shop/salt",
     },
-    sweetners: {
+    sweeteners: {
         title: "Buy Natural Sweeteners Online | Organic Nation",
-        description: "Shop for organic brown sugar & jaggary powder online in India from Organic Nation that is 100% natural. Experience the rich.",
-        canonicalUrl: "https://organicnation.co.in/shop/sweetners",
+        description: "Shop for organic brown sugar and jaggery powder online in India from Organic Nation. Experience the rich, authentic taste of these natural sweeteners, free from harmful chemicals and preservatives. Perfect for your daily dose of sweetness or for elevating your culinary creations.",
+        keywords: 'natural sweeteners, organic sweeteners, healthy sugar alternatives, Organic Nation sweeteners, pure sweetener, additive-free sweeteners, buy organic sweeteners online, sugar-free sweeteners, healthy baking ingredients, organic sugar substitutes',
+        canonicalUrl: "https://organicnation.co.in/shop/sweeteners",
     },
     'organic-oils': {
-        title: "Buy Organic Cooking Oil | Organic Nation",
-        description: "Buy Organic Oil Online India | Organic Cooking Oil | Organic Nation",
+        title: "Buy Organic Oil Online India | Organic Cooking Oil | Organic Nation",
+        description: "Shop from our collection of 100% organic cooking oil online in India from Organic Nation, India's most trusted online store for organic products.",
+        keywords: 'organic oils,cold-pressed oils,pure organic oils,natural oils,healthy cooking oils,Organic Nation oils,premium organic oils,buy organic oils online,chemical-free oils, bestorganic oils India',
         canonicalUrl: "https://organicnation.co.in/shop/organic-oils",
     },
     oats: {
-        title: "Organic Nation: High Fiber Organic Oats for Improved Health",
-        description: "Experience the goodness of nature with Organic Nation Oats. Our oats are 100% organic, whole grain, and gluten-free.",
+        title: "Organic Nation: High Fiber Organic Oats for Improved Gut Health",
+        description: "Experience the goodness of nature with Organic Nation Oats. Our oats are 100% organic, whole grain, and gluten-free, providing a wholesome and nutritious start to your day.",
+        keywords: 'organic oats, whole grain oats, gluten-free oats, healthy breakfast, fiber-rich, protein-packed, quick-cooking oats, nutritious, wholesome',
         canonicalUrl: "https://organicnation.co.in/shop/oats",
     },
     vegan: {
-        title: "Soya Chaap Online | Vegan Options | Organic Nation",
-        description: "Craving Soya Chaap? Indulge in the best vegetarian chaap at Organic Nation. Order online.",
+        title: "Best Soya Chaap Online | Vegan & Vegetarian Options | Organic Nation",
+        description: "Explore the authentic taste of Soya Chaap—India’s favorite vegetarian protein! Discover easy recipes, nutritional benefits, cooking tips, and the best ways to enjoy this versatile dish at home. Perfect for health-conscious food lovers and vegetarians alike.",
+        keywords: 'soya chaap, vegetarian protein, plant-based recipes, soya chaap recipes, healthy vegetarian meals, Indian cuisine, street food, mock meat, vegan chaap, chaap recipes, chaap, chaap soya, soya',
         canonicalUrl: "https://organicnation.co.in/shop/vegan",
     },
     'breakfast-cereals': {
-        title: "Best Breakfast Cereals for Energy | Organic Nation",
-        description: "Enjoy a wholesome breakfast without compromising on taste. Our organic and gluten-free cereals are the perfect choice. Buy Online",
+        title: "Best Breakfast Muesli for Weight Loss & Energy | Organic Nation",
+        description: "Enjoy a wholesome breakfast without compromising on taste. Our organic and gluten-free Muesli are the perfect choice. Buy Online",
+        keywords: 'muesli, breakfast muesli, best breakfast cereals for weight loss & energy,delicious & nutritious, breakfast cereals online,top-rated breakfast cereals,muesli',
         canonicalUrl: "https://organicnation.co.in/shop/breakfast-cereals",
     },
 }
@@ -91,21 +104,21 @@ const productCategoriesData = {
 //         canonicalUrl: "https://organicnation.co.in/shop/organic-honey/Organic-Jamun-Honey",
 //         image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Organic-Jamun-Honey/front.png"
 //     },
-   
+
 //     'Organic-Wild-Forest-Honey-small': {
 //         title: "Pure Wild Forest Honey | Buy Honey Online | Organic Nation",
 //         description: "Experience the pure essence of nature with our Organic Wild Forest Honey. Sourced from pristine, untouched forests, our honey is unprocessed and Pure.",
 //         canonicalUrl: "https://organicnation.co.in/shop/organic-honey/Organic-Wild-Forest-Honey-small",
 //         image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Organic-Wild-Forest-Honey-small/front.png"
 //     },
-   
+
 //     'Mixed-Pickle': {
 //         title: "Buy Mixed Pickles Online at Organic Nation | India",
 //         description: "Crafted with the finest organic ingredients and traditional recipes, our mixed pickles online offer a tantalizing blend of flavors at Organic Nation",
 //         canonicalUrl: "https://organicnation.co.in/shop/authentic-pickles/Mixed-Pickle",
 //         image:"https://organic-nation-product-images.s3.amazonaws.com/Organic-Nation-Images/Mixed-Pickle/front.png"
 //     },
-   
+
 //     'Stuffed-Red-chilli-pickle': {
 //         title: "Buy Red Chili Pickle Online at Organic Nation",
 //         description: "Organic Nation Lal Mirch Bharua Achar is a traditional pickle made from thick, fresh red chili, stuffed with a spicy blend of spices. Buy pickle online",

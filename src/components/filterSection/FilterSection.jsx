@@ -18,6 +18,7 @@ import { Link } from 'react-router-dom';
 import { IoCloseSharp } from 'react-icons/io5';
 import PriceRangeFilter from '../module/shop/PriceRangeFilter ';
 import SortFilter from '../module/shop/SortFilter';
+import { FiSearch, FiX } from 'react-icons/fi';
 
 
 const FilterSection = () => {
@@ -27,7 +28,7 @@ const FilterSection = () => {
   // const  products  = useSelector((state) => state.filterData.products);
   const { showFilters } = useSelector(state => state.sidebar);
   // const { price, minPrice, maxPrice } = useSelector((state) => state.filterData.priceRangeFilter);
-  const { products, categoryBtnValue, categoryList,searchInputValue } = useSelector((state) => state.filterData);
+  const { products, categoryBtnValue, categoryList, searchInputValue } = useSelector((state) => state.filterData);
 
 
   useEffect(() => {
@@ -59,7 +60,32 @@ const FilterSection = () => {
         </button>
       </div>
       {/* search filter  */}
-      <div className='mb-5 md:block hidden '>
+      <div className='mb-5 md:block hidden md:pl-2 '>
+        <h2 className='text-xl mb-2 md:text-black md:block hidden text-[#ffe9a1] md:tracking-normal tracking-widest
+        '>Search</h2>
+        <form onSubmit={(e) => {
+          e.preventDefault();
+          dispatch(setShowFilters('hide'))
+
+        }}>
+          <div className="flex items-center gap-2 bg-white rounded p-2">
+            <FiSearch className="text-[var(--themeColor)]" />
+            <input
+              type="text"
+              className="w-full outline-none"
+              value={searchInputValue}
+              onChange={(e) => {
+                e.preventDefault()
+                dispatch(getFilteredData({ type: 'SEARCH', value: e.target.value }))
+
+              }}
+              placeholder="Search products..."
+            />
+          </div>
+        </form>
+      </div>
+
+      {/* <div className='mb-5 md:block hidden '>
         <form onSubmit={(e) => {
           e.preventDefault();
           dispatch(setShowFilters('hide'))
@@ -72,14 +98,12 @@ const FilterSection = () => {
             value={searchInputValue}
             onChange={(e) => {
               e.preventDefault()
-              // setSearchInputValue(e.target.value)
-              // dispatch(getSearchedData({ value: e.target.value, products }))
               dispatch(getFilteredData({ type: 'SEARCH', value: e.target.value }))
 
             }}
           />
         </form>
-      </div>
+      </div> */}
 
       {/* category filter */}
       <div className='md:pl-2'>
@@ -91,12 +115,13 @@ const FilterSection = () => {
               to={`/shop/${curItem.categoryUrl.toLowerCase()}`}
               key={index}
               value={categoryBtnValue}
-              className={`${categoryBtnValue === curItem.categoryUrl.toLowerCase() && "border-b-2 border-gray-600"} text-[var(--themeColor)] text-sm hover:border-b-2 border-gray-600 w-max cursor-pointer`}
-              // onClick={() => {
-              //   dispatch(setCurrentPage(1))
-              //   dispatch(setCategoryBtnValue(curItem.categoryUrl))
-              //   dispatch(fetchCategoryWiseData(curItem.categoryUrl.toLowerCase()))
-              // }}
+              // className={`${categoryBtnValue === curItem.categoryUrl.toLowerCase() && "border-b-2 border-gray-600"} text-[var(--themeColor)] text-sm hover:border-b-2 border-gray-600 w-max cursor-pointer`}
+              className={`block w-full text-left p-2 rounded transition-colors hover:bg-[var(--accent-color)] hover:text-white ${categoryBtnValue === curItem.categoryUrl.toLowerCase() ? 'bg-[var(--accent-color)] text-white' : 'bg-white text-[var(--text-color)]'}`}
+            // onClick={() => {
+            //   dispatch(setCurrentPage(1))
+            //   dispatch(setCategoryBtnValue(curItem.categoryUrl))
+            //   dispatch(fetchCategoryWiseData(curItem.categoryUrl.toLowerCase()))
+            // }}
             >
               {curItem.category}
             </Link>
@@ -107,18 +132,18 @@ const FilterSection = () => {
       {/*  sort section showing in mobile devices  */}
 
       <div className="relative md:hidden block mt-10">
-       <SortFilter isMobile={true} />
+        <SortFilter isMobile={true} />
       </div>
 
-     
+
 
       <div className='md:pt-8 pt-8 pl-2'>
-        <PriceRangeFilter isMobile={true}/>
+        <PriceRangeFilter isMobile={true} />
       </div>
 
       {/* clear filter  */}
       <div className=' mt-8'>
-        <button type='button'
+        {/* <button type='button'
           className='bg-[var(--themeColor)] text-white hover:bg-red-700 hover:text-white  text-sm md:text-[16px] transition-all duration-500 md:py-3 py-2 md:px-5 px-3 '
           onClick={() => {
             dispatch(clearFilters())
@@ -127,7 +152,21 @@ const FilterSection = () => {
 
             }
           }}
-        >Clear Filters</button>
+        >Clear Filters</button> */}
+
+        <button
+        type='button'
+          onClick={() => {
+            dispatch(clearFilters())
+            if (window.innerWidth <= 768) {
+              dispatch(setShowFilters('hide'))
+
+            }
+          }}
+          className="w-full bg-[var(--alert-color)] text-white py-2 rounded flex items-center justify-center gap-2"
+        >
+          <FiX /> Clear Filters
+        </button>
       </div>
     </div>
   )

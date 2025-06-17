@@ -172,7 +172,6 @@ export const deleteDocumentFromDatabase = createAsyncThunk(
             }
 
         } catch (error) {
-            console.log('errr',error)
             if (error.response && error.response.data) {
                 return rejectWithValue(error.response.data);
             } else {

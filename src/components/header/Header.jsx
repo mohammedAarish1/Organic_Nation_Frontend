@@ -23,7 +23,7 @@ const Header = memo(() => {
   }, [handleScroll]);
 
   // Memoize the header class string
-  const headerClassName = `sticky top-0 w-full z-40 ${
+  const headerClassName = `sticky top-0 w-full z-30 ${
     isScrolled ? 'bg-[var(--bgColorSecondary)] shadow-xl' : 'bg-transparent'
   }`;
 

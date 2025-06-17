@@ -9,12 +9,11 @@ import { Link } from 'react-router-dom';
 
 const SearchedProduct = () => {
 
-
     const { searchInputValue } = useSelector(state => state.filterData);
 
 
     return (
-        <div>
+        <div className='bg-[var(--background-color)]'>
 
             {searchInputValue !== '' ? (
                 <div>

@@ -21,7 +21,7 @@ const ProfileSidebar = ({ activeMenu, setActiveMenu, isMobileMenuOpen, setIsMobi
     { id: 'personal-info', label: 'Personal Information', icon: FiUser },
     { id: 'addresses', label: 'Manage Addresses', icon: FiMapPin },
     { id: 'orders', label: 'My Orders', icon: FiPackage },
-    { id: 'coupons', label: 'Coupons', icon: RiCouponLine },
+    // { id: 'coupons', label: 'Coupons', icon: RiCouponLine },
   ];
 
   return (
