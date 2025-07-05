@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import Image from '../../components/image/Image';
 import ProductQty from '../../components/productQty/ProductQty';
 import { getAllCartItems, removeFromCart } from '../../features/cart/cart';
-import CheckoutModal from '../../components/CheckoutModal'; 
+import CheckoutModal from '../../components/CheckoutModal';
 import SubmitButton from '../../components/button/SubmitButton';
 import CheckDeliveryAvailability from '../../components/module/cart/CheckDeliveryAvailability';
 import CODEligibility from '../../components/module/cart/CODEligibility';
@@ -149,7 +149,7 @@ const Cart = () => {
         <Link
           to="/shop/all"
           className="flex items-center text-[#3E2C1B] mb-6 hover:text-[#7A2E1D] transition-colors"
-          // whileHover={{ x: -5 }}
+        // whileHover={{ x: -5 }}
         >
           <FiArrowLeft className="mr-2" /> Continue Shopping
         </Link>
@@ -311,16 +311,17 @@ const Cart = () => {
                 {/* Check Delivery Availability */}
                 {/* <CheckDeliveryAvailability /> */}
 
+                {/* COD Eligibility */}
+                {totalCartAmount < 399 && totalCartAmount > 0 && (
+                  <CODEligibility />
+                )}
 
                 {/* Free Shipping Alert */}
                 {totalCartAmount < 499 && totalCartAmount > 0 && (
                   <FreeShippingAlert totalCartAmount={totalCartAmount} />
                 )}
 
-                {/* COD Eligibility */}
-                {totalCartAmount < 399 && totalCartAmount > 0 && (
-                  <CODEligibility />
-                )}
+
 
                 {/* Promo code */}
                 {/* <div className="mb-6">

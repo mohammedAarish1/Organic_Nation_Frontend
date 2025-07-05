@@ -186,6 +186,30 @@ const getCouponDetails = async (couponId) => {
 
 
 
+  // Helper function for button styles
+const getButtonStyles = (variant, disabled) => {
+  const baseStyles = "border shadow-sm hover:shadow-md";
+  
+  if (disabled) {
+    return `${baseStyles} bg-[var(--neutral-color)]/50 text-[var(--text-color)]/40 cursor-not-allowed border-[var(--neutral-color)]`;
+  }
+
+  switch (variant) {
+    case 'primary':
+      return `${baseStyles} bg-[var(--themeColor)] hover:bg-[var(--themeColor)]/90 text-[var(--text-light-color)] border-[var(--themeColor)]`;
+    case 'secondary':
+      return `${baseStyles} bg-[var(--accent-color)] hover:bg-[var(--accent-color)]/90 text-[var(--text-light-color)] border-[var(--accent-color)]`;
+    case 'accent':
+      return `${baseStyles} bg-[var(--secondary-color)] hover:bg-[var(--secondary-color)]/90 text-[var(--text-light-color)] border-[var(--secondary-color)]`;
+    case 'return':
+      return `${baseStyles} bg-[var(--alert-color)] hover:bg-[var(--alert-color)]/90 text-[var(--text-light-color)] border-[var(--alert-color)]`;
+    default:
+      return `${baseStyles} bg-[var(--background-color)] hover:bg-[var(--neutral-color)]/20 text-[var(--text-color)] border-[var(--neutral-color)]`;
+  }
+};
+
+
+
 export {
   generateTransactionID,
   address,
@@ -195,5 +219,6 @@ export {
   checkDeliveryAndCalculateShippingFee,
   additionalDiscountforOnlinePayment,
   getCouponDetails,
-  scrollToSlide
+  scrollToSlide,
+  getButtonStyles
 }

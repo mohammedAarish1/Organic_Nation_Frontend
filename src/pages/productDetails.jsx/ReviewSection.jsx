@@ -10,7 +10,6 @@ const ReviewSection = ({ product }) => {
     };
 
     const reviewsToShow = product.reviews?.slice(0, visibleCount) || [];
-    console.log('reviewsToShow', reviewsToShow)
     return (
         <div className='xs:w-[80%] w-[95%] mx-auto flex flex-col gap-16'>
             {reviewsToShow.map((reviews) => (

@@ -300,7 +300,6 @@ const ProductCategories = () => {
   const [viewMode, setViewMode] = useState('featured');
   const [hoveredItem, setHoveredItem] = useState(null);
   const scrollContainerRef = useRef(null);
-
   // Categories images with enhanced data
   const categoriesData = [
     {

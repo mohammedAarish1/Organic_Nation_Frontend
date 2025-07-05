@@ -411,20 +411,19 @@
 
 
 import React, { lazy, Suspense, useEffect, useRef, useState } from "react";
-import ButtonTwo from "../button/ButtonTwo";
 import ReviewsAndRatings from "../../helper/ReviewsAndRatings";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart, getAllCartItems } from "../../features/cart/cart";
 import { toast } from "react-toastify";
-import { IoIosCloseCircleOutline } from "react-icons/io";
 import Image from "../image/Image";
 import Loader from "../common/Loader";
 import CloseButton from '../button/CloseButton';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaTimes, FaStar, FaEye, FaShoppingCart, FaUndo, FaStarHalfAlt } from 'react-icons/fa';
+import {  FaStar, FaEye, FaShoppingCart, FaUndo } from 'react-icons/fa';
 import { MdReviews } from 'react-icons/md';
+import {getButtonStyles} from '../../helper/helperFunctions'
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 const ReturnItemForm = lazy(() => import("../returnItemForm/ReturnItemForm"));
@@ -768,26 +767,6 @@ const SingleOrder = ({
   );
 };
 
-// Helper function for button styles
-const getButtonStyles = (variant, disabled) => {
-  const baseStyles = "border shadow-sm hover:shadow-md";
-  
-  if (disabled) {
-    return `${baseStyles} bg-[var(--neutral-color)]/50 text-[var(--text-color)]/40 cursor-not-allowed border-[var(--neutral-color)]`;
-  }
 
-  switch (variant) {
-    case 'primary':
-      return `${baseStyles} bg-[var(--themeColor)] hover:bg-[var(--themeColor)]/90 text-[var(--text-light-color)] border-[var(--themeColor)]`;
-    case 'secondary':
-      return `${baseStyles} bg-[var(--accent-color)] hover:bg-[var(--accent-color)]/90 text-[var(--text-light-color)] border-[var(--accent-color)]`;
-    case 'accent':
-      return `${baseStyles} bg-[var(--secondary-color)] hover:bg-[var(--secondary-color)]/90 text-[var(--text-light-color)] border-[var(--secondary-color)]`;
-    case 'return':
-      return `${baseStyles} bg-[var(--alert-color)] hover:bg-[var(--alert-color)]/90 text-[var(--text-light-color)] border-[var(--alert-color)]`;
-    default:
-      return `${baseStyles} bg-[var(--background-color)] hover:bg-[var(--neutral-color)]/20 text-[var(--text-color)] border-[var(--neutral-color)]`;
-  }
-};
 
 export default SingleOrder;

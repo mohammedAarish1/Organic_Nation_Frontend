@@ -13,8 +13,6 @@ import { getAllCartItems, mergeCart } from '../features/cart/cart';
 // import { verifyOTP } from '../features/auth/auth';
 // import { toast } from 'react-toastify';
 import NewCheckoutForm from './checkout/NewCheckoutForm';
-import FreeShippingAlert from './module/cart/FreeShippingAlert';
-import CODEligibility from './module/cart/CODEligibility';
 
 // Animation variants
 const fadeIn = {
@@ -464,16 +462,6 @@ const CheckoutModal = ({ isOpen, onClose }) => {
             {/* Body */}
             <div className="px-6 pb-6 max-h-[70vh] overflow-y-auto">
               {/* ======================================== Order Summary  ======================================= */}
-
-              {/* Free Shipping Alert */}
-              {totalCartAmount < 499 && totalCartAmount > 0 && (
-                <FreeShippingAlert totalCartAmount={totalCartAmount} />
-              )}
-
-               {/* COD Eligibility */}
-                {totalCartAmount < 399 && totalCartAmount > 0 && (
-                 <CODEligibility/>
-                )}
 
               <Accordion
                 title="Order Summary"

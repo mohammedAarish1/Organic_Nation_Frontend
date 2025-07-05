@@ -6,6 +6,7 @@ import { addReturnItems } from "../../features/manage-returns/manageReturns";
 import { getAllOrders } from "../../features/manageOrders/manageOrders";
 import { ImSpinner9 } from "react-icons/im";
 import { returnItemFormSchema } from "../../form-validation/returnItemFormSchema";
+import SubmitButton from "../button/SubmitButton";
 
 
 const FormField = ({ name, label, type = "text", as }) => (
@@ -62,7 +63,7 @@ const ReturnItemForm = ({
   onCancel,
 }) => {
   const dispatch = useDispatch();
-  const {addingReturnedItems}=useSelector(state=>state.returns)
+  const { addingReturnedItems } = useSelector(state => state.returns)
 
   const actualAmountPaid = (productMRP) => {
     // Find the product details based on the nameUrl
@@ -216,7 +217,7 @@ const ReturnItemForm = ({
         };
 
         return (
-          <Form className="bg-[var(--bgColorSecondary)] xs: shadow-none xs:shadow-md rounded xs:px-8 pt-6 pb-8 mb-4">
+          <Form className="bg-[var(--backgroundColor)] xs: shadow-none xs:shadow-md rounded xs:px-8 pt-6 pb-8 mb-4">
             <FormField name="itemName" label="Product Name" />
             <FormField name="weight" label="Weight" />
             {/* <FormField name="price" label="Rate Per Quantity" type="number" /> */}
@@ -382,14 +383,20 @@ const ReturnItemForm = ({
             </div>
 
             <div className="flex items-center flex-wrap  gap-2 justify-between">
-              <button
+              <div className="w-full">
+                <SubmitButton
+                  isSubmitting={addingReturnedItems || isSubmitting}
+                  text='Submit Request'
+                />
+              </div>
+              {/* <button
                 type="submit"
-                disabled={addingReturnedItems||isSubmitting}
-                className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 xs:px-4 px-1 xs:text-[16px] w-full rounded focus:outline-none focus:shadow-outline" 
+                disabled={addingReturnedItems || isSubmitting}
+                className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 xs:px-4 px-1 xs:text-[16px] w-full rounded focus:outline-none focus:shadow-outline"
               >
 
                 {addingReturnedItems ? <ImSpinner9 className="animate-spin" /> : ' Submit Request'}
-              </button>
+              </button> */}
               <button
                 type="button"
                 onClick={onCancel}

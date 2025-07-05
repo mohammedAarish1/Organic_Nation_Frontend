@@ -212,7 +212,6 @@ const Banner = () => {
   useEffect(() => {
     fetchBanners();
   }, [fetchBanners]);
-
   // Autoplay logic
   useEffect(() => {
     if (mainBanners.length > 1) {
@@ -318,3 +317,4 @@ const Banner = () => {
 };
 
 export default Banner;
+

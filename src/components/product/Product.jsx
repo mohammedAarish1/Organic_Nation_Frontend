@@ -195,214 +195,15 @@
 
 
 
-import React, { useState, memo } from 'react';
+import React, { useState, memo, lazy, Suspense } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import AddToCartBtn from '../add-to-cart-btn/AddToCartBtn';
 import Image from '../image/Image';
 import { LuEye } from "react-icons/lu";
+import Loader from '../../components/common/Loader';
 
-// QuickView Modal Component
-const QuickViewModal = ({ product, onClose }) => {
-  const discountedPrice = Math.round(product.price - (product.price * product.discount / 100));
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" onClick={onClose}>
-      <div className="relative w-full max-w-md px-6 pb-6 bg-white rounded-lg shadow-xl" onClick={e => e.stopPropagation()}>
-        <div className='text-end pt-4'>
-          <button
-            onClick={onClose}
-            className="text-gray-500 hover:text-gray-700"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-        <div className="flex flex-col gap-4">
-          <div className="aspect-square w-full relative max-h-[250px]">
-            <Image
-              src={{
-                sm: product.img[0].sm,
-                md: product.img[0].md,
-                lg: product.img[0].lg
-              }}
-              blurSrc={product.img[0].blur}
-              alt={product.name}
-              className="w-full h-full object-contain"
-            />
-          </div>
-
-          <div className="space-y-3">
-            <h3 className="text-xl font-semibold text-gray-900">{product.name}</h3>
-            <p className="text-sm text-gray-600">{product.description}</p>
-
-            <div className="flex items-center gap-3">
-              <span className="text-2xl font-bold text-gray-900">₹{discountedPrice}</span>
-              <span className="text-sm text-gray-500 line-through">₹{product.price}</span>
-              <span className="px-2 py-1 text-sm font-semibold text-green-600 bg-green-50 rounded-full">
-                {product.discount}% off
-              </span>
-            </div>
-
-            <AddToCartBtn item={product} />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-
-
-// const Product = memo(({ gridView, product }) => {
-
-
-//   const [isHovered, setIsHovered] = useState(false);
-//   const [showQuickView, setShowQuickView] = useState(false);
-//   const { categoryBtnValue } = useSelector((state) => state.filterData);
-
-//   const frontImage = product?.img?.[0];
-//   const hoverImage = product?.img?.[1];
-
-//   const discountedPrice = Math.round(product.price - (product.price * product.discount / 100));
-
-//   return (
-//     <>
-//       <div className={`
-//         group relative
-//         ${gridView 
-//           ? 'w-full sm:max-w-[180px] md:max-w-[220px] lg:max-w-[260px]' 
-//           : 'w-full max-w-full'
-//         }
-//       `}>
-//         <div className={`
-//           bg-white rounded-lg overflow-hidden shadow-sm transition-all duration-300
-//           hover:shadow-lg relative
-//           ${gridView 
-//             ? 'flex flex-col' 
-//             : 'flex flex-col sm:flex-row gap-4'
-//           }
-//         `}>
-//           {/* Image Container */}
-//           <div className={`
-//             relative aspect-square z-10
-//             ${gridView 
-//               ? 'w-full' 
-//               : 'w-full sm:w-[200px] md:w-[240px]'
-//             }
-//           `}
-//           onMouseEnter={() => setIsHovered(true)}
-//           onMouseLeave={() => setIsHovered(false)}
-//           >
-//             {/* Product Images */}
-//             <NavLink to={`/shop/${categoryBtnValue}/${product['name-url']}`}>
-//             <div className="relative w-full h-full">
-//             {frontImage && (
-//                 <div className="absolute inset-0">
-//                   <Image
-//                     src={{
-//                       sm: frontImage.sm,
-//                       md: frontImage.md,
-//                       lg: frontImage.lg
-//                     }}
-//                     blurSrc={frontImage.blur}
-//                     alt={product.name}
-//                     className="w-full h-full object-contain p-2"
-//                     isHovered={!isHovered}
-//                   />
-//                 </div>
-//               )}
-
-//               {/* Hover Image */}
-//               {hoverImage && (
-//                 <div className="absolute inset-0">
-//                   <Image
-//                     src={{
-//                       sm: hoverImage.sm,
-//                       md: hoverImage.md,
-//                       lg: hoverImage.lg
-//                     }}
-//                     blurSrc={hoverImage.blur}
-//                     alt={`${product.name} alternate view`}
-//                     className="w-full h-full object-contain p-2"
-//                     isHovered={isHovered}
-//                   />
-//                 </div>
-//               )}
-//               </div>
-//             </NavLink>
-
-//             {/* Quick View Button */}
-//             <button
-//               onClick={() => setShowQuickView(true)}
-//               className="absolute top-4 right-4 p-2 bg-white/90 rounded-full shadow-md
-//                 opacity-0 group-hover:opacity-100 transition-opacity duration-300
-//                 hover:bg-gray-100 z-20"
-//             >
-//               <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-//                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-//                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-//               </svg>
-//             </button>
-
-//             {/* Discount Badge */}
-//             <div className="absolute top-4 left-4 px-2 py-1 bg-red-500 text-white text-sm font-semibold rounded z-20">
-//               {product.discount}% OFF
-//             </div>
-//           </div>
-
-//           {/* Product Info */}
-//           <div className={`
-//             flex flex-col relative z-20 bg-white
-//             ${gridView 
-//               ? 'p-4 gap-2' 
-//               : 'p-4 sm:p-6 flex-1'
-//             }
-//           `}>
-//             <NavLink to={`/shop/${categoryBtnValue}/${product['name-url']}`}
-//               className="relative z-20">
-//               <h3 className="text-sm sm:text-base font-medium text-gray-900 hover:text-[#712522] transition-colors duration-200">
-//                 {product.name}
-//               </h3>
-//             </NavLink>
-
-//             {!gridView && (
-//               <p className="mt-2 text-sm text-gray-600 line-clamp-2 hidden sm:block relative z-20">
-//                 {product.description}
-//               </p>
-//             )}
-
-//             <div className="mt-2 space-y-2 relative z-20">
-//               <div className="flex items-baseline gap-2">
-//                 <span className="text-lg sm:text-xl font-bold text-gray-900">₹{discountedPrice}</span>
-//                 <span className="text-sm text-gray-500 line-through">₹{product.price}</span>
-//               </div>
-
-//               <div className="w-full relative z-30">
-//                 <AddToCartBtn item={product} />
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* Quick View Modal */}
-//       {showQuickView && (
-//         <QuickViewModal 
-//           product={product} 
-//           onClose={() => setShowQuickView(false)} 
-//         />
-//       )}
-//     </>
-//   );
-// });
-
-// Product.displayName = 'Product';
-
-// export default Product;
-
-
+const QuickViewModal = lazy(() => import('./QuickViewModal'))
 
 
 const Product = memo(({ gridView, product }) => {
@@ -536,7 +337,7 @@ const Product = memo(({ gridView, product }) => {
               >
                 <div className="flex items-baseline gap-2">
                   <span className="text-lg sm:text-xl font-semibold text-gray-700">₹{discountedPrice}</span>
-                 {product.discount!==0 &&  <span className="text-sm text-gray-500 font-semibold line-through">₹{product.price}</span>}
+                  {product.discount !== 0 && <span className="text-sm text-gray-500 font-semibold line-through">₹{product.price}</span>}
                 </div>
               </NavLink>
               <div className="w-full relative z-30">
@@ -549,10 +350,12 @@ const Product = memo(({ gridView, product }) => {
 
       {/* Quick View Modal */}
       {showQuickView && (
-        <QuickViewModal
-          product={product}
-          onClose={() => setShowQuickView(false)}
-        />
+        <Suspense fallback={<Loader height='200px' />}>
+          <QuickViewModal
+            product={product}
+            onClose={() => setShowQuickView(false)}
+          />
+        </Suspense>
       )}
     </>
   );

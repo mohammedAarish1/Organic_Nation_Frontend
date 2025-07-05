@@ -172,26 +172,57 @@
 
 
 import React, { memo, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'framer-motion'; 
 import { FaStar, FaQuoteLeft, FaQuoteRight, FaCheck } from 'react-icons/fa';
 
 // Optimized Star Rating Component with consistent styling
+// const StarRating = memo(({ rating }) => {
+//   const stars = useMemo(() => {
+//     return [...Array(5)].map((_, index) => {
+//       const ratingValue = index + 1;
+//       return (
+//         <motion.div
+//           key={index}
+//           initial={{ scale: 0, rotate: 180 }}
+//           animate={{ scale: 1, rotate: 0 }}
+//           transition={{ delay: 0.1 * index, type: "spring" }}
+//         >
+//           <FaStar
+//             className="text-lg transition-all duration-300"
+//             style={{
+//               color: ratingValue <= rating ? '#9B7A2F' : '#DCD2C0',
+//               filter: ratingValue <= rating ? "drop-shadow(0 1px 2px rgba(155, 122, 47, 0.3))" : "none"
+//             }}
+//           />
+//         </motion.div>
+//       );
+//     });
+//   }, [rating]);
+
+//   return <div className="flex gap-1 items-center">{stars}</div>;
+// });
+
+
+// Optimized StarRating Component with half-star support
 const StarRating = memo(({ rating }) => {
   const stars = useMemo(() => {
-    return [...Array(5)].map((_, index) => {
-      const ratingValue = index + 1;
+    return [...Array(5)].map((_, i) => {
+      const filled = Math.min(Math.max(rating - i, 0), 1);
+      
       return (
         <motion.div
-          key={index}
+          key={i}
           initial={{ scale: 0, rotate: 180 }}
           animate={{ scale: 1, rotate: 0 }}
-          transition={{ delay: 0.1 * index, type: "spring" }}
+          transition={{ delay: 0.1 * i, type: "spring" }}
+          className="relative"
         >
+          <FaStar className="text-lg text-[#DCD2C0]" />
           <FaStar
-            className="text-lg transition-all duration-300"
+            className="text-lg text-[#9B7A2F] absolute top-0 left-0 overflow-hidden transition-all duration-300"
             style={{
-              color: ratingValue <= rating ? '#9B7A2F' : '#DCD2C0',
-              filter: ratingValue <= rating ? "drop-shadow(0 1px 2px rgba(155, 122, 47, 0.3))" : "none"
+              clipPath: `inset(0 ${100 - filled * 100}% 0 0)`,
+              filter: filled > 0 ? "drop-shadow(0 1px 2px rgba(155, 122, 47, 0.3))" : "none"
             }}
           />
         </motion.div>

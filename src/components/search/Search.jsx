@@ -134,13 +134,13 @@ import { useNavigate } from 'react-router-dom';
 const items = [
   "pickle",
   "honey",
+  "chutney",
   "muesli",
   "oats",
   "jaggery powder"
 ];
 
 const AnimatedPlaceholder = memo(() => {
-  const itemRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
 

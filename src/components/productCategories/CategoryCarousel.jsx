@@ -6,18 +6,19 @@ import { Link } from 'react-router-dom';
 // import { useDispatch } from 'react-redux';
 
 const icons = [
-    { name:'Pickles',category: 'Homestyle-Pickles', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/pickle.webp' },
-    { name:'Honey',category: 'Organic-Honey', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/honey.webp' },
-    { name:'Seasonings',category: 'Seasonings-&-Herbs', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/seasonings.webp' },
-    { name:'Salt',category: 'Salt', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/salt.webp' },
-    { name:'Cereals',category: 'Breakfast-Cereals', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/brefastCereals.webp' },
-    { name:'Chutney',category: 'Chutney-&-Dip', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/chutney.webp' },
-    { name:'Oats',category: 'Oats', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/oats.webp' },
-    { name:'Oils',category: 'Organic-Oils', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/oils.webp' },
-    { name:'Preserves',category: 'Fruit-Preserves', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/preserves.webp' },
-    { name:'Vegan',category: 'Vegan', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/soyaChaap.webp' },
-    { name:'Sweeteners',category: 'Sweeteners', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/sugar.webp' },
-    { name:'Tea',category: 'Organic-Tea', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/tea.webp' },
+    // { name:'Pickles',category: 'Homestyle-Pickles', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/CategoryCarousel/pickle.webp' },
+    { name:'Pickles',category: 'Homestyle-Pickles', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/oils.webp' },
+    { name:'Honey',category: 'Organic-Honey', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/honey.webp' },
+    { name:'Seasonings',category: 'Seasonings-&-Herbs', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/seasonings.webp' },
+    { name:'Salt',category: 'Salt', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/salt.webp' },
+    { name:'Cereals',category: 'Breakfast-Cereals', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/breakfast.webp' },
+    { name:'Chutney',category: 'Chutney-&-Dip', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/chutney.webp' },
+    { name:'Oats',category: 'Oats', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/oats.webp' },
+    { name:'Oils',category: 'Organic-Oils', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/oils.webp' },
+    { name:'Preserves',category: 'Fruit-Preserves', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/fruit_preserves.webp' },
+    { name:'Vegan',category: 'Vegan', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/vegan.webp' },
+    { name:'Sweeteners',category: 'Sweeteners', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/sweeteners.webp' },
+    { name:'Tea',category: 'Organic-Tea', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/tea.webp' },
 ];
 
 const CategoryCarousel = () => {
@@ -85,7 +86,7 @@ const CategoryCarousel = () => {
                             // }}
                         >
                             <div className="relative">
-                                <div className="border-4 border-[var(--themeColor)] p-2 rounded-full 
+                                <div className="border-2 border-[var(--themeColor)] p-2 rounded-full 
                                             transform transition-transform duration-300 
                                             group-hover:scale-110 group-hover:shadow-lg
                                             w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24

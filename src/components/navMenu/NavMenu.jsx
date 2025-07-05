@@ -226,8 +226,8 @@
 
 import React, { memo, useCallback, useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom';
-import { fetchCategoryWiseData, setCategoryBtnValue } from '../../features/filter/filterSlice';
-import { setCurrentPage } from '../../features/pagination/pagination';
+// import { fetchCategoryWiseData, setCategoryBtnValue } from '../../features/filter/filterSlice';
+// import { setCurrentPage } from '../../features/pagination/pagination';
 import { useDispatch, useSelector } from 'react-redux';
 import { setShowSidebar } from '../../features/toggleSidebar/toggleSidebar';
 import Logo from '../logo/Logo';
@@ -235,7 +235,7 @@ import Logo from '../logo/Logo';
 import { MdOutlineHome, MdKeyboardArrowDown } from "react-icons/md";
 import { RiShoppingBasketFill, RiMenu3Fill } from "react-icons/ri";
 import { TbPhoneCall } from "react-icons/tb";
-import { IoCloseSharp } from "react-icons/io5";
+// import { IoCloseSharp } from "react-icons/io5";
 import { FaBlog, FaRegUser, FaLeaf } from "react-icons/fa";
 import { LiaGiftsSolid } from "react-icons/lia";
 import { LuChefHat } from "react-icons/lu";

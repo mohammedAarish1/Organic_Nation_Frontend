@@ -14,9 +14,9 @@ import { initiatePayment } from '../../features/orderPayment/payment';
 import { addOrders } from '../../features/manageOrders/manageOrders';
 import { useNavigate } from 'react-router-dom';
 import { getUserData } from '../../features/auth/auth';
-import { ImSpinner9 } from 'react-icons/im';
 import SubmitButton from '../button/SubmitButton';
-
+import FreeShippingAlert from '../module/cart/FreeShippingAlert';
+import CODEligibility from '../module/cart/CODEligibility';
 
 const SavedAddressCard = ({
     user,
@@ -34,9 +34,8 @@ const SavedAddressCard = ({
             const pinCode = address[0].pinCode
 
             checkDeliveryAndCalculateShippingFee(pinCode, dispatch)
-
         }
-    }, [selectedAddress])
+    }, [selectedAddress, addresses, dispatch])
 
     return (
         <div className="mb-6">
@@ -102,20 +101,6 @@ const SavedAddressCard = ({
     );
 };
 
-
-const Button = ({ children, onClick, type = 'button', disabled = false, className = '' }) => (
-    <motion.button
-        type={type}
-        onClick={onClick}
-        disabled={disabled}
-        className={`w-full bg-custom-gradient text-white font-medium py-3.5 rounded-lg hover:opacity-90 transition-all disabled:opacity-70 flex items-center justify-center ${className}`}
-        whileHover={{ scale: 1.02, boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)" }}
-        whileTap={{ scale: 0.98 }}
-    >
-        {children}
-    </motion.button>
-);
-
 // Selection Button component
 const SelectionButton = ({ icon, label, selected, onClick }) => {
     const IconComponent = icon;
@@ -133,7 +118,6 @@ const SelectionButton = ({ icon, label, selected, onClick }) => {
     );
 };
 
-
 // Payment Method Button component
 const PaymentMethodButton = ({ icon, label, selected, onClick, discount = null }) => {
     const IconComponent = icon;
@@ -141,7 +125,7 @@ const PaymentMethodButton = ({ icon, label, selected, onClick, discount = null }
         <button
             type="button"
             className={`w-full p-3.5 rounded-lg border flex items-center justify-between relative transition-all ${selected
-                ? 'bg-blue-50 border-[var(--accent-color)]  shadow-sm'
+                ? 'bg-blue-100 border-[var(--accent-color)] shadow-sm'
                 : 'border-gray-300 hover:border-gray-400'
                 }`}
             onClick={onClick}
@@ -165,32 +149,72 @@ const PaymentMethodButton = ({ icon, label, selected, onClick, discount = null }
     );
 };
 
+// Payment Method Selection Component
+const PaymentMethodSelection = ({
+    paymentMethod,
+    setPaymentMethod,
+    totalCartAmount,
+    shippingFee,
+    error = null
+}) => {
+    return (
+        <div className="mt-6">
+            <label className="block text-sm font-medium mb-2">Payment Method</label>
+            <div className="space-y-3">
+                {totalCartAmount > 399 && (
+                    <PaymentMethodButton
+                        icon={FaMoneyBillWave}
+                        label="Cash on Delivery"
+                        selected={paymentMethod === 'cash_on_delivery'}
+                        onClick={() => setPaymentMethod('cash_on_delivery')}
+                    />
+                )}
+
+                <PaymentMethodButton
+                    icon={FaCreditCard}
+                    label="Online Payment"
+                    selected={paymentMethod === 'online_payment'}
+                    onClick={() => setPaymentMethod('online_payment')}
+                    discount="5% off"
+                />
+            </div>
+            {error && (
+                <div className="text-red-500 mt-2">*{error}</div>
+            )}
+
+            <div className='mt-5'>
+                {/* COD Eligibility */}
+                {totalCartAmount < 399 && totalCartAmount > 0 && (
+                    <CODEligibility />
+                )}
+                {totalCartAmount < 499 && totalCartAmount > 0 && (
+                    <FreeShippingAlert totalCartAmount={totalCartAmount} shippingFee={shippingFee} />
+                )}
+
+            </div>
+        </div>
+    );
+};
+
 // FormField component for consistent form inputs
 const FormField = ({ setFieldValue = null, label, name, type = "text", placeholder, disabled = false, autoFocus = false, as }) => {
-
     const dispatch = useDispatch();
     const inputRef = useRef(null);
     const { user } = useSelector((state) => state.auth);
-    const { shippingFee, userCity, userPincode, userState, error } = useSelector((state) => state.delivery);
+    const { userCity, userPincode, userState, error } = useSelector((state) => state.delivery);
 
-    const handleOnChange = (e,) => {
+    const handleOnChange = (e) => {
         const value = e.target.value;
         setFieldValue(name, value)
         if (name === 'pinCode' && value.length === 6) {
-
-            checkDeliveryAndCalculateShippingFee(
-                value,
-                dispatch
-            );
+            checkDeliveryAndCalculateShippingFee(value, dispatch);
         }
-        // Add any logic you need here
     };
 
     const handlePincodeBlur = () => {
         setFieldValue('city', userCity)
         setFieldValue('state', userState)
     }
-
 
     useEffect(() => {
         if (autoFocus && inputRef.current && (!user || !user[name])) {
@@ -218,24 +242,23 @@ const FormField = ({ setFieldValue = null, label, name, type = "text", placehold
     )
 };
 
-
 const NewCheckoutForm = ({ close }) => {
-
     const dispatch = useDispatch();
     const navigate = useNavigate()
     const { user } = useSelector((state) => state.auth);
     const { cartItemsList, totalCartAmount, totalTax, couponCodeApplied } = useSelector((state) => state.cart);
     const { addingNewOrder } = useSelector((state) => state.orders);
-    const { shippingFee, userCity, userPincode, userState, error } = useSelector((state) => state.delivery);
+    const { shippingFee } = useSelector((state) => state.delivery);
 
     const [addressType, setAddressType] = useState('Home');
-    const [paymentMethod, setPaymentMethod] = useState('');
-
+    const [paymentMethod, setPaymentMethod] = useState('online_payment');
+    const [paymentError, setPaymentError] = useState('');
 
     const [savedAddresses, setSavedAddresses] = useState([]);
     const [showAddressForm, setShowAddressForm] = useState(false);
     const [selectedAddress, setSelectedAddress] = useState(null);
 
+    // Enhanced validation schema with payment method
     const checkoutSchema = Yup.object().shape({
         phoneNumber: Yup.string()
             .matches(/^\d{10}$/, 'Phone number must be 10 digits')
@@ -259,7 +282,7 @@ const NewCheckoutForm = ({ close }) => {
     });
 
     const initialValues = {
-        phoneNumber: user?.phoneNumber.replace('+91', '') || '',
+        phoneNumber: user?.phoneNumber?.replace('+91', '') || '',
         fullName: user?.fullName || '',
         email: user?.email || '',
         address: '',
@@ -268,14 +291,23 @@ const NewCheckoutForm = ({ close }) => {
         state: '',
     };
 
+    // Validate payment method selection
+    const validatePaymentMethod = () => {
+        if (!paymentMethod) {
+            setPaymentError('Please select a payment method');
+            return false;
+        }
+        setPaymentError('');
+        return true;
+    };
 
-    const processOrder = (shippingInfo) => {
+    const processOrder = async (shippingInfo) => {
 
-        const merchantTransactionId = generateTransactionID();
-        const { discountAmount, taxDiscount } = additionalDiscountforOnlinePayment(totalCartAmount, totalTax);
+        try {
+            const merchantTransactionId = generateTransactionID();
+            const { discountAmount, taxDiscount } = additionalDiscountforOnlinePayment(totalCartAmount, totalTax);
 
-        const orderDetails = cartItemsList.map((item) => {
-            return {
+            const orderDetails = cartItemsList.map((item) => ({
                 id: item._id,
                 "name-url": item["name-url"],
                 quantity: item.quantity,
@@ -283,136 +315,66 @@ const NewCheckoutForm = ({ close }) => {
                 tax: item.tax,
                 hsnCode: item["hsn-code"],
                 unitPrice: item.price,
+            }));
+
+            const checkoutData = {
+                fullName: shippingInfo.fullName,
+                userEmail: shippingInfo.email,
+                phoneNumber: shippingInfo.phoneNumber,
+                addressType: shippingInfo.addressType,
+                shippingAddress: {
+                    address: shippingInfo.address,
+                    pinCode: shippingInfo.pinCode,
+                    city: shippingInfo.city,
+                    state: shippingInfo.state,
+                },
+                orderDetails: orderDetails,
+                subTotal: paymentMethod === "cash_on_delivery" ? totalCartAmount : totalCartAmount - discountAmount,
+                taxAmount: paymentMethod === "cash_on_delivery" ? totalTax : totalTax - taxDiscount,
+                shippingFee: totalCartAmount < 499 ? shippingFee : 0,
+                paymentMethod: paymentMethod,
+                paymentStatus: "pending",
+                merchantTransactionId: paymentMethod === "cash_on_delivery" ? '' : merchantTransactionId,
+                couponCodeApplied: couponCodeApplied || user?.cart?.couponCodeApplied,
             };
-        });
 
-        const checkoutData = {
-            fullName: shippingInfo.fullName,
-            userEmail: shippingInfo.email,
-            phoneNumber: shippingInfo.phoneNumber,
-            addressType: shippingInfo.addressType,
-            shippingAddress: {
-                address: shippingInfo.address,
-                pinCode: shippingInfo.pinCode,
-                city: shippingInfo.city,
-                state: shippingInfo.state,
-            },
-            orderDetails: orderDetails,
-            subTotal: paymentMethod === "cash_on_delivery" ? totalCartAmount : totalCartAmount - discountAmount,
-            taxAmount: paymentMethod === "cash_on_delivery" ? totalTax : totalTax - taxDiscount,
-            shippingFee: totalCartAmount < 499 ? shippingFee : 0,
-            paymentMethod: paymentMethod,
-            paymentStatus: "pending",
-            merchantTransactionId: paymentMethod === "cash_on_delivery" ? '' : merchantTransactionId,
-            couponCodeApplied: couponCodeApplied || user?.cart?.couponCodeApplied,
-        };
-
-
-        if (user && cartItemsList.length > 0) {
-            if (paymentMethod === "cash_on_delivery") {
-                dispatch(addOrders(checkoutData)).then((value) => {
-                    if (value.type === "manageOrders/addOrders/fulfilled") {
-                        close();
-                        dispatch(getUserData())
-                        navigate(`/order-confirmed/${value.payload.orderId}`);
-                    }
-                });
-            } else {
-                dispatch(addOrders(checkoutData)).then((value) => {
-                    if (value.type === "manageOrders/addOrders/fulfilled") {
-                        dispatch(
-                            initiatePayment({
-                                number: shippingInfo.phoneNumber.replace('+91', ''),
-                                amount: totalCartAmount - discountAmount + (totalCartAmount < 499 ? shippingFee : 0),
-                                merchantTransactionId: merchantTransactionId,
-                            })
-                        );
-                        dispatch(clearCart());
-                    }
-                });
+            if (user && cartItemsList.length > 0) {
+                if (paymentMethod === "cash_on_delivery") {
+                    dispatch(addOrders(checkoutData)).then((value) => {
+                        if (value.type === "manageOrders/addOrders/fulfilled") {
+                            close();
+                            dispatch(getUserData())
+                            navigate(`/order-confirmed/${value.payload.orderId}`);
+                        }
+                    });
+                } else {
+                    dispatch(addOrders(checkoutData)).then((value) => {
+                        if (value.type === "manageOrders/addOrders/fulfilled") {
+                            dispatch(
+                                initiatePayment({
+                                    number: shippingInfo.phoneNumber.replace('+91', ''),
+                                    amount: totalCartAmount - discountAmount + (totalCartAmount < 499 ? shippingFee : 0),
+                                    merchantTransactionId: merchantTransactionId,
+                                })
+                            );
+                            dispatch(clearCart());
+                        }
+                    });
+                }
             }
+        } catch (error) {
+            console.error('Order processing failed:', error);
         }
     };
 
-
-    // const handleSubmit = (values, action) => {
-    //     const merchantTransactionId = generateTransactionID();
-    //     // calutaing additional 5% discount for online payment and tax inlcuded in this discounted amount
-    //     const { discountAmount, taxDiscount } = additionalDiscountforOnlinePayment(totalCartAmount, totalTax);
-
-
-    //     const orderDetails = cartItemsList.map((item) => {
-    //         return {
-    //             id: item._id,
-    //             "name-url": item["name-url"],
-    //             quantity: item.quantity,
-    //             weight: item.weight,
-    //             tax: item.tax,
-    //             hsnCode: item["hsn-code"],
-    //             unitPrice: item.price, // Update price with the discounted value
-    //         };
-    //     });
-
-    //     let checkoutData = {
-    //         fullName: user?.fullName || values?.fullName?.trim(),
-    //         userEmail: user?.email || values?.email?.toLowerCase().trim(),
-    //         phoneNumber: user?.phoneNumber || values?.phoneNumber,
-    //         addressType: addressType,
-    //         shippingAddress: {
-    //             address: values.address,
-    //             pinCode: values.pinCode,
-    //             city: values.city,
-    //             state: values.state,
-    //         },
-    //         orderDetails: orderDetails,
-    //         // subTotal: values.paymentMethod === "cash_on_delivery" ? totalCartAmount : totalCartAmount - discountAmount,
-    //         subTotal: totalCartAmount,
-    //         taxAmount: totalTax,
-    //         shippingFee: totalCartAmount < 499 ? shippingFee : 0,
-    //         paymentMethod: paymentMethod,
-    //         paymentStatus: "pending",
-    //         merchantTransactionId: paymentMethod === "cash_on_delivery" ? '' : merchantTransactionId,
-    //         couponCodeApplied: couponCodeApplied || user?.cart?.couponCodeApplied,
-    //     };
-
-
-    //     if (user && cartItemsList.length > 0) {
-    //         if (paymentMethod === "cash_on_delivery") {
-    //             dispatch(addOrders(checkoutData)).then((value) => {
-    //                 if (value.type === "manageOrders/addOrders/fulfilled") {
-    //                     // dispatch(clearCart());
-    //                     close()
-    //                     // localStorage.removeItem("deliveryChargeToken");
-    //                     navigate(`/order-confirmed/${value.payload.orderId}`);
-    //                     // navigate(`/order-confirmed`);
-    //                 }
-    //             });
-    //         } else {
-    //             dispatch(addOrders(checkoutData)).then((value) => {
-    //                 if (value.type === "manageOrders/addOrders/fulfilled") {
-    //                     dispatch(
-    //                         initiatePayment({
-    //                             number: values?.phoneNumber.slice(3),
-    //                             // amount: totalCartAmount - discountAmount + (totalCartAmount < 499 ? shippingFee : 0),
-    //                             amount: totalCartAmount + (totalCartAmount < 499 ? shippingFee : 0),
-    //                             merchantTransactionId: merchantTransactionId,
-    //                         })
-    //                     );
-
-    //                     dispatch(clearCart());
-    //                     // localStorage.removeItem("deliveryChargeToken");
-    //                 }
-    //             });
-    //         }
-    //     }
-
-    //     action.resetForm();
-    // };
-
-
-
     // Handle form submit for new address
     const handleSubmit = (values, action) => {
+        // Validate payment method before proceeding
+        if (!validatePaymentMethod()) {
+            action.setSubmitting(false);
+            return;
+        }
+
         const shippingInfo = {
             fullName: values.fullName,
             email: values.email,
@@ -429,12 +391,15 @@ const NewCheckoutForm = ({ close }) => {
         action.resetForm();
     };
 
-
     // Handle checkout with saved address
     const handleSavedAddressCheckout = () => {
-        const addressToUse = savedAddresses.find(addr => addr._id === selectedAddress);
+        // Validate payment method before proceeding
+        if (!validatePaymentMethod()) {
+            return;
+        }
 
-        if (!addressToUse || !paymentMethod) return;
+        const addressToUse = savedAddresses.find(addr => addr._id === selectedAddress);
+        if (!addressToUse) return;
 
         const shippingInfo = {
             fullName: user?.fullName,
@@ -474,44 +439,19 @@ const NewCheckoutForm = ({ close }) => {
                         onEdit={() => { }}
                     />
 
-                    {/* Payment method selection */}
-                    <div className="mt-6">
-                        <label className="block text-sm font-medium mb-2">Payment Method</label>
-                        <div className="space-y-3">
-
-                            {totalCartAmount > 399 && (
-                                <PaymentMethodButton
-                                    icon={FaMoneyBillWave}
-                                    label="Cash on Delivery"
-                                    selected={paymentMethod === 'cash_on_delivery'}
-                                    onClick={() => setPaymentMethod('cash_on_delivery')}
-                                />
-                            )}
-
-                            <PaymentMethodButton
-                                icon={FaCreditCard}
-                                label="Online Payment"
-                                selected={paymentMethod === 'online_payment'}
-                                onClick={() => setPaymentMethod('online_payment')}
-                                discount="5% off"
-                            />
-                        </div>
-                    </div>
-
+                    <PaymentMethodSelection
+                        paymentMethod={paymentMethod}
+                        setPaymentMethod={setPaymentMethod}
+                        totalCartAmount={totalCartAmount}
+                        shippingFee={shippingFee}
+                        error={paymentError}
+                    />
 
                     <SubmitButton
-                        // isSubmitting={isSubmitting}
+                        isSubmitting={addingNewOrder}
                         text={paymentMethod === 'online_payment' ? 'Proceed to Pay' : 'Place Order'}
                         action={handleSavedAddressCheckout}
                     />
-
-                    {/* <Button
-                        onClick={handleSavedAddressCheckout}
-                        disabled={!paymentMethod || !selectedAddress}
-                        className="mt-6"
-                    >
-                        {paymentMethod === 'online_payment' ? 'Proceed to Pay' : 'Place Order'}
-                    </Button> */}
                 </>
             ) : (
                 <>
@@ -613,41 +553,18 @@ const NewCheckoutForm = ({ close }) => {
                                     </div>
                                 </div>
 
-                                <div>
-                                    <label className="block text-sm font-medium mb-2">Payment Method</label>
-                                    <div className="space-y-3">
+                                <PaymentMethodSelection
+                                    paymentMethod={paymentMethod}
+                                    setPaymentMethod={setPaymentMethod}
+                                    totalCartAmount={totalCartAmount}
+                                    shippingFee={shippingFee}
+                                    error={paymentError}
+                                />
 
-                                        {totalCartAmount > 399 && (
-                                            <PaymentMethodButton
-                                                icon={FaMoneyBillWave}
-                                                label="Cash on Delivery"
-                                                selected={paymentMethod === 'cash_on_delivery'}
-                                                onClick={() => setPaymentMethod('cash_on_delivery')}
-                                            />
-                                        )}
-
-
-                                        <PaymentMethodButton
-                                            icon={FaCreditCard}
-                                            label="Online Payment"
-                                            selected={paymentMethod === 'online_payment'}
-                                            onClick={() => setPaymentMethod('online_payment')}
-                                            discount="5% off"
-                                        />
-                                    </div>
-                                </div>
                                 <SubmitButton
-                                    isSubmitting={isSubmitting}
+                                    isSubmitting={isSubmitting || addingNewOrder}
                                     text={paymentMethod === 'online_payment' ? 'Proceed to Pay' : 'Place Order'}
                                 />
-                                {/* <Button
-                                    type="submit"
-                                    disabled={isSubmitting || !paymentMethod}
-                                    className="mt-6"
-                                >
-                                    {isSubmitting ? <ImSpinner9 className="animate-spin" /> : paymentMethod === 'online_payment' ? 'Proceed to Pay' : 'Place Order'}
-
-                                </Button> */}
                             </Form>
                         )}
                     </Formik>

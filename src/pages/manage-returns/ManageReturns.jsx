@@ -28,7 +28,8 @@ const ManageReturns = () => {
 
 
     return (
-        <div className='mt-3 mb-20 lg:w-[80%] w-[95%] mx-auto'>
+        <div className='bg-[var(--background-color)]'>
+        <div className='pt-3 pb-20 lg:w-[80%] w-[95%] mx-auto'>
             {/* heading */}
             <div className='mb-5'>
                 <div className=''>
@@ -119,6 +120,7 @@ const ManageReturns = () => {
 
             </div>
 
+        </div>
         </div>
     )
 }
