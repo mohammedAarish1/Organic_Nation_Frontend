@@ -10,6 +10,7 @@ import { getAllCartItems, removeFromCart } from '../../../features/cart/cart';
 import ProductQty from '../../productQty/ProductQty';
 import CheckoutModal from '../../CheckoutModal';
 import CloseButton from '../../button/CloseButton';
+import { formatPrice } from '../../../helper/helperFunctions';
 
 const CartNotification = () => {
   const dispatch = useDispatch();
@@ -269,7 +270,7 @@ const CartNotification = () => {
                             {/* Price */}
                             <div className="font-semibold" style={{ color: 'var(--themeColor)' }}>
                               {/* ₹ {(item.price * item.quantity).toFixed(2)} */}
-                              ₹{item.discount > 0 ? (item.price - (item.price * item.discount) / 100) * item.quantity : (item.price * item.quantity)}
+                              ₹{formatPrice(item.discount > 0 ? (item.price - (item.price * item.discount) / 100) * item.quantity : (item.price * item.quantity))}
 
                             </div>
                           </div>

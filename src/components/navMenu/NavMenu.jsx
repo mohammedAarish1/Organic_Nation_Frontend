@@ -241,10 +241,12 @@ import { LiaGiftsSolid } from "react-icons/lia";
 import { LuChefHat } from "react-icons/lu";
 import { motion, AnimatePresence } from 'framer-motion';
 import CloseButton from '../button/CloseButton';
+import { BsFillBoxSeamFill } from 'react-icons/bs';
 
 const NAV_ITEMS = [
     { path: '/', icon: MdOutlineHome, label: 'Home' },
     { path: '/shop/all', icon: RiShoppingBasketFill, label: 'Shop', hasDropdown: true },
+    { path: '/manage-orders', icon: BsFillBoxSeamFill, label: 'Order History' },
     { path: '/about-us', icon: LiaGiftsSolid, label: 'About us' },
     { path: '/contact-us', icon: TbPhoneCall, label: 'Contact Us' },
     { path: '/our-blogs', icon: FaBlog, label: 'Blogs', mobileOnly: true },
@@ -552,16 +554,7 @@ const NavMenu = () => {
                                     <FaLeaf className="text-[var(--secondary-color)] text-xl" />
                                     <Logo />
                                 </div>
-                                {/* <motion.button
-                                    type="button"
-                                    className="flex items-center justify-center w-10 h-10 rounded-full bg-[rgba(122,46,29,0.1)] text-[var(--themeColor)] hover:bg-[rgba(122,46,29,0.2)] transition-colors"
-                                    onClick={() => dispatch(setShowSidebar(false))}
-                                    whileHover={{ scale: 1.1, rotate: 90 }}
-                                    whileTap={{ scale: 0.9 }}
-                                >
-                                    <IoCloseSharp className="text-2xl" />
-                                </motion.button> */}
-                                <CloseButton action={() => dispatch(setShowSidebar(false))} />
+                                {/* <CloseButton action={() => dispatch(setShowSidebar(false))} /> */}
                             </motion.div>
 
                             <div className="p-5 h-[calc(100%-70px)] overflow-y-auto custom-scrollbar">

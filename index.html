@@ -11,8 +11,7 @@
   <link rel="preconnect" href="https://connect.facebook.net" crossorigin>
 
   <!-- Preload critical image -->
-  <link rel="preload" as="image"
-    href="https://organicnationmages.s3.amazonaws.com/homepage-banners/honey/lg/honey.webp"
+  <link rel="preload" as="image" href="https://organicnationmages.s3.amazonaws.com/homepage-banners/honey/lg/honey.webp"
     type="image/webp">
 
   <!-- <link href="https://fonts.googleapis.com/css2?family=Jersey+10&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet"> -->
@@ -64,7 +63,7 @@
   </script>
 
   <!-- Meta Pixel Code with performance optimizations -->
- <script>
+  <script>
     // Defer Facebook Pixel loading
     window.addEventListener('load', function () {
       // Create a lightweight fbq stub
@@ -90,6 +89,25 @@
         fbq('track', 'PageView');
       };
     });
+  </script>
+
+  <!-- Google tag (gtag.js) event - delayed navigation helper -->
+  <script>
+    // Helper function to delay opening a URL until a gtag event is sent.
+    // Call it in response to an action that should navigate to a URL.
+    function gtagSendEvent(url) {
+      var callback = function () {
+        if (typeof url === 'string') {
+          window.location = url;
+        }
+      };
+      gtag('event', 'conversion_event_purchase_1', {
+        'event_callback': callback,
+        'event_timeout': 2000,
+        // <event_parameters>
+      });
+      return false;
+    }
   </script>
 
   <meta name="google-site-verification" content="lfAgd8_lz2afHqhTRhb03ADVs7lMjD44S9pHUGkeKF4" />

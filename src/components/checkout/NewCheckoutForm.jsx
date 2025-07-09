@@ -257,6 +257,8 @@ const NewCheckoutForm = ({ close }) => {
     const [savedAddresses, setSavedAddresses] = useState([]);
     const [showAddressForm, setShowAddressForm] = useState(false);
     const [selectedAddress, setSelectedAddress] = useState(null);
+    const { discountAmount, taxDiscount } = additionalDiscountforOnlinePayment(totalCartAmount, totalTax);
+
 
     // Enhanced validation schema with payment method
     const checkoutSchema = Yup.object().shape({
@@ -305,7 +307,6 @@ const NewCheckoutForm = ({ close }) => {
 
         try {
             const merchantTransactionId = generateTransactionID();
-            const { discountAmount, taxDiscount } = additionalDiscountforOnlinePayment(totalCartAmount, totalTax);
 
             const orderDetails = cartItemsList.map((item) => ({
                 id: item._id,
@@ -449,7 +450,8 @@ const NewCheckoutForm = ({ close }) => {
 
                     <SubmitButton
                         isSubmitting={addingNewOrder}
-                        text={paymentMethod === 'online_payment' ? 'Proceed to Pay' : 'Place Order'}
+                        // text={paymentMethod === 'online_payment' ? 'Proceed to Pay' : 'Place Order'}
+                        text={paymentMethod === 'online_payment' ? `Proceed to Pay (₹${totalCartAmount - discountAmount + (totalCartAmount < 499 ? shippingFee : 0)})` : `Place Order (₹${totalCartAmount + (totalCartAmount < 499 ? shippingFee : 0)})`}
                         action={handleSavedAddressCheckout}
                     />
                 </>
@@ -563,7 +565,7 @@ const NewCheckoutForm = ({ close }) => {
 
                                 <SubmitButton
                                     isSubmitting={isSubmitting || addingNewOrder}
-                                    text={paymentMethod === 'online_payment' ? 'Proceed to Pay' : 'Place Order'}
+                                    text={paymentMethod === 'online_payment' ? `Proceed to Pay (₹${totalCartAmount - discountAmount + (totalCartAmount < 499 ? shippingFee : 0)})` : `Place Order (₹${totalCartAmount + (totalCartAmount < 499 ? shippingFee : 0)})`}
                                 />
                             </Form>
                         )}

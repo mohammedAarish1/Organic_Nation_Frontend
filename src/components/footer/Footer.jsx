@@ -267,6 +267,7 @@ const companyLinks = [
 ];
 
 const quickLinks = [
+  { to: '/testimonials', label: 'Testimonials' },
   { to: '/our-blogs', label: 'Blogs' },
   { to: '/our-recipes', label: 'Recipes' },
   { to: '/frequently-asked-questions', label: "FAQ's" },

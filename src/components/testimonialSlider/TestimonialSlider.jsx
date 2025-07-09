@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { IoPersonCircle } from 'react-icons/io5';
 import { FaQuoteLeft, FaStar, FaLeaf, FaHeart } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
-import Title from '../title/Title'
 const feedbacks = [
     {
         customerName: "Avinash Jain",

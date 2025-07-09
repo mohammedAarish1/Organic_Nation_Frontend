@@ -209,6 +209,11 @@ const getButtonStyles = (variant, disabled) => {
 };
 
 
+// Format price with comma separators
+  const formatPrice = (price) => {
+    return price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
 
 export {
   generateTransactionID,
@@ -220,5 +225,6 @@ export {
   additionalDiscountforOnlinePayment,
   getCouponDetails,
   scrollToSlide,
-  getButtonStyles
+  getButtonStyles,
+  formatPrice
 }

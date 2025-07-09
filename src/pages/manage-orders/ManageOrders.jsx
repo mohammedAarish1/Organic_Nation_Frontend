@@ -183,22 +183,73 @@ import { Link } from 'react-router-dom';
 import { FaArrowLeftLong } from "react-icons/fa6";
 import Loader from '../../components/common/Loader';
 
+import { motion } from 'framer-motion';
+// import { Link } from 'react-router-dom';
+import { FaShoppingBag, FaArrowRight } from 'react-icons/fa';
+
 const NoOrders = () => (
-  <div className='flex flex-col gap-8 justify-center items-start xs:text-2xl font-mono'>
-    <p>You have no orders !!!</p>
-    <div>
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5 }}
+    className='flex flex-col items-center justify-center py-12 px-6 text-center'
+  >
+    <motion.div
+      initial={{ scale: 0 }}
+      animate={{ scale: 1 }}
+      transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+      className='mb-6'
+    >
+      <FaShoppingBag className='text-6xl text-gray-300 mb-4' />
+    </motion.div>
+
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.4 }}
+      className='mb-8'
+    >
+      <h2 className='text-2xl font-semibold text-gray-700 mb-2'>No Orders Yet</h2>
+      <p className='text-gray-500 max-w-md'>
+        Start exploring our products and place your first order today!
+      </p>
+    </motion.div>
+
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.6 }}
+    >
       <Link
         to="/shop/all"
-        className="flex underline-hover text-[var(--bgColorPrimary)] max-w-max 
-          hover:text-orange-500 justify-center items-center gap-2 py-1 
-          font-semibold rounded-lg uppercase"
+        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[var(--themeColor)] to-[var(--accent-color)] hover:from-[var(--accent-color)] hover:to-[var(--themeColor)]
+          text-white rounded-lg hover:bg-orange-500 transition-colors duration-200 
+          font-medium group"
       >
-        <FaArrowLeftLong />
-        <span className='text-sm sm:text-[16px]'>Continue Shopping</span>
+        <span>Start Shopping</span>
+        <FaArrowRight className='text-sm group-hover:translate-x-1 transition-transform' />
       </Link>
-    </div>
-  </div>
+    </motion.div>
+  </motion.div>
 );
+
+
+// const NoOrders = () => (
+//   <div className='flex flex-col gap-8 justify-center items-start xs:text-2xl font-mono'>
+//     <p>You have no orders !!!</p>
+//     <div>
+//       <Link
+//         to="/shop/all"
+//         className="flex underline-hover text-[var(--bgColorPrimary)] max-w-max 
+//           hover:text-orange-500 justify-center items-center gap-2 py-1 
+//           font-semibold rounded-lg uppercase"
+//       >
+//         <FaArrowLeftLong />
+//         <span className='text-sm sm:text-[16px]'>Continue Shopping</span>
+//       </Link>
+//     </div>
+//   </div>
+// );
 
 // OrdersHeader.js
 const OrdersHeader = () => (
@@ -276,10 +327,10 @@ const ManageOrders = () => {
 
   return (
     <div className='bg-[var(--background-color)] pt-3'>
-      <div className='pb-20 lg:w-[80%] w-[95%] mx-auto '>
-        <OrdersHeader />
+      <div className=''>
+        {/* <OrdersHeader /> */}
 
-        <div className='py-5 font-serif'>
+        {/* <div className='py-5 font-serif'>
           <div className='flex flex-wrap sm:gap-10 gap-2'>
             {STATUS_BUTTONS.map(button => (
               <StatusButton
@@ -295,16 +346,49 @@ const ManageOrders = () => {
               />
             ))}
           </div>
-        </div>
+        </div> */}
         <Suspense fallback={<Loader height='200px' />}>
           <div className='mt-6 flex flex-col gap-20'>
             {ordersByStatus.orderData?.length === 0 ? (
               <NoOrders />
             ) : (
-              ordersByStatus.orderData?.map((order) => (
+              // ordersByStatus.orderData?.map((order) => (
 
-                <Order key={order._id} order={order} />
-              ))
+              //   <Order key={order._id} order={order} />
+              // ))
+
+
+              <div className='pb-20 lg:w-[80%] w-[95%] mx-auto '>
+                <OrdersHeader />
+
+                <div className='py-5 font-serif'>
+                  <div className='flex flex-wrap sm:gap-10 gap-2'>
+                    {STATUS_BUTTONS.map(button => (
+                      <StatusButton
+                        key={button.id}
+                        isActive={ordersByStatus.orderStatusTab === button.id}
+                        count={button.getCount(orders)}
+                        label={button.label}
+                        onClick={() => dispatch(getOrdersByStatus(button.id))}
+                        borderColor={button.borderColor}
+                        iconBgColor={button.iconBgColor}
+                        iconColor={button.iconColor}
+                        shadowColor={button.shadowColor}
+                      />
+                    ))}
+                  </div>
+                </div>
+                <Suspense fallback={<Loader height='200px' />}>
+                  <div className='mt-6 flex flex-col gap-20'>
+                    {(
+                      ordersByStatus.orderData?.map((order) => (
+                        <Order key={order._id} order={order} />
+                      ))
+                    )}
+                  </div>
+                </Suspense>
+              </div>
+
             )}
           </div>
         </Suspense>

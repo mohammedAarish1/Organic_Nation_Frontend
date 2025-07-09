@@ -2,7 +2,6 @@ import React, { lazy, Suspense } from 'react'
 import SEO from '../../helper/SEO/SEO'
 
 const TestimonialSlider = lazy(() => import('../../components/testimonialSlider/TestimonialSlider'));
-const TestimonialSection = lazy(() => import('../../components/testimonial-section/TestimonialSection'));
 
 const Testimonials = () => {
 
@@ -27,30 +26,7 @@ const Testimonials = () => {
       <div className=''>
         <img src='https://organicnationmages.s3.ap-south-1.amazonaws.com/other_banners/testimonialBanner.webp' alt="image" className='w-full' />
       </div>
-      {/* images or videos */}
-      <div>
-        <Suspense fallback={
-          <div className='py-52 flex justify-center items-center'>
-            <div className="loader"></div>
-          </div>
-        }>
-          <TestimonialSection />
-        </Suspense>
-      </div>
-
-      {/* customer feedback section  */}
-
-      <div className="w-[80%] mx-auto flex flex-wrap items-center xs:mb-20">
-        <div className="w-full lg:w-2/3 px-4 mb-12 lg:mb-0">
-          <span className="inline-block py-1 px-3 mb-4 text-xs font-semibold text-[var(--titleTextColor)] bg-orange-50 rounded-full">TESTIMONIALS</span>
-          <h1 className="font-heading text-5xl xs:text-5xl font-semibold text-[var(--themeColor)] mb-4">
-            <span>What our customers </span>
-            <span className="font-serif italic">said</span>
-          </h1>
-          <p className="text-[var(--paraTextColor)]">Read what our valued customers have to say!</p>
-        </div>
-
-      </div>
+      
       <Suspense fallback={
           <div className='py-52 flex justify-center items-center'>
             <div className="loader"></div>

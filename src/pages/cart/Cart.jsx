@@ -11,6 +11,7 @@ import SubmitButton from '../../components/button/SubmitButton';
 import CheckDeliveryAvailability from '../../components/module/cart/CheckDeliveryAvailability';
 import CODEligibility from '../../components/module/cart/CODEligibility';
 import FreeShippingAlert from '../../components/module/cart/FreeShippingAlert';
+import { formatPrice } from '../../helper/helperFunctions';
 
 // Demo product data
 // const demoProducts = [
@@ -128,10 +129,7 @@ const Cart = () => {
   //   removeItem(id);
   // };
 
-  // Format price with comma separators
-  const formatPrice = (price) => {
-    return price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  };
+  
 
   return (
     <div className="bg-[#F5EFE6] min-h-screen pb-24">
@@ -290,7 +288,8 @@ const Cart = () => {
 
                       {/* Subtotal */}
                       <div className="md:col-span-2 flex items-center justify-end md:text-right text-[#3E2C1B] font-semibold">
-                        ₹{item.discount > 0 ? formatPrice(item.price - (item.price * item.discount) / 100) * item.quantity : formatPrice(item.price * item.quantity)}
+                        {/* ₹{item.discount > 0 ? formatPrice(item.price - (item.price * item.discount) / 100) * item.quantity : formatPrice(item.price * item.quantity)} */}
+                        ₹{formatPrice(item.discount > 0 ? (item.price - (item.price * item.discount) / 100) * item.quantity : (item.price * item.quantity))}
                       </div>
                     </div>
                   </motion.div>

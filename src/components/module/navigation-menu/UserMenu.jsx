@@ -19,7 +19,7 @@ const USER_MENU_ITEMS = [
     },
     {
       id: 'orders',
-      label: 'Your Orders',
+      label: 'Order History',
       description: 'Track and manage orders',
       icon: BsFillBoxSeamFill,
       path: '/manage-orders',
