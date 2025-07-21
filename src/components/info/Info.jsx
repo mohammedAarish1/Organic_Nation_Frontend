@@ -6,7 +6,7 @@ const Info = ({ text, fontSize }) => {
     //   <p className={`text-white xs:text-${fontSize} text-[10px] text-center`}>{text}</p>
     // </div>
 
-     <div className="bg-[var(--themeColor)] text-[#FFFFFF] py-2 text-center text-sm">
+     <div className="bg-[var(--themeColor)] text-[#FFFFFF] py-2 text-center text-[10px]">
        {text}
       </div>
   )

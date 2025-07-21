@@ -159,10 +159,10 @@
 
 //               <hr />
 
-//               {totalCartAmount < 499 && totalCartAmount > 0 && (
+//               {totalCartAmount < freeShippingEligibleAmt && totalCartAmount > 0 && (
 //                 <div className="text-center mt-2 font-bold">
 //                   <p className="text-[12px] text-green-700 capitalize">
-//                     ( Add ₹ {499 - totalCartAmount} worth of products more to get FREE SHIPPING !!)
+//                     ( Add ₹ {freeShippingEligibleAmt - totalCartAmount} worth of products more to get FREE SHIPPING !!)
 //                   </p>
 //                 </div>
 //               )}

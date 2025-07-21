@@ -76,7 +76,7 @@
 
 //       {/* <p className='lg:w-[70%]'>{product.description}</p> */}
 //       <p className='text-green-700 font-semibold'>*Cash On Delivery is available</p>
-//       <p className='flex items-center gap-2'><LiaShippingFastSolid className='text-xl' /> <span>Free shipping for all orders above ₹499</span></p>
+//       <p className='flex items-center gap-2'><LiaShippingFastSolid className='text-xl' /> <span>Free shipping for all orders above freeShippingEligibleAmt</span></p>
 //       <p className='flex items-center gap-3'><span>In Stock:</span>{product.details.availability ? (<FaCircleCheck className='text-xl text-[var(--bgColorPrimary)]' />) : (<HiXCircle className='text-3xl text-red-700' />)}</p>
 //       <div className='flex items-center gap-2 xs:mb-0 mb-5'>
 //         {/* Quantity:-  <ProductQty qty={qty} increaseQty={increaseQty} decreaseQty={decreaseQty} /> */}

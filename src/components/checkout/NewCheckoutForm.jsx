@@ -17,6 +17,8 @@ import { getUserData } from '../../features/auth/auth';
 import SubmitButton from '../button/SubmitButton';
 import FreeShippingAlert from '../module/cart/FreeShippingAlert';
 import CODEligibility from '../module/cart/CODEligibility';
+import { freeShippingEligibleAmt } from '../../constants';
+import api from '../../config/axiosConfig';
 
 const SavedAddressCard = ({
     user,
@@ -119,7 +121,7 @@ const SelectionButton = ({ icon, label, selected, onClick }) => {
 };
 
 // Payment Method Button component
-const PaymentMethodButton = ({ icon, label, selected, onClick, discount = null }) => {
+const PaymentMethodButton = ({ icon, label, selected, onClick, badge = null }) => {
     const IconComponent = icon;
     return (
         <button
@@ -134,15 +136,15 @@ const PaymentMethodButton = ({ icon, label, selected, onClick, discount = null }
                 <IconComponent className={`mr-3 ${label.includes('Cash') ? 'text-green-600' : 'text-blue-600'}`} size={18} />
                 <span>{label}</span>
             </div>
-            {discount && (
+            {badge && (
                 <motion.div
-                    className="absolute right-0 top-0 bg-green-500 text-white text-xs px-2 py-1 rounded-bl-lg rounded-tr-lg flex items-center"
+                    className={`absolute right-0 top-0 ${label.includes('Cash') ? 'bg-red-500' : 'bg-green-500'}  text-white text-xs px-2 py-1 rounded-bl-lg rounded-tr-lg flex items-center`}
                     initial={{ scale: 1 }}
-                    animate={{ scale: [1, 1.1, 1] }}
+                    animate={label.includes('Online') ? { scale: [1, 1.1, 1] } : { scale: [1, 1, 1] }}
                     transition={{ duration: 1.5, repeat: Infinity }}
                 >
-                    <FaPercent className="mr-1" size={10} />
-                    {discount}
+                    {label.includes('Online') && <FaPercent className="mr-1" size={10} />}
+                    {badge}
                 </motion.div>
             )}
         </button>
@@ -151,31 +153,41 @@ const PaymentMethodButton = ({ icon, label, selected, onClick, discount = null }
 
 // Payment Method Selection Component
 const PaymentMethodSelection = ({
+    CODCharge,
     paymentMethod,
     setPaymentMethod,
     totalCartAmount,
     shippingFee,
     error = null
 }) => {
+
     return (
         <div className="mt-6">
             <label className="block text-sm font-medium mb-2">Payment Method</label>
             <div className="space-y-3">
-                {totalCartAmount > 399 && (
+                {/* {totalCartAmount > 399 && (
                     <PaymentMethodButton
                         icon={FaMoneyBillWave}
                         label="Cash on Delivery"
                         selected={paymentMethod === 'cash_on_delivery'}
                         onClick={() => setPaymentMethod('cash_on_delivery')}
                     />
-                )}
+                )} */}
+
+                <PaymentMethodButton
+                    icon={FaMoneyBillWave}
+                    label="Cash on Delivery"
+                    selected={paymentMethod === 'cash_on_delivery'}
+                    onClick={() => setPaymentMethod('cash_on_delivery')}
+                    badge={`COD Charge applicable (₹${CODCharge})`}
+                />
 
                 <PaymentMethodButton
                     icon={FaCreditCard}
                     label="Online Payment"
                     selected={paymentMethod === 'online_payment'}
                     onClick={() => setPaymentMethod('online_payment')}
-                    discount="5% off"
+                    badge="5% off"
                 />
             </div>
             {error && (
@@ -184,10 +196,10 @@ const PaymentMethodSelection = ({
 
             <div className='mt-5'>
                 {/* COD Eligibility */}
-                {totalCartAmount < 399 && totalCartAmount > 0 && (
+                {/* {totalCartAmount < 399 && totalCartAmount > 0 && (
                     <CODEligibility />
-                )}
-                {totalCartAmount < 499 && totalCartAmount > 0 && (
+                )} */}
+                {totalCartAmount < 199 && totalCartAmount > 0 && (
                     <FreeShippingAlert totalCartAmount={totalCartAmount} shippingFee={shippingFee} />
                 )}
 
@@ -258,6 +270,7 @@ const NewCheckoutForm = ({ close }) => {
     const [showAddressForm, setShowAddressForm] = useState(false);
     const [selectedAddress, setSelectedAddress] = useState(null);
     const { discountAmount, taxDiscount } = additionalDiscountforOnlinePayment(totalCartAmount, totalTax);
+    const [CODCharge, setCODCharge] = useState(30)
 
 
     // Enhanced validation schema with payment method
@@ -292,6 +305,24 @@ const NewCheckoutForm = ({ close }) => {
         city: '',
         state: '',
     };
+
+    const calculateCODCharges = async () => {
+        try {
+            const response = await api.post('/api/delivery-charges/calculate/cod-charges', { cartItemsList })
+            if (response.status === 200) {
+                const CODCharge = response.data.codCharge
+                setCODCharge(CODCharge)
+            }
+        } catch (error) {
+            throw error
+        }
+    }
+
+    useEffect(() => {
+        calculateCODCharges()
+    }, [])
+
+
 
     // Validate payment method selection
     const validatePaymentMethod = () => {
@@ -330,9 +361,9 @@ const NewCheckoutForm = ({ close }) => {
                     state: shippingInfo.state,
                 },
                 orderDetails: orderDetails,
-                subTotal: paymentMethod === "cash_on_delivery" ? totalCartAmount : totalCartAmount - discountAmount,
+                subTotal: paymentMethod === "cash_on_delivery" ? totalCartAmount + CODCharge : totalCartAmount - discountAmount,
                 taxAmount: paymentMethod === "cash_on_delivery" ? totalTax : totalTax - taxDiscount,
-                shippingFee: totalCartAmount < 499 ? shippingFee : 0,
+                shippingFee: totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0,
                 paymentMethod: paymentMethod,
                 paymentStatus: "pending",
                 merchantTransactionId: paymentMethod === "cash_on_delivery" ? '' : merchantTransactionId,
@@ -354,7 +385,7 @@ const NewCheckoutForm = ({ close }) => {
                             dispatch(
                                 initiatePayment({
                                     number: shippingInfo.phoneNumber.replace('+91', ''),
-                                    amount: totalCartAmount - discountAmount + (totalCartAmount < 499 ? shippingFee : 0),
+                                    amount: totalCartAmount - discountAmount + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0),
                                     merchantTransactionId: merchantTransactionId,
                                 })
                             );
@@ -441,6 +472,7 @@ const NewCheckoutForm = ({ close }) => {
                     />
 
                     <PaymentMethodSelection
+                        CODCharge={CODCharge}
                         paymentMethod={paymentMethod}
                         setPaymentMethod={setPaymentMethod}
                         totalCartAmount={totalCartAmount}
@@ -451,7 +483,7 @@ const NewCheckoutForm = ({ close }) => {
                     <SubmitButton
                         isSubmitting={addingNewOrder}
                         // text={paymentMethod === 'online_payment' ? 'Proceed to Pay' : 'Place Order'}
-                        text={paymentMethod === 'online_payment' ? `Proceed to Pay (₹${totalCartAmount - discountAmount + (totalCartAmount < 499 ? shippingFee : 0)})` : `Place Order (₹${totalCartAmount + (totalCartAmount < 499 ? shippingFee : 0)})`}
+                        text={paymentMethod === 'online_payment' ? `Proceed to Pay (₹${Math.round(totalCartAmount - discountAmount + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0))})` : `Place Order (₹${Math.round(totalCartAmount + CODCharge + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0))})`}
                         action={handleSavedAddressCheckout}
                     />
                 </>
@@ -556,6 +588,7 @@ const NewCheckoutForm = ({ close }) => {
                                 </div>
 
                                 <PaymentMethodSelection
+                                    CODCharge={CODCharge}
                                     paymentMethod={paymentMethod}
                                     setPaymentMethod={setPaymentMethod}
                                     totalCartAmount={totalCartAmount}
@@ -565,7 +598,7 @@ const NewCheckoutForm = ({ close }) => {
 
                                 <SubmitButton
                                     isSubmitting={isSubmitting || addingNewOrder}
-                                    text={paymentMethod === 'online_payment' ? `Proceed to Pay (₹${totalCartAmount - discountAmount + (totalCartAmount < 499 ? shippingFee : 0)})` : `Place Order (₹${totalCartAmount + (totalCartAmount < 499 ? shippingFee : 0)})`}
+                                    text={paymentMethod === 'online_payment' ? `Proceed to Pay (₹${Math.round(totalCartAmount - discountAmount + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0))})` : `Place Order (₹${Math.round(totalCartAmount + CODCharge + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0))})`}
                                 />
                             </Form>
                         )}

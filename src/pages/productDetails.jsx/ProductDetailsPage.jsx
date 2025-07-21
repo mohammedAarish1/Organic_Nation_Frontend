@@ -20,6 +20,7 @@ import {
 import AddToCartBtn from '../../components/add-to-cart-btn/AddToCartBtn';
 import ProductQty from '../../components/productQty/ProductQty';
 import { GoDotFill } from 'react-icons/go';
+import { freeShippingEligibleAmt } from '../../constants';
 
 const ProductDetailsPage = ({ product }) => {
 
@@ -484,7 +485,7 @@ const ProductDetailsPage = ({ product }) => {
               transition={{ delay: 1.0 }}
             >
               {[
-                { icon: FaTruck, title: "Free Shipping", subtitle: "On orders over ₹499", color: '#6B8E23' },
+                { icon: FaTruck, title: "Free Shipping", subtitle: `On orders over ₹${freeShippingEligibleAmt}`, color: '#6B8E23' },
                 { icon: FaShield, title: "Quality Assured", subtitle: "100% home-style", color: '#7A2E1D' },
                 { icon: FaUndo, title: "Easy Returns", subtitle: "07-day policy", color: '#9B7A2F' }
               ].map((badge, index) => (

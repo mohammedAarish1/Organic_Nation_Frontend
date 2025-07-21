@@ -90,6 +90,7 @@ const Shop = () => {
         </div>
       )}
 
+
       {/* number of products available end */}
 
       <div className={`xs:max-w-[90%] max-w-[95%] mx-auto mt-5 flex md:flex-row flex-col `}>

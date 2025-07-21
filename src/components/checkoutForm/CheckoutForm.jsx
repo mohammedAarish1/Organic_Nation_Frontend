@@ -146,7 +146,7 @@
 //       // subTotal: values.paymentMethod === "cash_on_delivery" ? totalCartAmount : totalCartAmount - discountAmount,
 //       subTotal: totalCartAmount,
 //       taxAmount: totalTax,
-//       shippingFee: totalCartAmount < 499 ? shippingFee : 0,
+//       shippingFee: totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0,
 //       paymentMethod: values.paymentMethod,
 //       paymentStatus: "pending",
 //       receiverDetails,
@@ -170,8 +170,8 @@
 //             dispatch(
 //               initiatePayment({
 //                 number: values?.phoneNumber.slice(3),
-//                 // amount: totalCartAmount - discountAmount + (totalCartAmount < 499 ? shippingFee : 0),
-//                 amount: totalCartAmount + (totalCartAmount < 499 ? shippingFee : 0),
+//                 // amount: totalCartAmount - discountAmount + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0),
+//                 amount: totalCartAmount + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0),
 //                 merchantTransactionId: merchantTransactionId,
 //               })
 //             );

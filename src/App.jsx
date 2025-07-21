@@ -27,19 +27,21 @@ import getRoutes from './routes/routes';
 import AdminRoutes from './routes/AdminRoutes';
 import AdminLogin from './pages/admin/AdminLogin';
 import { checkAuthStatus } from './features/auth/auth';
-import RecentOrderNotification from './components/recent-order-notification/RecentOrderNotification ';
+// import RecentOrderNotification from './components/recent-order-notification/RecentOrderNotification ';
 import { getProductsData } from './features/filter/filterSlice';
 import { CartNotificationProvider } from './context/CartNotificationContext';
 import CartNotification from './components/module/cart/CartNotification';
+import DiscountProgress from './components/common/DiscountProgress';
 
 // Memoized components
 
 const MainContent = memo(() => {
   return (
     <div className="bg-[var(--bgColorSecondary)] relative">
-      <Info text="Free shipping on orders over Rs. 499 | COD on orders over Rs. 399—Shop now!" fontSize='[10px]' />
-      <ToastContainer position='bottom-right' autoClose={1000} />
+      <Info text="Free shipping on orders over Rs. 199/- | Order over Rs. 499 and get Flat 20% OFF" fontSize='[10px]' />
+      <ToastContainer position='top-right' autoClose={1000} />
       <Header />
+      <DiscountProgress/>
       <div>
         <Breadcrumbs />
         <Suspense fallback={

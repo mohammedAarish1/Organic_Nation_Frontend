@@ -15,11 +15,10 @@ import { formatPrice } from '../../../helper/helperFunctions';
 const CartNotification = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { cartItemsList, totalCartAmount, lastAddedItem } = useSelector((state) => state.cart);
+  const { cartItemsList, totalCartAmount, lastAddedItem, discountProgress } = useSelector((state) => state.cart);
   const { isCartNotificationVisible, hideCartNotification } = useCartNotification();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false)
-
 
   // Calculate total price
   const totalPrice = cartItemsList.reduce((total, item) => total + (item.price * item.quantity), 0);
@@ -193,7 +192,7 @@ const CartNotification = () => {
 
               {/* Cart Items List - Scrollable Section */}
               <div
-                className="flex-1 overflow-y-auto p-4 pb-44"
+                className="flex-1 overflow-y-auto p-4 pb-60"
                 style={{
                   scrollbarWidth: 'thin',
                   scrollbarColor: 'var(--themeColor) var(--neutral-color)'
@@ -297,7 +296,7 @@ const CartNotification = () => {
 
               {/* Fixed Footer with Cart Summary and Buttons */}
               <motion.div
-                className="absolute bottom-0 left-0 right-0 p-4 border-t"
+                className="absolute bottom-0 left-0 right-0 p-4 border-t z-20"
                 style={{
                   backgroundColor: 'var(--background-color)',
                   borderColor: 'var(--neutral-color)',
@@ -311,15 +310,26 @@ const CartNotification = () => {
                 <div className="mb-4">
                   <div className="flex justify-between items-center mb-1">
                     <span className="text-sm opacity-75">Subtotal:</span>
-                    <span>₹ {totalCartAmount.toFixed(2)}</span>
+                    <span>₹ {discountProgress.totalCartAmount?.toFixed(2)}</span>
                   </div>
+                  <div className="flex justify-between items-center mb-1">
+                    <span className="text-sm opacity-75">Discount Applied ({discountProgress.discountType}):</span>
+                    <span>₹ {discountProgress.discountAmount?.toFixed(2)}</span>
+                  </div>
+                  {discountProgress.progressInfo?.nextThreshold && (
+                    <div className="flex justify-between items-center mb-1 text-[var(--themeColor)] font-bold">
+                      <span className="text-sm opacity-75">You are just ₹{Math.round(discountProgress.progressInfo?.nextThreshold - (discountProgress.progressInfo?.nextThreshold === 1999 ? discountProgress.progressInfo.currentCartAmount : discountProgress.progressInfo?.currentEligibleAmount))} away from FLAT {discountProgress.progressInfo?.nextDiscountType} discount:</span>
+                    </div>
+                  )}
+
+
 
                   <div className="h-px w-full my-2" style={{ backgroundColor: 'var(--neutral-color)' }}></div>
 
                   <div className="flex justify-between items-center">
                     <span className="font-bold">Total:</span>
                     <span className="font-bold text-xl" style={{ color: 'var(--themeColor)' }}>
-                      ₹ {totalCartAmount.toFixed(2)}
+                      ₹ {Math.round(totalCartAmount)}
                     </span>
                   </div>
                 </div>

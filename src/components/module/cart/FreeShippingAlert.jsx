@@ -1,9 +1,10 @@
 import React from 'react'
-import { motion } from 'framer-motion'
+import { motion } from 'framer-motion';
+import {freeShippingEligibleAmt} from '../../../constants';
 
 const FreeShippingAlert = ({ totalCartAmount = 250, shippingFee =0}) => {
-  const remaining = Math.max(0, 499 - totalCartAmount);
-  const progress = Math.min(100, (totalCartAmount / 499) * 100);
+  const remaining = Math.max(0, freeShippingEligibleAmt - totalCartAmount);
+  const progress = Math.min(100, (totalCartAmount / freeShippingEligibleAmt) * 100);
 
   return (
     <motion.div
@@ -80,7 +81,7 @@ const FreeShippingAlert = ({ totalCartAmount = 250, shippingFee =0}) => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
             >
-              Add ₹{remaining} more to qualify
+              Add ₹{Math.round(remaining)} more to qualify
             </motion.p>
           </div>
           {shippingFee > 0 && (

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     spotlightProducts: [],
-    productsType:"new_arrivals"
+    productsType:"best_seller"
 }
 
 export const spotlightProducts = createSlice({

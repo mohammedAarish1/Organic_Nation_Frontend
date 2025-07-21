@@ -140,6 +140,8 @@ const AddToCartBtn = ({ item, qty = 1 }) => {
         dispatch(getAllCartItems());
         // toast.info('Item Added to the Cart');
         // Show cart notification instead of toast
+         // ADD THIS LINE - Update discount progress
+        // dispatch(getDiscountProgress());
         showCartNotification();
       });
   };

@@ -51,9 +51,9 @@ const SpotlightSection = () => {
     // };
 
     const tabs = [
+        { key: 'best_seller', icon: GiPodium, label: 'Best Seller' },
         { key: 'new_arrivals', icon: MdNewReleases, label: 'New Arrival' },
         { key: 'deal_of_the_day', icon: MdLocalOffer, label: 'Deal of the Day' },
-        { key: 'best_seller', icon: GiPodium, label: 'Best Seller' },
         { key: 'season_special', icon: GiSunflower, label: 'Season Special' }
     ]
 

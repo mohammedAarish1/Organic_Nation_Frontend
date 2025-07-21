@@ -1,0 +1,1 @@
+export const freeShippingEligibleAmt = 199

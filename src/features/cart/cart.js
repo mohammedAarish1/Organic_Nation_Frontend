@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import api from "../../config/axiosConfig";
+// import { calculateProgressiveDiscount } from "../../helper/discountCalculator";
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -82,18 +83,26 @@ export const getAllCartItems = createAsyncThunk(
                 if (response.status === 200) {
                     const products = response.data.items.map(product => {
                         return {
-                            nameUrl: product.productName,
+                            productName: product.productName,
                             quantity: product.quantity
                         }
                     });
+                    const responseData = await api.post('api/cart/cart-details', { cartItems: products })
+                    if (responseData.status === 200) {
+                        const { productDetails, totals } = responseData.data
+                        return { productDetails, result: totals };
+                    }
+                    // const productDetails = await Promise.all(
+                    //     products.map(async ({ nameUrl, quantity }) => {
+                    //         const response = await axios.get(`${apiUrl}/products/organic-honey/${nameUrl}`)
+                    //         return { ...response.data.product, quantity }
+                    //     })
+                    // );
 
-                    const productDetails = await Promise.all(
-                        products.map(async ({ nameUrl, quantity }) => {
-                            const response = await axios.get(`${apiUrl}/products/organic-honey/${nameUrl}`)
-                            return { ...response.data.product, quantity }
-                        })
-                    );
-                    return { productDetails, totalCartAmount: response.data.totalCartAmount, totalTax: response.data.totalTaxes, couponCodeApplied: response.data.couponCodeApplied }
+                    // const result = await calculateProgressiveDiscount(productDetails);
+                    // return { productDetails, result };
+
+                    // return { productDetails, totalCartAmount: response.data.totalCartAmount, totalTax: response.data.totalTaxes, couponCodeApplied: response.data.couponCodeApplied }
 
                 }
             } else {
@@ -104,32 +113,44 @@ export const getAllCartItems = createAsyncThunk(
                 }
                 // const localCart = JSON.parse(localStorage.getItem('cart') || []);
                 if (localCart.length > 0) {
-                    const productDetails = await Promise.all(
-                        localCart.map(async ({ quantity, productName }) => {
-                            const response = await axios.get(`${apiUrl}/products/organic-honey/${productName}`)
-                            return { ...response.data.product, quantity }
-                        })
-                    );
-                    let totalPrice = productDetails.reduce((total, product) => {
-                        const discountedPrice = product.price * (1 - product.discount / 100);
-                        return Math.round(total + discountedPrice * product.quantity);
-                    }, 0);
+
+                    const responseData = await api.post('api/cart/cart-details', { cartItems: localCart })
+                    if (responseData.status === 200) {
+                        const { productDetails, totals } = responseData.data
+                        return { productDetails, result: totals };
+                    }
+
+                    // const productDetails = await Promise.all(
+                    //     localCart.map(async ({ quantity, productName }) => {
+                    //         const response = await axios.get(`${apiUrl}/products/organic-honey/${productName}`)
+                    //         return { ...response.data.product, quantity }
+                    //     })
+                    // );
+                    // const result = await calculateProgressiveDiscount(productDetails);
+                    // let totalPrice = productDetails.reduce((total, product) => {
+                    //     const discountedPrice = product.price * (1 - product.discount / 100);
+                    //     return Math.round(total + discountedPrice * product.quantity);
+                    // }, 0);
 
 
-                    let totalTax = productDetails.reduce((total, product) => {
-                        const discountedPrice = product.price * (1 - product.discount / 100);
-                        const totalAmountWithTax = discountedPrice * product.quantity;
+                    // let totalTax = productDetails.reduce((total, product) => {
+                    //     const discountedPrice = product.price * (1 - product.discount / 100);
+                    //     const totalAmountWithTax = discountedPrice * product.quantity;
 
-                        // Calculate the amount without tax
-                        const amountWithoutTax = totalAmountWithTax / (1 + product.tax / 100);
+                    //     // Calculate the amount without tax
+                    //     const amountWithoutTax = totalAmountWithTax / (1 + product.tax / 100);
 
-                        // Calculate the tax amount
-                        const taxAmount = totalAmountWithTax - amountWithoutTax;
+                    //     // Calculate the tax amount
+                    //     const taxAmount = totalAmountWithTax - amountWithoutTax;
 
-                        return Math.round(total + taxAmount);
-                    }, 0);
+                    //     return Math.round(total + taxAmount);
+                    // }, 0);
 
-                    return { productDetails, totalCartAmount: totalPrice, totalTax: totalTax, couponCodeApplied: [] }
+                    // // calculate the discounts applied so far
+                    // const result = await calculateProgressiveDiscount(localCart);
+
+                    // return { productDetails, totalCartAmount: totalPrice, totalTax: totalTax, couponCodeApplied: [], discountData: result }
+                    // return { productDetails, result };
                 } else {
                     return {};
                 }
@@ -303,7 +324,7 @@ export const applyReferralCouponDiscount = createAsyncThunk(
             if (auth.user) {
                 const response = await api.post(`/api/validate/referral/coupon/discount`, data)
                 return response.data;
-            }else{
+            } else {
                 return rejectWithValue('Please login to apply referral code')
             }
 
@@ -312,6 +333,38 @@ export const applyReferralCouponDiscount = createAsyncThunk(
         }
     }
 )
+
+
+// ADD new async thunk for getting discount progress
+// export const getDiscountProgress = createAsyncThunk(
+//     'cart/getDiscountProgress',
+//     async (_, { rejectWithValue, getState }) => {
+//         const { auth } = getState();
+//         try {
+//             if (auth.user) {
+//                 const response = await api.get('/api/cart/discount-progress');
+//                 return response.data;
+//             } else {
+//                 // Handle local cart discount calculation
+//                 const localCart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+//                 if (localCart.length > 0) {
+//                     const result = await calculateProgressiveDiscount(localCart);
+
+//                     return {
+//                         hasEligibleItems: result.eligibleItems.length > 0,
+//                         progressInfo: result.progressInfo,
+//                         currentDiscount: result.discountType,
+//                         eligibleItems: result.eligibleItems
+//                     };
+//                 }
+//                 return { hasEligibleItems: false, progressInfo: null };
+//             }
+//         } catch (error) {
+//             return rejectWithValue(error.response?.data || error.message);
+//         }
+//     }
+// );
 
 
 
@@ -328,6 +381,16 @@ const initialState = {
     totalCartAmount: 0,
     // totalWeight: '',
     totalTax: 0,
+    // below NEW FIELDS for discount feature
+    originalAmount: 0,
+    discountAmount: 0,
+    progressiveDiscountApplied: 'none',
+    discountProgress: {
+        // hasEligibleItems: false,
+        // progressInfo: null,
+        // currentDiscount: 'none',
+        // eligibleItems: []
+    }
 }
 
 export const cartSlice = createSlice({
@@ -462,10 +525,17 @@ export const cartSlice = createSlice({
                     loading: false,
                     cartItemsList: action.payload?.productDetails || [],
                     totalCartItems: totalQty || 0,
-                    totalCartAmount: action.payload?.totalCartAmount || 0,
+                    // totalCartAmount: action.payload?.totalCartAmount || 0,
+                    totalCartAmount: action.payload?.result?.finalAmount || 0,
                     // totalWeight: JSON.stringify(totalWeight),
-                    totalTax: action.payload?.totalTax || 0,
+                    totalTax: action.payload?.result?.totalTax || 0,
                     couponCodeApplied: action.payload?.couponCodeApplied || [],
+                    // ADD THESE NEW FIELDS
+                    discountProgress: action.payload?.result || {}
+
+                    // originalAmount: action.payload?.originalAmount || 0,
+                    // discountAmount: action.payload?.discountAmount || 0,
+                    // progressiveDiscountApplied: action.payload?.progressiveDiscountApplied || 'none'
 
                 }
             })
@@ -670,6 +740,20 @@ export const cartSlice = createSlice({
                     error: action.payload,
                 }
             })
+
+        // for discount feature
+        // .addCase(getDiscountProgress.pending, (state) => {
+        //     state.loading = true;
+        // })
+        // .addCase(getDiscountProgress.fulfilled, (state, action) => {
+        //     console.log('dddd', action.payload)
+        //     state.loading = false;
+        //     state.discountProgress = action.payload;
+        // })
+        // .addCase(getDiscountProgress.rejected, (state, action) => {
+        //     state.loading = false;
+        //     state.error = action.payload;
+        // })
 
     }
 })

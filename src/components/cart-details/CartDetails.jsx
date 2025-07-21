@@ -75,20 +75,20 @@
 //                 </div>
 //                 <div className="lg:absolute left-0 bottom-0 bg-[var(--bgColorPrimary)] w-full p-4">
 //                     {/* <h4 className="flex flex-wrap gap-4 text-base text-white">Total taxes (+) <span className="ml-auto">₹ {totalTax}</span></h4> */}
-//                     {/* <h4 className="flex flex-wrap gap-4 text-base text-white">Shipping Fee (+) <span className="ml-auto">₹ {totalCartAmount < 499 ? shippingFee : 'FREE'}</span></h4> */}
+//                     {/* <h4 className="flex flex-wrap gap-4 text-base text-white">Shipping Fee (+) <span className="ml-auto">₹ {totalCartAmount < freeShippingEligibleAmt ? shippingFee : 'FREE'}</span></h4> */}
 //                     <h4 className="flex flex-wrap gap-4 text-base text-white">
 //                         Shipping Fee (+)
 //                         {shippingFee === 0 ? (
 //                             <span className="ml-auto text-sm text-gray-400">(Enter Shipping Details)</span>
 //                         ) : (
 //                             <span className="ml-auto">
-//                                 ₹ {totalCartAmount < 499 ? shippingFee : "FREE"}
+//                                 ₹ {totalCartAmount < freeShippingEligibleAmt ? shippingFee : "FREE"}
 //                             </span>
 //                         )}
 //                     </h4>
 //                     <h4 className="flex flex-wrap xs:gap-4 gap-1 xs:text-xl font-bold text-white"
 //                     >
-//                         Total{couponCodeApplied.length > 0 && <span className='flex text-sm justify-center items-center gap-1'>( Coupon Code Applied <PiSealCheckFill className='text-xl' />)</span>} <span className="ml-auto text-xl">₹{Math.round(totalCartAmount + (totalCartAmount < 499 ? shippingFee : 0)) || 0}</span></h4>
+//                         Total{couponCodeApplied.length > 0 && <span className='flex text-sm justify-center items-center gap-1'>( Coupon Code Applied <PiSealCheckFill className='text-xl' />)</span>} <span className="ml-auto text-xl">₹{Math.round(totalCartAmount + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0)) || 0}</span></h4>
 //                 </div>
 //             </div>
 //         </div>

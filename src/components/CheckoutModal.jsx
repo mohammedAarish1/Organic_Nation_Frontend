@@ -13,6 +13,8 @@ import { getAllCartItems, mergeCart } from '../features/cart/cart';
 // import { verifyOTP } from '../features/auth/auth';
 // import { toast } from 'react-toastify';
 import NewCheckoutForm from './checkout/NewCheckoutForm';
+import { freeShippingEligibleAmt } from '../constants';
+import { formatPrice } from '../helper/helperFunctions';
 
 // Animation variants
 const fadeIn = {
@@ -267,57 +269,14 @@ const CheckoutModal = ({ isOpen, onClose }) => {
   const [phoneNumber, setPhoneNumber] = useState(null)
   // const otpInputs = Array(4).fill(0).map(() => useRef(null));
 
-  const { cartItems, cartItemsList, totalCartAmount, totalTax, couponCodeApplied } = useSelector((state) => state.cart);
+  const { cartItemsList, totalCartAmount, totalTax, couponCodeApplied,discountProgress } = useSelector((state) => state.cart);
   const { checking, shippingFee } = useSelector(state => state.delivery)
 
-  // Data
-  // const cartItems = [
-  //   { id: 1, name: 'Wireless Headphones', price: 129.99, quantity: 1, image: '/api/placeholder/80/80' },
-  //   { id: 2, name: 'Smartphone Case', price: 24.99, quantity: 2, image: '/api/placeholder/80/80' }
-  // ];
 
   const coupons = [
     { code: 'BUY4PICKLES', description: 'Get Any Four Pickles at Flat ₹999' },
     { code: 'FOODSBAY5YEARS', description: 'Get additional 10% off on all orders above ₹ 1299' },
   ];
-
-  // Calculations
-  const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  // const shippingFee = 5.99;
-  const discount = appliedCoupon ? (appliedCoupon.code === 'WELCOME10' ? subtotal * 0.1 : 0) : 0;
-  // const total = subtotal + shippingFee - discount;
-
-  // Form validation schemas
-  // const phoneSchema = Yup.object().shape({
-  //   phone: Yup.string()
-  //     .matches(/^\d{10}$/, 'Phone number must be 10 digits')
-  //     .required('Phone number is required')
-  // });
-
-  // const checkoutSchema = Yup.object().shape({
-  //   phone: Yup.string()
-  //     .matches(/^\d{10}$/, 'Phone number must be 10 digits')
-  //     .required('Phone number is required'),
-  //   fullName: Yup.string()
-  //     .required('Full name is required')
-  //     .min(3, 'Name must be at least 3 characters'),
-  //   email: Yup.string()
-  //     .email('Invalid email address')
-  //     .required('Email is required'),
-  //   address: Yup.string()
-  //     .required('Address is required')
-  //     .min(5, 'Address is too short'),
-  //   pincode: Yup.string()
-  //     .matches(/^\d{6}$/, 'Pincode must be 6 digits')
-  //     .required('Pincode is required'),
-  //   city: Yup.string()
-  //     .required('City is required'),
-  //   state: Yup.string()
-  //     .required('State is required'),
-  // });
-
-  // Handlers
-  // const handlePhoneSubmit = () => setShowOtpInput(true);
 
 
   const getDataAfterLogin = () => {
@@ -380,21 +339,19 @@ const CheckoutModal = ({ isOpen, onClose }) => {
       >
         <div className="flex justify-between mb-1 text-sm">
           <span>Subtotal</span>
-          <span>₹ {totalCartAmount}</span>
+          <span>₹ {formatPrice(discountProgress.totalCartAmount)}</span>
+        </div>
+        <div className="flex justify-between mb-1 text-sm font-bold">
+          <span>Less: Discount Applied ({discountProgress?.discountType})</span>
+          <span>₹ {formatPrice(discountProgress?.discountAmount)}</span>
         </div>
         <div className="flex justify-between mb-1 text-sm">
           <span>Shipping</span>
-          <span>₹ {totalCartAmount < 499 ? shippingFee : "FREE"}</span>
+          <span>₹ {totalCartAmount < freeShippingEligibleAmt ? shippingFee : "FREE"}</span>
         </div>
-        {discount > 0 && (
-          <div className="flex justify-between mb-1 text-sm text-green-600">
-            <span>Discount</span>
-            <span>-${discount.toFixed(2)}</span>
-          </div>
-        )}
         <div className="flex justify-between font-bold text-lg mt-2">
           <span>Total</span>
-          <span>₹ {totalCartAmount + (totalCartAmount < 499 ? shippingFee : 0)}</span>
+          <span>₹ {Math.round(totalCartAmount + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0))}</span>
         </div>
       </motion.div>
     </>
@@ -454,7 +411,7 @@ const CheckoutModal = ({ isOpen, onClose }) => {
                 <p
                   className="text-xl font-bold bg-[var(--text-color)] bg-clip-text text-transparent"
                 >
-                  ₹ {totalCartAmount + (totalCartAmount < 499 ? shippingFee : 0)}
+                  ₹ {Math.round(totalCartAmount + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0))}
                 </p>
               </div>
             </div>

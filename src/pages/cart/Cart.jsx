@@ -76,6 +76,7 @@ const Cart = () => {
     totalCartAmount,
     totalTax,
     couponCodeApplied,
+    discountProgress
   } = useSelector((state) => state.cart);
 
   // Calculate order summary
@@ -316,7 +317,7 @@ const Cart = () => {
                 )}
 
                 {/* Free Shipping Alert */}
-                {totalCartAmount < 499 && totalCartAmount > 0 && (
+                {totalCartAmount < 199 && totalCartAmount > 0 && (
                   <FreeShippingAlert totalCartAmount={totalCartAmount} />
                 )}
 
@@ -379,25 +380,23 @@ const Cart = () => {
                 <div className="border-t border-[#DCD2C0] pt-4 mb-6">
                   <div className="flex justify-between py-2">
                     <span className="text-[#3E2C1B]">Subtotal</span>
-                    <span className="text-[#3E2C1B] font-medium">₹{formatPrice(totalCartAmount)}</span>
+                    <span className="text-[#3E2C1B] font-medium">₹{formatPrice(discountProgress.totalCartAmount)}</span>
                   </div>
-                  {/* {discountApplied && (
-                    <div className="flex justify-between py-2">
-                      <span className="text-[#6B8E23]">Discount (10%)</span>
-                      <span className="text-[#6B8E23]">-₹{formatPrice(discount)}</span>
-                    </div>
-                  )} */}
                   <div className="flex justify-between py-2">
+                    <span className="text-[#3E2C1B]">Discount Applied ({discountProgress.discountType}):</span>
+                    <span className="text-[#3E2C1B] font-medium">₹{formatPrice(discountProgress.discountAmount)}</span>
+                  </div>
+                  {/* <div className="flex justify-between py-2">
                     <span className="text-[#3E2C1B]">Shipping</span>
                     <span className="text-[#3E2C1B]">₹{formatPrice(shippingFee)}</span>
-                  </div>
+                  </div> */}
                   {/* <div className="flex justify-between py-2">
                     <span className="text-[#3E2C1B]">Estimated Tax</span>
                     <span className="text-[#3E2C1B]">₹{formatPrice(tax)}</span>
                   </div> */}
                   <div className="flex justify-between py-3 text-lg font-semibold border-t border-[#DCD2C0] mt-2">
                     <span className="text-[#3E2C1B]">Total</span>
-                    <span className="text-[#7A2E1D]">₹{formatPrice(totalCartAmount)}</span>
+                    <span className="text-[#7A2E1D]">₹{Math.round(totalCartAmount)}</span>
                   </div>
                 </div>
                 {/* Checkout button */}
