@@ -1,59 +1,104 @@
-// src/LoginForm.js
 import React, { useEffect } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { adminLogin, fetchAdminData } from '../../features/admin/adminSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import Logo from '../../components/logo/Logo';
+import { toast } from 'react-toastify';
 
-import Logo from '../../components/logo/Logo'
-import { toast, ToastContainer } from 'react-toastify';
+// Constants
+const BACKGROUND_IMAGE_URL = 'https://img.freepik.com/free-photo/abstract-luxury-gradient-blue-background-smooth-dark-blue-with-black-vignette-studio-banner_1258-56228.jpg?t=st=1724734255~exp=1724737855~hmac=b261b59d1919bd74a703e91e6d3311f4d8059c0a2c82e8f31ace4351a71b0202&w=1060';
 
+const INITIAL_VALUES = {
+  username: '',
+  password: '',
+  secretKey: '',
+};
 
-// Example URL for background image (use your own image URL)
-const backgroundImageUrl = 'https://img.freepik.com/free-photo/abstract-luxury-gradient-blue-background-smooth-dark-blue-with-black-vignette-studio-banner_1258-56228.jpg?t=st=1724734255~exp=1724737855~hmac=b261b59d1919bd74a703e91e6d3311f4d8059c0a2c82e8f31ace4351a71b0202&w=1060';
+const VALIDATION_SCHEMA = Yup.object({
+  username: Yup.string().required('Username is required'),
+  password: Yup.string().required('Password is required'),
+  secretKey: Yup.string().required('Secret key is required'),
+});
 
+const FORM_FIELDS = [
+  { name: 'username', type: 'text', label: 'Username' },
+  { name: 'password', type: 'password', label: 'Password' },
+  { name: 'secretKey', type: 'text', label: 'Secret Key' },
+];
+
+// Custom hook for admin token
+const useAdminToken = () => {
+  try {
+    return JSON.parse(sessionStorage.getItem('adminToken'));
+  } catch {
+    return null;
+  }
+};
+
+// Reusable Form Field Component
+const FormField = ({ field, className = "" }) => (
+  <div className={`mb-4 ${className}`}>
+    <label 
+      htmlFor={field.name} 
+      className="block text-sm mb-1 uppercase tracking-widest"
+    >
+      {field.label}
+    </label>
+    <Field
+      type={field.type}
+      id={field.name}
+      name={field.name}
+      className="w-full px-3 py-2 text-black border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors"
+    />
+    <ErrorMessage 
+      name={field.name} 
+      component="div" 
+      className="text-red-400 text-sm mt-1" 
+    />
+  </div>
+);
+
+// Background Container Component
+const BackgroundContainer = ({ children }) => (
+  <div
+    className="relative min-h-screen flex items-center justify-center"
+    style={{ 
+      backgroundImage: `url(${BACKGROUND_IMAGE_URL})`, 
+      backgroundSize: 'cover', 
+      backgroundPosition: 'center' 
+    }}
+  >
+    <div className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-lg" />
+    {children}
+  </div>
+);
+
+// Main Admin Login Component
 const AdminLogin = () => {
-
-  // State to store token
-  // const [adminToken, setAdminToken] = useState(JSON.parse(sessionStorage.getItem('adminToken')));
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const adminToken = useAdminToken();
 
-  const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
-
-
-  const initialValues = {
-    username: '',
-    password: '',
-    secretKey: '',
-  }
-
-  const validationSchema = Yup.object({
-    username: Yup.string().required('Required'),
-    password: Yup.string().required('Required'),
-    secretKey: Yup.string().required('Required'),
-  })
-
-
-
-  const handleFormSubmission = (values) => {
-
-    dispatch(adminLogin(values))
-      .then(res => {
-        if (res.meta.requestStatus === 'fulfilled') {
-          const adminToken = res.payload.token;
-          sessionStorage.setItem("adminToken", JSON.stringify(adminToken));
-          dispatch(fetchAdminData(adminToken));
-          toast.info(res.payload?.message)
-        }else{
-          toast.error(res.payload?.message || 'Network Error')
-        }
-      })
-     
-  }
-
-
+  const handleFormSubmission = async (values, { setSubmitting }) => {
+    try {
+      const result = await dispatch(adminLogin(values));
+      
+      if (result.meta.requestStatus === 'fulfilled') {
+        const { token, message } = result.payload;
+        sessionStorage.setItem("adminToken", JSON.stringify(token));
+        dispatch(fetchAdminData(token));
+        toast.success(message || 'Login successful');
+      } else {
+        toast.error(result.payload?.message || 'Login failed');
+      }
+    } catch (error) {
+      toast.error('Network error occurred');
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   useEffect(() => {
     if (adminToken) {
@@ -62,84 +107,53 @@ const AdminLogin = () => {
   }, [navigate, adminToken]);
 
   return (
-    <div>
-          <ToastContainer position='bottom-right' autoClose={1000} />
-      <div
-        className="relative min-h-screen flex items-center justify-center "
-        style={{ backgroundImage: `url(${backgroundImageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
-      >
-        <div className='z-50 fixed top-10 left-10'>
-
+    <>
+      
+      <BackgroundContainer>
+        <div className="z-50 fixed top-10 left-10">
           <Logo />
         </div>
 
-        {/* Backdrop with blur effect */}
-        <div className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-lg "></div>
-        <div>
-
-        </div>
-
-        <div className="relative z-10 p-8 text-white  rounded-lg shadow-2xl w-full max-w-md">
+        <div className="relative z-10 p-8 text-white rounded-lg shadow-2xl w-full max-w-md mx-4">
           <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
+            initialValues={INITIAL_VALUES}
+            validationSchema={VALIDATION_SCHEMA}
             onSubmit={handleFormSubmission}
           >
-            {() => (
-              <Form>
-                <h1 className="text-2xl font-bold mb-6 text-center ">Admin Login</h1>
-                <div className="mb-4">
-                  <label htmlFor="username" className="block text-sm   mb-1 uppercase tracking-widest">
-                    Username
-                  </label>
-                  <Field
-                    type="text"
-                    id="username"
-                    name="username"
-                    className="w-full px-3 py-2 text-black  border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            {({ isSubmitting }) => (
+              <Form className="space-y-4">
+                <h1 className="text-3xl font-bold mb-8 text-center">
+                  Admin Login
+                </h1>
+                
+                {FORM_FIELDS.map((field, index) => (
+                  <FormField 
+                    key={field.name}
+                    field={field} 
+                    className={index === FORM_FIELDS.length - 1 ? "mb-6" : ""}
                   />
-                  <ErrorMessage name="username" component="div" className="text-red-600 text-sm mt-1" />
-                </div>
-
-                <div className="mb-4">
-                  <label htmlFor="password" className="block text-sm uppercase tracking-widest  mb-1">
-                    Password
-                  </label>
-                  <Field
-                    type="password"
-                    id="password"
-                    name="password"
-                    className="w-full px-3 py-2 text-black border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  />
-                  <ErrorMessage name="password" component="div" className="text-red-600 text-sm mt-1" />
-                </div>
-
-                <div className="mb-6">
-                  <label htmlFor="secretkey" className="block text-sm uppercase tracking-widest  mb-1">
-                    Secret Key
-                  </label>
-                  <Field
-                    type="text"
-                    id="secretKey"
-                    name="secretKey"
-                    className="w-full px-3 py-2 text-black border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  />
-                  <ErrorMessage name="secretKey" component="div" className="text-red-600 text-sm mt-1" />
-                </div>
+                ))}
 
                 <button
                   type="submit"
-                  // disabled={isSubmitting}
-                  className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  disabled={isSubmitting}
+                  className={`
+                    w-full py-3 px-4 font-semibold rounded-md shadow-sm 
+                    transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500
+                    ${isSubmitting 
+                      ? 'bg-gray-500 cursor-not-allowed' 
+                      : 'bg-blue-600 hover:bg-blue-700 active:bg-blue-800'
+                    } text-white
+                  `}
                 >
-                  Login
+                  {isSubmitting ? 'Signing in...' : 'Login'}
                 </button>
               </Form>
             )}
           </Formik>
         </div>
-      </div>
-    </div>
+      </BackgroundContainer>
+    </>
   );
 };
 

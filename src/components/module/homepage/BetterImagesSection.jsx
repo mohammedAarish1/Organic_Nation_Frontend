@@ -105,8 +105,8 @@ const BetterImagesSection = memo(({ images }) => {
     >
       <div className="max-w-7xl mx-auto">
         <Title
-          heading=' Why Choose Our Products'
-          subHeading=' Crafted with care, our products combine tradition with innovation for unmatched quality'
+          heading='Why Organic Nation ?'
+          subHeading='Crafted with care, our products combine tradition with innovation for unmatched quality'
         />
 
         <motion.div

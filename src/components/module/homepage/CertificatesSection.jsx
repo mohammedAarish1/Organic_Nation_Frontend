@@ -29,14 +29,14 @@ const CertificatesSection = memo(({ certificates, title = "Our Certifications" }
   // };
 
   return (
-    <div className="py-12 sm:py-16 px-4 sm:px-6 lg:px-10" >
+    <div className="py-12 sm:py-16 px-4 sm:px-6 lg:px-10 bg-gradient-to-b from-[#F5EFE6] via-white to-[#F5EFE6]" >
       <div className="max-w mx-auto">
         {/* Section header */}
         <Title heading={title} subHeading='Our certifications represent our commitment to quality, safety, and excellence' />
         {/* Certificates container */}
         <motion.div
           className="rounded-lg p-6 sm:p-8"
-          style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
+          // style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
           initial="hidden"
           animate="visible"
           // variants={containerVariants}

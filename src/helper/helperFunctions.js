@@ -1,40 +1,89 @@
 import { toast } from "react-toastify";
 // import { deleteDocumentFromDatabase } from "../features/admin/adminData";
-import { getAllCartItems, getAllOrders } from "../imports";
+// import { getAllCartItems, getAllOrders } from "../imports";
 import { calculateShippingFee, checkDeliveryAvailability, updateShippingFee } from "../features/check-delivery/checkDelivery";
-import { mergeCart } from "../features/cart/cart";
+// import { mergeCart } from "../features/cart/cart";
 import api from "../config/axiosConfig";
-const apiUrl = import.meta.env.VITE_BACKEND_URL;
+// const apiUrl = import.meta.env.VITE_BACKEND_URL;
+
+const getCatogoriesWithImages = (categoryList) => {
+  // const categoriesImages = [
+  //   { 'Organic-Honey': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Organic-Honey.png' },
+  //   { 'Homestyle-Pickles': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Authentic-Pickles.png' },
+  //   { 'Chutney-&-Dip': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Chutney%26Dip.png' },
+  //   { 'Fruit-Preserves': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Fruit-Preserves.png' },
+  //   { 'Seasonings-&-Herbs': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Seasonings%26Herbs.png' },
+  //   { 'Organic-Tea': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Organic-Tea.png' },
+  //   { Salt: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Salt.png' },
+  //   { Sweeteners: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Sweetners.png' },
+  //   { 'Organic-Oils': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Organic-Oils.png' },
+  //   { Oats: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Oats.png' },
+  //   { Vegan: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Vegan.png' },
+  //   { 'Breakfast-Cereals': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Breakfast-Cereals.png' },
+  //   { Combo: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Combo.png' },
+  // ]
 
 
 
-const fetchDataAfterLogin = (dispatch, navigate, cart, checkoutStatus) => {
-  dispatch(getAllOrders())
-  // dispatch(getAllCartItems())
-  if (cart && cart.items.length > 0) {
-    dispatch(mergeCart({ cart }))
-      .then((result) => {
-        // localStorage.removeItem('cart');
-        dispatch(getAllCartItems());
-        if (checkoutStatus) {
-          navigate('/cart/checkout')
-        } else {
-          navigate('/')
 
-        }
-      }
-      )
-  } else {
+  const categoriesImages = [
+    { 'Organic-Honey': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/honey.webp' },
+    { 'Homestyle-Pickles': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/pickles.webp' },
+    { 'Chutney-&-Dip': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/chutney.webp' },
+    { 'Fruit-Preserves': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/fruit_preserves.webp' },
+    { 'Seasonings-&-Herbs': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/seasonings.webp' },
+    { 'Organic-Tea': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/tea.webp' },
+    { 'Organic-Oils': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/oils.webp' },
+    { Salt: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/salt.webp' },
+    { Sweeteners: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/sweeteners.webp' },
+    { Oats: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/oats.webp' },
+    { Vegan: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/vegan.webp' },
+    { 'Breakfast-Cereals': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/breakfast.webp' },
+    { 'Gifts-&-Combos': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/combo.webp' },
+  ]
+  const imageLookup = categoriesImages.reduce((acc, obj) => {
+    const [key, value] = Object.entries(obj)[0];
+    acc[key] = value;
+    return acc;
+  }, {});
+  const categoriesWithImages = categoryList?.filter(item => item.category !== 'All')
+    .map(item => ({
+      ...item,
+      image: imageLookup[item.categoryUrl] || null,
+    }));
 
-    if (checkoutStatus) {
-      navigate('/cart/checkout')
-    } else {
-
-      navigate('/');
-    }
-  }
-
+  return categoriesWithImages
 }
+
+
+
+// const fetchDataAfterLogin = (dispatch, navigate, cart, checkoutStatus) => {
+//   dispatch(getAllOrders())
+//   // dispatch(getAllCartItems())
+//   if (cart && cart.items.length > 0) {
+//     dispatch(mergeCart({ cart }))
+//       .then((result) => {
+//         // localStorage.removeItem('cart');
+//         dispatch(getAllCartItems());
+//         if (checkoutStatus) {
+//           navigate('/cart/checkout')
+//         } else {
+//           navigate('/')
+
+//         }
+//       }
+//       )
+//   } else {
+
+//     if (checkoutStatus) {
+//       navigate('/cart/checkout')
+//     } else {
+
+//       navigate('/');
+//     }
+//   }
+
+// }
 
 // generate random Transaction Id
 const generateTransactionID = () => {
@@ -89,19 +138,19 @@ const generateTransactionID = () => {
 // }
 
 // for calculating additional 5% discount on MRP and tax include in that discount
-const additionalDiscountforOnlinePayment = (totalCartAmount,totalTax) => {
+const additionalDiscountforOnlinePayment = (totalCartAmount, totalTax) => {
 
 
-      const DISCOUNT_PERCENTAGE = 5
+  const DISCOUNT_PERCENTAGE = 5
 
-      //calculate additional 5% discount
-      const additionalDiscount = totalCartAmount * DISCOUNT_PERCENTAGE / 100
-      const additionalTaxDiscount = totalTax * DISCOUNT_PERCENTAGE / 100
+  //calculate additional 5% discount
+  const additionalDiscount = totalCartAmount * DISCOUNT_PERCENTAGE / 100
+  const additionalTaxDiscount = totalTax * DISCOUNT_PERCENTAGE / 100
 
-      return {
-        discountAmount: Math.round(additionalDiscount),
-        taxDiscount: Math.round(additionalTaxDiscount)
-      };
+  return {
+    discountAmount: Math.round(additionalDiscount),
+    taxDiscount: Math.round(additionalTaxDiscount)
+  };
 
 }
 
@@ -158,38 +207,38 @@ const address = (obj) => {
 
 const getCouponDetails = async (couponId) => {
   try {
-      const response = await api.get(`/api/validate/${couponId}`);
-      if (response.status === 200) {
-          // setCouponDetails(response.data);
-          return response.data
-      }
+    const response = await api.get(`/api/validate/${couponId}`);
+    if (response.status === 200) {
+      // setCouponDetails(response.data);
+      return response.data
+    }
   } catch (error) {
-      throw error;
+    throw error;
   }
 };
 
 
 
 // Carousel controls
-  const scrollToSlide = (ref,direction) => {
-    const container = ref.current;
-    if (!container) return;
+const scrollToSlide = (ref, direction) => {
+  const container = ref.current;
+  if (!container) return;
 
-    const cardWidth = 280;
-    const scrollAmount = direction === 'next' ? cardWidth : -cardWidth;
+  const cardWidth = 280;
+  const scrollAmount = direction === 'next' ? cardWidth : -cardWidth;
 
-    container.scrollBy({
-      left: scrollAmount,
-      behavior: 'smooth'
-    });
-  };
+  container.scrollBy({
+    left: scrollAmount,
+    behavior: 'smooth'
+  });
+};
 
 
 
-  // Helper function for button styles
+// Helper function for button styles
 const getButtonStyles = (variant, disabled) => {
   const baseStyles = "border shadow-sm hover:shadow-md";
-  
+
   if (disabled) {
     return `${baseStyles} bg-[var(--neutral-color)]/50 text-[var(--text-color)]/40 cursor-not-allowed border-[var(--neutral-color)]`;
   }
@@ -210,16 +259,17 @@ const getButtonStyles = (variant, disabled) => {
 
 
 // Format price with comma separators
-  const formatPrice = (price) => {
-    return price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  };
+const formatPrice = (price) => {
+  return price?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
 
 
 export {
+  getCatogoriesWithImages,
   generateTransactionID,
   address,
   // calculateDiscountAndTaxIncluded,
-  fetchDataAfterLogin,
+  // fetchDataAfterLogin,
   // handleDocumentDeleteFromDatabase,
   checkDeliveryAndCalculateShippingFee,
   additionalDiscountforOnlinePayment,

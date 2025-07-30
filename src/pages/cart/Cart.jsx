@@ -312,7 +312,7 @@ const Cart = () => {
                 {/* <CheckDeliveryAvailability /> */}
 
                 {/* COD Eligibility */}
-                {totalCartAmount < 399 && totalCartAmount > 0 && (
+                {totalCartAmount < 199 && totalCartAmount > 0 && (
                   <CODEligibility />
                 )}
 

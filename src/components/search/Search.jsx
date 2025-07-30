@@ -135,7 +135,7 @@ const items = [
   "pickle",
   "honey",
   "chutney",
-  "muesli",
+  "mustard oil",
   "oats",
   "jaggery powder"
 ];

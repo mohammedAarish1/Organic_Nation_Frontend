@@ -266,8 +266,8 @@
 
 
 import React, { useEffect, useState, useRef } from 'react';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import { FaLeaf, FaHandshake, FaAward, FaEye, FaSeedling, FaHeart } from 'react-icons/fa';
+import { motion,  useInView } from 'framer-motion';
+import { FaLeaf, FaHandshake, FaAward, FaEye } from 'react-icons/fa';
 import SEO from '../../helper/SEO/SEO';
 
 const About = () => {

@@ -1,79 +1,79 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../../config/axiosConfig";
-import axios from "axios";
+// import axios from "axios";
 
-const apiUrl = import.meta.env.VITE_BACKEND_URL;
+// const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
 // thunk for signing up
-export const signup = createAsyncThunk(
-  "auth/signup",
-  async (userData, { rejectWithValue }) => {
-    try {
-      const response = await api.post("/api/auth/user/signup", userData);
-      const { accessToken, user } = response.data;
+// export const signup = createAsyncThunk(
+//   "auth/signup",
+//   async (userData, { rejectWithValue }) => {
+//     try {
+//       const response = await api.post("/api/auth/user/signup", userData);
+//       const { accessToken, user } = response.data;
 
-      // Set access token in axios headers
-      api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-      return { user, accessToken };
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
+//       // Set access token in axios headers
+//       api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+//       return { user, accessToken };
+//     } catch (error) {
+//       return rejectWithValue(error.response.data);
+//     }
+//   }
+// );
 
 // thunk for google signing up
-export const handleGoogleSignup = createAsyncThunk(
-  "auth/handleGoogleSignup",
-  async ({ userData }, { rejectWithValue }) => {
-    try {
-      if (userData) {
-        const response = await api.post(`/api/auth/google/phone`, userData, { withCredentials: true });
+// export const handleGoogleSignup = createAsyncThunk(
+//   "auth/handleGoogleSignup",
+//   async ({ userData }, { rejectWithValue }) => {
+//     try {
+//       if (userData) {
+//         const response = await api.post(`/api/auth/google/phone`, userData, { withCredentials: true });
 
-        const { accessToken, user } = response.data;
-        // Set access token in axios headers
-        api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-        // return response.data;
-        return { user, accessToken };
-      }
-    } catch (error) {
-      throw error;
-    }
-  }
-);
+//         const { accessToken, user } = response.data;
+//         // Set access token in axios headers
+//         api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+//         // return response.data;
+//         return { user, accessToken };
+//       }
+//     } catch (error) {
+//       throw error;
+//     }
+//   }
+// );
 
 
 // thunk for log in with google
-export const handleGoogleLogin = createAsyncThunk(
-  'auth/handleGoogleLogin',
-  async (searchParams, { rejectWithValue }) => {
-    try {
-      const encodedData = new URLSearchParams(searchParams).get('data');
-      if (!encodedData) return null;
+// export const handleGoogleLogin = createAsyncThunk(
+//   'auth/handleGoogleLogin',
+//   async (searchParams, { rejectWithValue }) => {
+//     try {
+//       const encodedData = new URLSearchParams(searchParams).get('data');
+//       if (!encodedData) return null;
 
-      const decodedData = JSON.parse(decodeURIComponent(encodedData));
-      return decodedData;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
+//       const decodedData = JSON.parse(decodeURIComponent(encodedData));
+//       return decodedData;
+//     } catch (error) {
+//       return rejectWithValue(error.message);
+//     }
+//   }
+// );
 
 // thunk for log in
-export const login = createAsyncThunk(
-  "auth/login",
-  async (credentials, { rejectWithValue }) => {
-    try {
-      const response = await api.post("/api/auth/user/login", credentials);
-      const { accessToken, user } = response.data;
-      // Set access token in axios headers
-      api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+// export const login = createAsyncThunk(
+//   "auth/login",
+//   async (credentials, { rejectWithValue }) => {
+//     try {
+//       const response = await api.post("/api/auth/user/login", credentials);
+//       const { accessToken, user } = response.data;
+//       // Set access token in axios headers
+//       api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
 
-      return { user, accessToken };
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
+//       return { user, accessToken };
+//     } catch (error) {
+//       return rejectWithValue(error.response.data);
+//     }
+//   }
+// );
 
 //  thunk to check auth status on app load
 export const checkAuthStatus = createAsyncThunk(
@@ -197,53 +197,53 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       // ========= signing up ==========
-      .addCase(signup.pending, (state) => {
-        return {
-          ...state,
-          user_loading: true,
-          error: null,
-        };
-      })
-      .addCase(signup.fulfilled, (state, action) => {
-        return {
-          ...state,
-          user_loading: false,
-          user: action.payload.user,
-          token: action.payload.accessToken,
-          isUserAuthenticated: true,
-        };
-      })
-      .addCase(signup.rejected, (state, action) => {
-        return {
-          ...state,
-          user_loading: false,
-          error: action.payload,
-        };
-      })
+      // .addCase(signup.pending, (state) => {
+      //   return {
+      //     ...state,
+      //     user_loading: true,
+      //     error: null,
+      //   };
+      // })
+      // .addCase(signup.fulfilled, (state, action) => {
+      //   return {
+      //     ...state,
+      //     user_loading: false,
+      //     user: action.payload.user,
+      //     token: action.payload.accessToken,
+      //     isUserAuthenticated: true,
+      //   };
+      // })
+      // .addCase(signup.rejected, (state, action) => {
+      //   return {
+      //     ...state,
+      //     user_loading: false,
+      //     error: action.payload,
+      //   };
+      // })
       // ========= signing up  by google ==========
-      .addCase(handleGoogleSignup.pending, (state) => {
-        return {
-          ...state,
-          user_loading: true,
-          error: null,
-        };
-      })
-      .addCase(handleGoogleSignup.fulfilled, (state, action) => {
-        return {
-          ...state,
-          user_loading: false,
-          user: action.payload.user,
-          token: action.payload.accessToken,
-          isUserAuthenticated: true,
-        };
-      })
-      .addCase(handleGoogleSignup.rejected, (state, action) => {
-        return {
-          ...state,
-          user_loading: false,
-          error: action.payload,
-        };
-      })
+      // .addCase(handleGoogleSignup.pending, (state) => {
+      //   return {
+      //     ...state,
+      //     user_loading: true,
+      //     error: null,
+      //   };
+      // })
+      // .addCase(handleGoogleSignup.fulfilled, (state, action) => {
+      //   return {
+      //     ...state,
+      //     user_loading: false,
+      //     user: action.payload.user,
+      //     token: action.payload.accessToken,
+      //     isUserAuthenticated: true,
+      //   };
+      // })
+      // .addCase(handleGoogleSignup.rejected, (state, action) => {
+      //   return {
+      //     ...state,
+      //     user_loading: false,
+      //     error: action.payload,
+      //   };
+      // })
 
       // =========google signing up ==========
       //   .addCase(userGoogleSignup.pending, (state) => {
@@ -269,31 +269,31 @@ const authSlice = createSlice({
       //   })
 
       // ============ logging in ===========
-      .addCase(login.pending, (state) => {
-        return {
-          ...state,
-          user_loading: true,
-          error: null,
-        };
-      })
-      .addCase(login.fulfilled, (state, action) => {
-        return {
-          ...state,
-          user_loading: false,
-          token: action.payload.accessToken,
-          user: action.payload.user,
-          isUserAuthenticated: true,
-        };
-      })
-      .addCase(login.rejected, (state, action) => {
-        return {
-          ...state,
-          user_loading: false,
-          user: null,
-          token: "",
-          error: action.payload,
-        };
-      })
+      // .addCase(login.pending, (state) => {
+      //   return {
+      //     ...state,
+      //     user_loading: true,
+      //     error: null,
+      //   };
+      // })
+      // .addCase(login.fulfilled, (state, action) => {
+      //   return {
+      //     ...state,
+      //     user_loading: false,
+      //     token: action.payload.accessToken,
+      //     user: action.payload.user,
+      //     isUserAuthenticated: true,
+      //   };
+      // })
+      // .addCase(login.rejected, (state, action) => {
+      //   return {
+      //     ...state,
+      //     user_loading: false,
+      //     user: null,
+      //     token: "",
+      //     error: action.payload,
+      //   };
+      // })
       // check user auth status
       .addCase(checkAuthStatus.pending, (state) => {
         return {
@@ -396,32 +396,32 @@ const authSlice = createSlice({
         };
       })
       // ============ handle google log in ===========
-      .addCase(handleGoogleLogin.pending, (state) => {
-        return {
-          ...state,
-          user_loading: true,
-          error: null,
-        };
-      })
-      .addCase(handleGoogleLogin.fulfilled, (state, action) => {
-        return {
-          ...state,
-          user_loading: false,
-          token: action.payload.accessToken,
-          user: action.payload.user,
-          isUserAuthenticated: true,
-        };
-      })
-      .addCase(handleGoogleLogin.rejected, (state, action) => {
-        return {
-          ...state,
+      // .addCase(handleGoogleLogin.pending, (state) => {
+      //   return {
+      //     ...state,
+      //     user_loading: true,
+      //     error: null,
+      //   };
+      // })
+      // .addCase(handleGoogleLogin.fulfilled, (state, action) => {
+      //   return {
+      //     ...state,
+      //     user_loading: false,
+      //     token: action.payload.accessToken,
+      //     user: action.payload.user,
+      //     isUserAuthenticated: true,
+      //   };
+      // })
+      // .addCase(handleGoogleLogin.rejected, (state, action) => {
+      //   return {
+      //     ...state,
 
-          user_loading: false,
-          user: null,
-          token: "",
-          error: action.payload,
-        };
-      })
+      //     user_loading: false,
+      //     user: null,
+      //     token: "",
+      //     error: action.payload,
+      //   };
+      // })
        // ============ get user data  ===========
        .addCase(getUserData.pending, (state) => {
         return {

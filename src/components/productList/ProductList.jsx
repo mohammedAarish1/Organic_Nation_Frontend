@@ -12,7 +12,6 @@ const ProductList = ({ gridView }) => {
   const { currentPage } = useSelector((state) => state.pagination)
 
 
-
   const [postPerPage, setPostPerPage] = useState(9);
 
   const lastIndex = currentPage * postPerPage;

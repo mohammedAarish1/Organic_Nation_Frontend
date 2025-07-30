@@ -109,7 +109,7 @@ const Faq = () => {
               <span className="mb-2 block text-4xl font-semibold text-black">
                 FAQ's
               </span>
-              <h2 className="mb-4 text-3xl font-bold text-[var(--titleTextColor)]  sm:text-[40px]/[48px]">
+              <h2 className="mb-4 text-3xl font-bold text-[var(--text-color)]  sm:text-[40px]/[48px]">
                 Any Questions? Look Here
               </h2>
               <p className="text-base  ">

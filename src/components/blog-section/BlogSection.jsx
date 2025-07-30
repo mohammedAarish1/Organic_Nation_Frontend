@@ -182,7 +182,7 @@ const BlogSection = ({ homePage = false }) => {
     }
 
     return (
-        <div className="relative overflow-hidden bg-gradient-to-b from-[#F5EFE6] via-white to-[#F5EFE6]">
+        <div className="relative overflow-hidden ">
             {/* Background decorative elements */}
 
             {/* Header Section */}

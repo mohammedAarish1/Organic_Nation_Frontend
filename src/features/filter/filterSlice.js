@@ -7,8 +7,17 @@ export const getProductsData = createAsyncThunk(
     "filterSlice/getProductsData",
     async () => {
         try {
-            const response = await axios.get(`${apiUrl}/products/all`);
-            return response.data;
+            const response = await axios.get(`${apiUrl}/products`);
+            if (response.status === 200) {
+
+                // const filteredProductList = products
+                //     // below filteration it to hide the specific categories
+                //     .filter(product => product.category !== 'Organic Tea' && product.category !== 'Breakfast Cereals')
+                // return { filteredProductList, categoryList };
+                return response.data
+            } else {
+                return {}
+            }
         } catch (error) {
             throw error
         }
@@ -32,22 +41,26 @@ export const fetchCategoryWiseData = createAsyncThunk(
 );
 
 // Move this function outside to prevent recreation
-const createCategoryList = (products) => {
-    if (!products) return [];
+// const createCategoryList = (products) => {
+//     if (!products) return [];
 
-    const categoryListData = products.map(product => ({
-        category: product.category,
-        categoryUrl: product['category-url']
-    }));
+//     const categoryListData = products
+//         // below filteration it to hide the specific categories
+//         // .filter(product => product.category !== 'Organic Tea' && product.category !== 'Breakfast Cereals')
+//         .map(product => ({
+//             category: product.category,
+//             categoryUrl: product['category-url']
+//         }));
 
-    const uniqueData = categoryListData.filter((product, index, self) =>
-        index === self.findIndex(t =>
-            t.category === product.category && t.categoryUrl === product.categoryUrl
-        )
-    );
+//     const uniqueData = categoryListData.filter((product, index, self) =>
+//         index === self.findIndex(t =>
+//             t.category === product.category && t.categoryUrl === product.categoryUrl
+//         )
+//     );
 
-    return [{ category: 'All', categoryUrl: 'All' }, ...uniqueData];
-};
+
+//     return [{ category: 'All', categoryUrl: 'All' }, ...uniqueData];
+// };
 
 const initialState = {
     products: [],
@@ -236,7 +249,7 @@ const filterSlice = createSlice({
             state.categoryBtnValue = 'all';
             state.sortValue = 'sort';
             state.selectedRanges = [];
-            state.searchInputValue=''
+            state.searchInputValue = ''
 
         },
         getFilteredData: (state, action) => {
@@ -271,7 +284,7 @@ const filterSlice = createSlice({
                 }
                 state.filteredProducts = filterData;
                 state.sortValue = value;
-                state.searchInputValue='';
+                state.searchInputValue = '';
 
             } else if (type === 'PRICE') {
                 if (state.selectedRanges?.length === 0) {
@@ -284,24 +297,26 @@ const filterSlice = createSlice({
                         });
                     });
                 }
-                state.searchInputValue='';
+                state.searchInputValue = '';
             }
         }
     },
     extraReducers: builder => {
         builder
-            .addCase(getProductsData.pending, (state, action) => {
+            .addCase(getProductsData.pending, (state) => {
                 state.loading = true;
             })
             .addCase(getProductsData.fulfilled, (state, action) => {
-                if (action.payload.length > 0) {
-                    state.products = action.payload;
-                    state.filteredProducts = action.payload;
+                const { products, categoryList } = action.payload;
+                if (products.length > 0) {
+                    state.products = products;
+                    state.filteredProducts = products;
+                    state.categoryList = categoryList;
                     // Only update categoryList if it's actually different
-                    const newCategoryList = createCategoryList(action.payload);
-                    if (JSON.stringify(state.categoryList) !== JSON.stringify(newCategoryList)) {
-                        state.categoryList = newCategoryList;
-                    }
+                    // const newCategoryList = createCategoryList(action.payload);
+                    // if (JSON.stringify(state.categoryList) !== JSON.stringify(newCategoryList)) {
+                    //     state.categoryList = newCategoryList;
+                    // }
                 }
                 state.loading = false;
             })
@@ -317,7 +332,7 @@ const filterSlice = createSlice({
                 state.loading = false;
                 state.filteredProducts = action.payload.data
                 state.categoryBtnValue = action.payload.category
-                state.searchInputValue=''
+                state.searchInputValue = ''
             })
             .addCase(fetchCategoryWiseData.rejected, (state, action) => {
                 state.loading = false;

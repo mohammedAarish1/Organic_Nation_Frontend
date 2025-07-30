@@ -66,7 +66,7 @@
 //                     </Link>
 //                     {/* {item.label === 'Shop' && (
 //                         <span
-//                             className={` border-l-2 border-[var(--titleTextColor)]  p-4`}
+//                             className={` border-l-2 border-[var(--text-color)]  p-4`}
 //                             onClick={() => setShowDropDownMenu((prev) => !prev)}
 //                         >
 //                             <BsChevronDown className={`${showDropDownMenu && 'rotate-180'} transition-all duration-500`} />
@@ -167,7 +167,7 @@
 //                             {item.hasDropdown && (
 //                                 <div className="dropDown absolute lg:right-44 right-24 lg:w-[60%] w-[80%] md:top-[84%] shadow-xl rounded-lg overflow-hidden">
 //                                     <div className="grid grid-cols-7 gap-x-3 bg-[var(--bgColorSecondary)] p-2">
-                                       
+
 //                                         {filteredCategories.map(category => (
 //                                             <CategoryItem
 //                                                 key={category.categoryUrl}
@@ -242,12 +242,14 @@ import { LuChefHat } from "react-icons/lu";
 import { motion, AnimatePresence } from 'framer-motion';
 import CloseButton from '../button/CloseButton';
 import { BsFillBoxSeamFill } from 'react-icons/bs';
+import { getCatogoriesWithImages } from '../../helper/helperFunctions';
 
 const NAV_ITEMS = [
     { path: '/', icon: MdOutlineHome, label: 'Home' },
     { path: '/shop/all', icon: RiShoppingBasketFill, label: 'Shop', hasDropdown: true },
+    { path: '/shop/gifts-&-combos', icon: RiShoppingBasketFill, label: 'Gifts & Combos', },
     { path: '/manage-orders', icon: BsFillBoxSeamFill, label: 'Order History' },
-    { path: '/about-us', icon: LiaGiftsSolid, label: 'About us' },
+    // { path: '/about-us', icon: LiaGiftsSolid, label: 'About us' },
     { path: '/contact-us', icon: TbPhoneCall, label: 'Contact Us' },
     { path: '/our-blogs', icon: FaBlog, label: 'Blogs', mobileOnly: true },
     { path: '/our-recipes', icon: LuChefHat, label: 'Recipe', mobileOnly: true },
@@ -256,7 +258,7 @@ const NAV_ITEMS = [
 
 const CategoryItem = memo(({ category, onClick }) => {
     return (
-        <motion.div 
+        <motion.div
             className="xl:p-4 px-1 py-2"
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 300 }}
@@ -265,9 +267,9 @@ const CategoryItem = memo(({ category, onClick }) => {
                 to={`/shop/${category.categoryUrl.toLowerCase()}`}
                 className="flex flex-col items-center group"
             >
-                <motion.div 
+                <motion.div
                     className="relative overflow-hidden mb-2 p-4 shadow-lg rounded-full bg-[var(--background-color)]"
-                    whileHover={{ 
+                    whileHover={{
                         boxShadow: "0 8px 20px rgba(155, 122, 47, 0.3)",
                     }}
                 >
@@ -298,7 +300,7 @@ const MobileMenuItem = memo(({ item, onClick, index }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
         >
-            <motion.div 
+            <motion.div
                 className="flex justify-between items-center mb-2 rounded-xl overflow-hidden"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
@@ -308,7 +310,7 @@ const MobileMenuItem = memo(({ item, onClick, index }) => {
                     className="flex gap-3 items-center px-4 py-3 bg-gradient-to-r from-[#7A2E1D] to-[#8a3e2d] rounded-xl w-full shadow-md"
                     onClick={onClick}
                 >
-                    <motion.div 
+                    <motion.div
                         className="p-2 bg-[rgba(255,255,255,0.15)] rounded-lg"
                         whileHover={{ rotate: [0, -10, 10, -10, 0] }}
                         transition={{ duration: 0.5 }}
@@ -316,9 +318,9 @@ const MobileMenuItem = memo(({ item, onClick, index }) => {
                         <item.icon className="text-xl text-[#ffe9a1]" />
                     </motion.div>
                     <span className="text-[#ffe9a1] font-medium">{item.label}</span>
-                    
+
                     {item.hasDropdown && (
-                        <motion.div 
+                        <motion.div
                             className="ml-auto"
                             animate={{ rotate: isOpen ? 180 : 0 }}
                             onClick={(e) => {
@@ -332,7 +334,7 @@ const MobileMenuItem = memo(({ item, onClick, index }) => {
                     )}
                 </Link>
             </motion.div>
-            
+
             {item.hasDropdown && isOpen && (
                 <motion.div
                     initial={{ height: 0, opacity: 0 }}
@@ -341,36 +343,36 @@ const MobileMenuItem = memo(({ item, onClick, index }) => {
                     className="pl-8 pr-2 mb-3"
                 >
                     <div className="border-l-2 border-[var(--accent-color)] pl-4 space-y-2 py-2">
-                        <Link 
-                            to="/shop/all" 
+                        <Link
+                            to="/shop/all"
                             className="block py-2 px-3 rounded-lg text-[var(--text-color)] hover:bg-[var(--neutral-color)] transition-colors"
                             onClick={onClick}
                         >
                             All Products
                         </Link>
-                        <Link 
-                            to="/shop/organic-honey" 
+                        <Link
+                            to="/shop/organic-honey"
                             className="block py-2 px-3 rounded-lg text-[var(--text-color)] hover:bg-[var(--neutral-color)] transition-colors"
                             onClick={onClick}
                         >
                             Organic Honey
                         </Link>
-                        <Link 
-                            to="/shop/homestyle-pickles" 
+                        <Link
+                            to="/shop/homestyle-pickles"
                             className="block py-2 px-3 rounded-lg text-[var(--text-color)] hover:bg-[var(--neutral-color)] transition-colors"
                             onClick={onClick}
                         >
                             Homestyle Pickles
                         </Link>
-                        <Link 
-                            to="/shop/organic-oils" 
+                        <Link
+                            to="/shop/organic-oils"
                             className="block py-2 px-3 rounded-lg text-[var(--text-color)] hover:bg-[var(--neutral-color)] transition-colors"
                             onClick={onClick}
                         >
                             Organic Oils
                         </Link>
-                        <Link 
-                            to="/shop/all" 
+                        <Link
+                            to="/shop/all"
                             className="flex items-center gap-2 py-2 px-3 rounded-lg text-[var(--secondary-color)] hover:bg-[var(--neutral-color)] transition-colors font-medium"
                             onClick={onClick}
                         >
@@ -388,27 +390,6 @@ const NavMenu = () => {
     const { showSidebar } = useSelector(state => state.sidebar);
     const { categoryList } = useSelector(state => state.filterData);
 
-    const categoriesImages = [
-        { 'Organic-Honey': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Organic-Honey.png' },
-        { 'Homestyle-Pickles': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Authentic-Pickles.png' },
-        { 'Chutney-&-Dip': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Chutney%26Dip.png' },
-        { 'Fruit-Preserves': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Fruit-Preserves.png' },
-        { 'Seasonings-&-Herbs': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Seasonings%26Herbs.png' },
-        { 'Organic-Tea': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Organic-Tea.png' },
-        { Salt: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Salt.png' },
-        { Sweeteners: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Sweetners.png' },
-        { 'Organic-Oils': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Organic-Oils.png' },
-        { Oats: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Oats.png' },
-        { Vegan: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Vegan.png' },
-        { 'Breakfast-Cereals': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Breakfast-Cereals.png' },
-        { Combo: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Combo.png' },
-    ]
-
-    const imageLookup = categoriesImages.reduce((acc, obj) => {
-        const [key, value] = Object.entries(obj)[0];
-        acc[key] = value;
-        return acc;
-    }, {});
 
     // Lock body scroll when mobile menu is open
     useEffect(() => {
@@ -418,29 +399,26 @@ const NavMenu = () => {
         };
     }, [showSidebar]);
 
-    const filteredCategories = categoryList?.filter(item => item.category !== 'All')
-        .map(item => ({
-            ...item,
-            image: imageLookup[item.categoryUrl] || null
-        }));
+    const categoriesImages = getCatogoriesWithImages(categoryList)
+
 
     // Sidebar animation variants
     const sidebarVariants = {
         hidden: { x: "-100%" },
-        visible: { 
+        visible: {
             x: 0,
-            transition: { 
-                type: "spring", 
-                stiffness: 250, 
+            transition: {
+                type: "spring",
+                stiffness: 250,
                 damping: 25,
                 when: "beforeChildren",
                 staggerChildren: 0.1
             }
         },
-        exit: { 
+        exit: {
             x: "-100%",
-            transition: { 
-                ease: "easeInOut", 
+            transition: {
+                ease: "easeInOut",
                 duration: 0.3,
                 when: "afterChildren",
                 staggerChildren: 0.05,
@@ -452,11 +430,11 @@ const NavMenu = () => {
     // Overlay animation variants
     const overlayVariants = {
         hidden: { opacity: 0 },
-        visible: { 
+        visible: {
             opacity: 1,
             transition: { duration: 0.3 }
         },
-        exit: { 
+        exit: {
             opacity: 0,
             transition: { duration: 0.3 }
         }
@@ -465,12 +443,12 @@ const NavMenu = () => {
     // Header animation for mobile menu
     const headerVariants = {
         hidden: { opacity: 0, y: -20 },
-        visible: { 
-            opacity: 1, 
+        visible: {
+            opacity: 1,
             y: 0,
             transition: { delay: 0.2, duration: 0.5 }
         },
-        exit: { 
+        exit: {
             opacity: 0,
             y: -20,
             transition: { duration: 0.3 }
@@ -494,7 +472,7 @@ const NavMenu = () => {
 
                 <ul className="hidden md:flex items-center lg:gap-1 font-medium text-[var(--themeColor)]">
                     {NAV_ITEMS.filter(item => !item.mobileOnly).map(item => (
-                        <li key={item.path} className={`${item.label==='Shop' && 'shop'}`}>
+                        <li key={item.path} className={`${item.label === 'Shop' && 'shop'}`}>
                             <NavLink
                                 to={item.path}
                                 className={({ isActive }) => `flex flex-col items-center lg:p-4 min-w-[86px] rounded-md hover:underline hover:underline-offset-4 transition-all ${isActive ? 'underline underline-offset-4' : ''}`}
@@ -509,7 +487,7 @@ const NavMenu = () => {
                             {item.hasDropdown && (
                                 <div className="dropDown absolute lg:right-44 right-24 lg:w-[60%] w-[80%] md:top-[84%] shadow-xl rounded-lg overflow-hidden">
                                     <div className="grid grid-cols-7 gap-x-3 bg-[var(--bgColorSecondary)] p-2">
-                                        {filteredCategories.map(category => (
+                                        {categoriesImages.map(category => (
                                             <CategoryItem
                                                 key={category.categoryUrl}
                                                 category={category}
@@ -545,8 +523,8 @@ const NavMenu = () => {
                             {/* Decorative elements */}
                             <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-[var(--accent-color)]/10 -mr-16 -mt-16"></div>
                             <div className="absolute bottom-0 left-0 w-40 h-40 rounded-full bg-[var(--secondary-color)]/10 -ml-20 -mb-20"></div>
-                            
-                            <motion.div 
+
+                            <motion.div
                                 className="flex items-center justify-between p-4 border-b border-[var(--neutral-color)]"
                                 variants={headerVariants}
                             >
@@ -567,19 +545,19 @@ const NavMenu = () => {
                                     <h3 className="text-[var(--text-color)] opacity-70 text-sm uppercase tracking-wider font-medium mb-1">Menu</h3>
                                     <div className="h-1 w-10 bg-[var(--accent-color)] rounded-full"></div>
                                 </motion.div>
-                                
+
                                 <ul className="space-y-3">
                                     {NAV_ITEMS.map((item, index) => (
                                         <MobileMenuItem
                                             key={item.path}
                                             item={item}
-                                            onClick={() => {dispatch(setShowSidebar(false))}}
+                                            onClick={() => { dispatch(setShowSidebar(false)) }}
                                             index={index}
                                         />
                                     ))}
                                 </ul>
-                                
-                                <motion.div 
+
+                                <motion.div
                                     className="mt-8 p-4 bg-white/50 backdrop-blur-sm rounded-xl shadow-md"
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}

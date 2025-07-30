@@ -20,7 +20,7 @@ export const About = lazy(() => import('./pages/about/About'));
 export const Shop = lazy(() => import('./pages/shop/Shop'));
 export const ContactUs = lazy(() => import('./pages/contact-us/ContactUs'))
 export const Cart = lazy(() => import('./pages/cart/Cart'))
-export const Auth = lazy(() => import('./pages/login-signup/Auth'))
+// export const Auth = lazy(() => import('./pages/login-signup/Auth'))
 export const Recipes = lazy(() => import('./pages/recipes/Recipes'))
 export const Testimonials = lazy(() => import('./pages/testimonials/Testimonials'))
 export const Faq = lazy(() => import('./pages/FAQ\'s/Faq'))

@@ -492,9 +492,9 @@ const ProductCategories = () => {
               src={category.image}
               alt={category.category}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              onError={(e) => {
-                e.target.src = 'https://via.placeholder.com/300x200?text=No+Image';
-              }}
+              // onError={(e) => {
+              //   e.target.src = 'https://via.placeholder.com/300x200?text=No+Image';
+              // }}
             />
 
             {/* Gradient overlay */}
@@ -565,9 +565,9 @@ const ProductCategories = () => {
               src={category.image}
               alt={category.category}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-              onError={(e) => {
-                e.target.src = 'https://via.placeholder.com/300x200?text=No+Image';
-              }}
+              // onError={(e) => {
+              //   e.target.src = 'https://via.placeholder.com/300x200?text=No+Image';
+              // }}
             />
             <div className={`absolute inset-0 bg-gradient-to-t from-[#7A2E1D]/20 to-transparent transition-opacity duration-300 ${hoveredItem === category.categoryUrl ? 'opacity-100' : 'opacity-0'
               }`} />
@@ -772,9 +772,9 @@ const ProductCategories = () => {
                             src={category.image}
                             alt={category.category}
                             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            onError={(e) => {
-                              e.target.src = 'https://via.placeholder.com/300x200?text=No+Image';
-                            }}
+                            // onError={(e) => {
+                            //   e.target.src = 'https://via.placeholder.com/300x200?text=No+Image';
+                            // }}
                           />
 
                           {category.trending && (

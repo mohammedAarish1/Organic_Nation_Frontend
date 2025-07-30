@@ -1,6 +1,6 @@
 import React, { memo, useCallback } from 'react';
 import { FaHome, FaShoppingCart, FaUserAlt, FaProductHunt, FaSignOutAlt } from 'react-icons/fa';
-import { IoMdLogIn } from 'react-icons/io';
+// import { IoMdLogIn } from 'react-icons/io';
 import { RiMailUnreadFill } from 'react-icons/ri';
 import { MdOutlineAssignmentReturn } from 'react-icons/md';
 import { PiImagesSquareThin } from 'react-icons/pi';
@@ -11,7 +11,7 @@ import { IoCloseSharp } from 'react-icons/io5';
 
 const AdminSidebar = memo(({ setShowSidebar }) => {
     const dispatch = useDispatch();
-    const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
+    // const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
 
     const handleLogout = useCallback(() => {
         dispatch(adminLogout());
@@ -29,6 +29,7 @@ const AdminSidebar = memo(({ setShowSidebar }) => {
         { path: "/admin/returns", icon: MdOutlineAssignmentReturn, label: "Returns" },
         { path: "/admin/products", icon: FaProductHunt, label: "Products" },
         { path: "/admin/banners", icon: PiImagesSquareThin, label: "Banners" },
+        { path: "#", icon: FaSignOutAlt, label: "Logout" },
     ];
 
     return (
@@ -59,27 +60,27 @@ const AdminSidebar = memo(({ setShowSidebar }) => {
                         to={path}
                         end
                         className={({ isActive }) => `${isActive ? 'underline underline-offset-4' : ''} flex items-center space-x-4`}
-                        onClick={closeSidebar}
+                        onClick={label === 'Logout' ? handleLogout : closeSidebar}
                     >
                         <Icon />
                         <span>{label}</span>
                     </NavLink>
                 ))}
 
-                <NavLink to="#" className="flex items-center space-x-4">
+                {/* <NavLink to="#" className=" bg-red-600 mt-4">
                     {adminToken ? (
                         <button
                             className="flex justify-center items-center gap-4"
                             onClick={handleLogout}
                         >
-                            <FaSignOutAlt /> Logout
+                            Logout  <FaSignOutAlt />
                         </button>
                     ) : (
                         <button className="flex justify-center items-center gap-4">
                             <IoMdLogIn className='text-xl' /> Log in
                         </button>
                     )}
-                </NavLink>
+                </NavLink> */}
             </nav>
         </div>
     );

@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+// import axios from "axios";
 import api from "../../config/axiosConfig";
 
-const apiUrl = import.meta.env.VITE_BACKEND_URL;
+// const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
 // api calling for handling return items
 export const addReturnItems = createAsyncThunk(
