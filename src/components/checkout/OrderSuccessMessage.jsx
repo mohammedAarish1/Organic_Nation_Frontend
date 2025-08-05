@@ -569,7 +569,7 @@ const OrderSuccessMessage = () => {
                                         animate={{ scale: [1, 1.05, 1] }}
                                         transition={{ delay: 1, duration: 0.5 }}
                                     >
-                                        ₹ {orderDetails.subTotal + orderDetails.shippingFee}
+                                        ₹ {Math.round(orderDetails.subTotal + orderDetails.shippingFee)}
                                     </motion.span>
                                 </motion.div>
                             </motion.div>

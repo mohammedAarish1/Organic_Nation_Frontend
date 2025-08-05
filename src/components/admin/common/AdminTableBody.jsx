@@ -144,7 +144,7 @@ const AdminTableBody = memo(({
                     // Simplified rendering logic with early returns
                     switch (header.label) {
                         case 'Total':
-                            return <td key={header.label} className="p-3">{data[header.key] + data['shippingFee']}</td>;
+                            return <td key={header.label} className="p-3">{Math.round(data[header.key] + data['shippingFee'])}</td>;
                         // case 'Receiver':
                         //     return <td key={header.label} className="p-3">{data[header.key]?.name}</td>;
                         case 'Date':

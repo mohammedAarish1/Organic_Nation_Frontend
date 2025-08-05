@@ -272,17 +272,11 @@ export const mergeCart = createAsyncThunk(
 
 
 // family coupon code validation logic
-export const getCouponCodeValidate = createAsyncThunk(
-    'cart/getCouponCodeValidate',
-    async (data, { rejectWithValue, getState }) => {
-        // const { auth } = getState();
+export const applyFamilyCouponCode = createAsyncThunk(
+    'cart/applyFamilyCouponCode',
+    async (data, { rejectWithValue }) => {
         try {
-            // if (auth.user) {
-
-            // }
-            const response = await axios.post(`${apiUrl}/api/validate/family/coupon-code`, data,
-
-            )
+            const response = await axios.post(`${apiUrl}/api/validate/family/coupon-code`, data)
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data.error);
@@ -519,7 +513,6 @@ export const cartSlice = createSlice({
                     totalQty = action.payload.productDetails.reduce((total, product) => total + product.quantity, 0);
 
                 }
-
                 return {
                     ...state,
                     loading: false,
@@ -663,30 +656,35 @@ export const cartSlice = createSlice({
                 }
             })
             //  ======================= coupon code validation ===============
-            .addCase(getCouponCodeValidate.pending, (state) => {
-                return {
-                    ...state,
-                    validatingCouponCode: true,
-                }
+            .addCase(applyFamilyCouponCode.pending, (state) => {
+                state.validatingCouponCode = true
             })
-            .addCase(getCouponCodeValidate.fulfilled, (state, action) => {
+            .addCase(applyFamilyCouponCode.fulfilled, (state, action) => {
                 if (action.payload) {
-                    return {
-                        ...state,
-                        validatingCouponCode: false,
-                        // isCouponCodeApplied: action.payload.isCouponCodeApplied
-                        couponCodeApplied: action.payload.couponCodeApplied,
+                    const { message, couponCodeApplied, totalCartAmount, discountAmount, totalTax, discountType, discountPercentage } = action.payload
+                    // return {
+                    //     ...state,
+                    //     validatingCouponCode: false,
+                    //     // isCouponCodeApplied: action.payload.isCouponCodeApplied
+                    //     couponCodeApplied: action.payload.couponCodeApplied,
 
+                    // }
+                    state.validatingCouponCode = false;
+                    state.couponCodeApplied = couponCodeApplied;
+                    state.totalCartAmount = totalCartAmount;
+                    state.totalTax = totalTax;
+                    state.discountProgress = {
+                        ...state.discountProgress,
+                        discountAmount: discountAmount,
+                        discountType: discountType,
+                        discountPercentage: discountPercentage
                     }
                 }
 
             })
-            .addCase(getCouponCodeValidate.rejected, (state, action) => {
-                return {
-                    ...state,
-                    validatingCouponCode: false,
-                    error: action.payload,
-                }
+            .addCase(applyFamilyCouponCode.rejected, (state, action) => {
+                state.validatingCouponCode = false;
+                state.error = action.payload;
             })
             //  ======================= pickle coupon code validation ===============
             .addCase(applyPickleCouponCode.pending, (state) => {

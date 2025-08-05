@@ -15,6 +15,7 @@ import { getAllCartItems, mergeCart } from '../features/cart/cart';
 import NewCheckoutForm from './checkout/NewCheckoutForm';
 import { freeShippingEligibleAmt } from '../constants';
 import { formatPrice } from '../helper/helperFunctions';
+import FamilyCoupon from './couponCodeList/FamilyCoupon';
 
 // Animation variants
 const fadeIn = {
@@ -269,7 +270,7 @@ const CheckoutModal = ({ isOpen, onClose }) => {
   const [phoneNumber, setPhoneNumber] = useState(null)
   // const otpInputs = Array(4).fill(0).map(() => useRef(null));
 
-  const { cartItemsList, totalCartAmount, totalTax, couponCodeApplied,discountProgress } = useSelector((state) => state.cart);
+  const { cartItemsList, totalCartAmount, totalTax, couponCodeApplied, discountProgress } = useSelector((state) => state.cart);
   const { checking, shippingFee } = useSelector(state => state.delivery)
 
 
@@ -419,6 +420,9 @@ const CheckoutModal = ({ isOpen, onClose }) => {
             {/* Body */}
             <div className="px-6 pb-6 max-h-[70vh] overflow-y-auto">
               {/* ======================================== Order Summary  ======================================= */}
+              {user && (
+                <FamilyCoupon />
+              )}
 
               <Accordion
                 title="Order Summary"

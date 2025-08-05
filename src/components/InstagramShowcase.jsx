@@ -409,7 +409,7 @@ const InstagramShowcase = () => {
           </button> */}
 
           {/* Carousel */}
-          <div className="overflow-hidden rounded-3xl">
+          <div className="overflow-x-auto scrollbar-hide rounded-3xl">
             <motion.div
               className="flex"
               animate={{ x: `${-currentIndex * (100 / slidesPerView)}%` }}

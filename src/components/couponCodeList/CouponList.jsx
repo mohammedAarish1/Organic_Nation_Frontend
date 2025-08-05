@@ -6,7 +6,7 @@ import {
   applyPickleCouponCode,
   applyReferralCouponDiscount,
   getAllCartItems,
-  getCouponCodeValidate,
+  applyFamilyCouponCode,
 } from "../../features/cart/cart";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -64,7 +64,7 @@ const CouponList = ({
     // const items = cartItemsList.map(item => ({ id: item._id, quantity: item.quantity }));
     const payload = { phoneNumber: user ? user.phoneNumber : '', couponCode: 'FFNEW45' };
 
-    dispatch(getCouponCodeValidate(payload))
+    dispatch(applyFamilyCouponCode(payload))
       .unwrap()
       .then((result) => {
         dispatch(getAllCartItems());

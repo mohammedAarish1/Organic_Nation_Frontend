@@ -80,7 +80,7 @@ const SingleOrderFooterSection = ({ order, onCancelOrder, isActive }) => {
   );
 
   const total = calculateTotal();
-  const discount = total - order.subTotal;
+  const discount = Math.round(total - order.subTotal);
   const finalAmount = order?.subTotal + order?.shippingFee;
 
   const priceBreakdown = [
@@ -127,7 +127,7 @@ const SingleOrderFooterSection = ({ order, onCancelOrder, isActive }) => {
           className="flex justify-between items-center pt-3 border-t border-[var(--neutral-color)]/20"
         >
           <span className="font-bold text-[var(--text-color)] text-lg">Total Amount:</span>
-          <span className="font-bold text-[var(--themeColor)] text-xl">₹{finalAmount}</span>
+          <span className="font-bold text-[var(--themeColor)] text-xl">₹{Math.round(finalAmount)}</span>
         </motion.div>
       </div>
 

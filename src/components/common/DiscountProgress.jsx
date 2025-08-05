@@ -68,7 +68,7 @@
 //   const handleStart = (e) => {
 //     const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
 //     const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
-    
+
 //     if (e.target.closest('.drag-handle')) {
 //       setIsDragging(true);
 //       const rect = componentRef.current.getBoundingClientRect();
@@ -76,7 +76,7 @@
 //         x: clientX - rect.left,
 //         y: clientY - rect.top
 //       });
-      
+
 //       // Prevent scrolling on mobile
 //       e.preventDefault();
 //     }
@@ -86,7 +86,7 @@
 //     if (isDragging) {
 //       const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
 //       const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
-      
+
 //       const newX = clientX - dragOffset.x;
 //       const newY = clientY - dragOffset.y;
 
@@ -98,7 +98,7 @@
 //         x: Math.max(0, Math.min(newX, maxX)),
 //         y: Math.max(0, Math.min(newY, maxY))
 //       });
-      
+
 //       // Prevent scrolling on mobile
 //       e.preventDefault();
 //     }
@@ -274,7 +274,7 @@
 //       onTouchStart={handleStart}
 //     >
 //       <div className="bg-white border-2 rounded-lg shadow-lg overflow-hidden relative" style={{ borderColor: 'var(--accent-color)' }}>
-        
+
 //         {/* Compact Header with drag handle */}
 //         <div className="flex items-center justify-between p-2 bg-gradient-to-r from-[var(--theme-color)] to-[var(--accent-color)] text-white">
 //           <div className="flex items-center gap-2 flex-1">
@@ -293,7 +293,7 @@
 //               )}
 //             </div>
 //           </div>
-          
+
 //           <div className="flex items-center gap-1">
 //             <button
 //               onClick={() => setIsExpanded(!isExpanded)}
@@ -471,13 +471,13 @@ import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  FaGift, 
-  FaChevronDown, 
-  FaChevronUp, 
-  FaFire, 
-  FaTags, 
-  FaTimes, 
+import {
+  FaGift,
+  FaChevronDown,
+  FaChevronUp,
+  FaFire,
+  FaTags,
+  FaTimes,
   FaGripVertical,
   FaPercentage,
   FaTrophy,
@@ -497,13 +497,14 @@ const HIDDEN_PAGES = ['/checkout', '/blogs', '/about', '/contact', '/login', '/r
 const ELIGIBLE_ITEMS = ['Pickles', 'Honey', 'Chutney', 'Jam', 'Oats', 'Chaap'];
 
 const DiscountProgress = () => {
+  const { couponCodeApplied } = useSelector(state => state.cart)
   const [isExpanded, setIsExpanded] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [isDragging, setIsDragging] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [lastDiscountAmount, setLastDiscountAmount] = useState(0);
-  
+
   const componentRef = useRef(null);
   const location = useLocation();
 
@@ -579,7 +580,7 @@ const DiscountProgress = () => {
   const triggerCelebration = useCallback(() => {
     const duration = 2000;
     const animationEnd = Date.now() + duration;
-    
+
     const interval = setInterval(() => {
       const timeLeft = animationEnd - Date.now();
       if (timeLeft <= 0) {
@@ -611,12 +612,11 @@ const DiscountProgress = () => {
       setIsVisible(true);
     }
   }, [totalCartItems]);
-
   // Drag handlers
   const handleDragStart = useCallback((e) => {
     const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
     const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
-    
+
     if (e.target.closest('.drag-handle')) {
       setIsDragging(true);
       const rect = componentRef.current.getBoundingClientRect();
@@ -630,10 +630,10 @@ const DiscountProgress = () => {
 
   const handleDragMove = useCallback((e) => {
     if (!isDragging) return;
-    
+
     const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
     const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
-    
+
     const newX = clientX - dragOffset.x;
     const newY = clientY - dragOffset.y;
 
@@ -644,7 +644,7 @@ const DiscountProgress = () => {
       x: Math.max(0, Math.min(newX, maxX)),
       y: Math.max(0, Math.min(newY, maxY))
     });
-    
+
     e.preventDefault();
   }, [isDragging, dragOffset]);
 
@@ -673,7 +673,7 @@ const DiscountProgress = () => {
     };
   }, [isDragging, handleDragMove, handleDragEnd]);
 
-  if (!shouldShow || !progressData) return null;
+  if (!shouldShow || !progressData || couponCodeApplied.length > 0) return null;
 
   const {
     progressPercentage,
@@ -690,22 +690,22 @@ const DiscountProgress = () => {
 
   const positionStyles = isDragging || position.x !== 0 || position.y !== 0
     ? {
-        position: 'fixed',
-        left: `${position.x}px`,
-        top: `${position.y}px`,
-        zIndex: 9999,
-        maxWidth: '320px',
-        width: '90vw'
-      }
+      position: 'fixed',
+      left: `${position.x}px`,
+      top: `${position.y}px`,
+      zIndex: 9999,
+      maxWidth: '320px',
+      width: '90vw'
+    }
     : {
-        position: 'fixed',
-        top: '64px',
-        left: '8px',
-        right: '8px',
-        zIndex: 40,
-        margin: '0 auto',
-        maxWidth: '400px'
-      };
+      position: 'fixed',
+      top: '64px',
+      left: '8px',
+      right: '8px',
+      zIndex: 40,
+      margin: '0 auto',
+      maxWidth: '400px'
+    };
   return (
     <motion.div
       ref={componentRef}
@@ -718,7 +718,7 @@ const DiscountProgress = () => {
       onTouchStart={handleDragStart}
     >
       <div className="bg-white rounded-2xl shadow-2xl overflow-hidden relative backdrop-blur-sm border border-white/20">
-        
+
         {/* Compact Header */}
         <div className="flex items-center justify-between px-3 py-2 bg-gradient-to-r from-amber-600 via-amber-700 to-orange-600 text-white relative overflow-hidden">
           {/* Background Pattern */}
@@ -726,26 +726,26 @@ const DiscountProgress = () => {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,_rgba(255,255,255,0.3)_0%,_transparent_50%)]" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,_rgba(255,255,255,0.2)_0%,_transparent_50%)]" />
           </div>
-          
+
           <div className="flex items-center gap-3 flex-1 relative z-10">
             <div className="drag-handle cursor-grab hover:cursor-grabbing p-2 rounded-lg hover:bg-white/20 transition-all duration-200 active:scale-95">
               <FaGripVertical className="text-sm opacity-70" />
             </div>
-            
+
             <div className="bg-white/20 p-2 rounded-lg backdrop-blur-sm">
               <FaGift className="text- text-amber-100" />
             </div>
-            
+
             <div className="font-bold text-ssm flex-1 min-w-0">
               {isDiscountActive ? (
-                <motion.span 
+                <motion.span
                   className="flex items-center gap-2"
                   initial={{ scale: 0.8 }}
                   animate={{ scale: 1 }}
                   transition={{ type: "spring", stiffness: 200 }}
                 >
                   <FaFire className="text-orange-300 animate-pulse" />
-                  <span className="truncate">₹{discountAmount} Saved!</span>
+                  <span className="truncate">₹{Math.round(discountAmount)} Saved!</span>
                 </motion.span>
               ) : (
                 <span className="truncate flex items-center gap-2">
@@ -755,7 +755,7 @@ const DiscountProgress = () => {
               )}
             </div>
           </div>
-          
+
           <div className="flex items-center gap-2 relative z-10">
             <motion.button
               onClick={() => setIsExpanded(!isExpanded)}
@@ -772,7 +772,7 @@ const DiscountProgress = () => {
                 <FaChevronDown className="text-xs" />
               </motion.div>
             </motion.button>
-            
+
             <motion.button
               onClick={() => setIsVisible(false)}
               className="p-2 hover:bg-white/20 rounded-lg transition-all duration-200"
@@ -788,15 +788,15 @@ const DiscountProgress = () => {
         {/* Encouraging Message Bar */}
         <div className="px-4 py-1 relative overflow-hidden">
           <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.1)_50%,transparent_75%)] animate-pulse" />
-          
+
           <div className="flex items-center justify-between relative z-10">
             <div className="flex items-center gap-3 flex-1 min-w-0">
               <div className="bg-white/20 p-2 rounded-lg">
                 <FaTags className="text-sm" />
               </div>
-              
+
               <div className="flex-1 min-w-0">
-                <motion.div 
+                <motion.div
                   className="text-sm  truncate"
                   key={remainingAmount}
                   initial={{ y: 10, opacity: 0 }}
@@ -805,7 +805,7 @@ const DiscountProgress = () => {
                 >
                   {remainingAmount > 0 ? (
                     <>
-                    You are Just <span className="text-[var(--themeColor)] text-lg font-bold">₹{Math.round(remainingAmount)}</span> away from FLAT{' '}
+                      You are Just <span className="text-[var(--themeColor)] text-lg font-bold">₹{Math.round(remainingAmount)}</span> away from FLAT{' '}
                       <span className=" text-[var(--themeColor)] font-bold py-1 text-lg rounded-md">
                         {nextDiscount}
                       </span>
@@ -817,7 +817,7 @@ const DiscountProgress = () => {
                     </span>
                   )}
                 </motion.div>
-                
+
                 {/* <div className="text-xs opacity-90 mt-1">
                   {totalCartItems} items • ₹{formatPrice(totalCartAmount)} total
                 </div> */}
@@ -837,14 +837,14 @@ const DiscountProgress = () => {
               className="border-t border-gray-100"
             >
               <div className="p-4 bg-gradient-to-br from-gray-50 to-white space-y-4">
-                
+
                 {/* Progress Bar */}
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
                     <span className="font-medium text-gray-700">Progress</span>
                     <span className="text-amber-600 font-bold">{Math.round(progressPercentage)}%</span>
                   </div>
-                  
+
                   <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
                     <motion.div
                       className="h-full bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 rounded-full relative"
@@ -855,7 +855,7 @@ const DiscountProgress = () => {
                       <div className="absolute inset-0 bg-white/30 animate-pulse rounded-full" />
                     </motion.div>
                   </div>
-                  
+
                   <div className="flex justify-between text-xs text-gray-600">
                     <span>₹{Math.round(currentAmount)}</span>
                     <span>₹{targetAmount}</span>
@@ -872,9 +872,8 @@ const DiscountProgress = () => {
                       </p>
                     </div>
                     <div className="text-right">
-                      <div className={`text-sm font-bold ${
-                        isDiscountActive ? 'text-green-600' : 'text-gray-500'
-                      }`}>
+                      <div className={`text-sm font-bold ${isDiscountActive ? 'text-green-600' : 'text-gray-500'
+                        }`}>
                         {isDiscountActive ? `${discountType} Applied` : 'No Discount Yet'}
                       </div>
                       {isDiscountActive && (
@@ -892,22 +891,20 @@ const DiscountProgress = () => {
                   <div className="grid grid-cols-3 gap-2">
                     {DISCOUNT_TIERS.map((tier, index) => {
                       const isUnlocked = (tier.threshold === 1999 ? currentCartAmount : currentEligibleAmount) >= tier.threshold;
-                      
+
                       return (
                         <motion.div
                           key={index}
-                          className={`text-center p-1 rounded-xl border-2 transition-all duration-200 ${
-                            isUnlocked 
-                              ? 'border-green-400 bg-green-50 shadow-md' 
+                          className={`text-center p-1 rounded-xl border-2 transition-all duration-200 ${isUnlocked
+                              ? 'border-green-400 bg-green-50 shadow-md'
                               : 'border-gray-200 bg-gray-50 hover:border-gray-300'
-                          }`}
+                            }`}
                           whileHover={{ scale: 1.02 }}
                           animate={isUnlocked ? { scale: [1, 1.05, 1] } : {}}
                           transition={{ duration: 0.3 }}
                         >
-                          <div className={`font-bold text-sm ${
-                            isUnlocked ? 'text-green-700' : 'text-gray-600'
-                          }`}>
+                          <div className={`font-bold text-sm ${isUnlocked ? 'text-green-700' : 'text-gray-600'
+                            }`}>
                             {tier.discount}
                           </div>
                           <div className="text-xs text-gray-500 mt-1">
@@ -917,7 +914,7 @@ const DiscountProgress = () => {
                             )}
                           </div>
                           {isUnlocked && (
-                            <motion.div 
+                            <motion.div
                               className="text-green-600 text-xs mt-2 flex items-center justify-center gap-1"
                               initial={{ scale: 0 }}
                               animate={{ scale: 1 }}
