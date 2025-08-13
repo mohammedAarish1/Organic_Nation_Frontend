@@ -125,7 +125,7 @@ const TestimonialSlider = () => {
     return (
         <section className="relative py-16 lg:py-24 bg-gradient-to-b from-[#F5EFE6] via-white to-[#F5EFE6] overflow-hidden">
             {/* Animated Background Elements */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            {/* <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <motion.div
                     animate={{
                         rotate: [0, 360],
@@ -178,7 +178,7 @@ const TestimonialSlider = () => {
                 >
                     <FaHeart className="w-full h-full" />
                 </motion.div>
-            </div>
+            </div> */}
 
             <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* <Title heading=' Real Stories from Happy Customers' subHeading='Discover why families across India choose Organic Nation for pure, authentic, and healthy organic products' /> */}

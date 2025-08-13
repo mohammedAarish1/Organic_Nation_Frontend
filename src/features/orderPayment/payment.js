@@ -13,19 +13,16 @@ export const initiatePayment = createAsyncThunk(
 
             if (response.status === 200 && response.data.data.instrumentResponse.redirectInfo.url) {
                 window.location.href = response.data.data.instrumentResponse.redirectInfo.url;
-            } 
+            }
 
         } catch (error) {
             return rejectWithValue({
-                message: err.message,
-                status: err.response?.status
+                message: error.message,
+                status: error.response?.status
             });
         }
     }
 )
-
-
-
 
 
 const initialState = {
@@ -40,26 +37,15 @@ const payment = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(initiatePayment.pending, (state) => {
-                return {
-                    ...state,
-                    loading: true,
-                }
+                state.loading = true;
             })
             .addCase(initiatePayment.fulfilled, (state) => {
-                return {
-                    ...state,
-                    loading: false,
-                }
+                state.loading = false
             })
             .addCase(initiatePayment.rejected, (state, action) => {
-                return {
-                    ...state,
-                    loading: false,
-                    error: action.payload
-                }
+                state.loading = false;
+                state.error = action.payload;
             })
-
-
     }
 })
 

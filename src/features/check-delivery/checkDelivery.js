@@ -41,19 +41,41 @@ export const calculateShippingFee = createAsyncThunk(
 )
 
 
+export const calculateCODCharges = createAsyncThunk(
+    'delivery/calculateCODCharges',
+    async (cartItemsList, { rejectWithValue }) => {
+        try {
+            // let deliveryChargeToken = localStorage.getItem('deliveryChargeToken')
+            const response = await api.post(`/api/delivery-charges/calculate/cod-charges`, { cartItemsList });
+            if (response.status === 200) {
+                const CODCharge = response.data.codCharge
+                return CODCharge;
+            }
+
+        } catch (error) {
+            return rejectWithValue({
+                message: error.message,
+                status: error.response?.status
+            });
+        }
+    }
+)
+
+
 const initialState = {
     isAvailable: null,
     message: '',
-    userCity:'',
-    userPincode:'',
+    userCity: '',
+    userPincode: '',
     // locallySavedAddress:{
     //     add1:'',
     //     add2:''
     // },
-    userState:'',
+    userState: '',
     checking: false,
     error: null,
-    shippingFee: 0
+    shippingFee: 0,
+    CODCharge: 0,
 }
 
 const checkDelivery = createSlice({
@@ -66,10 +88,10 @@ const checkDelivery = createSlice({
                 isAvailable: null,
             }
         },
-        updateShippingFee:(state)=>{
+        updateShippingFee: (state) => {
             return {
                 ...state,
-                shippingFee:0
+                shippingFee: 0
             }
         },
         // handleSavingLocalAdd:(state,action)=>{
@@ -91,7 +113,7 @@ const checkDelivery = createSlice({
         //             }
         //         }
         //     }
-           
+
         // }
     },
     extraReducers: (builder) => {
@@ -107,10 +129,10 @@ const checkDelivery = createSlice({
                 isAvailable: action.payload?.available,
                 message: action.payload.message,
                 checking: false,
-                error:null,
-                userCity:action.payload?.data?.city,
-                userState:action.payload?.data?.state,
-                userPincode:action.payload?.data?.pinCode
+                error: null,
+                userCity: action.payload?.data?.city,
+                userState: action.payload?.data?.state,
+                userPincode: action.payload?.data?.pinCode
             }
         })
         builder.addCase(checkDeliveryAvailability.rejected, (state, action) => {
@@ -146,9 +168,24 @@ const checkDelivery = createSlice({
                 error: action.payload,
             }
         })
+        // calculate COD charge
+        builder.addCase(calculateCODCharges.pending, (state) => {
+            state.checking = true
+        })
+        builder.addCase(calculateCODCharges.fulfilled, (state, action) => {
+            if (action.payload) {
+                state.checking = false;
+                state.CODCharge = action.payload
+            }
+
+        })
+        builder.addCase(calculateCODCharges.rejected, (state, action) => {
+            state.checking = false;
+            state.error = action.payload;
+        })
     }
 })
 
-export const { setIsAvailable,updateShippingFee } = checkDelivery.actions;
+export const { setIsAvailable, updateShippingFee } = checkDelivery.actions;
 
 export default checkDelivery.reducer;

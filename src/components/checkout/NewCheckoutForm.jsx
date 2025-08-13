@@ -19,6 +19,8 @@ import FreeShippingAlert from '../module/cart/FreeShippingAlert';
 import CODEligibility from '../module/cart/CODEligibility';
 import { freeShippingEligibleAmt } from '../../constants';
 import api from '../../config/axiosConfig';
+import { calculateCODCharges } from '../../features/check-delivery/checkDelivery';
+import PaymentMethodButton from './PaymentMethodButton';
 
 const SavedAddressCard = ({
     user,
@@ -121,35 +123,35 @@ const SelectionButton = ({ icon, label, selected, onClick }) => {
 };
 
 // Payment Method Button component
-const PaymentMethodButton = ({ icon, label, selected, onClick, badge = null }) => {
-    const IconComponent = icon;
-    return (
-        <button
-            type="button"
-            className={`w-full p-3.5 rounded-lg border flex items-center justify-between relative transition-all ${selected
-                ? 'bg-blue-100 border-[var(--accent-color)] shadow-sm'
-                : 'border-gray-300 hover:border-gray-400'
-                }`}
-            onClick={onClick}
-        >
-            <div className="flex items-center">
-                <IconComponent className={`mr-3 ${label.includes('Cash') ? 'text-green-600' : 'text-blue-600'}`} size={18} />
-                <span>{label}</span>
-            </div>
-            {badge && (
-                <motion.div
-                    className={`absolute right-0 top-0 ${label.includes('Cash') ? 'bg-red-500' : 'bg-green-500'}  text-white text-xs px-2 py-1 rounded-bl-lg rounded-tr-lg flex items-center`}
-                    initial={{ scale: 1 }}
-                    animate={label.includes('Online') ? { scale: [1, 1.1, 1] } : { scale: [1, 1, 1] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                >
-                    {label.includes('Online') && <FaPercent className="mr-1" size={10} />}
-                    {badge}
-                </motion.div>
-            )}
-        </button>
-    );
-};
+// const PaymentMethodButton = ({ icon, label, selected, onClick, badge = null }) => {
+//     const IconComponent = icon;
+//     return (
+//         <button
+//             type="button"
+//             className={`w-full p-3.5 rounded-lg border flex items-center justify-between relative transition-all ${selected
+//                 ? 'bg-blue-100 border-[var(--accent-color)] shadow-sm'
+//                 : 'border-gray-300 hover:border-gray-400'
+//                 }`}
+//             onClick={onClick}
+//         >
+//             <div className="flex items-center">
+//                 <IconComponent className={`mr-3 ${label.includes('Cash') ? 'text-green-600' : 'text-blue-600'}`} size={18} />
+//                 <span>{label}</span>
+//             </div>
+//             {badge && (
+//                 <motion.div
+//                     className={`absolute right-0 top-0 ${label.includes('Cash') ? 'bg-red-500' : 'bg-green-500'}  text-white text-xs px-2 py-1 rounded-bl-lg rounded-tr-lg flex items-center`}
+//                     initial={{ scale: 1 }}
+//                     animate={label.includes('Online') ? { scale: [1, 1.1, 1] } : { scale: [1, 1, 1] }}
+//                     transition={{ duration: 1.5, repeat: Infinity }}
+//                 >
+//                     {label.includes('Online') && <FaPercent className="mr-1" size={10} />}
+//                     {badge}
+//                 </motion.div>
+//             )}
+//         </button>
+//     );
+// };
 
 // Payment Method Selection Component
 const PaymentMethodSelection = ({
@@ -260,7 +262,7 @@ const NewCheckoutForm = ({ close }) => {
     const { user } = useSelector((state) => state.auth);
     const { cartItemsList, totalCartAmount, totalTax, couponCodeApplied } = useSelector((state) => state.cart);
     const { addingNewOrder } = useSelector((state) => state.orders);
-    const { shippingFee } = useSelector((state) => state.delivery);
+    const { shippingFee, CODCharge } = useSelector((state) => state.delivery);
 
     const [addressType, setAddressType] = useState('Home');
     const [paymentMethod, setPaymentMethod] = useState('online_payment');
@@ -270,7 +272,6 @@ const NewCheckoutForm = ({ close }) => {
     const [showAddressForm, setShowAddressForm] = useState(false);
     const [selectedAddress, setSelectedAddress] = useState(null);
     const { discountAmount, taxDiscount } = additionalDiscountforOnlinePayment(totalCartAmount, totalTax);
-    const [CODCharge, setCODCharge] = useState(30)
 
 
     // Enhanced validation schema with payment method
@@ -306,20 +307,10 @@ const NewCheckoutForm = ({ close }) => {
         state: '',
     };
 
-    const calculateCODCharges = async () => {
-        try {
-            const response = await api.post('/api/delivery-charges/calculate/cod-charges', { cartItemsList })
-            if (response.status === 200) {
-                const CODCharge = response.data.codCharge
-                setCODCharge(CODCharge)
-            }
-        } catch (error) {
-            throw error
-        }
-    }
+
 
     useEffect(() => {
-        calculateCODCharges()
+        dispatch(calculateCODCharges(cartItemsList))
     }, [])
 
 

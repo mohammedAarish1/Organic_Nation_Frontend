@@ -32,6 +32,7 @@ import { getProductsData } from './features/filter/filterSlice';
 import { CartNotificationProvider } from './context/CartNotificationContext';
 import CartNotification from './components/module/cart/CartNotification';
 import DiscountProgress from './components/common/DiscountProgress';
+import IncompleteOrder from './components/IncompleteOrder';
 
 // Memoized components
 
@@ -42,6 +43,7 @@ const MainContent = memo(() => {
       <ToastContainer position='top-right' autoClose={1000} />
       <Header />
       <DiscountProgress/>
+      <IncompleteOrder/>
       <div>
         <Breadcrumbs />
         <Suspense fallback={
@@ -54,7 +56,7 @@ const MainContent = memo(() => {
           </Routes>
         </Suspense>
         <Footer />
-        <div className='max-w-max fixed xs:bottom-10 bottom-5 xs:right-10 right-5 z-50'>
+        <div className='max-w-max fixed xs:bottom-10 bottom-5 xs:right-10 right-5 z-40'>
           <WhatsApp />
         </div>
       </div>
