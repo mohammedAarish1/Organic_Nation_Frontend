@@ -207,31 +207,31 @@ import { BiBlock } from "react-icons/bi";
 
 const socialData = [
   { 
-    href: 'https://www.linkedin.com/company/earthyfoods-pvt-ltd',
+    href: 'https://www.linkedin.com/company/organicnationofficial',
     icon: <GrLinkedin />,
     label: "LinkedIn",
     color: "#7A2E1D"
   },
   { 
-    href: 'https://www.facebook.com/organicnation/',
+    href: 'https://www.facebook.com/organicnationofficial',
     icon: <ImFacebook2 />,
     label: "Facebook",
     color: "#7A2E1D"
   },
   { 
-    href: 'https://www.instagram.com/organicnation.co.in/',
+    href: 'https://www.instagram.com/organicnationofficial/',
     icon: <GrInstagram />,
     label: "Instagram",
     color: "#7A2E1D"
   },
    { 
-    href: 'https://twitter.com/organicnation_',
+    href: 'https://x.com/organicnation_',
     icon: <FaSquareXTwitter />,
     label: "Twitter",
     color: '#7A2E1D'
   },
   { 
-    href: 'https://www.youtube.com/channel/UCyUSaFyepi2jx_ViFKE0TkA/community?pvf=CAI%253D',
+    href: 'https://www.youtube.com/@organicnationofficial',
     icon: <FaYoutube />,
     label: "YouTube",
     color: "#7A2E1D"

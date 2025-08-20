@@ -8,7 +8,7 @@ import SEO from '../../helper/SEO/SEO';
 import CategoryCarousel from '../../components/productCategories/CategoryCarousel';
 import Search from '../../components/search/Search';
 import { addReviews } from '../../features/reviews/reviews';
-import IndependenceDayWish from '../../components/popup-banner/IndependenceDayWish';
+// import IndependenceDayWish from '../../components/popup-banner/IndependenceDayWish';
 // import InstagramShowcase from '../../components/InstagramShowcase';
 // import ClientLogosShowcase from '../../components/ClientLogosShowcase';
 // Lazy loaded components
@@ -170,7 +170,7 @@ const Home = memo(() => {
             </Suspense>
 
 
-            <IndependenceDayWish />
+            {/* <IndependenceDayWish /> */}
 
             {/* <ClientLogosShowcase/> */}
 

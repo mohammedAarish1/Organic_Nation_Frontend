@@ -450,7 +450,7 @@ const InstagramShowcase = () => {
           className="text-center mt-12"
         >
           <motion.a
-            href="https://instagram.com/organicnation.co.in"
+            href="https://www.instagram.com/organicnationofficial/"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[var(--themeColor)] to-[var(--accent-color)] text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"

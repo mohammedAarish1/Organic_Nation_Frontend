@@ -53,9 +53,9 @@ const AdminBanners = () => {
     getMainBanners();
   }, [])
 
-  if (bannersList.length === 0) {
-    return <div>Loading...</div>
-  }
+  // if (bannersList.length === 0) {
+  //   return <div>Loading...</div>
+  // }
 
   return (
     <div>

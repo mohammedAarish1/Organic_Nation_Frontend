@@ -1,31 +1,40 @@
 import { toast } from "react-toastify";
-// import { deleteDocumentFromDatabase } from "../features/admin/adminData";
-// import { getAllCartItems, getAllOrders } from "../imports";
 import { calculateShippingFee, checkDeliveryAvailability, updateShippingFee } from "../features/check-delivery/checkDelivery";
-// import { mergeCart } from "../features/cart/cart";
 import api from "../config/axiosConfig";
-// const apiUrl = import.meta.env.VITE_BACKEND_URL;
+
+
+// extracting the wwight since weight is in different formats like 900 gm, 1 Ltr, 20 bags *1.8g=36g
+// function extractWeight(description) {
+//     // Remove all spaces from the description
+//     const cleanDesc = description.replace(/\s/g, '');
+
+//     // Regular expression to match the last number followed by 'g', 'kg', 'l', or 'ltr'
+//     const match = cleanDesc.match(/(\d+(?:\.\d+)?)(g|kg|l|ltr|gm)$/i);
+//     if (match) {
+//         const value = parseFloat(match[1]);
+//         const unit = match[2].toLowerCase();
+
+//         switch (unit) {
+//             case 'kg':
+//                 return value * 1000; // Convert kg to g
+//             case 'g':
+//                 return value;
+//             case 'gm':
+//                 return value;
+//             case 'l':
+//             case 'ltr':
+//                 return value * 1000; // Assume 1 liter = 1000g (for water-based products)
+//             default:
+//                 return null;
+//         }
+//     }
+
+//     return null; // Return null if no match is found
+// }
+
 
 const getCatogoriesWithImages = (categoryList) => {
-  // const categoriesImages = [
-  //   { 'Organic-Honey': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Organic-Honey.png' },
-  //   { 'Homestyle-Pickles': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Authentic-Pickles.png' },
-  //   { 'Chutney-&-Dip': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Chutney%26Dip.png' },
-  //   { 'Fruit-Preserves': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Fruit-Preserves.png' },
-  //   { 'Seasonings-&-Herbs': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Seasonings%26Herbs.png' },
-  //   { 'Organic-Tea': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Organic-Tea.png' },
-  //   { Salt: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Salt.png' },
-  //   { Sweeteners: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Sweetners.png' },
-  //   { 'Organic-Oils': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Organic-Oils.png' },
-  //   { Oats: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Oats.png' },
-  //   { Vegan: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Vegan.png' },
-  //   { 'Breakfast-Cereals': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Breakfast-Cereals.png' },
-  //   { Combo: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/shop_menu_categories/Combo.png' },
-  // ]
-
-
-
-
+ 
   const categoriesImages = [
     { 'Organic-Honey': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/honey.webp' },
     { 'Homestyle-Pickles': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/pickles.webp' },
@@ -56,35 +65,6 @@ const getCatogoriesWithImages = (categoryList) => {
 }
 
 
-
-// const fetchDataAfterLogin = (dispatch, navigate, cart, checkoutStatus) => {
-//   dispatch(getAllOrders())
-//   // dispatch(getAllCartItems())
-//   if (cart && cart.items.length > 0) {
-//     dispatch(mergeCart({ cart }))
-//       .then((result) => {
-//         // localStorage.removeItem('cart');
-//         dispatch(getAllCartItems());
-//         if (checkoutStatus) {
-//           navigate('/cart/checkout')
-//         } else {
-//           navigate('/')
-
-//         }
-//       }
-//       )
-//   } else {
-
-//     if (checkoutStatus) {
-//       navigate('/cart/checkout')
-//     } else {
-
-//       navigate('/');
-//     }
-//   }
-
-// }
-
 // generate random Transaction Id
 const generateTransactionID = () => {
   const timestamp = Date.now();
@@ -109,32 +89,6 @@ const generateTransactionID = () => {
 //     }
 //   }
 //   return result.trim();
-// }
-
-
-// for calculating additional 5% discount on MRP and tax include in that discount
-// const calculateDiscountAndTaxIncluded = (cart) => {
-//   const totalCartValue = cart.reduce((total, item) => {
-//     const subtotal = item.price * item.quantity;
-//     return total + subtotal;
-//   }, 0);
-
-//   const discountAmount = totalCartValue * 0.05;
-
-//   const totalCartValueExcludingTax = cart.reduce((total, item) => {
-//     const priceExcludingTax = item.price / (1 + item.tax / 100);
-//     const subtotalExcludingTax = priceExcludingTax * item.quantity;
-//     return total + subtotalExcludingTax;
-//   }, 0);
-
-//   const discountAmountExcludingTax = totalCartValueExcludingTax * 0.05;
-
-//   const taxIncludedInDiscountAmount = discountAmount - discountAmountExcludingTax;
-
-//   return {
-//     discountAmount: Math.round(discountAmount),
-//     taxIncludedInDiscountAmount: Math.round(taxIncludedInDiscountAmount)
-//   };
 // }
 
 // for calculating additional 5% discount on MRP and tax include in that discount
@@ -235,7 +189,7 @@ const scrollToSlide = (ref, direction) => {
 
 
 
-// Helper function for button styles
+// Helper function for button styles used in manage-order page
 const getButtonStyles = (variant, disabled) => {
   const baseStyles = "border shadow-sm hover:shadow-md";
 
@@ -268,9 +222,6 @@ export {
   getCatogoriesWithImages,
   generateTransactionID,
   address,
-  // calculateDiscountAndTaxIncluded,
-  // fetchDataAfterLogin,
-  // handleDocumentDeleteFromDatabase,
   checkDeliveryAndCalculateShippingFee,
   additionalDiscountforOnlinePayment,
   getCouponDetails,

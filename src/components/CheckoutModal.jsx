@@ -6,7 +6,7 @@ import {
 import { RxCross2 } from "react-icons/rx";
 import { motion, AnimatePresence } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
-import CouponCodeList from './couponCodeList/CouponCodeList';
+// import CouponCodeList from './couponCodeList/CouponCodeList';
 import OtpLogin from '../pages/login-signup/OtpLogin';
 import OtpVerification from './auth/OtpVerification';
 import { getAllCartItems, mergeCart } from '../features/cart/cart';

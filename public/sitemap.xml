@@ -25,7 +25,7 @@
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://organicnation.co.in/shop/authentic-pickles</loc>
+        <loc>https://organicnation.co.in/shop/homestyle-pickles</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -55,7 +55,7 @@
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://organicnation.co.in/shop/sweetners</loc>
+        <loc>https://organicnation.co.in/shop/sweeteners</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -140,7 +140,7 @@
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://organicnation.co.in/shop/organic-honey/Organic-Honey-Jamun</loc>
+        <loc>https://organicnation.co.in/shop/organic-honey/Organic-Jamun-Honey</loc>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
@@ -152,72 +152,72 @@
 
     <!-- Authentic Pickles -->
     <url>
-        <loc>https://organicnation.co.in/shop/authentic-pickles/Mixed-Pickle</loc>
+        <loc>https://organicnation.co.in/shop/authentic-pickles/mixed-pickle</loc>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://organicnation.co.in/shop/authentic-pickles/Stuffed-Red-chilli-pickle</loc>
+        <loc>https://organicnation.co.in/shop/authentic-pickles/stuffed-red-chilli-pickle</loc>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://organicnation.co.in/shop/authentic-pickles/Garlic-Pickle</loc>
+        <loc>https://organicnation.co.in/shop/authentic-pickles/garlic-pickle</loc>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://organicnation.co.in/shop/authentic-pickles/Ginger-Pickle</loc>
+        <loc>https://organicnation.co.in/shop/authentic-pickles/ginger-pickle</loc>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://organicnation.co.in/shop/authentic-pickles/Sweet-Mango-Pickle</loc>
+        <loc>https://organicnation.co.in/shop/authentic-pickles/sweet-mango-pickle</loc>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://organicnation.co.in/shop/authentic-pickles/Green-Chilli-Pickle</loc>
+        <loc>https://organicnation.co.in/shop/authentic-pickles/green-chilli-pickle</loc>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://organicnation.co.in/shop/authentic-pickles/Lemon-Pickle</loc>
+        <loc>https://organicnation.co.in/shop/authentic-pickles/lemon-pickle</loc>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://organicnation.co.in/shop/authentic-pickles/Mango-Pickle</loc>
+        <loc>https://organicnation.co.in/shop/authentic-pickles/mango-pickle</loc>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://organicnation.co.in/shop/authentic-pickles/Turmeric-Pickle</loc>
+        <loc>https://organicnation.co.in/shop/authentic-pickles/turmeric-pickle</loc>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://organicnation.co.in/shop/authentic-pickles/Nimbu-Mirchi-Pickle</loc>
+        <loc>https://organicnation.co.in/shop/authentic-pickles/nimbu-mirchi-pickle</loc>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://organicnation.co.in/shop/authentic-pickles/Heeng-ka-Aam-Pickle</loc>
+        <loc>https://organicnation.co.in/shop/authentic-pickles/hing-ka-aam-pickle</loc>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://organicnation.co.in/shop/authentic-pickles/Carrot-Pickle</loc>
+        <loc>https://organicnation.co.in/shop/authentic-pickles/carrot-pickle</loc>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://organicnation.co.in/shop/authentic-pickles/Khata-Meetha-Pickle</loc>
+        <loc>https://organicnation.co.in/shop/authentic-pickles/khata-meetha-pickle</loc>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://organicnation.co.in/shop/authentic-pickles/Sweet-Lemon-Pickle</loc>
+        <loc>https://organicnation.co.in/shop/authentic-pickles/sweet-lemon-pickle</loc>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
@@ -256,7 +256,7 @@
 
     <!-- Fruit Preserves -->
     <url>
-        <loc>https://organicnation.co.in/shop/fruit-preserves/Mixed-Fruit-Conserve</loc>
+        <loc>https://organicnation.co.in/shop/fruit-preserves/Mix-Fruit-Conserve</loc>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>

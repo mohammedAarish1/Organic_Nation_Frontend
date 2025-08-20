@@ -133,15 +133,30 @@ const SpotlightSection = () => {
             </div>
 
             <div className="flex justify-center items-center h-16 my-4"> {/* Fixed height for dots */}
-                <div className="flex gap-2 justify-center items-center">
-                    {tabs.map((type) => (
+                {/* <div className="flex gap-2 justify-center items-center">
+                    {tabs.map(({ key, label }) => (
                         <button
-                            key={type.key}
-                            className={`transition-all duration-300 rounded-full cursor-auto ${productsType === type.key
+                            key={key}
+                            onClick={() => setActiveTab(key)}
+                            className={`transition-all duration-300 rounded-full cursor-pointer ${productsType === key
                                 ? 'bg-[var(--bgColorPrimary)] w-5 h-5'
                                 : 'bg-[var(--themeColor)] w-3 h-3'
                                 }`}
-                            aria-label={`${type.label} indicator`}
+                            aria-label={`${label} indicator`}
+                        />
+                    ))}
+                </div> */}
+                <div className="flex gap-2 justify-center items-center">
+                    {tabs.map(({ key, label }) => (
+                        <button
+                            key={key}
+                            onClick={() => setActiveTab(key)}
+                            className={`transition-all duration-300 ease-in-out transform rounded-full cursor-pointer 
+                ${productsType === key
+                                    ? 'bg-gradient-to-r from-[var(--themeColor)] to-[var(--accent-color)] w-5 h-5 shadow-lg scale-110'
+                                    : 'bg-[var(--themeColor)] w-4 h-4 scale-100'}
+                hover:scale-125 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--themeColor)]`}
+                            aria-label={`${label} indicator`}
                         />
                     ))}
                 </div>

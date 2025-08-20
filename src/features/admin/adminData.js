@@ -506,49 +506,61 @@ const adminData = createSlice({
             })
             // ========= totla users ==========
             .addCase(getAllUsers.pending, (state) => {
-                return {
-                    ...state,
-                    loading: true,
-                    error: null,
-                }
+                state.loading = true;
+                state.error = null;
+                // return {
+                //     ...state,
+                //     loading: true,
+                //     error: null,
+                // }
             })
             .addCase(getAllUsers.fulfilled, (state, action) => {
-                return {
-                    ...state,
-                    loading: false,
-                    totalUsers: action.payload,
+                state.loading = false;
+                state.totalUsers = action.payload;
+                // return {
+                //     ...state,
+                //     loading: false,
+                //     totalUsers: action.payload,
 
-                }
+                // }
             })
             .addCase(getAllUsers.rejected, (state, action) => {
-                return {
-                    ...state,
-                    loading: false,
-                    error: action.payload,
-                }
+                state.loading = false;
+                state.error = action.payload
+                // return {
+                //     ...state,
+                //     loading: false,
+                //     error: action.payload,
+                // }
             })
             // ========= totla user queries ==========
             .addCase(getAllUserQueries.pending, (state) => {
-                return {
-                    ...state,
-                    loading: true,
-                    error: null,
-                }
+                state.loading = true;
+                state.error = null;
+                // return {
+                //     ...state,
+                //     loading: true,
+                //     error: null,
+                // }
             })
             .addCase(getAllUserQueries.fulfilled, (state, action) => {
-                return {
-                    ...state,
-                    loading: false,
-                    totalUserQueries: action.payload,
+                state.loading = false;
+                state.totalUserQueries = action.payload;
+                // return {
+                //     ...state,
+                //     loading: false,
+                //     totalUserQueries: action.payload,
 
-                }
+                // }
             })
             .addCase(getAllUserQueries.rejected, (state, action) => {
-                return {
-                    ...state,
-                    loading: false,
-                    error: action.payload,
-                }
+                state.loading = false;
+                state.error = action.payload;
+                // return {
+                //     ...state,
+                //     loading: false,
+                //     error: action.payload,
+                // }
             })
             // ========= invoice generate ==========
             .addCase(generateInvoice.pending, (state) => {
@@ -654,7 +666,7 @@ const adminData = createSlice({
                 }
             })
             .addCase(updateCurrentStatus.rejected, (state, action) => {
-                state.otherLoading.updatingOrderStatus=false
+                state.otherLoading.updatingOrderStatus = false
                 state.error = action.payload
             })
 

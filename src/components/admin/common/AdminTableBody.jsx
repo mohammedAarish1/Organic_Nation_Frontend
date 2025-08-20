@@ -113,7 +113,7 @@ import { Suspense, lazy } from 'react';
 import Loader from '../../common/Loader';
 
 // Lazy load complex subcomponents
-const BannerImage = lazy(() => import('../../image/BannerImage'));
+// const BannerImage = lazy(() => import('../../image/BannerImage'));
 const AdminOrderDetails = lazy(() => import('../module/admin-orders/AdminOrderDetails'));
 const AdminOrderStatus = lazy(() => import('../module/admin-orders/AdminOrderStatus'));
 const AdminPaymentStatus = lazy(() => import('../module/admin-orders/AdminPaymentStatus'));
@@ -154,7 +154,13 @@ const AdminTableBody = memo(({
                         case 'Image':
                             return (
                                 <td key={header.label} className="p-3">
-                                    <Suspense fallback={<Loader height="10px" />} key={header.label}>
+                                    <img
+                                        src={data.image}
+                                        alt="Banner Image"
+                                        className="w-16 h-16 object-cover rounded-md"
+
+                                    />
+                                    {/* <Suspense fallback={<Loader height="10px" />} key={header.label}>
 
                                         <BannerImage
                                             src={{
@@ -166,7 +172,7 @@ const AdminTableBody = memo(({
                                             className="w-16 h-16 object-cover rounded-md"
                                             blurSrc={data.image.blur}
                                         />
-                                    </Suspense>
+                                    </Suspense> */}
                                 </td>
                             );
                         default:

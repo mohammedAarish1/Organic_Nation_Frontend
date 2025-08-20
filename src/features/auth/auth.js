@@ -124,7 +124,7 @@ export const requestOTP = createAsyncThunk(
 
 export const verifyOTP = createAsyncThunk(
   "auth/verifyOTP",
-  async ({ phoneNumber,referralCode, otp }, { rejectWithValue }) => {
+  async ({ phoneNumber, referralCode, otp }, { rejectWithValue }) => {
     try {
       const response = await api.post(`/api/otp-auth/verify-otp`, {
         phoneNumber,
@@ -296,104 +296,136 @@ const authSlice = createSlice({
       // })
       // check user auth status
       .addCase(checkAuthStatus.pending, (state) => {
-        return {
-          ...state,
-          user_loading: true,
-          error: null,
-        };
+        state.user_loading = true;
+        state.error = null;
+        // return {
+        //   ...state,
+        //   user_loading: true,
+        //   error: null,
+        // };
       })
       .addCase(checkAuthStatus.fulfilled, (state, action) => {
 
-        return {
-          ...state,
-          user_loading: false,
-          user: action.payload.user,
-          token: action.payload.accessToken,
-          isUserAuthenticated: true,
-        };
+        state.user_loading = false;
+        state.user = action.payload.user;
+        state.token = action.payload.accessToken;
+        state.isUserAuthenticated = true;
+
+        // return {
+        //   ...state,
+        //   user_loading: false,
+        //   user: action.payload.user,
+        //   token: action.payload.accessToken,
+        //   isUserAuthenticated: true,
+        // };
       })
       .addCase(checkAuthStatus.rejected, (state, action) => {
-        return {
-          ...state,
-          user_loading: false,
-          error: action.payload,
-        };
+        state.user_loading = false;
+        state.error = action.payload;
+        // return {
+        //   ...state,
+        //   user_loading: false,
+        //   error: action.payload,
+        // };
       })
       // ============ log out ===========
       .addCase(logout.pending, (state) => {
-        return {
-          ...state,
-          user_loading: true,
-          error: null,
-        };
+        state.user_loading = true;
+        state.error = null;
+        // return {
+        //   ...state,
+        //   user_loading: true,
+        //   error: null,
+        // };
       })
       .addCase(logout.fulfilled, (state, action) => {
-        return {
-          ...state,
-          user_loading: false,
-          token: "",
-          user: null,
-          isUserAuthenticated: false,
-        };
+
+        state.user_loading = false;
+        state.token = "";
+        state.user = null;
+        state.isUserAuthenticated = false;
+
+        // return {
+        //   ...state,
+        //   user_loading: false,
+        //   token: "",
+        //   user: null,
+        //   isUserAuthenticated: false,
+        // };
       })
       .addCase(logout.rejected, (state, action) => {
-        return {
-          ...state,
-          user_loading: false,
-          error: action.payload,
-        };
+        state.user_loading = false;
+        state.error = action.payload;
+        // return {
+        //   ...state,
+        //   user_loading: false,
+        //   error: action.payload,
+        // };
       })
       // send otp
       .addCase(requestOTP.pending, (state) => {
-        return {
-          ...state,
-          sendingOTP: true,
-        };
+        state.sendingOTP = true;
+        // return {
+        //   ...state,
+        //   sendingOTP: true,
+        // };
       })
       .addCase(requestOTP.fulfilled, (state, action) => {
-        return {
-          ...state,
-          sendingOTP: false,
-          message: action.payload.message,
-        };
+        state.sendingOTP = false;
+        state.message = action.payload.message
+        // return {
+        //   ...state,
+        //   sendingOTP: false,
+        //   message: action.payload.message,
+        // };
       })
       .addCase(requestOTP.rejected, (state, action) => {
-        return {
-          ...state,
-          sendingOTP: false,
-          error: action.payload,
-        };
+        state.sendingOTP = false;
+        state.error = action.payload
+        // return {
+        //   ...state,
+        //   sendingOTP: false,
+        //   error: action.payload,
+        // };
       })
       // verify otp
       .addCase(verifyOTP.pending, (state) => {
-        return {
-          ...state,
-          verifyingOTP: true,
-        };
+        state.verifyingOTP = true;
+        // return {
+        //   ...state,
+        //   verifyingOTP: true,
+        // };
       })
       .addCase(verifyOTP.fulfilled, (state, action) => {
 
         if (action.payload.accessToken) {
-          return {
-            ...state,
-            verifyingOTP: false,
-            token: action.payload.accessToken,
-            user: action.payload.user,
-          };
+          state.verifyingOTP = false;
+          state.token = action.payload.accessToken;
+          state.user = action.payload.user;
+          // return {
+          //   ...state,
+          //   verifyingOTP: false,
+          //   token: action.payload.accessToken,
+          //   user: action.payload.user,
+          // };
         } else {
-          return {
-            ...state,
-            verifyingOTP: false,
-            message: action.payload.message,
-          };
+          state.verifyingOTP = false;
+          state.message = action.payload.message;
+          // return {
+          //   ...state,
+          //   verifyingOTP: false,
+          //   message: action.payload.message,
+          // };
         }
       })
       .addCase(verifyOTP.rejected, (state, action) => {
-        return {
-          ...state,
-          verifyingOTP: false,
-          error: action.payload,
-        };
+        state.verifyingOTP = false;
+        state.error = action.payload
+        // return {
+        //   ...state,
+        //   verifyingOTP: false,
+        //   error: action.payload,
+        // };
       })
       // ============ handle google log in ===========
       // .addCase(handleGoogleLogin.pending, (state) => {
@@ -422,27 +454,33 @@ const authSlice = createSlice({
       //     error: action.payload,
       //   };
       // })
-       // ============ get user data  ===========
-       .addCase(getUserData.pending, (state) => {
-        return {
-          ...state,
-          user_loading: true,
-          error: null,
-        };
+      // ============ get user data  ===========
+      .addCase(getUserData.pending, (state) => {
+        state.user_loading = true;
+        state.error = null;
+        // return {
+        //   ...state,
+        //   user_loading: true,
+        //   error: null,
+        // };
       })
       .addCase(getUserData.fulfilled, (state, action) => {
-        return {
-          ...state,
-          user_loading: false,
-          user: action.payload.user,
-        };
+        state.user_loading = false;
+        state.user = action.payload.user;
+        // return {
+        //   ...state,
+        //   user_loading: false,
+        //   user: action.payload.user,
+        // };
       })
       .addCase(getUserData.rejected, (state, action) => {
-        return {
-          ...state,
-          user_loading: false,
-          error: action.payload,
-        };
+        state.user_loading = false;
+        state.error = action.payload;
+        // return {
+        //   ...state,
+        //   user_loading: false,
+        //   error: action.payload,
+        // };
       })
   },
 });

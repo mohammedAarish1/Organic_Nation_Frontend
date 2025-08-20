@@ -121,11 +121,11 @@ const ContactUs = () => {
   };
 
   const socialLinks = [
-    { href: 'https://www.linkedin.com/company/earthyfoods-pvt-ltd', icon: <GrLinkedin size={24} />, delay: 0.3 },
-    { href: 'https://twitter.com/organicnation_', icon: <FaSquareXTwitter size={24} />, delay: 0.4 },
-    { href: 'https://www.facebook.com/organicnation/', icon: <RiFacebookCircleFill size={26} />, delay: 0.5 },
-    { href: 'https://www.instagram.com/organicnationadmin/', icon: <FaInstagram size={26} />, delay: 0.6 },
-    { href: 'https://www.youtube.com/channel/UCyUSaFyepi2jx_ViFKE0TkA/community', icon: <FaYoutube size={26} />, delay: 0.7 },
+    { href: 'https://www.linkedin.com/company/organicnationofficial', icon: <GrLinkedin size={24} />, delay: 0.3 },
+    { href: 'https://x.com/organicnation_', icon: <FaSquareXTwitter size={24} />, delay: 0.4 },
+    { href: 'https://www.facebook.com/organicnationofficial', icon: <RiFacebookCircleFill size={26} />, delay: 0.5 },
+    { href: 'https://www.instagram.com/organicnationofficial/', icon: <FaInstagram size={26} />, delay: 0.6 },
+    { href: 'https://www.youtube.com/@organicnationofficial', icon: <FaYoutube size={26} />, delay: 0.7 },
   ];
 
   // Form field configurations

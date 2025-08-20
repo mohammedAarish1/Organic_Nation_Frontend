@@ -45,7 +45,6 @@ export const calculateCODCharges = createAsyncThunk(
     'delivery/calculateCODCharges',
     async (cartItemsList, { rejectWithValue }) => {
         try {
-            // let deliveryChargeToken = localStorage.getItem('deliveryChargeToken')
             const response = await api.post(`/api/delivery-charges/calculate/cod-charges`, { cartItemsList });
             if (response.status === 200) {
                 const CODCharge = response.data.codCharge
@@ -67,10 +66,6 @@ const initialState = {
     message: '',
     userCity: '',
     userPincode: '',
-    // locallySavedAddress:{
-    //     add1:'',
-    //     add2:''
-    // },
     userState: '',
     checking: false,
     error: null,
@@ -83,16 +78,10 @@ const checkDelivery = createSlice({
     initialState,
     reducers: {
         setIsAvailable: (state) => {
-            return {
-                ...state,
-                isAvailable: null,
-            }
+            state.isAvailable = true;
         },
         updateShippingFee: (state) => {
-            return {
-                ...state,
-                shippingFee: 0
-            }
+            state.shippingFee = 0;
         },
         // handleSavingLocalAdd:(state,action)=>{
 
@@ -118,55 +107,69 @@ const checkDelivery = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(checkDeliveryAvailability.pending, (state) => {
-            return {
-                ...state,
-                checking: true,
-            }
+            state.checking = true;
         })
         builder.addCase(checkDeliveryAvailability.fulfilled, (state, action) => {
-            return {
-                ...state,
-                isAvailable: action.payload?.available,
-                message: action.payload.message,
-                checking: false,
-                error: null,
-                userCity: action.payload?.data?.city,
-                userState: action.payload?.data?.state,
-                userPincode: action.payload?.data?.pinCode
-            }
+
+            state.isAvailable = action.payload?.available;
+            state.message = action.payload.message;
+            state.checking = false;
+            state.error = null;
+            state.userCity = action.payload?.data?.city;
+            state.userState = action.payload?.data?.state;
+            state.userPincode = action.payload?.data?.pinCode;
+
+            // return {
+            //     ...state,
+            //     isAvailable: action.payload?.available,
+            //     message: action.payload.message,
+            //     checking: false,
+            //     error: null,
+            //     userCity: action.payload?.data?.city,
+            //     userState: action.payload?.data?.state,
+            //     userPincode: action.payload?.data?.pinCode
+            // }
         })
         builder.addCase(checkDeliveryAvailability.rejected, (state, action) => {
-            return {
-                ...state,
-                isAvailable: action.payload.available,
-                checking: false,
-                error: action.payload?.message,
-            }
+            state.isAvailable = action.payload.available;
+            state.checking = false;
+            state.error = action.payload?.message;
+            // return {
+            //     ...state,
+            //     isAvailable: action.payload.available,
+            //     checking: false,
+            //     error: action.payload?.message,
+            // }
         })
         // calculate shipping fee 
         builder.addCase(calculateShippingFee.pending, (state) => {
-            return {
-                ...state,
-                checking: true,
-            }
+            state.checking = true
+            // return {
+            //     ...state,
+            //     checking: true,
+            // }
         })
         builder.addCase(calculateShippingFee.fulfilled, (state, action) => {
 
             if (action.payload) {
-                return {
-                    ...state,
-                    checking: false,
-                    shippingFee: action.payload.deliveryCharge
-                }
+                state.checking = false;
+                state.shippingFee = action.payload.deliveryCharge;
+                // return {
+                //     ...state,
+                //     checking: false,
+                //     shippingFee: action.payload.deliveryCharge
+                // }
             }
 
         })
         builder.addCase(calculateShippingFee.rejected, (state, action) => {
-            return {
-                ...state,
-                checking: false,
-                error: action.payload,
-            }
+            state.checking = false;
+            state.error = action.payload;
+            // return {
+            //     ...state,
+            //     checking: false,
+            //     error: action.payload,
+            // }
         })
         // calculate COD charge
         builder.addCase(calculateCODCharges.pending, (state) => {
