@@ -142,7 +142,7 @@ const AdminRoutes = () => {
       dispatch(fetchAdminData(adminToken)).then(res => {
         dispatch(getTotalOrders());
         dispatch(getTotalReturns());
-        dispatch(getProductsData());
+        // dispatch(getProductsData());
         dispatch(getAllUsers());
         dispatch(getAllUserQueries());
         dispatch(getOrdersByStatus("total"));

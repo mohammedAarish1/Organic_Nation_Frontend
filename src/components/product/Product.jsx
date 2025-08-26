@@ -304,11 +304,16 @@ const Product = memo(({ gridView, product }) => {
               </button>
 
               {/* Discount Badge */}
-              {product.discount > 0 && (
+              {/* {product.discount > 0 && (
                 <div className="absolute top-4 left-4 px-2 py-1 bg-red-500 text-white text-sm font-semibold rounded z-20">
                   {product.discount}% OFF
                 </div>
-              )}
+              )} */}
+              {/* 30% off badge  */}
+              <div className="absolute top-4 left-4 px-2 py-1 bg-orange-500 text-white text-sm font-semibold rounded z-20">
+              Up to 30% OFF
+              </div>
+
             </div>
           </NavLink>
           {/* Product Info */}

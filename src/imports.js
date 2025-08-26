@@ -11,7 +11,7 @@ import WhatsApp from './components/whatsApp/WhatsApp';
 
 // import VerifyEmail from './components/forgotPassword/VerifyEmail';
 // import ResetPassword from './components/forgotPassword/ResetPassword';
-import SearchedProduct from './components/searchedProduct/SearchedProduct';
+// import SearchedProduct from './components/searchedProduct/SearchedProduct';
 import Home from './pages/home/Home';
 
 // pages
@@ -34,22 +34,27 @@ export const BlogDetail = lazy(() => import('./pages/blog-detail-page/BlogDetail
 export const OtpLogin = lazy(() => import('./pages/login-signup/OtpLogin'));
 // export const OtpSubmit = lazy(() => import('./pages/login-signup/OtpSubmit'));
 export const Blogs = lazy(() => import('./pages/blogs/Blogs'));
-export const ScrollToTop = lazy(() => import('./helper/ScrollToTop'));
+// export const ScrollToTop = lazy(() => import('./helper/ScrollToTop'));
 export const RecipeDetails = lazy(() => import('./pages/recipe-detail-page/RecipeDetails'));
 // export const GoogleSignup = lazy(() => import('./pages/login-signup/GoogleSignup'));
 // export const OrderConfirm = lazy(() => import('./pages/order-confirmation/OrderConfirm'));
 export const PaymentStatus = lazy(() => import('./pages/payment-status/PaymentStatus'));
 export const NoPageFound = lazy(() => import('./pages/no-page-found/NoPageFound'));
-export const UserProfile=lazy(()=>import('./pages/user-profile/UserProfile'))
-
+export const UserProfile = lazy(() => import('./pages/user-profile/UserProfile'))
+export const ManageOrders = lazy(() => import('./pages/manage-orders/ManageOrders'))
+export const ManageReturns = lazy(() => import('./pages/manage-returns/ManageReturns'))
+export const SearchedProduct = lazy(() => import('./components/searchedProduct/SearchedProduct'))
 // Redux actions
 export { getProductsData } from '../src/features/filter/filterSlice';
 export { getAllCartItems } from './features/cart/cart';
 export { getAllOrders } from './features/manageOrders/manageOrders';
 export { getAllBlogs } from './features/blogs/blogs';
 export { getAllRecipes } from './features/blogs/blogs'
-import ManageOrders from './pages/manage-orders/ManageOrders';
+// import ManageOrders from './pages/manage-orders/ManageOrders';
 
+// admin routes
+export const AdminRoutes = lazy(() => import('./routes/AdminRoutes'))
+export const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'))
 
 export {
   Home,
@@ -60,6 +65,6 @@ export {
   WhatsApp,
   // VerifyEmail,
   // ResetPassword,
-  SearchedProduct,
-  ManageOrders
+  // SearchedProduct,
+  // ManageOrders
 };

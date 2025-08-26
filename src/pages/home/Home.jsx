@@ -155,7 +155,7 @@ const Home = memo(() => {
             <CategoryCarousel />
             <SpotlightSection />
 
-            <Suspense fallback={<div className="h-48 animate-pulse bg-gray-100" />}>
+            <Suspense fallback={<div className="h-96 animate-pulse bg-gray-100" />}>
                 <LazyLoadSection>
                     <ProductCategories />
                 </LazyLoadSection>

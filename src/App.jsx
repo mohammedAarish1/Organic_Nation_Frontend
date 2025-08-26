@@ -6,26 +6,27 @@ import './App.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // animation
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+// import AOS from 'aos';
+// import 'aos/dist/aos.css';
 
 import {
   Header,
   Footer,
-   Info,
+  Info,
   Breadcrumbs,
   WhatsApp,
-  ScrollToTop,
   // getAllCartItems,
   // getAllBlogs,
   // getAllRecipes,
   getAllOrders,
+  AdminRoutes,
+  AdminLogin,
 } from './imports';
 
 
-import getRoutes from './routes/routes';
-import AdminRoutes from './routes/AdminRoutes';
-import AdminLogin from './pages/admin/AdminLogin';
+// import getRoutes from './routes/routes';
+// import AdminRoutes from './routes/AdminRoutes';
+// import AdminLogin from './pages/admin/AdminLogin';
 import { checkAuthStatus } from './features/auth/auth';
 // import RecentOrderNotification from './components/recent-order-notification/RecentOrderNotification ';
 import { getProductsData } from './features/filter/filterSlice';
@@ -33,6 +34,8 @@ import { CartNotificationProvider } from './context/CartNotificationContext';
 import CartNotification from './components/module/cart/CartNotification';
 import DiscountProgress from './components/common/DiscountProgress';
 import IncompleteOrder from './components/IncompleteOrder';
+import ScrollToTop from './helper/ScrollToTop'
+import MyAppRoutes from './routes/MyAppRoutes';
 
 // Memoized components
 
@@ -42,8 +45,8 @@ const MainContent = memo(() => {
       <Info text="Free shipping on orders over Rs. 199/- | Order over Rs. 499 and get Flat 20% OFF" fontSize='[10px]' />
       <ToastContainer position='top-right' autoClose={1000} />
       <Header />
-      <DiscountProgress/>
-      <IncompleteOrder/>
+      <DiscountProgress />
+      <IncompleteOrder />
       <div>
         <Breadcrumbs />
         <Suspense fallback={
@@ -51,9 +54,10 @@ const MainContent = memo(() => {
             <div className="loader"></div>
           </div>
         }>
-          <Routes>
+          <MyAppRoutes />
+          {/* <Routes>
             {getRoutes()}
-          </Routes>
+          </Routes> */}
         </Suspense>
         <Footer />
         <div className='max-w-max fixed xs:bottom-10 bottom-5 xs:right-10 right-5 z-40'>
@@ -65,7 +69,6 @@ const MainContent = memo(() => {
   );
 });
 
-MainContent.displayName = 'MainContent';
 
 function App() {
   const { isAdminLoggedIn } = useSelector(state => state.admin)
@@ -77,9 +80,9 @@ function App() {
   const dispatch = useDispatch();
 
 
-  useEffect(() => {
-    AOS.init();
-  }, []);
+  // useEffect(() => {
+  //   AOS.init();
+  // }, []);
 
   useEffect(() => {
     const fetchInitialData = async () => {
@@ -98,25 +101,31 @@ function App() {
 
 
   return (
-     <CartNotificationProvider>
-    <BrowserRouter>
-      <Routes>
-        {/* Admin routes */}
-        <Route path="/admin/*" element={
-          isAdminLoggedIn || adminToken ? <AdminRoutes /> : <AdminLogin />
-        } />
+    <CartNotificationProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* Admin routes */}
+          <Route path="/admin/*" element={
+            <Suspense fallback={
+              <div className='py-52 flex justify-center items-center'>
+                <div className="loader"></div>
+              </div>
+            }>
+              {isAdminLoggedIn || adminToken ? <AdminRoutes /> : <AdminLogin />}
+            </Suspense>
+          } />
 
-        {/* Normal routes */}
-        <Route path="*" element={
-          <>
-            <ScrollToTop />
-            <MainContent />
-            <CartNotification />
-            {/* <RecentOrderNotification /> */}
-          </>
-        } />
-      </Routes>
-    </BrowserRouter>
+          {/* Normal routes */}
+          <Route path="*" element={
+            <>
+              <ScrollToTop />
+              <MainContent />
+              <CartNotification />
+              {/* <RecentOrderNotification /> */}
+            </>
+          } />
+        </Routes>
+      </BrowserRouter>
     </CartNotificationProvider>
   )
 }
