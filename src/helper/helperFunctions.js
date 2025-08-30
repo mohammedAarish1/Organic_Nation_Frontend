@@ -36,19 +36,19 @@ import api from "../config/axiosConfig";
 const getCatogoriesWithImages = (categoryList) => {
  
   const categoriesImages = [
-    { 'Organic-Honey': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/honey.webp' },
-    { 'Homestyle-Pickles': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/pickles.webp' },
-    { 'Chutney-&-Dip': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/chutney.webp' },
-    { 'Fruit-Preserves': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/fruit_preserves.webp' },
-    { 'Seasonings-&-Herbs': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/seasonings.webp' },
-    { 'Organic-Tea': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/tea.webp' },
-    { 'Organic-Oils': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/oils.webp' },
-    { Salt: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/salt.webp' },
-    { Sweeteners: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/sweeteners.webp' },
-    { Oats: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/oats.webp' },
-    { Vegan: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/vegan.webp' },
-    { 'Breakfast-Cereals': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/breakfast.webp' },
-    { 'Gifts-&-Combos': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/combo.webp' },
+    { 'Organic-Honey': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/honey.webp' },
+    { 'Homestyle-Pickles': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/pickle.webp' },
+    { 'Chutney-&-Dip': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/chutney.webp' },
+    { 'Fruit-Preserves': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/fruit_preserves.webp' },
+    { 'Seasonings-&-Herbs': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/seasonings.webp' },
+    { 'Organic-Tea': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/tea.webp' },
+    { 'Organic-Oils': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/oils.webp' },
+    { Salt: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/salt.webp' },
+    { Sweeteners: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/sweeteners.webp' },
+    { Oats: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/oats.webp' },
+    { Vegan: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/vegan.webp' },
+    { 'Breakfast-Cereals': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/breakfast.webp' },
+    { 'Gifts-&-Combos': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/combo.webp' },
   ]
   const imageLookup = categoriesImages.reduce((acc, obj) => {
     const [key, value] = Object.entries(obj)[0];

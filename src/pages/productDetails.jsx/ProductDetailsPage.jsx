@@ -280,36 +280,41 @@ const ProductDetailsPage = ({ product }) => {
 
             {/* Price */}
             <motion.div
-              className="flex items-center space-x-6 p-6 rounded-2xl"
+              // className="flex items-center space-x-6 p-6 rounded-2xl"
               style={{ backgroundColor: '#FFFFFF' }}
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.4, type: "spring" }}
               whileHover={{ scale: 1.02 }}
             >
-              <span className="text-5xl font-bold" style={{ color: '#7A2E1D' }}>
-                {/* ₹{product.details.price} */}
-                ₹{Math.round(product.details.price - (product.details.price * product.details.discount / 100))}
-              </span>
-              <div className="flex flex-col">
-                <span className="text-2xl line-through" style={{ color: '#9B7A2F' }}>
-                  ₹{product.details.price}
+              <div className="flex items-center space-x-6 px-6 pt-6 pb-2 rounded-2xl">
+                <span className="text-5xl font-bold" style={{ color: '#7A2E1D' }}>
+                  {/* ₹{product.details.price} */}
+                  ₹{Math.round(product.details.price - (product.details.price * product.details.discount / 100))}
                 </span>
-                <motion.span
-                  className="px-3 py-1 rounded-full text-white text-sm font-bold"
-                  style={{ backgroundColor: '#D87C45' }}
-                  animate={{
-                    scale: [1, 1.05, 1],
-                  }}
-                  transition={{
-                    duration: 1.5,
-                    repeat: Infinity,
-                    repeatDelay: 2
-                  }}
-                >
-                  {product.details.discount}% OFF
-                  {/* {Math.round(((product.details.originalPrice - product.details.price) / product.details.originalPrice) * 100)}% OFF */}
-                </motion.span>
+                <div className="flex flex-col">
+                  <span className="text-2xl line-through" style={{ color: '#9B7A2F' }}>
+                    ₹{product.details.price}
+                  </span>
+                  <motion.span
+                    className="px-3 py-1 rounded-full text-white text-sm font-bold"
+                    style={{ backgroundColor: '#D87C45' }}
+                    animate={{
+                      scale: [1, 1.05, 1],
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      repeatDelay: 2
+                    }}
+                  >
+                    {product.details.discount}% OFF
+                    {/* {Math.round(((product.details.originalPrice - product.details.price) / product.details.originalPrice) * 100)}% OFF */}
+                  </motion.span>
+                </div>
+              </div>
+              <div className='ml-6 pb-3'>
+                <span className='text-gray-600 text-sm'>Inclusive of all taxes. Shipping calculated at checkout.</span>
               </div>
             </motion.div>
 

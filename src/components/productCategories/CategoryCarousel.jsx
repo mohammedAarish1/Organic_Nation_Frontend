@@ -5,20 +5,37 @@ import { Link } from 'react-router-dom';
 // import { fetchCategoryWiseData, setCategoryBtnValue } from '../../features/filter/filterSlice';
 // import { useDispatch } from 'react-redux';
 
+// const icons = [
+//     { name:'Pickles',category: 'Homestyle-Pickles', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/pickles.webp' },
+//     { name:'Honey',category: 'Organic-Honey', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/honey.webp' },
+//     { name:'Seasonings',category: 'Seasonings-&-Herbs', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/seasonings.webp' },
+//     { name:'Salt',category: 'Salt', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/salt.webp' },
+//     // { name:'Cereals',category: 'Breakfast-Cereals', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/breakfast.webp' },
+//     { name:'Chutney',category: 'Chutney-&-Dip', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/chutney.webp' },
+//     { name:'Oats',category: 'Oats', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/oats.webp' },
+//     { name:'Oils',category: 'Organic-Oils', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/oils.webp' },
+//     { name:'Preserves',category: 'Fruit-Preserves', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/fruit_preserves.webp' },
+//     { name:'Vegan',category: 'Vegan', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/vegan.webp' },
+//     { name:'Sweeteners',category: 'Sweeteners', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/sweeteners.webp' },
+//     // { name:'Tea',category: 'Organic-Tea', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/tea.webp' },
+//     {name: 'Combo',category:'Gifts-&-Combos', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/combo.webp' },
+// ];
+
+
 const icons = [
-    { name:'Pickles',category: 'Homestyle-Pickles', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/pickles.webp' },
-    { name:'Honey',category: 'Organic-Honey', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/honey.webp' },
-    { name:'Seasonings',category: 'Seasonings-&-Herbs', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/seasonings.webp' },
-    { name:'Salt',category: 'Salt', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/salt.webp' },
-    // { name:'Cereals',category: 'Breakfast-Cereals', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/breakfast.webp' },
-    { name:'Chutney',category: 'Chutney-&-Dip', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/chutney.webp' },
-    { name:'Oats',category: 'Oats', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/oats.webp' },
-    { name:'Oils',category: 'Organic-Oils', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/oils.webp' },
-    { name:'Preserves',category: 'Fruit-Preserves', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/fruit_preserves.webp' },
-    { name:'Vegan',category: 'Vegan', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/vegan.webp' },
-    { name:'Sweeteners',category: 'Sweeteners', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/sweeteners.webp' },
-    // { name:'Tea',category: 'Organic-Tea', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/tea.webp' },
-    {name: 'Combo',category:'Gifts-&-Combos', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/combo.webp' },
+    { name:'Pickles',category: 'Homestyle-Pickles', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/pickle.webp' },
+    { name:'Honey',category: 'Organic-Honey', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/honey.webp' },
+    { name:'Seasonings',category: 'Seasonings-&-Herbs', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/seasonings.webp' },
+    { name:'Salt',category: 'Salt', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/salt.webp' },
+    // { name:'Cereals',category: 'Breakfast-Cereals', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/breakfast.webp' },
+    { name:'Chutney',category: 'Chutney-&-Dip', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/chutney.webp' },
+    { name:'Oats',category: 'Oats', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/oats.webp' },
+    { name:'Oils',category: 'Organic-Oils', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/oils.webp' },
+    { name:'Preserves',category: 'Fruit-Preserves', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/fruit_preserves.webp' },
+    { name:'Vegan',category: 'Vegan', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/vegan.webp' },
+    { name:'Sweeteners',category: 'Sweeteners', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/sweeteners.webp' },
+    // { name:'Tea',category: 'Organic-Tea', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/tea.webp' },
+    {name: 'Combo',category:'Gifts-&-Combos', icon: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/combo.webp' },
 ];
 
 const CategoryCarousel = () => {

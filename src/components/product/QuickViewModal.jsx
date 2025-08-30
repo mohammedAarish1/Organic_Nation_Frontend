@@ -32,7 +32,7 @@ const QuickViewModal = ({ product, onClose }) => {
             />
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-2">
             <h3 className="text-xl font-semibold text-gray-900">{product.name}</h3>
             <p className="text-sm text-gray-600">{product.description}</p>
 
@@ -42,6 +42,9 @@ const QuickViewModal = ({ product, onClose }) => {
               <span className="px-2 py-1 text-sm font-semibold text-green-600 bg-green-50 rounded-full">
                 {product.discount}% off
               </span>
+            </div>
+            <div>
+              <span className='text-gray-600 text-sm'>(Inclusive of all taxes)</span>
             </div>
 
             <AddToCartBtn item={product} />

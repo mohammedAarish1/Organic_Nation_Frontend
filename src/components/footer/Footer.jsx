@@ -509,13 +509,13 @@ const Footer = () => {
                 <ContactItem 
                   icon={<FaBuilding />} 
                   content={<>
-                    <span className="font-semibold">Office Address:</span> Shop No - 336, Plot No - 134B, Shopprix Mall, Sector-61, Noida, Gautam Buddha Nagar, Uttar Pradesh, 201301
+                    <span className="font-semibold">Corporate Office Address:</span> Shop No - 336, Plot No - 134B, Shopprix Mall, Sector-61, Noida, Gautam Buddha Nagar, Uttar Pradesh, 201301
                   </>}
                 />
                 <ContactItem 
                   icon={<FaLocationDot />} 
                   content={<>
-                    <span className="font-semibold">Work Address:</span> Foodsbay India, Bailparao, Ramnagar Road, Nainital, Uttarakhand-263159
+                    <span className="font-semibold">Work & Manufacturing Address:</span> Foodsbay India, Bailparao, Ramnagar Road, Nainital, Uttarakhand-263159
                   </>}
                 />
               </div>
@@ -545,11 +545,11 @@ const Footer = () => {
           >
             <h3 className="text-lg font-semibold mb-4 text-center">Secure Payment Options</h3>
             <div className="flex flex-wrap justify-center items-center gap-6">
-              <motion.img whileHover={{ scale: 1.1 }} src="https://organicnationmages.s3.ap-south-1.amazonaws.com/payments/maestro.png" alt="maestro" className="h-10" />
-              <motion.img whileHover={{ scale: 1.1 }} src="https://organicnationmages.s3.ap-south-1.amazonaws.com/payments/visa.png" alt="visa" className="h-10" />
-              <motion.img whileHover={{ scale: 1.1 }} src="https://organicnationmages.s3.ap-south-1.amazonaws.com/payments/rupay.png" alt="rupay" className="h-10" />
-              <motion.img whileHover={{ scale: 1.1 }} src="https://organicnationmages.s3.ap-south-1.amazonaws.com/payments/mastercard.png" alt="mastercard" className="h-10" />
-              <motion.img whileHover={{ scale: 1.1 }} src="https://organicnationmages.s3.ap-south-1.amazonaws.com/payments/upi.png" alt="upi" className="h-10" />
+              <motion.img whileHover={{ scale: 1.1 }} src="https://organicnationmages.s3.ap-south-1.amazonaws.com/payments/reduced_quality/maestro.webp" alt="maestro" className="h-10" />
+              <motion.img whileHover={{ scale: 1.1 }} src="https://organicnationmages.s3.ap-south-1.amazonaws.com/payments/reduced_quality/visa.webp" alt="visa" className="h-10" />
+              <motion.img whileHover={{ scale: 1.1 }} src="https://organicnationmages.s3.ap-south-1.amazonaws.com/payments/reduced_quality/rupay.webp" alt="rupay" className="h-10" />
+              <motion.img whileHover={{ scale: 1.1 }} src="https://organicnationmages.s3.ap-south-1.amazonaws.com/payments/reduced_quality/mastercard.webp" alt="mastercard" className="h-10" />
+              <motion.img whileHover={{ scale: 1.1 }} src="https://organicnationmages.s3.ap-south-1.amazonaws.com/payments/reduced_quality/upi.webp" alt="upi" className="h-10" />
             </div>
           </motion.div>
         </div>

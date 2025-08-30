@@ -311,7 +311,7 @@ const Product = memo(({ gridView, product }) => {
               )} */}
               {/* 30% off badge  */}
               <div className="absolute top-4 left-4 px-2 py-1 bg-orange-500 text-white text-sm font-semibold rounded z-20">
-              Up to 30% OFF
+                Up to 30% OFF
               </div>
 
             </div>
@@ -340,9 +340,14 @@ const Product = memo(({ gridView, product }) => {
                 to={`/shop/${categoryBtnValue}/${product['name-url']}`}
                 className="relative z-20"
               >
-                <div className="flex items-baseline gap-2">
-                  <span className="text-lg sm:text-xl font-semibold text-gray-700">₹{discountedPrice}</span>
-                  {product.discount !== 0 && <span className="text-sm text-gray-500 font-semibold line-through">₹{product.price}</span>}
+                <div className="flex items-baseline sm:gap-2 flex-wrap">
+                  <div>
+                    <span className="text-lg sm:text-xl font-semibold text-gray-700">₹{discountedPrice}</span>
+                    {product.discount !== 0 && <span className="text-sm text-gray-500 font-semibold line-through ml-2">₹{product.price}</span>}
+                  </div>
+                  <div>
+                    <span className='text-gray-600 text-sm'>(Inclusive of all taxes)</span>
+                  </div>
                 </div>
               </NavLink>
               <div className="w-full relative z-30">
