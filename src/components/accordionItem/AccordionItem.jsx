@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IoChevronDownOutline } from "react-icons/io5";
+import { ChevronDown } from 'lucide-react';
 
 const AccordionItem = ({ faq }) => {
   const [active, setActive] = useState(false);
@@ -17,7 +17,7 @@ const AccordionItem = ({ faq }) => {
       >
         <div className="mr-5 flex h-10 w-full max-w-[40px] items-center justify-center rounded-lg bg-primary/5 text-primary dark:bg-white/5">
 
-          <IoChevronDownOutline className={`fill-primary text-xl stroke-primary duration-200 ease-in-out ${active ? "rotate-180" : ""
+          <ChevronDown className={`fill-primary text-xl stroke-primary duration-200 ease-in-out ${active ? "rotate-180" : ""
             }`} />
         </div>
 

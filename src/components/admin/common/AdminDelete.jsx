@@ -1,5 +1,4 @@
-import React from 'react'
-import { MdDeleteForever } from 'react-icons/md'
+import { Trash } from 'lucide-react';
 
 const AdminDelete = ({handleDelete}) => {
     return (
@@ -8,7 +7,7 @@ const AdminDelete = ({handleDelete}) => {
                 onClick={handleDelete}
                 className=" text-red-500 py-1 rounded hover:text-red-800"
             >
-                <MdDeleteForever className="text-2xl" />
+                <Trash className="text-xl" />
             </button>
         </div>
     )

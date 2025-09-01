@@ -24,7 +24,8 @@ const WhatsApp = () => {
       />
       
       <img
-        src='https://organicnationmages.s3.ap-south-1.amazonaws.com/other_images/whatsApp.png'
+        // src='https://organicnationmages.s3.ap-south-1.amazonaws.com/other_images/whatsApp.png'
+        src='https://organicnationmages.s3.ap-south-1.amazonaws.com/other_images/whatsApp.webp'
         alt="Chat with us on WhatsApp"
         onClick={handleClick}
         // onLoad={() => setImageLoaded(true)}

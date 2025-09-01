@@ -1,9 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
-import * as Yup from 'yup';
-import {
-  FaShoppingCart, FaChevronDown,
-} from 'react-icons/fa';
-import { RxCross2 } from "react-icons/rx";
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 // import CouponCodeList from './couponCodeList/CouponCodeList';
@@ -17,6 +12,7 @@ import { freeShippingEligibleAmt } from '../constants';
 import { formatPrice } from '../helper/helperFunctions';
 import FamilyCoupon from './couponCodeList/FamilyCoupon';
 
+import {X, ShoppingCart ,ChevronDown } from 'lucide-react';
 // Animation variants
 const fadeIn = {
   hidden: { opacity: 0 },
@@ -54,7 +50,7 @@ const Accordion = ({ title, icon, isOpen, setIsOpen, children }) => {
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.3 }}
         >
-          <FaChevronDown />
+          <ChevronDown  />
         </motion.div>
       </button>
 
@@ -399,7 +395,7 @@ const CheckoutModal = ({ isOpen, onClose }) => {
                 whileHover={{ scale: 1.1, backgroundColor: "rgba(239, 246, 255, 0.6)" }}
                 whileTap={{ scale: 0.95 }}
               >
-                <RxCross2 size={20} />
+                <X size={20} />
               </motion.button>
             </div>
 
@@ -412,7 +408,8 @@ const CheckoutModal = ({ isOpen, onClose }) => {
                 <p
                   className="text-xl font-bold bg-[var(--text-color)] bg-clip-text text-transparent"
                 >
-                  ₹ {Math.round(totalCartAmount + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0))}
+                  {/* ₹ {Math.round(totalCartAmount + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0))} */}
+                  ₹ {Math.round(totalCartAmount + (totalCartAmount < freeShippingEligibleAmt ? 0 : 0))}
                 </p>
               </div>
             </div>
@@ -426,7 +423,7 @@ const CheckoutModal = ({ isOpen, onClose }) => {
 
               <Accordion
                 title="Order Summary"
-                icon={FaShoppingCart}
+                icon={ShoppingCart}
                 isOpen={orderSummaryOpen}
                 setIsOpen={setOrderSummaryOpen}
               >
