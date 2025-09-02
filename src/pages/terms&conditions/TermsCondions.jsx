@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { GoChecklist } from "react-icons/go";
-import { AiOutlineMenuUnfold } from "react-icons/ai";
-import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
-import { FaLongArrowAltRight } from "react-icons/fa";
+import { useEffect, useState } from 'react';
+import { ListCheck,Menu,ChevronUp, ChevronDown ,MoveRight  } from 'lucide-react';
 
 // Section component for reusability
 const Section = ({  title, children }) => (
   <div className="rounded-lg shadow-md p-6 mb-6" >
     <div className="flex items-center gap-1 text-xl mb-4">
-      <GoChecklist />
+      <ListCheck />
       <h2 className="font-medium">{title}</h2>
     </div>
     <div className="pl-6">{children}</div>
@@ -49,7 +46,7 @@ const TableOfContents = ({ sections, activeSection, setActiveSection }) => {
   const tocContainerClasses = `
     ${isMobile ? 'fixed bottom-24 right-6 z-40 w-64' : 'sticky top-8 w-full'}
     ${isMobile && !isOpen ? 'hidden' : 'block'}
-    rounded-lg shadow-lg overflow-hidden transition-all duration-300 ease-in-out`;
+    rounded-lg shadow-lg overflow-hidden transition-all duration-300 ease-in-out bg-[var(--background-color)]`;
   const navClasses = `
     max-h-[calc(100vh-200px)] overflow-y-auto
     ${isMobile ? 'pb-4' : 'pb-6'}
@@ -59,9 +56,9 @@ const TableOfContents = ({ sections, activeSection, setActiveSection }) => {
     <div className="toc-container">
       {isMobile && (
         <button onClick={() => setIsOpen(!isOpen)} className={mobileButtonClasses}>
-          <AiOutlineMenuUnfold size={20} />
+          <Menu/>
           <span className="font-medium">Sections</span>
-          {isOpen ? <FaAngleDown size={20} /> : <FaAngleUp size={20} />}
+          {isOpen ? <ChevronUp   /> : <ChevronDown />}
         </button>
       )}
 
@@ -81,7 +78,7 @@ const TableOfContents = ({ sections, activeSection, setActiveSection }) => {
                 ${activeSection === section.id ? 'bg-gray-100 text-[var(--themeColor)] font-medium' : ''}
               `}
             >
-              {section.title} {activeSection === section.id && <FaLongArrowAltRight className='text-xl' />}
+              {section.title} {activeSection === section.id && <MoveRight  className='text-xl' />}
             </button>
           ))}
         </nav>
@@ -475,7 +472,7 @@ const TermsAndConditions = () => {
   const ActiveSectionComponent = SECTIONS_MAP[activeSection];
 
   return (
-    <div className="min-h-screen font-sans">
+    <div className="min-h-screen font-sans bg-[var(--background-color)]">
       <div className="relative text-center leading-10 py-8">
         <h1 className="text-3xl font-medium tracking-widest">Terms & Conditions</h1>
         <p className="text-gray-500 text-sm">

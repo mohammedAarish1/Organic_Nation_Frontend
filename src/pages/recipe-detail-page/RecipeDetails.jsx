@@ -1,14 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
-
-
-// react icons 
-import { FaArrowLeftLong } from "react-icons/fa6";
-import { FaInstagram } from "react-icons/fa";
-import { ImLinkedin } from "react-icons/im";
 import { Link, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
+import { MoveLeft  } from 'lucide-react';
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -94,7 +89,7 @@ const RecipeDetails = () => {
                     </div>
                     <div>
                         <Link to='/our-recipes'>
-                            <button className='flex  justify-center items-center gap-5 bg-gradient-to-r from-[#6D613B] to-[#D3BB71]  px-5 py-3 tracking-widest hover:text-yellow-200 '><FaArrowLeftLong /> Explore more Recipes</button>
+                            <button className='flex  justify-center items-center gap-5 bg-gradient-to-r from-[#6D613B] to-[#D3BB71]  px-5 py-3 tracking-widest hover:text-yellow-200 '><MoveLeft  /> Explore more Recipes</button>
                         </Link>
                     </div>
                 </div>

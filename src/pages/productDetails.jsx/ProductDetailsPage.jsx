@@ -1,27 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  FaStar,
-  FaHeart,
-  FaShoppingCart,
-  FaTimes,
-  FaChevronLeft,
-  FaChevronRight,
-  FaTruck,
-  FaUndo,
-  FaEye,
-  FaTag,
-  FaCheckCircle,
-  FaFire
-} from 'react-icons/fa';
-import {
-  FaShield,
-} from 'react-icons/fa6';
 import AddToCartBtn from '../../components/add-to-cart-btn/AddToCartBtn';
 import ProductQty from '../../components/productQty/ProductQty';
 import { GoDotFill } from 'react-icons/go';
 import { freeShippingEligibleAmt } from '../../constants';
-
+import {X, Heart,ChevronLeft ,ChevronRight,Truck ,Shield ,RotateCcw, CircleCheck   } from 'lucide-react';
 const ProductDetailsPage = ({ product }) => {
 
 
@@ -145,14 +128,14 @@ const ProductDetailsPage = ({ product }) => {
                   className="absolute left-4 top-1/2 transform -translate-y-1/2 p-3 rounded-full shadow-lg transition-all duration-300 opacity-0 group-hover:opacity-100"
                   style={{ backgroundColor: '#F5EFE6', color: '#7A2E1D' }}
                 >
-                  <FaChevronLeft />
+                  <ChevronLeft />
                 </motion.button>
                 <motion.button
                   onClick={(e) => { e.stopPropagation(); nextImage(); }}
                   className="absolute right-4 top-1/2 transform -translate-y-1/2 p-3 rounded-full shadow-lg transition-all duration-300 opacity-0 group-hover:opacity-100"
                   style={{ backgroundColor: '#F5EFE6', color: '#7A2E1D' }}
                 >
-                  <FaChevronRight />
+                  <ChevronRight />
                 </motion.button>
 
                 {/* Image Counter */}
@@ -213,8 +196,8 @@ const ProductDetailsPage = ({ product }) => {
                   whileHover={{ scale: 1.1, rotate: 10 }}
                   whileTap={{ scale: 0.9 }}
                 >
-                  <FaHeart
-                    className={`text-xl transition-colors duration-300 ${isWishlisted ? 'text-red-500' : '#7A2E1D'
+                  <Heart
+                    className={`transition-colors duration-300 ${isWishlisted ? 'text-red-500' : '#7A2E1D'
                       }`}
                     style={{ color: isWishlisted ? '#D87C45' : '#7A2E1D' }}
                   />
@@ -246,10 +229,10 @@ const ProductDetailsPage = ({ product }) => {
                       animate={{ scale: 1, rotate: 0 }}
                       transition={{ delay: 0.1 * i, type: "spring" }}
                     >
-                      <FaStar
-                        className={i < Math.floor(product.averageRating) ? '' : 'text-gray-300'}
-                        style={{ color: i < Math.floor(product.averageRating) ? '#9B7A2F' : '#DCD2C0' }}
-                      />
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill={i < Math.floor(product.averageRating) ? '#9B7A2F' : '#DCD2C0'} className="bi bi-star-fill" viewBox="0 0 16 16">
+                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                      </svg>
+
                     </motion.div>
                   ))}
                 </div>
@@ -391,7 +374,7 @@ const ProductDetailsPage = ({ product }) => {
                         x: 5
                       }}
                     >
-                      <FaCheckCircle style={{ color: '#6B8E23' }} />
+                      <CircleCheck  style={{ color: '#6B8E23' }} />
                       <span style={{ color: '#3E2C1B' }} className="font-medium">
                         {feature}
                       </span>
@@ -490,9 +473,9 @@ const ProductDetailsPage = ({ product }) => {
               transition={{ delay: 1.0 }}
             >
               {[
-                { icon: FaTruck, title: "Free Shipping", subtitle: `On orders over ₹${freeShippingEligibleAmt}`, color: '#6B8E23' },
-                { icon: FaShield, title: "Quality Assured", subtitle: "100% home-style", color: '#7A2E1D' },
-                { icon: FaUndo, title: "Easy Returns", subtitle: "07-day policy", color: '#9B7A2F' }
+                { icon: Truck, title: "Free Shipping", subtitle: `On orders over ₹${freeShippingEligibleAmt}`, color: '#6B8E23' },
+                { icon: Shield, title: "Quality Assured", subtitle: "100% home-style", color: '#7A2E1D' },
+                { icon: RotateCcw , title: "Easy Returns", subtitle: "07-day policy", color: '#9B7A2F' }
               ].map((badge, index) => (
                 <motion.div
                   key={index}
@@ -572,7 +555,7 @@ const ProductDetailsPage = ({ product }) => {
                 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <FaTimes size={16} />
+                <X size={16} />
               </motion.button>
 
               {/* Navigation */}
@@ -583,7 +566,7 @@ const ProductDetailsPage = ({ product }) => {
               // whileHover={{ scale: 1.1, backgroundColor: '#7A2E1D' }}
               // whileTap={{ scale: 0.9 }}
               >
-                <FaChevronLeft size={16} />
+                <ChevronLeft size={16} />
               </motion.button>
               <motion.button
                 onClick={nextImage}
@@ -592,7 +575,7 @@ const ProductDetailsPage = ({ product }) => {
               // whileHover={{ scale: 1.1, backgroundColor: '#7A2E1D' }}
               // whileTap={{ scale: 0.9 }}
               >
-                <FaChevronRight size={16} />
+                <ChevronRight  size={16} />
               </motion.button>
 
               {/* Image Counter */}

@@ -1,22 +1,13 @@
 import React, { lazy, Suspense, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { MdOutlineArrowDownward } from "react-icons/md";
-// import ProductImages from '../../components/product-images/ProductImages';
-// import SingleReview from '../../components/reviews/SingleReview';
-// import ReviewsAndRatings from '../../helper/ReviewsAndRatings';
-// import OfferBanner from '../../components/offerBanner/OfferBanner';
 import SEO from '../../helper/SEO/SEO';
-// import YouMayAlsoLike from '../../components/module/product-details/YouMayAlsoLike';
-// import ProductInfo from '../../components/module/product-details/ProductInfo';
 import Loader from '../../components/common/Loader'
-// import ProductAdditionalInfo from '../../components/module/product-details/ProductAdditionalInfo';
 import ProductShare from '../../components/module/product-details/ProductShare';
-// import Title from '../../components/title/Title';
 import ProductDetailsPage from './ProductDetailsPage';
 
 const YouMayAlsoLike = lazy(() => import('../../components/module/product-details/YouMayAlsoLike'));
-const SingleReview = lazy(() => import('../../components/reviews/SingleReview'));
+// const SingleReview = lazy(() => import('../../components/reviews/SingleReview'));
 const ReviewsAndRatings = lazy(() => import('../../helper/ReviewsAndRatings'));
 const ReviewSection = lazy(() => import('./ReviewSection'));
 const ProductAdditionalInfo = lazy(() => import('../../components/module/product-details/ProductAdditionalInfo'));
@@ -227,15 +218,6 @@ const ProductDetails = () => {
           </Suspense>
         )}
 
-
-
-        {/* =============== product info =============  */}
-        {/* <section className=''>
-        <h3 className='text-center text-[var(--themeColor)] text-xl font-semibold pb-10'>FAQ's</h3>
-        <div>
-          <Accordion data={faq} />
-        </div>
-      </section> */}
 
         {/* =============== you may also like section ========== */}
         <Suspense fallback={<Loader height='300px' />}>

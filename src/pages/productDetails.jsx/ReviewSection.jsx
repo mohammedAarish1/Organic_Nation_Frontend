@@ -1,6 +1,6 @@
 import { useState } from "react";
 import SingleReview from "../../components/reviews/SingleReview";
-import { MdOutlineArrowDownward } from "react-icons/md";
+import { ArrowDown } from 'lucide-react';
 
 const ReviewSection = ({ product }) => {
     const [visibleCount, setVisibleCount] = useState(4);
@@ -22,7 +22,7 @@ const ReviewSection = ({ product }) => {
                     className="flex justify-center items-center gap-2 self-center py-3 px-6 rounded-lg   bg-gradient-to-r from-[var(--themeColor)] to-[var(--accent-color)] text-white hover:from-[var(--accent-color)] hover:to-[var(--themeColor)]"
                 >
                     more reviews
-                    <MdOutlineArrowDownward />
+                    <ArrowDown />
                 </button>
             )}
         </div>
