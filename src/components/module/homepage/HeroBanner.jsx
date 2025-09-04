@@ -1,6 +1,4 @@
 // import React, {  useEffect,  useState } from 'react';
-// import { BiChevronLeft, BiChevronRight, BiHeart, BiMailSend, BiMapPin, BiMenu, BiPhone, BiSearch, BiUser } from 'react-icons/bi';
-// import { CgShoppingCart } from 'react-icons/cg';
 
 
 // const HeroBanner = () => {

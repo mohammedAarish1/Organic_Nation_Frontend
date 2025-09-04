@@ -265,10 +265,10 @@
 // export default About;
 
 
-import React, { useEffect, useState, useRef } from 'react';
+import  { useEffect, useState, useRef } from 'react';
 import { motion,  useInView } from 'framer-motion';
-import { FaLeaf, FaHandshake, FaAward, FaEye } from 'react-icons/fa';
 import SEO from '../../helper/SEO/SEO';
+import { Award, Eye, Handshake, Leaf } from 'lucide-react';
 
 const About = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -422,22 +422,22 @@ const ValueSection = () => {
 
   const values = [
     {
-      icon: <FaLeaf className="text-4xl text-[var(--secondary-color)]" />,
+      icon: <Leaf size={32} className="text-4xl text-[var(--secondary-color)]" />,
       title: "Sustainability",
       description: "Committed to eco-friendly practices throughout our supply chain."
     },
     {
-      icon: <FaHandshake className="text-4xl text-[var(--accent-color)]" />,
+      icon: <Handshake size={32} className="text-4xl text-[var(--accent-color)]" />,
       title: "Community",
       description: "Supporting local farmers and empowering rural communities."
     },
     {
-      icon: <FaAward className="text-4xl text-[var(--themeColor)]" />,
+      icon: <Award size={32} className="text-4xl text-[var(--themeColor)]" />,
       title: "Quality",
       description: "Ensuring excellence in every product we create and distribute."
     },
     {
-      icon: <FaEye className="text-4xl text-[var(--alert-color)]" />,
+      icon: <Eye size={32} className="text-4xl text-[var(--alert-color)]" />,
       title: "Transparency",
       description: "Open about our processes, sources, and sustainable practices."
     },

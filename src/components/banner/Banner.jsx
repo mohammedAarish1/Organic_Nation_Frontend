@@ -163,7 +163,6 @@
 
 // import React, { useState, useEffect, useCallback } from 'react';
 // import { motion, AnimatePresence } from 'framer-motion';
-// // import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
 // import axios from 'axios';
 // import { setCurrentPage } from "../../features/pagination/pagination";
 // import { fetchCategoryWiseData, setCategoryBtnValue } from "../../features/filter/filterSlice";

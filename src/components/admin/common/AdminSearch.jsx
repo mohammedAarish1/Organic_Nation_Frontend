@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { FaSearch } from 'react-icons/fa'
+import { useEffect, useState } from 'react';
+import { Search } from 'lucide-react';
 
 const AdminSearch = ({
     data = [],
@@ -83,7 +83,7 @@ const AdminSearch = ({
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-8 pr-2 py-1 border rounded"
             />
-            <FaSearch className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <Search size={14} className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" />
         </div>
     )
 }

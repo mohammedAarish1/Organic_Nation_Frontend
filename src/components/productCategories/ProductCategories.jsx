@@ -2,7 +2,6 @@
 // import { useSelector } from 'react-redux';
 // import { Link } from 'react-router-dom';
 // import { motion } from 'framer-motion';
-// import { FiArrowRight, FiGrid, FiList } from 'react-icons/fi';
 // import Title from '../title/Title';
 
 // const ProductCategories = () => {
@@ -112,7 +111,7 @@
 //               onClick={() => setViewMode('grid')}
 //               className={`px-4 py-2 rounded-full flex items-center ${viewMode === 'grid' ? 'bg-[#712522] text-white' : 'text-gray-600'}`}
 //             >
-//               <FiGrid className="mr-2" />
+//               <Grid className="mr-2" />
 //               <span className="hidden sm:inline">Grid View</span>
 //             </button>
 //             <button
@@ -162,7 +161,7 @@
 //                       <h3 className="font-bold text-xl">{category.category}</h3>
 //                       <div className="flex items-center mt-2">
 //                         <span className="text-sm">Explore</span>
-//                         <FiArrowRight className="ml-2" />
+//                         <ArrowRight className="ml-2" />
 //                       </div>
 //                     </div>
 //                   </div>
@@ -249,7 +248,7 @@
 //                             <h3 className="font-medium text-lg text-gray-800">{category.category}</h3>
 //                             <div className="mt-2 flex justify-center">
 //                               <span className="inline-flex items-center text-sm text-[#712522]">
-//                                 View Products <FiArrowRight className="ml-1" />
+//                                 View Products <ArrowRight className="ml-1" />
 //                               </span>
 //                             </div>
 //                           </div>
@@ -282,18 +281,10 @@ import React, { useMemo, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import {
-  FiArrowRight,
-  FiGrid,
-  FiChevronLeft,
-  FiChevronRight,
-  FiStar,
-  FiTrendingUp,
-  FiHeart
-} from 'react-icons/fi';
 import Title from '../title/Title';
 import Tabs from '../button/Tabs';
 import { scrollToSlide } from '../../helper/helperFunctions';
+import { ArrowRight, ChevronLeft, ChevronRight, Grid, Grid2X2, Heart, Star, TrendingUp } from 'lucide-react';
 
 const ProductCategories = () => {
   const { categoryList } = useSelector((state) => state.filterData);
@@ -402,9 +393,9 @@ const ProductCategories = () => {
 
 
   const tabs = [
-    { key: 'featured', icon: FiStar, label: 'Featured' },
-    { key: 'trending', icon: FiTrendingUp, label: 'Trending' },
-    { key: 'grid', icon: FiGrid, label: 'All Categories' }
+    { key: 'featured', icon: Star, label: 'Featured' },
+    { key: 'trending', icon: TrendingUp, label: 'Trending' },
+    { key: 'grid', icon: Grid, label: 'All Categories' }
   ]
 
   // Enhanced image lookup with metadata
@@ -481,7 +472,7 @@ const ProductCategories = () => {
           {/* Trending badge */}
           {category.trending && (
             <div className="absolute top-4 right-4 z-20 bg-gradient-to-r from-[#D87C45] to-[#9B7A2F] text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1 shadow-lg">
-              <FiTrendingUp className="w-3 h-3" />
+              <TrendingUp className="w-3 h-3" />
               Trending
             </div>
           )}
@@ -513,8 +504,7 @@ const ProductCategories = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center text-[#e4b035] bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
                 <span className="text-sm font-medium">Explore Collection</span>
-                <FiArrowRight className={`ml-2 w-4 h-4 transition-transform duration-300 ${hoveredItem === category.categoryUrl ? 'translate-x-1' : ''
-                  }`} />
+                <ArrowRight className={`ml-2 w-4 h-4 transition-transform duration-300 ${hoveredItem === category.categoryUrl ? 'translate-x-1' : '' }`} />
               </div>
 
               <button
@@ -524,7 +514,7 @@ const ProductCategories = () => {
                 }}
                 className="text-white/80 hover:text-red-400 transition-colors duration-300 p-2"
               >
-                <FiHeart className="w-5 h-5" />
+                <Heart className="w-5 h-5" />
               </button>
             </div>
           </div>
@@ -554,7 +544,7 @@ const ProductCategories = () => {
           {/* Trending indicator */}
           {category.trending && (
             <div className="absolute top-3 left-3 z-10 bg-[#D87C45] text-white px-2 py-1 rounded-lg text-xs font-semibold flex items-center gap-1">
-              <FiStar className="w-3 h-3" />
+              <Star className="w-3 h-3" />
               Hot
             </div>
           )}
@@ -589,7 +579,7 @@ const ProductCategories = () => {
                 }`}>
                 View Products
               </span>
-              <FiArrowRight className={`w-4 h-4 transition-all duration-300 ${hoveredItem === category.categoryUrl
+              <ArrowRight className={`w-4 h-4 transition-all duration-300 ${hoveredItem === category.categoryUrl
                 ? 'text-[#9B7A2F] translate-x-1'
                 : 'text-[#7A2E1D]'
                 }`} />
@@ -641,9 +631,9 @@ const ProductCategories = () => {
           {/* <div className="flex justify-center mt-8">
             <div className="bg-white/80 backdrop-blur-sm shadow-xl rounded-2xl p-2 flex border border-[#DCD2C0]/30">
               {[
-                { key: 'featured', icon: FiStar, label: 'Featured' },
+                { key: 'featured', icon: Star, label: 'Featured' },
                 { key: 'trending', icon: FiTrendingUp, label: 'Trending' },
-                { key: 'grid', icon: FiGrid, label: 'All Categories' }
+                { key: 'grid', icon: Grid, label: 'All Categories' }
               ].map(({ key, icon: Icon, label }) => (
                 <button
                   key={key}
@@ -694,7 +684,7 @@ const ProductCategories = () => {
             <div className="relative">
               <div className="flex items-center justify-between mb-8">
                 <h3 className="text-3xl font-bold text-[#3E2C1B] flex items-center">
-                  <FiTrendingUp className="mr-3 text-[#D87C45]" />
+                  <TrendingUp className="mr-3 text-[#D87C45]" />
                   Trending Now
                 </h3>
 
@@ -704,13 +694,13 @@ const ProductCategories = () => {
                       onClick={() => scrollToSlide(scrollContainerRef,'prev')}
                       className="p-3 bg-white/80 hover:bg-white border border-[#DCD2C0]/30 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 text-[#7A2E1D] hover:text-[#9B7A2F]"
                     >
-                      <FiChevronLeft className="w-5 h-5" />
+                      <ChevronLeft className="w-5 h-5" />
                     </button>
                     <button
                       onClick={() => scrollToSlide(scrollContainerRef,'next')}
                       className="p-3 bg-white/80 hover:bg-white border border-[#DCD2C0]/30 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 text-[#7A2E1D] hover:text-[#9B7A2F]"
                     >
-                      <FiChevronRight className="w-5 h-5" />
+                      <ChevronRight className="w-5 h-5" />
                     </button>
                   </div>
                 )}
@@ -745,7 +735,7 @@ const ProductCategories = () => {
             animate="visible"
           >
             <h3 className="text-3xl font-bold text-[#3E2C1B] mb-8 flex items-center">
-              <FiGrid className="mr-3 text-[#9B7A2F]" />
+              <Grid2X2 className="mr-3 text-[#9B7A2F]" />
               Complete Collection
             </h3>
 
@@ -797,7 +787,7 @@ const ProductCategories = () => {
                             <div className={`flex items-center text-sm transition-colors duration-300 ${hoveredItem === category.categoryUrl ? 'text-[#9B7A2F]' : 'text-[#7A2E1D]'
                               }`}>
                               <span>Explore</span>
-                              <FiArrowRight className={`ml-1 w-3 h-3 transition-transform duration-300 ${hoveredItem === category.categoryUrl ? 'translate-x-1' : ''
+                              <ArrowRight className={`ml-1 w-3 h-3 transition-transform duration-300 ${hoveredItem === category.categoryUrl ? 'translate-x-1' : ''
                                 }`} />
                             </div>
                           </div>

@@ -2,8 +2,8 @@ import React, { memo, useCallback, useMemo, useRef } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { Field, Form, Formik } from "formik";
-import { ImSpinner9 } from "react-icons/im";
 import { applyFamilyCouponCode } from '../../features/cart/cart';
+import { Loader } from 'lucide-react';
 
 // Import confetti library - make sure to install: npm install canvas-confetti
 // import confetti from 'canvas-confetti';
@@ -156,7 +156,7 @@ const FamilyCoupon = memo(() => {
                   className="px-6 py-3 bg-gradient-to-r from-[#7A2E1D] to-[#7A2E1D]/90 hover:from-[#7A2E1D]/90 hover:to-[#7A2E1D] text-[#F5EFE6] font-semibold rounded-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md transform hover:scale-[1.02] active:scale-[0.98] min-w-[80px] flex items-center justify-center"
                 >
                   {isSubmitting ? (
-                    <ImSpinner9 className="animate-spin w-4 h-4 text-[#F5EFE6]" />
+                    <Loader className="animate-spin w-4 h-4 text-[#F5EFE6]" />
                   ) : (
                     <span className="text-sm">Apply</span>
                   )}

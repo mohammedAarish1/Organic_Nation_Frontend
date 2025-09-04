@@ -9,9 +9,8 @@ import Image from "../image/Image";
 import Loader from "../common/Loader";
 import CloseButton from '../button/CloseButton';
 import { motion, AnimatePresence } from 'framer-motion';
-import {  FaStar, FaEye, FaShoppingCart, FaUndo } from 'react-icons/fa';
-import { MdReviews } from 'react-icons/md';
 import {getButtonStyles} from '../../helper/helperFunctions'
+import { Eye, ShoppingCart, SquareChartGantt, Star, Undo } from "lucide-react";
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 const ReturnItemForm = lazy(() => import("../returnItemForm/ReturnItemForm"));
@@ -102,26 +101,26 @@ const SingleOrder = ({
 
   const actionButtons = [
     {
-      icon: FaEye,
+      icon: Eye,
       text: "View Product",
       action: () => {},
       link: `/shop/all/${nameUrl}`,
       variant: "primary"
     },
     {
-      icon: FaShoppingCart,
+      icon: ShoppingCart,
       text: "Buy Again",
       action: handleAddToCart,
       variant: "secondary"
     },
     {
-      icon: MdReviews,
+      icon: SquareChartGantt,
       text: "Review Product",
       action: () => setShowProductReview(true),
       variant: "accent"
     },
     {
-      icon: FaUndo,
+      icon: Undo,
       text: isReturned ? "Returned" : "Return Item",
       action: () => setIsFormVisible(true),
       variant: "return",
@@ -197,7 +196,7 @@ const SingleOrder = ({
                   animate={{ opacity: 1, scale: 1 }}
                   className="inline-flex items-center gap-1 bg-[var(--alert-color)]/10 text-[var(--alert-color)] px-2 py-1 rounded-full text-xs font-medium"
                 >
-                  <FaUndo className="w-3 h-3" />
+                  <Undo className="w-3 h-3" />
                   {curOrder.returnInfo.returnedQuantity} item(s) returned
                 </motion.div>
               )}
@@ -263,7 +262,7 @@ const SingleOrder = ({
               <div className="flex items-center justify-between p-6 border-b border-[var(--neutral-color)]/30">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-[var(--themeColor)]/10 rounded-lg">
-                    <FaStar className="w-5 h-5 text-[var(--themeColor)]" />
+                    <Star className="w-5 h-5 text-[var(--themeColor)]" />
                   </div>
                   <h2 className="text-xl font-bold text-[var(--text-color)]">
                     Rate & Review
@@ -304,7 +303,7 @@ const SingleOrder = ({
               <div className="p-6 border-b border-[var(--neutral-color)]/30">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-[var(--alert-color)]/10 rounded-lg">
-                    <FaUndo className="w-5 h-5 text-[var(--alert-color)]" />
+                    <Undo className="w-5 h-5 text-[var(--alert-color)]" />
                   </div>
                   <h2 className="text-2xl font-bold text-[var(--text-color)]">
                     Return Request

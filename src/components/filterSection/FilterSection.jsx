@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import {
   // setFilterInitialValues,
@@ -15,10 +15,10 @@ import { setCurrentPage } from '../../features/pagination/pagination';
 import { setShowFilters } from '../../features/toggleSidebar/toggleSidebar';
 import { Link } from 'react-router-dom';
 // react icons 
-import { IoCloseSharp } from 'react-icons/io5';
 import PriceRangeFilter from '../module/shop/PriceRangeFilter ';
 import SortFilter from '../module/shop/SortFilter';
-import { FiSearch, FiX } from 'react-icons/fi';
+import CloseButton from "../../components/button/CloseButton"
+import { Search, X } from 'lucide-react';
 
 
 const FilterSection = () => {
@@ -51,13 +51,8 @@ const FilterSection = () => {
 
   return (
     <div className={`px-4 filters ${showFilters ? 'active' : ''}`}>
-      <div className='md:hidden block mb-5 pr-4 text-end'>
-        <button
-          className='shadow-md rounded-full shadow-green-700 hover:scale-110 text-[#ffe9a1]'
-          onClick={() => dispatch(setShowFilters('hide'))}
-        >
-          <IoCloseSharp className='text-4xl' />
-        </button>
+      <div className='md:hidden flex justify-end mb-5 pr-4'>
+        <CloseButton action={() => dispatch(setShowFilters('hide'))} />
       </div>
       {/* search filter  */}
       <div className='mb-5 md:block hidden md:pl-2 '>
@@ -69,7 +64,7 @@ const FilterSection = () => {
 
         }}>
           <div className="flex items-center gap-2 bg-white rounded p-2">
-            <FiSearch className="text-[var(--themeColor)]" />
+            <Search size={16} className="text-[var(--themeColor)]" />
             <input
               type="text"
               className="w-full outline-none"
@@ -155,7 +150,7 @@ const FilterSection = () => {
         >Clear Filters</button> */}
 
         <button
-        type='button'
+          type='button'
           onClick={() => {
             dispatch(clearFilters())
             if (window.innerWidth <= 768) {
@@ -165,7 +160,7 @@ const FilterSection = () => {
           }}
           className="w-full bg-[var(--alert-color)] text-white py-2 rounded flex items-center justify-center gap-2"
         >
-          <FiX /> Clear Filters
+          <X size={20} /> Clear Filters
         </button>
       </div>
     </div>

@@ -1,5 +1,4 @@
 // import React, { useEffect, useState } from 'react'
-// import { FaCheckCircle } from 'react-icons/fa';
 // import { Link, useParams } from 'react-router-dom';
 // // import { getSingleOrder } from '../../features/manageOrders/manageOrders';
 // import axios from 'axios';

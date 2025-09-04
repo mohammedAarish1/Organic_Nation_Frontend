@@ -1,7 +1,5 @@
 import React, { memo } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { MdOutlineHome } from "react-icons/md";
-import { FaAngleRight } from "react-icons/fa";
 import { motion } from 'framer-motion';
 
 const Breadcrumbs = () => {

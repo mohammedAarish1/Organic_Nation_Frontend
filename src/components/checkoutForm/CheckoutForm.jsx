@@ -8,11 +8,6 @@
 // // state list
 // import { states } from "../../helper/stateList";
 // // react icons
-// import { MdEmail, MdOutlinePhoneAndroid, MdLocationCity } from "react-icons/md";
-// import { FaUserEdit } from "react-icons/fa";
-// import { PiFileZipFill } from "react-icons/pi";
-// import { BsArrowRight } from "react-icons/bs";
-// import { FaArrowLeftLong, FaArrowRight } from "react-icons/fa6";
 // import {
 //   generateTransactionID,
 //   // address,
@@ -24,7 +19,6 @@
 // // formik
 // import { Formik, Form, Field } from "formik";
 // import { initiatePayment } from "../../features/orderPayment/payment";
-// import { ImSpinner9 } from "react-icons/im";
 // import CouponList from "../couponCodeList/CouponList";
 // // import { handleSavingLocalAdd } from "../../features/check-delivery/checkDelivery";
 // // import { saveLocalUserInfo } from "../../features/auth/auth";

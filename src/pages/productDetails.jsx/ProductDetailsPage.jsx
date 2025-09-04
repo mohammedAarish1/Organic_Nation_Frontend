@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import AddToCartBtn from '../../components/add-to-cart-btn/AddToCartBtn';
 import ProductQty from '../../components/productQty/ProductQty';
-import { GoDotFill } from 'react-icons/go';
 import { freeShippingEligibleAmt } from '../../constants';
-import {X, Heart,ChevronLeft ,ChevronRight,Truck ,Shield ,RotateCcw, CircleCheck   } from 'lucide-react';
+import { X, Heart, ChevronLeft, ChevronRight, Truck, Shield, RotateCcw, CircleCheck } from 'lucide-react';
 const ProductDetailsPage = ({ product }) => {
 
 
@@ -256,8 +255,12 @@ const ProductDetailsPage = ({ product }) => {
               transition={{ delay: 0.4, type: "spring" }}
               whileHover={{ scale: 1.02 }}
             >
-              <p className='flex items-center gap-2'><span className='border border-green-600'><GoDotFill className='text-green-700' /></span><span className='font-medium '>Pure Vegetarian Product</span></p>
-
+              <p className='flex items-center gap-2'><span className='border border-green-600'>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="16" height="16">
+                  <rect x="2" y="2" width="36" height="36" fill="none" stroke="#1B5E20" strokeWidth="2" />
+                  <circle cx="20" cy="20" r="10" fill="#1B5E20" />
+                </svg>
+              </span><span className='font-medium '>Pure Vegetarian Product</span></p>
             </motion.div>
 
 
@@ -374,7 +377,7 @@ const ProductDetailsPage = ({ product }) => {
                         x: 5
                       }}
                     >
-                      <CircleCheck  style={{ color: '#6B8E23' }} />
+                      <CircleCheck style={{ color: '#6B8E23' }} />
                       <span style={{ color: '#3E2C1B' }} className="font-medium">
                         {feature}
                       </span>
@@ -475,7 +478,7 @@ const ProductDetailsPage = ({ product }) => {
               {[
                 { icon: Truck, title: "Free Shipping", subtitle: `On orders over ₹${freeShippingEligibleAmt}`, color: '#6B8E23' },
                 { icon: Shield, title: "Quality Assured", subtitle: "100% home-style", color: '#7A2E1D' },
-                { icon: RotateCcw , title: "Easy Returns", subtitle: "07-day policy", color: '#9B7A2F' }
+                { icon: RotateCcw, title: "Easy Returns", subtitle: "07-day policy", color: '#9B7A2F' }
               ].map((badge, index) => (
                 <motion.div
                   key={index}
@@ -575,7 +578,7 @@ const ProductDetailsPage = ({ product }) => {
               // whileHover={{ scale: 1.1, backgroundColor: '#7A2E1D' }}
               // whileTap={{ scale: 0.9 }}
               >
-                <ChevronRight  size={16} />
+                <ChevronRight size={16} />
               </motion.button>
 
               {/* Image Counter */}

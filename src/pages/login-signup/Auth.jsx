@@ -11,9 +11,6 @@
 // import { getAllCartItems, mergeCart } from "../../features/cart/cart";
 // // import OtpInput from '../../components/otp/OtpInput';
 // // react icons
-// import { FcGoogle, FcIphone } from "react-icons/fc";
-// import { ImSpinner9 } from "react-icons/im";
-// import { FaArrowRight } from "react-icons/fa";
 // import { fetchDataAfterLogin } from "../../helper/helperFunctions";
 // import {  login, signup, updateUserRegisterStatus } from "../../features/auth/auth";
 

@@ -70,11 +70,10 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaCheckCircle, FaInfoCircle, FaLeaf, FaStar } from 'react-icons/fa';
+import { CheckCircle, Leaf, Star } from 'lucide-react';
 
 const ProductAdditionalInfo = ({ data }) => {
   const [activeTab, setActiveTab] = useState(0);
-
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0, y: 30 },
@@ -129,10 +128,10 @@ const ProductAdditionalInfo = ({ data }) => {
   // Icon mapping for different tab types
   const getTabIcon = (title) => {
     const titleLower = title.toLowerCase();
-    if (titleLower.includes('feature') || titleLower.includes('benefit')) return FaCheckCircle;
-    if (titleLower.includes('ingredient') || titleLower.includes('organic')) return FaLeaf;
-    if (titleLower.includes('review') || titleLower.includes('rating')) return FaStar;
-    return FaInfoCircle;
+    if (titleLower.includes('Product Description') || titleLower.includes('benefit')) return CheckCircle;
+    if (titleLower.includes('Features & Benefits') || titleLower.includes('organic')) return Leaf;
+    if (titleLower.includes('usage') || titleLower.includes('rating')) return Star;
+    return Leaf;
   };
 
   return (
@@ -280,7 +279,7 @@ const ProductAdditionalInfo = ({ data }) => {
                       repeatDelay: 3
                     }}
                   >
-                    <FaCheckCircle />
+                    <CheckCircle size={20} />
                     <span>Premium Quality Assured</span>
                   </motion.div>
                 </motion.div>

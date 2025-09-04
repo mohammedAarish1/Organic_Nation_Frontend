@@ -1,6 +1,4 @@
 // import React, { useEffect, useState } from 'react'
-// import { PiSealCheckBold } from "react-icons/pi";
-// import { RxCrossCircled } from "react-icons/rx";
 // import { Link } from 'react-router-dom';
 // import { initiatePayment } from '../../features/orderPayment/payment';
 // import { useDispatch } from 'react-redux';

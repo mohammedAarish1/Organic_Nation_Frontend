@@ -5,14 +5,10 @@ import { clearUserOrders, resetCheckoutStatus } from '../../features/manageOrder
 import { clearLocalCart, getAllCartItems } from '../../features/cart/cart';
 import { logout } from '../../features/auth/auth';
 import { toast } from 'react-toastify';
-// import { IoIosArrowDown } from "react-icons/io";
 
 // Icons
-// import { FaUserCircle } from "react-icons/fa";
-// import { IoMdLogIn } from "react-icons/io";
-// import { BsCart } from "react-icons/bs";
 import Loader from '../common/Loader';
-import { FiLogIn, FiShoppingCart, FiUser } from 'react-icons/fi';
+import { LogIn, ShoppingCart, User } from 'lucide-react';
 
 
 const UserMenu = lazy(() => import('../module/navigation-menu/UserMenu'))
@@ -34,7 +30,7 @@ const CartButton = memo(({ totalCartItems }) => (
     </div>
     <span>Cart</span> */}
     <button className="text-[#3E2C1B] hover:text-[#9B7A2F] relative">
-      <FiShoppingCart size={20} />
+      <ShoppingCart size={20} />
       <span className="absolute -top-2 -right-2 bg-[#D87C45] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
         {totalCartItems}
       </span>
@@ -91,7 +87,7 @@ const OtherNavItems = () => {
 
   return (
     <nav className="text-[var(--themeColor)]">
-      <ul className="flex justify-center items-center sm:gap-4 gap-3 font-medium">
+      <ul className="flex justify-center items-center sm:gap-3 gap-2 font-medium">
        
 
         {user && !user_loading ? (
@@ -112,7 +108,7 @@ const OtherNavItems = () => {
               aria-expanded={showUserMenu}
               aria-label="User menu"
             >
-              <FiUser size={20} />
+              <User size={20} className='mt-1' />
             </button>
 
             <Suspense fallback={<Loader height='10px' />}>
@@ -138,7 +134,7 @@ const OtherNavItems = () => {
 
             >
               {/* <IoMdLogIn className="text-2xl" /> */}
-              <FiLogIn size={20} />
+              <LogIn size={20} />
               {/* <span>Login</span> */}
             </NavLink>
           </li>

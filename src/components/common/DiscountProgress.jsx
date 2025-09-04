@@ -1,21 +1,10 @@
-import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import  { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  FaGift,
-  FaChevronDown,
-  // FaChevronUp,
-  FaFire,
-  FaTags,
-  FaTimes,
-  FaGripVertical,
-  // FaPercentage,
-  FaTrophy,
-  FaStar
-} from 'react-icons/fa';
 import { formatPrice } from '../../helper/helperFunctions';
 import confetti from 'canvas-confetti';
+import { ChevronDown, Flame, Gift, GripVertical, Star, Tags, Trophy, X } from 'lucide-react';
 
 // Constants
 const DISCOUNT_TIERS = [
@@ -260,11 +249,11 @@ const DiscountProgress = () => {
 
           <div className="flex items-center gap-3 flex-1 relative z-10">
             <div className="drag-handle cursor-grab hover:cursor-grabbing p-2 rounded-lg hover:bg-white/20 transition-all duration-200 active:scale-95">
-              <FaGripVertical className="text-sm opacity-70" />
+              <GripVertical size={20} className="text-sm opacity-70" />
             </div>
 
             <div className="bg-white/20 p-2 rounded-lg backdrop-blur-sm">
-              <FaGift className="text- text-amber-100" />
+              <Gift size={18} className="text-amber-100" />
             </div>
 
             <div className="font-bold text-ssm flex-1 min-w-0">
@@ -275,17 +264,18 @@ const DiscountProgress = () => {
                   animate={{ scale: 1 }}
                   transition={{ type: "spring", stiffness: 200 }}
                 >
-                  <FaFire className="text-orange-300 animate-pulse" />
+                  <Flame size={22} className="text-orange-300 animate-pulse" />
                   <span className="truncate">₹{Math.round(discountAmount)} Saved!</span>
                 </motion.span>
               ) : (
                 <span className="truncate flex items-center gap-2">
-                  <FaStar className="text-yellow-300" />
+                  <Star size={18} className="text-yellow-300" />
                   Unlock Discounts
                 </span>
               )}
             </div>
           </div>
+
 
           <div className="flex items-center gap-2 relative z-10">
             <motion.button
@@ -300,18 +290,18 @@ const DiscountProgress = () => {
                 animate={{ rotate: isExpanded ? 180 : 0 }}
                 transition={{ duration: 0.2 }}
               >
-                <FaChevronDown className="text-xs" />
+                <ChevronDown size={18} />
               </motion.div>
             </motion.button>
 
             <motion.button
               onClick={() => setIsVisible(false)}
-              className="p-2 hover:bg-white/20 rounded-lg transition-all duration-200"
+              className="p-1 hover:bg-white/20 rounded-lg transition-all duration-200"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               title="Close"
             >
-              <FaTimes className="text-sm" />
+              <X size={20} />
             </motion.button>
           </div>
         </div>
@@ -323,7 +313,7 @@ const DiscountProgress = () => {
           <div className="flex items-center justify-between relative z-10">
             <div className="flex items-center gap-3 flex-1 min-w-0">
               <div className="bg-white/20 p-2 rounded-lg">
-                <FaTags className="text-sm" />
+                <Tags size={20} />
               </div>
 
               <div className="flex-1 min-w-0">
@@ -343,7 +333,7 @@ const DiscountProgress = () => {
                     </>
                   ) : (
                     <span className="flex items-center gap-2">
-                      <FaTrophy className="text-yellow-300" />
+                      <Trophy size={14} className="text-yellow-300" />
                       Maximum Discount Applied! 🎉
                     </span>
                   )}
@@ -427,8 +417,8 @@ const DiscountProgress = () => {
                         <motion.div
                           key={index}
                           className={`text-center p-1 rounded-xl border-2 transition-all duration-200 ${isUnlocked
-                              ? 'border-green-400 bg-green-50 shadow-md'
-                              : 'border-gray-200 bg-gray-50 hover:border-gray-300'
+                            ? 'border-green-400 bg-green-50 shadow-md'
+                            : 'border-gray-200 bg-gray-50 hover:border-gray-300'
                             }`}
                           whileHover={{ scale: 1.02 }}
                           animate={isUnlocked ? { scale: [1, 1.05, 1] } : {}}
@@ -451,7 +441,7 @@ const DiscountProgress = () => {
                               animate={{ scale: 1 }}
                               transition={{ delay: 0.2 }}
                             >
-                              <FaTrophy className="text-[10px]" />
+                              <Trophy size={12} />
                               Unlocked
                             </motion.div>
                           )}

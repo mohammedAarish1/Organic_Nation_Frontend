@@ -1,5 +1,3 @@
-import React, { useState } from 'react';
-import { BsFillGridFill, BsList } from "react-icons/bs";
 import {
   // getFilteredData,
   // fetchCategoryWiseData,
@@ -9,14 +7,13 @@ import {
 } from '../../features/filter/filterSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { setShowFilters } from '../../features/toggleSidebar/toggleSidebar';
-import { Tooltip } from 'react-tooltip';
+// import { Tooltip } from 'react-tooltip';
 // react icons 
-import { LiaFilterSolid } from "react-icons/lia";
 // import { setCurrentPage } from '../../features/pagination/pagination';
 import { useNavigate } from 'react-router-dom';
 import SortFilter from '../module/shop/SortFilter';
 import Search from "../../components/search/Search"
-import { FiGrid, FiList } from 'react-icons/fi';
+import { Funnel, Grid, List } from 'lucide-react';
 
 
 const SortSection = ({ setGridView, gridView }) => {
@@ -117,7 +114,7 @@ const SortSection = ({ setGridView, gridView }) => {
 
                 className={`px-4 py-2 rounded-full flex items-center ${gridView ? 'bg-[#712522] text-white' : 'text-gray-600'}`}
               >
-                <FiGrid className="mr-2" />
+                <Grid size={16} className="mr-2" />
                 {/* <span className="hidden sm:inline">Grid View</span> */}
               </button>
               <button
@@ -125,7 +122,7 @@ const SortSection = ({ setGridView, gridView }) => {
 
                 className={`px-4 py-2 rounded-full flex items-center ${!gridView ? 'bg-[#712522] text-white' : 'text-gray-600'}`}
               >
-                <FiList className="mr-2" />
+                <List size={16} className="mr-2" />
                 {/* <span className="hidden sm:inline">Carousel</span> */}
               </button>
             </div>
@@ -173,7 +170,7 @@ const SortSection = ({ setGridView, gridView }) => {
         <div className='md:hidden block'>
           <button className='flex justify-center items-center text-[var(--themeColor)] gap-3 py-1 px-2 border border-gray-400 rounded-lg'
             onClick={() => dispatch(setShowFilters('showHide'))}
-          >Filters <LiaFilterSolid /></button>
+          >Filters <Funnel size={16} /></button>
         </div>
 
       </div>

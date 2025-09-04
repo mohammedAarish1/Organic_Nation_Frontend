@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { Link } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 // import { setCurrentPage } from '../../features/pagination/pagination';
 // import { fetchCategoryWiseData, setCategoryBtnValue } from '../../features/filter/filterSlice';
 // import { useDispatch } from 'react-redux';
@@ -82,7 +82,7 @@ const CategoryCarousel = () => {
                               ${showLeftArrow ? 'text-gray-800' : 'text-gray-300'}`}
                     disabled={!showLeftArrow}
                 >
-                    <IoIosArrowBack className="w-6 h-6" />
+                    <ChevronLeft  className="w-6 h-6" />
                 </button>
 
                 {/* Carousel Container */}
@@ -134,7 +134,7 @@ const CategoryCarousel = () => {
                               ${showRightArrow ? 'text-gray-800' : 'text-gray-300'}`}
                     disabled={!showRightArrow}
                 >
-                    <IoIosArrowForward className="w-6 h-6" />
+                    <ChevronRight className="w-6 h-6" />
                 </button>
             </div>
         </div>

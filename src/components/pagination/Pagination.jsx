@@ -1,8 +1,8 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentPage, setPrev, setNext } from '../../features/pagination/pagination';
-// react icons 
-import { AiOutlineBackward, AiOutlineForward } from "react-icons/ai";
+//  icons 
+import {  ChevronsLeft, ChevronsRight } from 'lucide-react';
 
 const Pagination = ({ totalPost, postPerPage }) => {
 
@@ -24,7 +24,7 @@ const Pagination = ({ totalPost, postPerPage }) => {
                     window.scrollTo(0, 0);
                 }}
             >
-                <AiOutlineBackward />
+                <ChevronsLeft size={20} />
             </button>
 
             {/* number buttons  */}
@@ -49,7 +49,7 @@ const Pagination = ({ totalPost, postPerPage }) => {
                     window.scrollTo(0, 0);
                 }}
             >
-                <AiOutlineForward />
+                <ChevronsRight size={20} />
             </button>
 
         </div>

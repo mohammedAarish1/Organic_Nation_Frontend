@@ -3,9 +3,8 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { addNewProductInDatabase, updateExistingProduct } from '../../../../features/admin/adminData';
-import { RxCross2 } from "react-icons/rx";
-import { TiPlus } from "react-icons/ti";
 import { toast } from 'react-toastify';
+import { Plus, X } from 'lucide-react';
 
 
 
@@ -72,7 +71,7 @@ const ImagePreview = ({ url, onRemove, index }) => (
             onClick={() => onRemove(index)}
             className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
         >
-            <RxCross2 />
+            <X />
         </button>
     </div>
 );
@@ -277,7 +276,7 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
                                         className="hidden"
                                     />
                                     <div className="flex flex-col items-center">
-                                        <TiPlus size={24} className="text-green-500" />
+                                        <Plus size={24} className="text-green-500" />
                                         <span className="text-xs text-gray-500 mt-1">Add Images</span>
                                     </div>
                                 </label>

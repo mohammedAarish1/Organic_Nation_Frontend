@@ -1,11 +1,5 @@
 // import React, { useState } from 'react';
 // // react icons 
-// import { FaCircleCheck, FaStar, FaIndianRupeeSign } from "react-icons/fa6";
-// import { HiXCircle } from "react-icons/hi";
-// import { AiOutlineStar } from "react-icons/ai";
-// import { FaStarHalfAlt } from 'react-icons/fa';
-// import { GoDotFill } from "react-icons/go";
-// import { LiaShippingFastSolid } from "react-icons/lia";
 // import ProductQty from '../../productQty/ProductQty';
 // import AddToCartBtn from '../../add-to-cart-btn/AddToCartBtn';
 

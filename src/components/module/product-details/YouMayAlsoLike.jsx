@@ -67,14 +67,14 @@
 
 
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { FaStar, FaHeart, FaShoppingCart, FaArrowRight, FaTag } from 'react-icons/fa';
 import Image from '../../image/Image';
 import { fetchCategoryWiseData } from '../../../features/filter/filterSlice';
 import AddToCartBtn from '../../add-to-cart-btn/AddToCartBtn';
+import { ArrowRight, BadgePercent, Heart } from 'lucide-react';
 
 const YouMayAlsoLike = ({ categoryUrl }) => {
   const dispatch = useDispatch();
@@ -205,7 +205,7 @@ const YouMayAlsoLike = ({ categoryUrl }) => {
                             animate={{ scale: 1, rotate: 0 }}
                             transition={{ delay: index * 0.1 + 0.3, type: "spring" }}
                           >
-                            <FaTag />
+                            <BadgePercent size={16} />
                             <span>{product.discount}% OFF</span>
                           </motion.div>
                         )}
@@ -218,7 +218,7 @@ const YouMayAlsoLike = ({ categoryUrl }) => {
                           whileHover={{ scale: 1.1, rotate: 10 }}
                           whileTap={{ scale: 0.9 }}
                         >
-                          <FaHeart
+                          <Heart
                             className={`transition-colors duration-300 ${
                               isWishlisted ? 'text-red-500' : 'text-gray-400'
                             }`}
@@ -409,7 +409,7 @@ const YouMayAlsoLike = ({ categoryUrl }) => {
                         repeatDelay: 1
                       }}
                     >
-                      <FaArrowRight 
+                      <ArrowRight 
                         className="text-3xl"
                         style={{ color: '#7A2E1D' }}
                       />

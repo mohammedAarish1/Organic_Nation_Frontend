@@ -1,6 +1,4 @@
 // import { useState } from "react";
-// import { GoPlus } from "react-icons/go";
-// import { LiaMinusSolid } from "react-icons/lia";
 
 // const Accordion = ({ data }) => {
 

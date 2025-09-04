@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import UpdateInvoiceNo from '../../UpdateInvoiceNo'
-import { ImSpinner9 } from 'react-icons/im'
 import { address } from '../../../../helper/helperFunctions';
 import { useDispatch, useSelector } from 'react-redux';
 import { generateInvoice } from '../../../../features/admin/adminData';
+import { Loader } from 'lucide-react';
 
 const AdminOrderDetails = ({ order }) => {
 
@@ -78,7 +78,7 @@ const AdminOrderDetails = ({ order }) => {
                             className="flex justify-center items-center gap-1 mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
                             onClick={() => handleInvoiceGeneration(selectedOrder._id)}
                         >
-                            {!generatingInvoice ? ' Generate Invoice' : <ImSpinner9 className='animate-spin' />}
+                            {!generatingInvoice ? ' Generate Invoice' : <Loader className='animate-spin' />}
                         </button>
                     </div>
                 </div>

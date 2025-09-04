@@ -1,12 +1,12 @@
 import React from 'react';
 // react icons 
-import { MdOutlinePrivacyTip } from "react-icons/md";
+import { ShieldAlert } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 
 const PrivacyPolicy = () => {
     return (
-        <div className=" min-h-screen font-sans ">
+        <div className=" min-h-screen font-sans bg-[var(--background-color)]">
 
             <div className='relative leading-10 text-center'>
                 <h2 className='text-3xl font-medium tracking-widest'>Privacy Policy</h2>
@@ -18,7 +18,7 @@ const PrivacyPolicy = () => {
                 {/* =================Introduction =================== */}
                 <div className=" rounded-lg shadow-md p-6">
                     <div className='flex items-center gap-1 text-xl mb-4'>
-                        <MdOutlinePrivacyTip className='' />
+                        <ShieldAlert size={20} />
                         <h2 className=' font-medium'>Introduction</h2>
                     </div>
                     <div className='flex flex-col gap-4 text-gray-700 pl-6'>
@@ -44,7 +44,7 @@ const PrivacyPolicy = () => {
                 {/* =================collection of information =================== */}
                 <div className=" rounded-lg shadow-md p-6">
                     <div className='flex items-center gap-1 text-xl mb-4'>
-                        <MdOutlinePrivacyTip className='' />
+                        <ShieldAlert size={20} />
                         <h2 className=' font-medium'>How do we collect the information</h2>
                     </div>
                     <div className='flex flex-col gap-4 text-gray-700 pl-6'>
@@ -86,7 +86,7 @@ const PrivacyPolicy = () => {
                 {/* =================use of information =================== */}
                 <div className=" rounded-lg shadow-md p-6">
                     <div className='flex items-center gap-1 text-xl mb-4'>
-                        <MdOutlinePrivacyTip className='' />
+                        <ShieldAlert size={20} />
                         <h2 className=' font-medium'>How do we use the information </h2>
                     </div>
                     <div className='flex flex-col gap-4 text-gray-700 pl-6'>
@@ -109,7 +109,7 @@ const PrivacyPolicy = () => {
                 {/* =================sharing of information =================== */}
                 <div className=" rounded-lg shadow-md p-6">
                     <div className='flex items-center gap-1 text-xl mb-4'>
-                        <MdOutlinePrivacyTip className='' />
+                         <ShieldAlert size={20} />
                         <h2 className=' font-medium'>Sharing the information </h2>
                     </div>
                     <div className='flex flex-col gap-4 text-gray-700 pl-6'>
@@ -133,7 +133,7 @@ const PrivacyPolicy = () => {
                 {/* =================Cookie Note & Policy =================== */}
                 <div className=" rounded-lg shadow-md p-6">
                     <div className='flex items-center gap-1 text-xl mb-4'>
-                        <MdOutlinePrivacyTip className='' />
+                        <ShieldAlert size={20} />
                         <h2 className=' font-medium'>Cookie Note & Policy </h2>
                     </div>
                     <div className='flex flex-col gap-4 text-gray-700 pl-6'>
@@ -159,7 +159,7 @@ const PrivacyPolicy = () => {
                 {/* =================User Communication =================== */}
                 <div className=" rounded-lg shadow-md p-6">
                     <div className='flex items-center gap-1 text-xl mb-4'>
-                        <MdOutlinePrivacyTip className='' />
+                        <ShieldAlert size={20} />
                         <h2 className=' font-medium'>User Communication </h2>
                     </div>
                     <div className='flex flex-col gap-4 text-gray-700 pl-6'>
@@ -169,7 +169,7 @@ const PrivacyPolicy = () => {
                 {/* =================Termination  =================== */}
                 <div className=" rounded-lg shadow-md p-6">
                     <div className='flex items-center gap-1 text-xl mb-4'>
-                        <MdOutlinePrivacyTip className='' />
+                        <ShieldAlert size={20} />
                         <h2 className=' font-medium'>Termination </h2>
                     </div>
                     <div className='flex flex-col gap-4 text-gray-700 pl-6'>
@@ -184,7 +184,7 @@ const PrivacyPolicy = () => {
                 {/* =================How long do we retain your information?  =================== */}
                 <div className=" rounded-lg shadow-md p-6">
                     <div className='flex items-center gap-1 text-xl mb-4'>
-                        <MdOutlinePrivacyTip className='' />
+                        <ShieldAlert size={20} />
                         <h2 className=' font-medium'>How long do we retain your information? </h2>
                     </div>
                     <div className='flex flex-col gap-4 text-gray-700 pl-6'>
@@ -196,7 +196,7 @@ const PrivacyPolicy = () => {
                 {/* =================You are responsible for the information you provide =================== */}
                 <div className=" rounded-lg shadow-md p-6">
                     <div className='flex items-center gap-1 text-xl mb-4'>
-                        <MdOutlinePrivacyTip className='' />
+                        <ShieldAlert size={20} />
                         <h2 className=' font-medium'>You are responsible for the information you provide </h2>
                     </div>
                     <div className='flex flex-col gap-4 text-gray-700 pl-6'>
@@ -207,7 +207,7 @@ const PrivacyPolicy = () => {
                 {/* =================Security of your Information =================== */}
                 <div className=" rounded-lg shadow-md p-6">
                     <div className='flex items-center gap-1 text-xl mb-4'>
-                        <MdOutlinePrivacyTip className='' />
+                        <ShieldAlert size={20} />
                         <h2 className=' font-medium'>Security of your Information </h2>
                     </div>
                     <div className='flex flex-col gap-4 text-gray-700 pl-6'>
@@ -223,7 +223,7 @@ const PrivacyPolicy = () => {
                 {/* =================Rights of the users=================== */}
                 <div className=" rounded-lg shadow-md p-6">
                     <div className='flex items-center gap-1 text-xl mb-4'>
-                        <MdOutlinePrivacyTip className='' />
+                        <ShieldAlert size={20} />
                         <h2 className=' font-medium'>Rights of the users </h2>
                     </div>
                     <div className='flex flex-col gap-4 text-gray-700 pl-6'>
@@ -248,7 +248,7 @@ const PrivacyPolicy = () => {
                 {/* =================Alerts=================== */}
                 <div className=" rounded-lg shadow-md p-6">
                     <div className='flex items-center gap-1 text-xl mb-4'>
-                        <MdOutlinePrivacyTip className='' />
+                        <ShieldAlert size={20} />
                         <h2 className=' font-medium'>Alerts </h2>
                     </div>
                     <div className='flex flex-col gap-4 text-gray-700 pl-6'>
@@ -258,7 +258,7 @@ const PrivacyPolicy = () => {
                 {/* =================Account Protection=================== */}
                 <div className=" rounded-lg shadow-md p-6">
                     <div className='flex items-center gap-1 text-xl mb-4'>
-                        <MdOutlinePrivacyTip className='' />
+                        <ShieldAlert size={20} />
                         <h2 className=' font-medium'>Account Protection </h2>
                     </div>
                     <div className='flex flex-col gap-4 text-gray-700 pl-6'>
@@ -270,7 +270,7 @@ const PrivacyPolicy = () => {
                 {/* =================Grievance officer=================== */}
                 <div className=" rounded-lg shadow-md p-6">
                     <div className='flex items-center gap-1 text-xl mb-4'>
-                        <MdOutlinePrivacyTip className='' />
+                        <ShieldAlert size={20} />
                         <h2 className=' font-medium'>Grievance officer </h2>
                     </div>
                     <div className='flex flex-col gap-4 text-gray-700 pl-6'>
@@ -280,7 +280,7 @@ const PrivacyPolicy = () => {
                 {/* =================Disclaimer =================== */}
                 <div className=" rounded-lg shadow-md p-6">
                     <div className='flex items-center gap-1 text-xl mb-4'>
-                        <MdOutlinePrivacyTip className='' />
+                        <ShieldAlert size={20} />
                         <h2 className=' font-medium'>Disclaimer  </h2>
                     </div>
                     <div className='flex flex-col gap-4 text-gray-700 pl-6'>

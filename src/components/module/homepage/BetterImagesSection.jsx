@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, memo } from 'react';
 import { motion } from 'framer-motion';
-import { FaCheckCircle, FaShieldAlt, FaStar, FaLeaf } from 'react-icons/fa';
 import Title from '../../title/Title';
+import { CheckCircle, Leaf,ShieldCheck, Star  } from 'lucide-react';
 
 
 // const Image = memo(({ src, alt, className }) => {
@@ -65,19 +65,19 @@ const BetterImagesSection = memo(({ images }) => {
   const TrustBadge = memo(({ type }) => {
     const badges = {
       'quality': {
-        icon: <FaCheckCircle className="text-green-600" />,
+        icon: <CheckCircle size={14} className="text-green-600" />,
         text: 'Premium Quality'
       },
       'eco': {
-        icon: <FaLeaf className="text-green-500" />,
+        icon: <Leaf size={14} className="text-green-500" />,
         text: 'Eco Friendly'
       },
       'trusted': {
-        icon: <FaShieldAlt style={{ color: 'var(--accent-color)' }} />,
+        icon: <ShieldCheck size={14} style={{ color: 'var(--accent-color)' }} />,
         text: 'Trusted'
       },
       'rated': {
-        icon: <FaStar style={{ color: 'var(--alert-color)' }} />,
+        icon: <Star size={14} style={{ color: 'var(--alert-color)' }} />,
         text: 'Top Rated'
       }
     };

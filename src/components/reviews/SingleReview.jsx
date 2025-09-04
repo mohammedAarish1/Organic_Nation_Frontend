@@ -1,5 +1,4 @@
 // // import React  from 'react'
-// // import { FaStar } from 'react-icons/fa6';
 
 // // const SingleReview = ({ reviews }) => {
 
@@ -47,7 +46,6 @@
 
 
 // import React, { memo, useMemo } from 'react';
-// import { FaStar, FaQuoteLeft, FaQuoteRight, FaCheck, FaUser } from 'react-icons/fa6';
 
 
 // // Star Rating Component

@@ -1,13 +1,10 @@
-import React, { memo, useCallback } from 'react';
-import { FaHome, FaShoppingCart, FaUserAlt, FaProductHunt, FaSignOutAlt } from 'react-icons/fa';
-// import { IoMdLogIn } from 'react-icons/io';
-import { RiMailUnreadFill } from 'react-icons/ri';
-import { MdOutlineAssignmentReturn } from 'react-icons/md';
-import { PiImagesSquareThin } from 'react-icons/pi';
+import { memo, useCallback } from 'react';
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { adminLogout } from "../../features/admin/adminSlice";
-import { IoCloseSharp } from 'react-icons/io5';
+import CloseButton from "../button/CloseButton"
+
+import { Home, ShoppingCart, User, StretchHorizontal, LogOut, MailQuestionMark, Undo2, Image } from 'lucide-react'
 
 const AdminSidebar = memo(({ setShowSidebar }) => {
     const dispatch = useDispatch();
@@ -22,18 +19,18 @@ const AdminSidebar = memo(({ setShowSidebar }) => {
     }, [setShowSidebar]);
 
     const sidebarLinks = [
-        { path: "/admin", icon: FaHome, label: "Dashboard" },
-        { path: "/admin/orders", icon: FaShoppingCart, label: "Orders" },
-        { path: "/admin/users", icon: FaUserAlt, label: "Users" },
-        { path: "/admin/queries", icon: RiMailUnreadFill, label: "Queries" },
-        { path: "/admin/returns", icon: MdOutlineAssignmentReturn, label: "Returns" },
-        { path: "/admin/products", icon: FaProductHunt, label: "Products" },
-        { path: "/admin/banners", icon: PiImagesSquareThin, label: "Banners" },
-        { path: "#", icon: FaSignOutAlt, label: "Logout" },
+        { path: "/admin", icon: Home, label: "Dashboard" },
+        { path: "/admin/orders", icon: ShoppingCart, label: "Orders" },
+        { path: "/admin/users", icon: User, label: "Users" },
+        { path: "/admin/queries", icon: MailQuestionMark, label: "Queries" },
+        { path: "/admin/returns", icon: Undo2, label: "Returns" },
+        { path: "/admin/products", icon: StretchHorizontal, label: "Products" },
+        { path: "/admin/banners", icon: Image, label: "Banners" },
+        { path: "#", icon: LogOut, label: "Logout" },
     ];
 
     return (
-        <div className={`bg-[var(--bgColorPrimary)] text-white min-h-screen h-full duration-300 w-64 px-6 py-8`}>
+        <div className={`bg-[var(--background-color)]  min-h-screen h-full duration-300 w-64 px-6 py-8`}>
             <div className="flex items-center justify-between mb-8">
                 <h1 className="text-2xl font-bold">
                     <img
@@ -43,13 +40,7 @@ const AdminSidebar = memo(({ setShowSidebar }) => {
                     />
                 </h1>
                 <div className='sm:hidden px-4 text-end'>
-                    <button
-                        type='button'
-                        className='shadow-md rounded-full shadow-green-700 hover:scale-110 text-[#ffe9a1]'
-                        onClick={closeSidebar}
-                    >
-                        <IoCloseSharp className='text-4xl' />
-                    </button>
+                    <CloseButton action={closeSidebar}/>
                 </div>
             </div>
 
@@ -62,7 +53,7 @@ const AdminSidebar = memo(({ setShowSidebar }) => {
                         className={({ isActive }) => `${isActive ? 'underline underline-offset-4' : ''} flex items-center space-x-4`}
                         onClick={label === 'Logout' ? handleLogout : closeSidebar}
                     >
-                        <Icon />
+                        <Icon size={16} />
                         <span>{label}</span>
                     </NavLink>
                 ))}

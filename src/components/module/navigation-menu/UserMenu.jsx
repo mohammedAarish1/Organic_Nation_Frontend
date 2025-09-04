@@ -1,10 +1,6 @@
 import { memo } from "react";
 import { Link } from "react-router-dom";
-// icons
-import { LuUserCircle } from "react-icons/lu";
-import { BsFillBoxSeamFill } from "react-icons/bs";
-import { PiKeyReturnFill } from "react-icons/pi";
-import { RiLogoutCircleLine } from "react-icons/ri";
+import { Boxes, LogOut, Undo, User } from "lucide-react";
 
 
 const USER_MENU_ITEMS = [
@@ -12,7 +8,7 @@ const USER_MENU_ITEMS = [
       id: 'profile',
       label: 'Personal Information',
       description: 'Manage your personal details',
-      icon: LuUserCircle,
+      icon: User,
       path: '/profile/personal-info',
       iconBg: 'bg-purple-100',
       iconColor: 'text-purple-600'
@@ -21,7 +17,7 @@ const USER_MENU_ITEMS = [
       id: 'orders',
       label: 'Order History',
       description: 'Track and manage orders',
-      icon: BsFillBoxSeamFill,
+      icon: Boxes,
       path: '/manage-orders',
       iconBg: 'bg-blue-100',
       iconColor: 'text-blue-600'
@@ -30,7 +26,7 @@ const USER_MENU_ITEMS = [
       id: 'returns',
       label: 'Returns & Refunds',
       description: 'Manage your returns',
-      icon: PiKeyReturnFill,
+      icon: Undo,
       path: '/manage-returns',
       iconBg: 'bg-green-100',
       iconColor: 'text-green-600'
@@ -46,7 +42,7 @@ const USER_MENU_ITEMS = [
         onClick={onClick}
       >
         <span className="p-2 rounded-lg bg-gray-100 group-hover:bg-white group-hover:text-green-600 transition-colors">
-          <Icon className="text-lg" />
+          <Icon size={20} />
         </span>
         <span className="font-medium text-gray-700 group-hover:text-gray-900">{label}</span>
       </Link>
@@ -100,7 +96,7 @@ const UserMenu = ({ user, showMenu, menuRef, onLogout }) => (
                    hover:bg-red-50 hover:border-red-100 hover:text-red-600
                    transition-all duration-300 group"
         >
-          <RiLogoutCircleLine className="text-xl group-hover:rotate-180 transition-transform duration-300" />
+          <LogOut className="text-xl group-hover:rotate-180 transition-transform duration-300" />
           <span className="font-medium">Sign out</span>
         </button>
       </div>

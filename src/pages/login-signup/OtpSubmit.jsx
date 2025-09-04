@@ -4,10 +4,8 @@
 // import OtpInput from "../../components/otp/OtpInput";
 // import { toast } from "react-toastify";
 // import { useLocation, useNavigate } from "react-router-dom";
-// import { ImSpinner9 } from "react-icons/im";
 
 // // react icons
-// import { FaArrowRight } from "react-icons/fa6";
 // import { getAllOrders } from "../../features/manageOrders/manageOrders";
 // import { getAllCartItems, mergeCart } from "../../features/cart/cart";
 // import { handleGoogleSignup, updateUserRegisterStatus, verifyOTP } from "../../features/auth/auth";

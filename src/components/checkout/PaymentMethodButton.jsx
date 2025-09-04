@@ -1,8 +1,5 @@
-
-import {
-    FaPercent
-} from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import { Percent } from 'lucide-react';
 
 
 
@@ -28,7 +25,7 @@ const PaymentMethodButton = ({ icon, label, selected, onClick, badge = null }) =
                     animate={label.includes('Online') ? { scale: [1, 1.1, 1] } : { scale: [1, 1, 1] }}
                     transition={{ duration: 1.5, repeat: Infinity }}
                 >
-                    {label.includes('Online') && <FaPercent className="mr-1" size={10} />}
+                    {label.includes('Online') && <Percent className="mr-1" size={10} />}
                     {badge}
                 </motion.div>
             )}

@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { motion } from 'framer-motion';
 import { submitContactForm } from '../../features/contactedUser/contactedUser';
 import Logo from '../../components/logo/Logo';
-import { ImOffice } from "react-icons/im";
-import { BiSolidPhoneCall, BiEnvelope } from "react-icons/bi";
 import { GrLinkedin } from "react-icons/gr";
-import { FaSquareXTwitter, FaYoutube, FaLeaf } from "react-icons/fa6";
+import { FaSquareXTwitter, FaYoutube } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa";
 import { RiFacebookCircleFill } from "react-icons/ri";
 import SEO from '../../helper/SEO/SEO';
 import SubmitButton from '../../components/button/SubmitButton';
+import { Building2,PhoneCall ,Mail,Leaf  } from 'lucide-react';
 
 // Animated form input component
 const AnimatedInputField = ({ label, type, name, isTextarea = false, icon }) => {
@@ -130,11 +129,11 @@ const ContactUs = () => {
 
   // Form field configurations
   const formFields = [
-    { label: 'Full Name', type: 'text', name: 'fullName', icon: <FaLeaf /> },
-    { label: 'Email Address', type: 'email', name: 'email', icon: <BiEnvelope /> },
-    { label: 'Phone Number', type: 'tel', name: 'phoneNumber', icon: <BiSolidPhoneCall /> },
-    { label: 'City', type: 'text', name: 'city', icon: <ImOffice /> },
-    { label: 'Message', type: 'textarea', name: 'message', isTextarea: true, icon: <FaLeaf /> },
+    { label: 'Full Name', type: 'text', name: 'fullName', icon: <Leaf size={14} /> },
+    { label: 'Email Address', type: 'email', name: 'email', icon: <Mail size={14}  /> },
+    { label: 'Phone Number', type: 'tel', name: 'phoneNumber', icon: <PhoneCall size={14} /> },
+    { label: 'City', type: 'text', name: 'city', icon: <Building2 size={12} /> },
+    { label: 'Message', type: 'textarea', name: 'message', isTextarea: true, icon: <Leaf size={14} /> },
   ];
 
   return (
@@ -209,7 +208,7 @@ const ContactUs = () => {
                     transition={{ delay: 0.2 }}
                   >
                     <div className="bg-[var(--background-color)] p-3 rounded-full text-[var(--themeColor)]">
-                      <ImOffice size={24} />
+                      <Building2 size={20} />
                     </div>
                     <div>
                       <h3 className="font-semibold text-lg">Visit Us</h3>
@@ -227,7 +226,7 @@ const ContactUs = () => {
                     transition={{ delay: 0.3 }}
                   >
                     <div className="bg-[var(--background-color)] p-3 rounded-full text-[var(--themeColor)]">
-                      <BiSolidPhoneCall size={24} />
+                      <PhoneCall  size={20} />
                     </div>
                     <div>
                       <h3 className="font-semibold text-lg">Call Us</h3>
@@ -250,7 +249,7 @@ const ContactUs = () => {
                     transition={{ delay: 0.4 }}
                   >
                     <div className="bg-[var(--background-color)] p-3 rounded-full text-[var(--themeColor)]">
-                      <BiEnvelope size={24} />
+                      <Mail  size={20} />
                     </div>
                     <div>
                       <h3 className="font-semibold text-lg">Email Us</h3>

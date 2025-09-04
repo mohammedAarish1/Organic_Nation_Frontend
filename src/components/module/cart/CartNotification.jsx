@@ -1,8 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaShoppingCart, FaArrowRight, FaTimes, FaCheckCircle, FaTrash, FaPlus, FaMinus } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-// import { updateCartItem, removeFromCart, getAllCartItems } from '../../features/cart/cart';
 import { useNavigate } from 'react-router-dom';
 import { useCartNotification } from '../../../context/CartNotificationContext';
 import Image from '../../image/Image';
@@ -11,6 +9,7 @@ import ProductQty from '../../productQty/ProductQty';
 import CheckoutModal from '../../CheckoutModal';
 import CloseButton from '../../button/CloseButton';
 import { formatPrice } from '../../../helper/helperFunctions';
+import { ArrowRight, CheckCircle, ShoppingCart, Trash } from 'lucide-react';
 
 const CartNotification = () => {
   const dispatch = useDispatch();
@@ -163,7 +162,7 @@ const CartNotification = () => {
                         color: 'var(--text-light-color)'
                       }}
                     >
-                      <FaShoppingCart className="text-lg" />
+                      <ShoppingCart size={20} />
                     </div>
                     <div>
                       <h3 className="font-bold text-xl">Your Cart</h3>
@@ -184,7 +183,7 @@ const CartNotification = () => {
                       color: 'var(--text-light-color)'
                     }}
                   >
-                    <FaCheckCircle className="text-xs" />
+                    <CheckCircle size={16} />
                     <span>"{lastAddedItem.name}" was added to your cart</span>
                   </motion.div>
                 )}
@@ -209,7 +208,7 @@ const CartNotification = () => {
                       className="w-16 h-16 rounded-full flex items-center justify-center mb-3"
                       style={{ backgroundColor: 'var(--neutral-color)' }}
                     >
-                      <FaShoppingCart className="text-xl" style={{ color: 'var(--themeColor)' }} />
+                      <ShoppingCart size={20} style={{ color: 'var(--themeColor)' }} />
                     </div>
                     <p className="font-medium text-lg">Your cart is empty</p>
                     <p className="text-sm opacity-75 mt-1 max-w-xs">Add items to your cart to see them here</p>
@@ -252,7 +251,7 @@ const CartNotification = () => {
                             />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center" style={{ backgroundColor: 'var(--neutral-color)' }}>
-                              <FaShoppingCart className="text-xl" style={{ color: 'var(--themeColor)' }} />
+                              <ShoppingCart className="text-xl" style={{ color: 'var(--themeColor)' }} />
                             </div>
                           )}
                         </div>
@@ -286,7 +285,7 @@ const CartNotification = () => {
                             color: 'var(--text-light-color)'
                           }}
                         >
-                          <FaTrash className="text-xs" />
+                          <Trash size={16} />
                         </motion.button>
                       </motion.li>
                     ))}
@@ -360,7 +359,7 @@ const CartNotification = () => {
                     disabled={cartItemsList.length === 0}
                   >
                     <span>Checkout</span>
-                    <FaArrowRight />
+                    <ArrowRight size={20} />
                   </motion.button>
                 </div>
               </motion.div>

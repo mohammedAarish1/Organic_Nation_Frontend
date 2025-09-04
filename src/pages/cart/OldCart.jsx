@@ -1,10 +1,6 @@
 // import React, { lazy, Suspense, useEffect, useMemo, useState } from "react";
 // import { useDispatch, useSelector } from "react-redux";
 // import { Link } from "react-router-dom";
-// import { IoIosArrowRoundForward } from "react-icons/io";
-// import { BsEmojiAstonished } from "react-icons/bs";
-// import { FaArrowLeftLong } from "react-icons/fa6";
-// import { PiSealCheckFill } from "react-icons/pi";
 // import { Tooltip } from "react-tooltip";
 
 // // Redux actions

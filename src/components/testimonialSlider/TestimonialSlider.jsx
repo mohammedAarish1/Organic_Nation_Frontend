@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { IoPersonCircle } from 'react-icons/io5';
-import { FaQuoteLeft, FaStar, FaLeaf, FaHeart } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
+import { CircleUserRound, Heart, Leaf, Star } from 'lucide-react';
 const feedbacks = [
     {
         customerName: "Avinash Jain",
-        customerPicture: <IoPersonCircle className='text-6xl md:text-7xl text-[var(--accent-color)] drop-shadow-lg' />,
+        customerPicture: <CircleUserRound size={80} strokeWidth={1} className='text-[var(--accent-color)] drop-shadow-lg' />,
         description: "I've been using Organic Nation's Honey for years and it's the best, pure, delicious, and has so many health benefits. Highly recommended!",
         rating: 5,
         product: "🍯 Organic Honey",
@@ -13,7 +12,7 @@ const feedbacks = [
     },
     {
         customerName: "Akash Kumar",
-        customerPicture: <IoPersonCircle className='text-6xl md:text-7xl text-[var(--accent-color)] drop-shadow-lg' />,
+        customerPicture: <CircleUserRound size={80} strokeWidth={1} className='text-[var(--accent-color)] drop-shadow-lg' />,
         description: "Organic honey from Organic Nation has been a game-changer for me. Rich, flavorful, and pure - the best honey I've ever tasted!",
         rating: 5,
         product: "🍯 Pure Honey",
@@ -21,7 +20,7 @@ const feedbacks = [
     },
     {
         customerName: "Aparna Singh",
-        customerPicture: <IoPersonCircle className='text-6xl md:text-7xl text-[var(--accent-color)] drop-shadow-lg' />,
+        customerPicture: <CircleUserRound size={80} strokeWidth={1} className='text-[var(--accent-color)] drop-shadow-lg' />,
         description: "Garlic Pickle is very tasty! The bold flavors have transformed my cooking. Highly recommend for anyone looking to spice up their meals.",
         rating: 5,
         product: "🥒 Garlic Pickle",
@@ -29,7 +28,7 @@ const feedbacks = [
     },
     {
         customerName: "Abhinav Banerjee",
-        customerPicture: <IoPersonCircle className='text-6xl md:text-7xl text-[var(--accent-color)] drop-shadow-lg' />,
+        customerPicture: <CircleUserRound size={80} strokeWidth={1} className='text-[var(--accent-color)] drop-shadow-lg' />,
         description: "Green Chili Pickle is a delightful condiment that adds a flavorful kick to any meal. The perfect balance of spice and tanginess makes it a must-try.",
         rating: 5,
         product: "🌶️ Green Chili Pickle",
@@ -37,7 +36,7 @@ const feedbacks = [
     },
     {
         customerName: "Sumit Tiwary",
-        customerPicture: <IoPersonCircle className='text-6xl md:text-7xl text-[var(--accent-color)] drop-shadow-lg' />,
+        customerPicture: <CircleUserRound size={80} strokeWidth={1} className='text-[var(--accent-color)] drop-shadow-lg' />,
         description: "Brown Sugar's high-quality ingredients and thoughtful formulations have transformed my skin. I'm thoroughly impressed and highly recommend this brand.",
         rating: 5,
         product: "🍯 Brown Sugar",
@@ -115,7 +114,7 @@ const TestimonialSlider = () => {
                 animate={{ scale: 1, rotate: 0 }}
                 transition={{ delay: index * 0.1 + 0.5 }}
             >
-                <FaStar
+                <Star
                     className={`text-lg ${index < rating ? 'text-[var(--accent-color)]' : 'text-[var(--neutral-color)]'}`}
                 />
             </motion.div>
@@ -162,7 +161,6 @@ const TestimonialSlider = () => {
                     }}
                     className="absolute top-1/4 right-1/4 w-8 h-8 text-[var(--accent-color)] opacity-20"
                 >
-                    <FaLeaf className="w-full h-full" />
                 </motion.div>
                 <motion.div
                     animate={{
@@ -176,7 +174,6 @@ const TestimonialSlider = () => {
                     }}
                     className="absolute bottom-1/3 left-1/3 w-6 h-6 text-[var(--themeColor)] opacity-20"
                 >
-                    <FaHeart className="w-full h-full" />
                 </motion.div>
             </div> */}
 
@@ -195,9 +192,9 @@ const TestimonialSlider = () => {
                         transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
                         className="inline-flex items-center gap-2 bg-gradient-to-r from-[var(--themeColor)] to-[var(--accent-color)] text-white px-6 py-3 rounded-full text-sm font-semibold mb-6 shadow-lg"
                     >
-                        <FaHeart className="text-sm" />
+                        <Heart size={18}  />
                         <span>Loved by 10,000+ Customers</span>
-                        <FaLeaf className="text-sm" />
+                        <Leaf size={18} />
                     </motion.div>
                     
                     <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[var(--text-color)] mb-6 leading-tight">
@@ -247,7 +244,7 @@ const TestimonialSlider = () => {
                                     transition={{ delay: 0.2 }}
                                     className="absolute top-8 left-8 text-[var(--themeColor)] opacity-20"
                                 >
-                                    <FaQuoteLeft className="text-4xl lg:text-6xl" />
+                                    {/* <FaQuoteLeft className="text-4xl lg:text-6xl" /> */}
                                 </motion.div>
 
                                 <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
@@ -270,7 +267,7 @@ const TestimonialSlider = () => {
                                                 transition={{ delay: 0.6 }}
                                                 className="absolute -bottom-2 -right-2 bg-gradient-to-r from-[var(--themeColor)] to-[var(--accent-color)] text-white p-2 rounded-full shadow-lg"
                                             >
-                                                <FaHeart className="text-sm" />
+                                                <Heart size={18} />
                                             </motion.div>
                                         </motion.div>
 

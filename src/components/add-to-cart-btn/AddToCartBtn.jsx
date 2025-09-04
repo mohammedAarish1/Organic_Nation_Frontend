@@ -4,7 +4,6 @@
 // import { toast } from 'react-toastify';
 // import { Tooltip } from 'react-tooltip';
 // // react icons 
-// import { BsCart4 } from 'react-icons/bs'
 
 
 
@@ -68,7 +67,6 @@
 //         }}
 //         className={`${isOutOfStock ? 'opacity-60' : 'hover:bg-[var(--bgColorPrimary)]'}  flex justify-center items-center sm:mt-1  w-full text-white sm:py-2 py-1 sm:px-4 px-2 rounded-2xl bg-[#712522]   transition-all duration-500 gap-1 `}>
 
-//         <BsCart4 className={`text-white  ${!isOutOfStock && 'animate-bounce'}`} />
 
 
 //         Add to Cart
@@ -103,15 +101,14 @@
 // export default AddToCartBtn;
 
 
-import React, { memo, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, getAllCartItems } from '../../features/cart/cart';
 import { toast } from 'react-toastify';
 import { Tooltip } from 'react-tooltip';
-import { BsCart4 } from 'react-icons/bs';
 import { useCartNotification } from '../../context/CartNotificationContext';
-import { FaShoppingCart } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import { ShoppingCart } from 'lucide-react';
 
 const AddToCartBtn = ({ item, qty = 1 }) => {
   const dispatch = useDispatch();
@@ -177,9 +174,7 @@ const AddToCartBtn = ({ item, qty = 1 }) => {
         }}
         whileTap={{ scale: 0.98 }}
       >
-        <FaShoppingCart
-        // className={` ${!isOutOfStock && 'animate-bounce'}`} 
-        />
+        <ShoppingCart size={20}/>
         <span>Add to Cart</span>
       </motion.button>
 

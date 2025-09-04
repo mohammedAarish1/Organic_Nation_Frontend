@@ -1,8 +1,7 @@
-import React, { useCallback, useState } from 'react'
-import { FaMinus, FaPlus } from 'react-icons/fa6';
-import { ImSpinner9 } from 'react-icons/im';
+import  { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllCartItems, updateQty } from '../../features/cart/cart';
+import { Minus, Plus } from 'lucide-react';
 
 
 
@@ -55,7 +54,7 @@ const ProductQty = ({ qty = 1, setQty, curItem = null }) => {
 
         //                 increaseQty();
         //             }}>
-        //             <FaPlus />
+        //             <Plus />
         //         </button>
         //     </div>
         // </div>
@@ -67,7 +66,7 @@ const ProductQty = ({ qty = 1, setQty, curItem = null }) => {
                     backgroundColor: 'var(--neutral-color)'
                 }}
             >
-                <FaMinus className="text-xs" />
+                <Minus size={16} />
             </button>
 
             <span className="w-7 text-center text-sm font-medium">{curItem?.quantity || qty}</span>
@@ -81,7 +80,7 @@ const ProductQty = ({ qty = 1, setQty, curItem = null }) => {
                 }}
                 disabled={curItem?.quantity >= curItem?.availability}
             >
-                <FaPlus className="text-xs" />
+                <Plus size={16} />
             </button>
         </div>
     )

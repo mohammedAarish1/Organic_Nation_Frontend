@@ -1,8 +1,5 @@
 // import React, { useState, useEffect } from 'react';
 // import { motion, AnimatePresence } from 'framer-motion';
-// import { FaTimes, FaFlag, FaStar } from 'react-icons/fa';
-// import { GiIndiaGate, GiPeaceDove, GiFlowerPot } from 'react-icons/gi';
-// import { BiHeart } from 'react-icons/bi';
 // import confetti from 'canvas-confetti';
 // import { useNavigate } from 'react-router-dom';
 

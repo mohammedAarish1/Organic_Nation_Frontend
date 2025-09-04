@@ -1,7 +1,6 @@
 // import React from 'react';
 // import { Formik, Form, Field, ErrorMessage } from 'formik';
 // import * as Yup from 'yup';
-// import { FaStar } from 'react-icons/fa';
 // import { useDispatch, useSelector } from 'react-redux';
 // import { addReviews } from '../features/reviews/reviews';
 // import { useNavigate } from 'react-router-dom';
@@ -120,11 +119,11 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaStar, FaPaperPlane, FaEdit, FaCheckCircle } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { addReviews } from '../features/reviews/reviews';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { CheckCircle, Edit, Send, Star } from 'lucide-react';
 
 const ReviewsAndRatings = ({ productName, insideProductDetails = false }) => {
     const initialValues = {
@@ -257,7 +256,7 @@ const ReviewsAndRatings = ({ productName, insideProductDetails = false }) => {
                                                     animate={{ scale: 1 }}
                                                     transition={{ delay: index * 0.1 }}
                                                 >
-                                                    <FaStar
+                                                    <Star
                                                         size={32}
                                                         style={{
                                                             color: ratingValue <= values.rating ? '#9B7A2F' : '#DCD2C0',
@@ -315,7 +314,7 @@ const ReviewsAndRatings = ({ productName, insideProductDetails = false }) => {
                                     className="text-lg font-semibold tracking-wide flex items-center gap-2"
                                     style={{ color: '#7A2E1D' }}
                                 >
-                                    <FaEdit />
+                                    <Edit />
                                     Tell us about your experience
                                 </label>
                                 
@@ -407,7 +406,7 @@ const ReviewsAndRatings = ({ productName, insideProductDetails = false }) => {
                                                 exit={{ opacity: 0 }}
                                                 className="flex items-center gap-3"
                                             >
-                                                <FaPaperPlane />
+                                                <Send  />
                                                 <span>Submit Review</span>
                                             </motion.div>
                                         )}
@@ -421,7 +420,7 @@ const ReviewsAndRatings = ({ productName, insideProductDetails = false }) => {
                                 style={{ color: '#7A2E1D' }}
                                 variants={itemVariants}
                             >
-                                <FaCheckCircle style={{ color: '#6B8E23' }} />
+                                <CheckCircle style={{ color: '#6B8E23' }} />
                                 <span>Your review helps build trust in our community</span>
                             </motion.div>
                         </motion.div>

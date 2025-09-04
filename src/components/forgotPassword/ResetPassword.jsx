@@ -8,8 +8,6 @@
 // import { Link, useParams } from 'react-router-dom';
 
 // // react icons 
-// import { FaArrowRight } from "react-icons/fa6";
-// import { ImSpinner9 } from 'react-icons/im';
 
 
 

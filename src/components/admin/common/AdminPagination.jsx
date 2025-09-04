@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const AdminPagination = ({
     currentPage,
@@ -32,7 +32,7 @@ const AdminPagination = ({
                 aria-label="Previous page"
                 className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-                <FaChevronLeft />
+                <ChevronLeft />
             </button>
             {[...Array(totalPages).keys()].map(number => (
                 <button
@@ -50,7 +50,7 @@ const AdminPagination = ({
                 aria-label="Next page"
                 className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-                <FaChevronRight />
+                <ChevronRight />
             </button>
         </div>
     );

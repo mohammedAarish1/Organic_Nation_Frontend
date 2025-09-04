@@ -1,9 +1,5 @@
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { IoCubeOutline } from 'react-icons/io5';
-import { FaAngleDown } from 'react-icons/fa';
-
-
+import {  Box, ChevronDown } from 'lucide-react';
 
 const StatusButton = ({ title, color, curStatus, length,action }) => {
     const dispatch = useDispatch();
@@ -17,7 +13,7 @@ const StatusButton = ({ title, color, curStatus, length,action }) => {
         onClick={() => dispatch(action(curStatus))}
       >
         <div className="sm:block hidden bg-[#EEF2FF] md:p-4 p-2 rounded-full">
-          <IoCubeOutline className={`text-2xl text-${color}`} />
+          <Box className={`text-2xl text-${color}`} />
         </div>
         <div>
           <p className="font-semibold lg:text-[22px] xs:text-xl max-w-max">
@@ -28,7 +24,7 @@ const StatusButton = ({ title, color, curStatus, length,action }) => {
           </p>
         </div>
         <div className="sm:hidden block bg-[#EEF2FF] md:p-5 xs:p-2 rounded-full">
-          <FaAngleDown />
+          <ChevronDown />
         </div>
       </div>
     );

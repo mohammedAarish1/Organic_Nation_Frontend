@@ -1,5 +1,3 @@
-// import { PiSealCheckFill } from "react-icons/pi";
-// import { BsCartX } from "react-icons/bs";
 
 // const SingleOrderFooterSection = ({ order, onCancelOrder, isActive }) => {
 //     const calculateTotal = () => order?.orderDetails.reduce(
@@ -68,8 +66,7 @@
 
 import { motion } from 'framer-motion';
 // React Icons
-import { PiSealCheckFill } from "react-icons/pi";
-import { BsCartX } from "react-icons/bs";
+import { BadgeCheck, CircleX } from 'lucide-react';
 
 
 // Enhanced SingleOrderFooterSection Component
@@ -115,7 +112,7 @@ const SingleOrderFooterSection = ({ order, onCancelOrder, isActive }) => {
             animate={{ opacity: 1, scale: 1 }}
             className="flex items-center gap-2 bg-[var(--secondary-color)]/10 text-[var(--secondary-color)] px-3 py-2 rounded-lg text-sm font-medium"
           >
-            <PiSealCheckFill className="w-4 h-4" />
+            <BadgeCheck className="w-4 h-4" />
             <span>Coupon Applied</span>
           </motion.div>
         )}
@@ -146,7 +143,7 @@ const SingleOrderFooterSection = ({ order, onCancelOrder, isActive }) => {
           onClick={onCancelOrder}
           disabled={!isActive}
         >
-          <BsCartX className="w-5 h-5" />
+          <CircleX className="w-5 h-5" />
           <span>Cancel</span>
         </motion.button>
       </div>

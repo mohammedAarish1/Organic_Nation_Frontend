@@ -2,9 +2,7 @@
 // import {  useSelector } from 'react-redux';
 // import Image from '../../components/image/Image';
 // // react icons 
-// import { IoChevronDownOutline } from "react-icons/io5";
 
-// import { PiSealCheckFill } from 'react-icons/pi';
 
 
 // const CartDetails = () => {

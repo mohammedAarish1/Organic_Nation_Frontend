@@ -1,7 +1,5 @@
 // import React, { useEffect } from 'react'
 // // react icons 
-// import { FaAngleDown, FaArrowLeftLong } from "react-icons/fa6";
-// import { IoCubeOutline } from "react-icons/io5";
 // // product image 
 // import { useDispatch, useSelector } from 'react-redux';
 // import { getAllOrders, getOrdersByStatus } from '../../features/manageOrders/manageOrders';
@@ -50,7 +48,7 @@
 //                             <p className='font-semibold lg:text-[22px] xs:text-xl max-w-max'>{orders?.length || 0}</p>
 //                             <p className='text-gray-600 tracking-wider lg:text-[16px] xs:text-xs text-[10px]'>Total Order</p>
 //                         </div>
-//                         <div className='sm:hidden block bg-[#EEF2FF] md:p-5 xs:p-2 rounded-full'><FaAngleDown /></div>
+//                         <div className='sm:hidden block bg-[#EEF2FF] md:p-5 xs:p-2 rounded-full'><ChevronDown size={20} /></div>
 //                     </div>
 
 //                     {/* button2 */}
@@ -62,7 +60,7 @@
 //                             </p>
 //                             <p className='text-gray-600 tracking-wider lg:text-[16px] xs:text-xs text-[10px]'>Active Order</p>
 //                         </div>
-//                         <div className='sm:hidden block bg-[#ECFDF5] md:p-5 xs:p-2 rounded-full'><FaAngleDown /></div>
+//                         <div className='sm:hidden block bg-[#ECFDF5] md:p-5 xs:p-2 rounded-full'><ChevronDown size={20} /></div>
 //                     </div>
 //                     {/* button3 */}
 //                     <div className={`${ordersByStatus.orderStatusTab === 'dispatched' && 'border-purple-500 border-[1px]'} flex justify-start items-center xs:gap-3 rounded-lg  max-w-max sm:pr-6 pr-1 pl-2 xs:py-2 cursor-pointer shadow-sm shadow-purple-400  transition-all duration-500 hover:bg-[var(--hoverEffect)]`} onClick={() => dispatch(getOrdersByStatus("dispatched"))}>
@@ -73,7 +71,7 @@
 //                             </p>
 //                             <p className='text-gray-600 tracking-wider lg:text-[16px] xs:text-xs text-[10px]'>Dispatched</p>
 //                         </div>
-//                         <div className='sm:hidden block bg-[#ECFDF5] md:p-5 xs:p-2 rounded-full'><FaAngleDown /></div>
+//                         <div className='sm:hidden block bg-[#ECFDF5] md:p-5 xs:p-2 rounded-full'><ChevronDown size={20} /></div>
 //                     </div>
 
 //                     {/* button4 */}
@@ -85,7 +83,7 @@
 //                             </p>
 //                             <p className='text-gray-600 tracking-wider lg:text-[16px] xs:text-xs text-[10px]'>Completed</p>
 //                         </div>
-//                         <div className='sm:hidden block bg-[#FFFBEB] md:p-5 xs:p-2 rounded-full'><FaAngleDown /></div>
+//                         <div className='sm:hidden block bg-[#FFFBEB] md:p-5 xs:p-2 rounded-full'><ChevronDown size={20} /></div>
 //                     </div>
 
 //                     {/* button5 */}
@@ -98,7 +96,7 @@
 //                             </p>
 //                             <p className='text-gray-600 tracking-wider lg:text-[16px] xs:text-xs text-[10px]'>Cancelled</p>
 //                         </div>
-//                         <div className='sm:hidden block bg-[#FEF2F2] md:p-5 xs:p-2 rounded-full'><FaAngleDown /></div>
+//                         <div className='sm:hidden block bg-[#FEF2F2] md:p-5 xs:p-2 rounded-full'><ChevronDown size={20} /></div>
 //                     </div>
 
 
@@ -140,8 +138,9 @@ import { getAllOrders, getOrdersByStatus } from '../../features/manageOrders/man
 // import Order from '../../components/orders/Order';
 
 // StatusButton.js
-import { FaAngleDown } from "react-icons/fa6";
-import { IoCubeOutline } from "react-icons/io5";
+
+import { ChevronDown, Box } from 'lucide-react';
+
 
 // lazy loading
 
@@ -166,26 +165,25 @@ const StatusButton = ({
     onClick={onClick}
   >
     <div className={`sm:block hidden bg-${iconBgColor} md:p-4 p-2 rounded-full`}>
-      <IoCubeOutline className={`text-2xl text-${iconColor}`} />
+      <Box color={iconColor} size={24} />
     </div>
     <div>
       <p className='font-semibold lg:text-[22px] xs:text-xl max-w-max'>{count}</p>
       <p className='text-gray-600 tracking-wider lg:text-[16px] xs:text-xs text-[10px]'>{label}</p>
     </div>
     <div className={`sm:hidden block bg-${iconBgColor} md:p-5 xs:p-2 rounded-full`}>
-      <FaAngleDown />
+      <ChevronDown size={20} />
     </div>
   </div>
 );
 
 // NoOrders.js
 import { Link } from 'react-router-dom';
-import { FaArrowLeftLong } from "react-icons/fa6";
 import Loader from '../../components/common/Loader';
 
 import { motion } from 'framer-motion';
 // import { Link } from 'react-router-dom';
-import { FaShoppingBag, FaArrowRight } from 'react-icons/fa';
+import { ShoppingBag ,ArrowRight } from 'lucide-react';
 
 const NoOrders = () => (
   <motion.div
@@ -200,7 +198,7 @@ const NoOrders = () => (
       transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
       className='mb-6'
     >
-      <FaShoppingBag className='text-6xl text-gray-300 mb-4' />
+      <ShoppingBag size={56} color='gray' />
     </motion.div>
 
     <motion.div
@@ -227,7 +225,7 @@ const NoOrders = () => (
           font-medium group"
       >
         <span>Start Shopping</span>
-        <FaArrowRight className='text-sm group-hover:translate-x-1 transition-transform' />
+        <ArrowRight className='text-sm group-hover:translate-x-1 transition-transform' />
       </Link>
     </motion.div>
   </motion.div>

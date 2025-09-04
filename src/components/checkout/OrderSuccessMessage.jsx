@@ -1,21 +1,12 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-    FaShoppingBag,
-    FaMapMarkerAlt,
-    FaRegClock,
-    FaCheck,
-    FaTruck,
-    FaBoxOpen
-} from 'react-icons/fa';
-import { BsArrowRight } from 'react-icons/bs';
-import { RxCrossCircled } from "react-icons/rx";
 import confetti from 'canvas-confetti';
 import axios from 'axios';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { clearCart } from '../../features/cart/cart';
 import { initiatePayment } from '../../features/orderPayment/payment';
+import { Archive, ArrowRight, Check, CircleX, Clock, Map, MapPin, ShoppingBag, Truck } from 'lucide-react';
 
 // Animation variants 
 const containerVariants = {
@@ -180,15 +171,15 @@ const OrderSuccessMessage = () => {
             dispatch(clearCart());
             
             // FB Pixel tracking for purchase event
-            const purchaseValue = orderDetails.subTotal + orderDetails.shippingFee;
-            const currency = 'INR';
+            // const purchaseValue = orderDetails.subTotal + orderDetails.shippingFee;
+            // const currency = 'INR';
 
-            if (window.fbq) {
-                window.fbq('track', 'Purchase', {
-                    value: purchaseValue,
-                    currency: currency,
-                });
-            }
+            // if (window.fbq) {
+            //     window.fbq('track', 'Purchase', {
+            //         value: purchaseValue,
+            //         currency: currency,
+            //     });
+            // }
         }
     }, [paymentStatus, orderDetails, dispatch]);
 
@@ -203,22 +194,22 @@ const OrderSuccessMessage = () => {
         return [
             {
                 name: "Order Placed",
-                icon: FaCheck,
+                icon: Check,
                 complete: true
             },
             {
                 name: "Processing",
-                icon: FaBoxOpen,
+                icon: Archive,
                 complete: true
             },
             {
                 name: "Dispatched",
-                icon: FaTruck,
+                icon: Truck,
                 complete: status === 'dispatched' || status === 'completed'
             },
             {
                 name: "Delivered",
-                icon: FaShoppingBag,
+                icon: ShoppingBag,
                 complete: status === 'completed'
             }
         ];
@@ -309,7 +300,7 @@ const OrderSuccessMessage = () => {
                                     }}
                                 >
                                     <div className="bg-white bg-opacity-30 rounded-full p-3 sm:p-4 backdrop-blur-sm shadow-lg">
-                                        <RxCrossCircled className="text-white text-2xl sm:text-3xl" />
+                                        <CircleX size={28}  className="text-white sm:text-3xl" />
                                     </div>
                                 </motion.div>
 
@@ -427,7 +418,7 @@ const OrderSuccessMessage = () => {
                                 }}
                             >
                                 <div className="bg-white bg-opacity-30 rounded-full p-3 sm:p-4 backdrop-blur-sm shadow-lg">
-                                    <FaCheck className="text-white text-2xl sm:text-3xl" />
+                                    <Check className="text-white text-2xl sm:text-3xl" />
                                 </div>
                             </motion.div>
 
@@ -479,7 +470,7 @@ const OrderSuccessMessage = () => {
                                     whileHover={{ boxShadow: "0 4px 12px rgba(37, 99, 235, 0.15)" }}
                                 >
                                     <div className="flex items-center mb-3">
-                                        <FaRegClock className="text-[var(--accent-color)] mr-2" />
+                                        <Clock size={20} className="text-[var(--accent-color)] mr-2" />
                                         <h3 className="font-medium text-sm sm:text-base">Estimated Delivery</h3>
                                     </div>
 
@@ -536,7 +527,7 @@ const OrderSuccessMessage = () => {
                                     whileHover={{ backgroundColor: "rgba(243, 244, 246, 1)" }}
                                 >
                                     <div className="mt-0.5 text-lg text-red-500">
-                                        <FaMapMarkerAlt />
+                                        <MapPin />
                                     </div>
                                     <div className="ml-3 flex-1">
                                         <h3 className="font-medium text-sm sm:text-base">Delivery Address</h3>
@@ -600,7 +591,7 @@ const OrderSuccessMessage = () => {
                             whileTap={{ scale: 0.98 }}
                             onClick={() => navigate('/manage-orders')}
                         >
-                            Track Order <BsArrowRight />
+                            Track Order <ArrowRight />
                         </motion.button>
                     </motion.div>
                 </motion.div>

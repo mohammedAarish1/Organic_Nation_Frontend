@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import ProductForm from './ProductForm'
-import { FaEdit } from 'react-icons/fa'
-import { FiPlusSquare } from 'react-icons/fi';
+import { CirclePlus, SquarePen } from 'lucide-react';
 
 const AdminProductForm = ({ type, product }) => {
     const modalRef = useRef();
@@ -34,7 +33,7 @@ const AdminProductForm = ({ type, product }) => {
                     setIsFormVisible(true);
                 }}
             >
-                Add New Product <FiPlusSquare className='text-xl' />
+                Add New Product <CirclePlus  className='text-xl' />
             </button>
         )
     } else if (type === 'edit') {
@@ -46,7 +45,7 @@ const AdminProductForm = ({ type, product }) => {
                 }}
                 className="  px-2 py-1 rounded hover:text-green-800 flex justify-center"
             >
-                <FaEdit className='text-yellow-500 text-xl' />
+                <SquarePen  className='text-yellow-500' />
             </button>
         )
     }

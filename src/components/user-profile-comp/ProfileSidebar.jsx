@@ -1,14 +1,6 @@
-import React from 'react';
-import { 
-  FiUser, 
-  FiMapPin, 
-  FiPackage, 
-  FiChevronRight
-} from 'react-icons/fi';
-import { RiCouponLine } from "react-icons/ri";
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { FaAngleDown } from "react-icons/fa6";
+import {  ChevronDown, ChevronRight, MapPin, Package, User } from 'lucide-react';
 
 const ProfileSidebar = ({ activeMenu, setActiveMenu, isMobileMenuOpen, setIsMobileMenuOpen }) => {
 
@@ -18,9 +10,9 @@ const ProfileSidebar = ({ activeMenu, setActiveMenu, isMobileMenuOpen, setIsMobi
   const userName=user?.fullName || 'You'
 
   const menuItems = [
-    { id: 'personal-info', label: 'Personal Information', icon: FiUser },
-    { id: 'addresses', label: 'Manage Addresses', icon: FiMapPin },
-    { id: 'orders', label: 'My Orders', icon: FiPackage },
+    { id: 'personal-info', label: 'Personal Information', icon: User },
+    { id: 'addresses', label: 'Manage Addresses', icon: MapPin },
+    { id: 'orders', label: 'My Orders', icon: Package },
     // { id: 'coupons', label: 'Coupons', icon: RiCouponLine },
   ];
 
@@ -32,7 +24,7 @@ const ProfileSidebar = ({ activeMenu, setActiveMenu, isMobileMenuOpen, setIsMobi
           <div className="p-6">
             <div className="flex items-center gap-3 mb-8">
               <div className="w-12 h-12 rounded-full bg-green-600 flex items-center justify-center">
-                <FiUser className="text-white" size={24} />
+                <User className="text-white" size={24} />
               </div>
               <div>
                 <h2 className="text-lg font-semibold capitalize">{userName}</h2>
@@ -63,7 +55,7 @@ const ProfileSidebar = ({ activeMenu, setActiveMenu, isMobileMenuOpen, setIsMobi
                     <Icon size={20} />
                     <span className="font-medium">{item.label}</span>
                     {activeMenu === item.id && (
-                      <FiChevronRight className="ml-auto" size={18} />
+                      <ChevronRight className="ml-auto" size={18} />
                     )}
                   </button>
                 );
@@ -80,7 +72,7 @@ const ProfileSidebar = ({ activeMenu, setActiveMenu, isMobileMenuOpen, setIsMobi
           className="relative  p-2 rounded-lg bg-gray-300 shadow-lg text-gray-700 hover:bg-gray-400 z-50 flex justify-center items-center  gap-2"
         >
           <span className="font-medium">Menu</span>
-          <FaAngleDown  className='items-end'  size={20} />
+          <ChevronDown  className='items-end'  size={20} />
         </button>
 
         {/* Dropdown Menu */}
@@ -96,7 +88,7 @@ const ProfileSidebar = ({ activeMenu, setActiveMenu, isMobileMenuOpen, setIsMobi
           <div className="p-4">
             <div className="flex items-center gap-3 mb-4 pb-4 border-b">
               <div className="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center">
-                <FiUser className="text-white" size={20} />
+                <User className="text-white" size={20} />
               </div>
               <div>
                 <h2 className="text-sm font-semibold text-gray-600">{userName}</h2>
@@ -127,7 +119,7 @@ const ProfileSidebar = ({ activeMenu, setActiveMenu, isMobileMenuOpen, setIsMobi
                     <Icon size={18} />
                     <span className="font-medium text-sm">{item.label}</span>
                     {activeMenu === item.id && (
-                      <FiChevronRight className="ml-auto" size={16} />
+                      <ChevronRight className="ml-auto" size={16} />
                     )}
                   </button>
                 );

@@ -2,7 +2,6 @@
 // import Title from '../title/Title'
 // import { Link } from 'react-router-dom';
 // // react icons 
-// import { FaArrowRightLong } from "react-icons/fa6";
 // import { useDispatch, useSelector } from 'react-redux';
 // import { getAllBlogs } from '../../imports';
 
@@ -77,19 +76,14 @@
 
 
 
-import React, { useEffect } from 'react'
+import  { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Title from '../title/Title'
 import { Link } from 'react-router-dom'
-import {
-    FaCalendarAlt, FaClock
-} from "react-icons/fa"
-import {
-    FaArrowRightLong,
-} from "react-icons/fa6"
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllBlogs } from '../../imports'
 import SubmitButton from '../button/SubmitButton'
+import { ArrowRight, Calendar, Clock } from 'lucide-react'
 
 const BlogSection = ({ homePage = false }) => {
     const { blogs, loading } = useSelector(state => state.blog)
@@ -245,7 +239,7 @@ const BlogSection = ({ homePage = false }) => {
 
                                     {/* Reading time badge */}
                                     <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-1 text-xs font-medium text-[var(--text-color)] opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-                                        <FaClock />
+                                        <Clock size={16} />
                                         <span>5 min read</span>
                                     </div>
                                 </div>
@@ -255,8 +249,8 @@ const BlogSection = ({ homePage = false }) => {
 
                                     {/* Date */}
                                     <div className="flex items-center gap-2 mb-4">
-                                        <FaCalendarAlt
-                                            className="text-sm"
+                                        <Calendar
+                                        size={16}
                                             style={{ color: 'var(--accent-color)' }}
                                         />
                                         <span
@@ -315,7 +309,7 @@ const BlogSection = ({ homePage = false }) => {
                                                     color: 'var(--text-light-color)'
                                                 }}
                                             >
-                                                <FaArrowRightLong className="text-sm" />
+                                                <ArrowRight className="text-sm" />
                                             </motion.div>
                                         </div>
                                     </motion.div>

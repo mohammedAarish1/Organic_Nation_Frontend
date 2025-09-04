@@ -1,21 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
-  
-
-// React Icons
-import { 
-  GoPackage, 
-  GoCalendar, 
-  GoCreditCard, 
-  GoInfo 
-} from "react-icons/go";
-import {  
-  FaMapMarkerAlt,
-  FaPhone,
-  FaEnvelope,
-  FaReceipt,
-  FaTimes,
-} from "react-icons/fa";
 import { address } from "../../../helper/helperFunctions";
+import { Box, Calendar, CreditCard, IndianRupee, Info, Mail, MapPin, Phone, ScrollText, X } from 'lucide-react';
 
 
 
@@ -28,28 +13,28 @@ const OrderDetailsModal = ({ isOpen, onClose, order, statusIcon }) => {
   const detailSections = [
     {
       title: "Order Information",
-      icon: GoPackage,
+      icon: Box,
       items: [
-        { icon: GoInfo, label: "Order Status", value: order?.orderStatus, statusIcon },
-        { icon: GoPackage, label: "Order Number", value: `#${order?.orderNo}` },
-        { icon: GoCalendar, label: "Order Date", value: new Date(order?.createdAt).toLocaleDateString() },
+        { icon: Info, label: "Order Status", value: order?.orderStatus, statusIcon },
+        { icon: Box, label: "Order Number", value: `#${order?.orderNo}` },
+        { icon: Calendar, label: "Order Date", value: new Date(order?.createdAt).toLocaleDateString() },
       ]
     },
     {
       title: "Contact Information",
-      icon: FaPhone,
+      icon: Phone,
       items: [
-        { icon: FaEnvelope, label: "Email", value: order?.userEmail },
-        { icon: FaPhone, label: "Phone", value: order?.phoneNumber },
+        { icon: Mail, label: "Email", value: order?.userEmail },
+        { icon: Phone, label: "Phone", value: order?.phoneNumber },
       ]
     },
     {
       title: "Payment & Shipping",
-      icon: GoCreditCard,
+      icon: CreditCard,
       items: [
-        { icon: GoCreditCard, label: "Payment Method", value: order?.paymentMethod },
-        { icon: FaMapMarkerAlt, label: "Shipping Address", value: address(order?.shippingAddress) },
-        { icon: FaReceipt, label: "Total Amount", value: `₹${order?.subTotal + order?.shippingFee}` }
+        { icon: CreditCard, label: "Payment Method", value: order?.paymentMethod },
+        { icon: MapPin, label: "Shipping Address", value: address(order?.shippingAddress) },
+        { icon: IndianRupee, label: "Total Amount", value: `₹${order?.subTotal + order?.shippingFee}` }
       ]
     }
   ];
@@ -74,7 +59,7 @@ const OrderDetailsModal = ({ isOpen, onClose, order, statusIcon }) => {
           <div className="flex items-center justify-between p-6 border-b border-[var(--neutral-color)]/30 bg-[var(--themeColor)] text-[var(--text-light-color)]">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-[var(--text-light-color)]/10 rounded-lg">
-                <FaReceipt className="w-5 h-5" />
+                <ScrollText className="w-5 h-5" />
               </div>
               <h2 className="text-xl font-bold">Order Details</h2>
             </div>
@@ -84,7 +69,7 @@ const OrderDetailsModal = ({ isOpen, onClose, order, statusIcon }) => {
               onClick={onClose}
               className="p-2 hover:bg-[var(--text-light-color)]/10 rounded-lg transition-colors"
             >
-              <FaTimes className="w-5 h-5" />
+              <X className="w-5 h-5" />
             </motion.button>
           </div>
 

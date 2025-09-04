@@ -1,6 +1,5 @@
 // import React, { useEffect, useRef } from "react";
 // // react icnons
-// import { RiDiscountPercentLine } from "react-icons/ri";
 // import {
 //   applyAdditionalCouponDiscount,
 //   applyPickleCouponCode,
@@ -11,8 +10,6 @@
 // import { useDispatch, useSelector } from "react-redux";
 // import { toast } from "react-toastify";
 // import { Field, Form, Formik } from "formik";
-// import { ImSpinner9 } from "react-icons/im";
-// import {  FaTags,  } from "react-icons/fa";
 // import { Link } from "react-router-dom";
 // import api from "../../config/axiosConfig";
 // import PersoanlCouponCard from "../user-profile-comp/PersoanlCouponCard";

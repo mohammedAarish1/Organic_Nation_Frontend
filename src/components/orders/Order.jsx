@@ -12,46 +12,24 @@ const SingleOrder = lazy(() => import("./SingleOrder"))
 const DeliveryFeedbackForm = lazy(() => import("../../helper/DeliveryFeedbackForm"))
 const SingleOrderFooterSection = lazy(() => import("../module/manage-orders/SingleOrderFooterSection"));
 const OrderDetailsModal = lazy(() => import("../module/manage-orders/OrderDetailsModal"));
-
-// React Icons
-import {
-  GoDotFill,
-  GoPackage,
-  GoCalendar,
-  GoCreditCard,
-  GoInfo
-} from "react-icons/go";
-import {
-  IoCheckmarkDoneCircleSharp,
-} from "react-icons/io5";
-import {
-  MdOutlineCancel,
-  MdDeliveryDining,
-  MdOutlineFeedback
-} from "react-icons/md";
-import {
-  FaArrowRight,
-  FaEye,
-  FaTimes,
-  FaChevronDown
-} from "react-icons/fa";
+import { ArrowRight, Box, Calendar, ChevronDown, CircleCheck, CircleX, CreditCard, Dot, Eye, Info, MessageSquareWarning, X } from "lucide-react";
 
 // Status Configuration
 const STATUS_CONFIG = {
   active: {
-    icon: <GoDotFill className="text-xl text-[var(--secondary-color)]" />,
+    icon: <Dot className="text-xl text-[var(--secondary-color)]" />,
     color: "var(--secondary-color)",
     bgColor: "var(--secondary-color)/10",
     label: "Active"
   },
   completed: {
-    icon: <IoCheckmarkDoneCircleSharp className="text-xl text-[var(--secondary-color)]" />,
+    icon: <CircleCheck size={18} />,
     color: "var(--secondary-color)",
     bgColor: "var(--secondary-color)/10",
     label: "Completed"
   },
   cancelled: {
-    icon: <MdOutlineCancel className="text-xl text-[var(--alert-color)]" />,
+    icon: <CircleX size={18} className="text-[var(--alert-color)]" />,
     color: "var(--alert-color)",
     bgColor: "var(--alert-color)/10",
     label: "Cancelled"
@@ -85,7 +63,7 @@ const DeliveryFeedbackModal = ({ isOpen, onClose, order }) => {
           <div className="flex items-center justify-between p-3 border-b border-[var(--neutral-color)]/30 bg-[var(--themeColor)] text-[var(--text-light-color)]">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-[var(--text-light-color)]/10 rounded-lg">
-                <MdDeliveryDining className="w-5 h-5" />
+                <MessageSquareWarning className="w-5 h-5" />
               </div>
               <h2 className="text-xl font-bold">Delivery Feedback</h2>
             </div>
@@ -95,7 +73,7 @@ const DeliveryFeedbackModal = ({ isOpen, onClose, order }) => {
               onClick={onClose}
               className="p-2 hover:bg-[var(--text-light-color)]/10 rounded-lg transition-colors"
             >
-              <FaTimes className="w-5 h-5" />
+              <X className="w-5 h-5" />
             </motion.button>
           </div>
 
@@ -125,25 +103,25 @@ const OrderHeader = ({ order, onShowDetails, statusIcon }) => {
 
   const headerItems = [
     {
-      icon: GoPackage,
+      icon: Box,
       label: "Order Number",
       value: `#${order?.orderNo}`,
       className: "lg:flex hidden"
     },
     {
-      icon: GoCalendar,
+      icon: Calendar,
       label: "Date Placed",
       value: new Date(order?.createdAt).toLocaleDateString(),
       className: "md:flex hidden"
     },
     {
-      icon: GoCreditCard,
+      icon: CreditCard,
       label: "Payment Method",
       value: order?.paymentMethod,
       className: "lg:flex hidden"
     },
     {
-      icon: GoInfo,
+      icon: Info,
       label: "Status",
       value: statusConfig?.label || order?.orderStatus,
       statusIcon: statusIcon,
@@ -186,9 +164,9 @@ const OrderHeader = ({ order, onShowDetails, statusIcon }) => {
           className="flex items-center gap-2 bg-[var(--text-light-color)] text-[var(--themeColor)] px-4 py-2.5 rounded-lg font-medium hover:bg-[var(--background-color)] transition-colors shadow-lg"
           onClick={onShowDetails}
         >
-          <FaEye className="w-4 h-4" />
+          <Eye size={18} />
           <span>Order Details</span>
-          <FaArrowRight className="w-3 h-3" />
+          <ArrowRight size={18} />
         </motion.button>
       </div>
     </motion.div>
@@ -274,7 +252,7 @@ const Order = ({ order }) => {
                 animate={{ rotate: showAllItems ? 180 : 0 }}
                 transition={{ duration: 0.2 }}
               >
-                <FaChevronDown className="w-4 h-4" />
+                <ChevronDown size={18} />
               </motion.div>
             </motion.button>
           </motion.div>
@@ -299,7 +277,7 @@ const Order = ({ order }) => {
             className="flex items-center gap-2 text-[var(--themeColor)] hover:text-[var(--themeColor)]/80 text-sm underline underline-offset-2"
             onClick={() => setShowDeliveryFeedbackForm(true)}
           >
-            <MdOutlineFeedback className="w-4 h-4" />
+            <MessageSquareWarning className="w-4 h-4" />
             Delivery Feedback
           </motion.button>
         </div>

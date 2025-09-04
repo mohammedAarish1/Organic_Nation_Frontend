@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { FiTrash2, FiPlus, FiMinus, FiArrowLeft, FiArrowRight, FiShoppingBag, FiHeart } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import Image from '../../components/image/Image';
@@ -8,10 +7,11 @@ import ProductQty from '../../components/productQty/ProductQty';
 import { getAllCartItems, removeFromCart } from '../../features/cart/cart';
 import CheckoutModal from '../../components/CheckoutModal';
 import SubmitButton from '../../components/button/SubmitButton';
-import CheckDeliveryAvailability from '../../components/module/cart/CheckDeliveryAvailability';
+// import CheckDeliveryAvailability from '../../components/module/cart/CheckDeliveryAvailability';
 import CODEligibility from '../../components/module/cart/CODEligibility';
 import FreeShippingAlert from '../../components/module/cart/FreeShippingAlert';
 import { formatPrice } from '../../helper/helperFunctions';
+import { ArrowLeft, ShoppingBag, Trash2 } from 'lucide-react';
 
 // Demo product data
 // const demoProducts = [
@@ -150,7 +150,7 @@ const Cart = () => {
           className="flex items-center text-[#3E2C1B] mb-6 hover:text-[#7A2E1D] transition-colors"
         // whileHover={{ x: -5 }}
         >
-          <FiArrowLeft className="mr-2" /> Continue Shopping
+          <ArrowLeft size={16} className="mr-2" /> Continue Shopping
         </Link>
 
         {cartItemsList.length === 0 ? (
@@ -160,7 +160,7 @@ const Cart = () => {
             className="text-center py-16"
           >
             <div className="flex justify-center mb-4">
-              <FiShoppingBag className="w-16 h-16 text-[#DCD2C0]" />
+              <ShoppingBag className="w-16 h-16 text-[#DCD2C0]" />
             </div>
             <h2 className="text-2xl text-[#3E2C1B] font-semibold mb-2">Your cart is empty</h2>
             <p className="text-[#3E2C1B] opacity-70 mb-8">Looks like you haven't added any items to your cart yet.</p>
@@ -242,7 +242,7 @@ const Cart = () => {
                                 }}
                                 className="flex items-center text-[#D87C45] hover:text-[#7A2E1D] transition-colors"
                               >
-                                <FiTrash2 className="mr-1" /> Remove
+                                <Trash2 size={16} className="mr-1" /> Remove
                               </button>
                             </div>
                           </div>

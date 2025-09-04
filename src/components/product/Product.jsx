@@ -2,8 +2,6 @@
 // import { NavLink } from 'react-router-dom';
 // import AddToCartBtn from '../add-to-cart-btn/AddToCartBtn';
 // import axios from 'axios';
-// import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
-// import { AiOutlineStar } from 'react-icons/ai';
 // import { useSelector } from 'react-redux';
 // import Image from '../image/Image';
 
@@ -200,8 +198,8 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import AddToCartBtn from '../add-to-cart-btn/AddToCartBtn';
 import Image from '../image/Image';
-import { LuEye } from "react-icons/lu";
 import Loader from '../../components/common/Loader';
+import { Eye } from 'lucide-react';
 
 const QuickViewModal = lazy(() => import('./QuickViewModal'))
 
@@ -300,7 +298,7 @@ const Product = memo(({ gridView, product }) => {
                 opacity-0 group-hover:opacity-100 transition-opacity duration-300
                 hover:bg-gray-100 z-20"
               >
-                <LuEye className='text-xl text-gray-600' />
+                <Eye size={16} className='text-gray-600' />
               </button>
 
               {/* Discount Badge */}

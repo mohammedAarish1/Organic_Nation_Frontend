@@ -4,10 +4,6 @@
 // import {  useSelector } from 'react-redux';
 // // import { setCurrentPage } from '../../features/pagination/pagination';
 // // import { fetchCategoryWiseData, setCategoryBtnValue } from '../../features/filter/filterSlice';
-// import { FaAnglesRight, FaSquareXTwitter } from "react-icons/fa6";
-// import { FaInstagramSquare, FaYoutube } from "react-icons/fa";
-// import { GrLinkedin } from "react-icons/gr";
-// import { ImFacebook2 } from "react-icons/im";
 
 // // Move static data outside component to prevent recreating on each render
 // const socialData = [
@@ -185,54 +181,40 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import Newsletter from './Newsletter'
-import { 
-  FaAnglesRight, 
-  FaSquareXTwitter, 
-//   FaInstagramSquare, 
-  FaYoutube, 
-  FaPhone, 
-  FaEnvelope, 
-  FaLocationDot, 
-  FaBuilding,
-  FaLeaf,
-  FaSeedling
-} from "react-icons/fa6";
-import { GrInstagram } from "react-icons/gr";
-import { GrLinkedin } from "react-icons/gr";
-import { ImFacebook2 } from "react-icons/im";
-import { MdOutlineSecurity, MdNaturePeople } from "react-icons/md";
-// import { GiMicroorganisms } from "react-icons/gi";
-import { FaGlobeAmericas } from "react-icons/fa";
-import { BiBlock } from "react-icons/bi";
+import { FacebookIcon, InstagramIcon, LinkedInIcon, XIcon, YouTubeIcon } from '../../icons/SvgIcons';
+import { Ban, Building, ChevronsRight, Globe, HeartHandshake, Leaf, Mail, MapPin, Phone, ShieldCheck, Sprout } from 'lucide-react';
 
 const socialData = [
-  { 
-    href: 'https://www.linkedin.com/company/organicnationofficial',
-    icon: <GrLinkedin />,
-    label: "LinkedIn",
-    color: "#7A2E1D"
-  },
-  { 
-    href: 'https://www.facebook.com/organicnationofficial',
-    icon: <ImFacebook2 />,
-    label: "Facebook",
-    color: "#7A2E1D"
-  },
-  { 
+   {
     href: 'https://www.instagram.com/organicnationofficial/',
-    icon: <GrInstagram />,
+    icon: InstagramIcon(),
     label: "Instagram",
     color: "#7A2E1D"
   },
-   { 
+   {
+    href: 'https://www.facebook.com/organicnationofficial',
+    // icon: <ImFacebook2 />,
+    icon: FacebookIcon(),
+    label: "Facebook",
+    color: "#7A2E1D"
+  },
+  {
+    href: 'https://www.linkedin.com/company/organicnationofficial',
+    // icon: <GrLinkedin />,
+    icon: LinkedInIcon(),
+    label: "LinkedIn",
+    color: "#7A2E1D"
+  },
+ 
+  {
     href: 'https://x.com/organicnation_',
-    icon: <FaSquareXTwitter />,
+    icon: XIcon(),
     label: "Twitter",
     color: '#7A2E1D'
   },
-  { 
+  {
     href: 'https://www.youtube.com/@organicnationofficial',
-    icon: <FaYoutube />,
+    icon: YouTubeIcon(),
     label: "YouTube",
     color: "#7A2E1D"
   }
@@ -240,23 +222,23 @@ const socialData = [
 
 const qualities = [
   {
-    icon: <FaSeedling className="text-3xl text-[var(--secondary-color)]" />,
+    icon: <Sprout className="text-3xl text-[var(--secondary-color)]" />,
     text: 'Sustainable Farming Techniques'
   },
   {
-    icon: <MdOutlineSecurity className="text-3xl text-[var(--secondary-color)]" />,
+    icon: <ShieldCheck className="text-3xl text-[var(--secondary-color)]" />,
     text: 'Chemical Pesticide-free'
   },
   {
-    icon: <MdNaturePeople className="text-3xl text-[var(--secondary-color)]" />,
+    icon: <HeartHandshake className="text-3xl text-[var(--secondary-color)]" />,
     text: 'Locally Ethically Sourced'
   },
   {
-    icon: <BiBlock  className="text-3xl text-[var(--secondary-color)]" />,
+    icon: <Ban className="text-3xl text-[var(--secondary-color)]" />,
     text: 'Non-GMO Produce'
   },
   {
-    icon: <FaGlobeAmericas className="text-3xl text-[var(--secondary-color)]" />,
+    icon: <Globe className="text-3xl text-[var(--secondary-color)]" />,
     text: 'Global Testing Standards'
   }
 ];
@@ -279,11 +261,11 @@ const quickLinks = [
 const SocialLinks = memo(() => (
   <div className="flex justify-center items-center gap-4">
     {socialData.map(({ href, icon, label, color }, index) => (
-      <motion.a 
-        key={index} 
-        href={href} 
-        target="_blank" 
-        rel="noopener noreferrer" 
+      <motion.a
+        key={index}
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
         aria-label={label}
         whileHover={{ scale: 1.2 }}
         transition={{ type: "spring", stiffness: 400, damping: 10 }}
@@ -303,13 +285,13 @@ const FooterLinks = memo(({ title, links }) => (
     </h2>
     <ul className="flex flex-col gap-2">
       {links.map(({ to, label }, index) => (
-        <motion.li 
+        <motion.li
           key={index}
           whileHover={{ x: 8 }}
           transition={{ type: "spring", stiffness: 300, damping: 10 }}
         >
           <Link to={to} className="flex items-center gap-2 hover:text-[var(--accent-color)]">
-            <FaAnglesRight className="text-[var(--accent-color)]" /> 
+            <ChevronsRight className="text-[var(--accent-color)]" />
             <span className="tracking-wide">{label}</span>
           </Link>
         </motion.li>
@@ -319,16 +301,16 @@ const FooterLinks = memo(({ title, links }) => (
 ));
 
 const ContactItem = memo(({ icon, content, href, label }) => (
-  <motion.div 
+  <motion.div
     className="flex items-start gap-3 group"
     whileHover={{ x: 5 }}
     transition={{ type: "spring", stiffness: 300, damping: 10 }}
   >
     <div className="mt-1 text-[var(--accent-color)]">{icon}</div>
     {href ? (
-      <a 
-        href={href} 
-        aria-label={label} 
+      <a
+        href={href}
+        aria-label={label}
         className="tracking-wide group-hover:text-[var(--accent-color)]"
       >
         {content}
@@ -340,7 +322,7 @@ const ContactItem = memo(({ icon, content, href, label }) => (
 ));
 
 const QualityBadge = memo(({ icon, text }) => (
-  <motion.div 
+  <motion.div
     className="flex items-center gap-2 bg-[var(--background-color)] p-3 rounded-lg shadow-sm"
     whileHover={{ y: -5 }}
     transition={{ type: "spring", stiffness: 300, damping: 10 }}
@@ -356,7 +338,7 @@ const Logo = memo(() => (
   <Link to="/" className="flex items-center gap-2">
     <div className="relative w-12 h-12 md:w-16 md:h-16">
       <div className="absolute inset-0 bg-[var(--accent-color)] rounded-full opacity-20"></div>
-      <FaLeaf className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[var(--themeColor)] text-3xl md:text-4xl" />
+      <Leaf size={28} className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[var(--themeColor)]" />
     </div>
     <div className="flex flex-col">
       <span className="font-bold text-xl md:text-2xl tracking-wide text-[var(--themeColor)]">ORGANIC NATION</span>
@@ -371,14 +353,14 @@ const Footer = () => {
     if (!prev || !next) return false;
     return JSON.stringify(prev) === JSON.stringify(next);
   });
-  
+
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 500);
     };
-    
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -421,16 +403,16 @@ const Footer = () => {
         {/* Wavy divider */}
         <div className="relative h-12 overflow-hidden">
           <svg viewBox="0 0 500 150" preserveAspectRatio="none" className="w-full h-full">
-            <path 
-              d="M0.00,49.98 C149.99,150.00 349.20,-49.98 500.00,49.98 L500.00,150.00 L0.00,150.00 Z" 
+            <path
+              d="M0.00,49.98 C149.99,150.00 349.20,-49.98 500.00,49.98 L500.00,150.00 L0.00,150.00 Z"
               className="fill-[var(--themeColor)] opacity-10"
             ></path>
           </svg>
         </div>
-        
+
         <div className="container mx-auto px-4">
           {/* Top section with logo and social links */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -440,11 +422,11 @@ const Footer = () => {
             <Logo />
             <SocialLinks />
           </motion.div>
-          
+
           {/* Main footer content */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
             {/* About us section */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -461,7 +443,7 @@ const Footer = () => {
             </motion.div>
 
             {/* Company & Quick Links */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -473,7 +455,7 @@ const Footer = () => {
             </motion.div>
 
             {/* Categories */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -483,7 +465,7 @@ const Footer = () => {
             </motion.div>
 
             {/* Contact Information */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -494,26 +476,26 @@ const Footer = () => {
                 Get in Touch
               </h2>
               <div className="flex flex-col gap-4">
-                <ContactItem 
-                  icon={<FaEnvelope />} 
-                  content="info@organicnation.co.in" 
+                <ContactItem
+                  icon={<Mail size={18} />}
+                  content="info@organicnation.co.in"
                   href="mailto:info@organicnation.co.in"
                   label="Email"
                 />
-                <ContactItem 
-                  icon={<FaPhone />} 
-                  content="+91-9999532041" 
+                <ContactItem
+                  icon={<Phone size={18} />}
+                  content="+91-9999532041"
                   href="tel:+919999532041"
                   label="Phone"
                 />
-                <ContactItem 
-                  icon={<FaBuilding />} 
+                <ContactItem
+                  icon={<Building size={18} />}
                   content={<>
                     <span className="font-semibold">Corporate Office Address:</span> Shop No - 336, Plot No - 134B, Shopprix Mall, Sector-61, Noida, Gautam Buddha Nagar, Uttar Pradesh, 201301
                   </>}
                 />
-                <ContactItem 
-                  icon={<FaLocationDot />} 
+                <ContactItem
+                  icon={<MapPin size={18} />}
                   content={<>
                     <span className="font-semibold">Work & Manufacturing Address:</span> Foodsbay India, Bailparao, Ramnagar Road, Nainital, Uttarakhand-263159
                   </>}
@@ -521,9 +503,9 @@ const Footer = () => {
               </div>
             </motion.div>
           </div>
-          
+
           {/* Quality badges */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -534,9 +516,9 @@ const Footer = () => {
               <QualityBadge key={index} {...quality} />
             ))}
           </motion.div>
-          
+
           {/* Payment methods */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -553,7 +535,7 @@ const Footer = () => {
             </div>
           </motion.div>
         </div>
-        
+
         {/* Copyright bar */}
         <div className="bg-[var(--themeColor)] py-4 text-[var(--text-light-color)]">
           <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-2 text-sm">

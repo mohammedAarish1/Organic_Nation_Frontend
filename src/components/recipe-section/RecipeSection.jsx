@@ -2,7 +2,6 @@
 // import Title from '../title/Title'
 // import { Link } from 'react-router-dom';
 // // react icons 
-// import { FaArrowRightLong } from "react-icons/fa6";
 // import { useDispatch, useSelector } from 'react-redux';
 // import { getAllRecipes } from '../../imports';
 
@@ -80,20 +79,10 @@ import React, { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Title from '../title/Title'
 import { Link } from 'react-router-dom'
-import {
-    FaClock,
-    FaUtensils,
-    FaStar,
-    FaLeaf,
-    FaHeart,
-    FaCalendarAlt
-} from "react-icons/fa"
-import {
-    FaArrowRightLong,
-} from "react-icons/fa6"
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllRecipes } from '../../imports'
 import SubmitButton from '../button/SubmitButton'
+import { ArrowRight, Calendar, Clock, Heart, Leaf, Star, Utensils } from 'lucide-react'
 
 const RecipeSection = ({ showBtn = false }) => {
     const dispatch = useDispatch()
@@ -202,7 +191,7 @@ const RecipeSection = ({ showBtn = false }) => {
                         ease: "easeInOut"
                     }}
                 >
-                    <FaLeaf size={24} />
+                    <Leaf size={24} />
                 </motion.div>
                 <motion.div
                     className="absolute bottom-1/3 right-1/3 text-[var(--accent-color)] opacity-10"
@@ -217,7 +206,7 @@ const RecipeSection = ({ showBtn = false }) => {
                         delay: 1
                     }}
                 >
-                    <FaUtensils size={20} />
+                    <Utensils size={20} />
                 </motion.div>
             </div>
 
@@ -247,7 +236,7 @@ const RecipeSection = ({ showBtn = false }) => {
                         animate={{ rotate: [0, 360] }}
                         transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
                     >
-                        <FaUtensils size={20} />
+                        <Utensils size={20} />
                     </motion.div>
                     <motion.div
                         className="w-16 h-1 rounded-full"
@@ -305,7 +294,7 @@ const RecipeSection = ({ showBtn = false }) => {
                                                     animate={{ scale: 1, rotate: 0 }}
                                                     transition={{ delay: 0.3, type: "spring" }}
                                                 >
-                                                    <FaLeaf size={10} />
+                                                    <Leaf size={14} />
                                                     Vegan
                                                 </motion.div>
                                             )}
@@ -325,17 +314,17 @@ const RecipeSection = ({ showBtn = false }) => {
                                             whileHover={{ scale: 1.1 }}
                                             whileTap={{ scale: 0.9 }}
                                         >
-                                            <FaHeart className="text-red-500" size={16} />
+                                            <Heart color='brown' size={20} />
                                         </motion.div>
 
                                         {/* Recipe stats overlay */}
                                         <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
                                             <div className="bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-1 text-xs font-medium text-[var(--text-color)]">
-                                                <FaClock />
+                                                <Clock size={16} />
                                                 <span>{details.cookTime}</span>
                                             </div>
                                             <div className="bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-1 text-xs font-medium text-[var(--text-color)]">
-                                                <FaUtensils />
+                                                <Utensils size={14}  />
                                                 <span>{details.servings} servings</span>
                                             </div>
                                         </div>
@@ -347,8 +336,7 @@ const RecipeSection = ({ showBtn = false }) => {
                                         {/* Date and Rating */}
                                         <div className="flex items-center justify-between mb-4">
                                             <div className="flex items-center gap-2">
-                                                <FaCalendarAlt
-                                                    className="text-xs"
+                                                <Calendar size={16}
                                                     style={{ color: 'var(--accent-color)' }}
                                                 />
                                                 <span
@@ -363,7 +351,7 @@ const RecipeSection = ({ showBtn = false }) => {
                                             </div>
 
                                             <div className="flex items-center gap-1">
-                                                <FaStar className="text-yellow-400" size={12} />
+                                                <Star className="text-yellow-400" size={16} />
                                                 <span
                                                     className="text-sm font-semibold"
                                                     style={{ color: 'var(--text-color)' }}
@@ -426,7 +414,7 @@ const RecipeSection = ({ showBtn = false }) => {
                                                         whileHover={{ rotate: 360 }}
                                                         transition={{ duration: 0.5 }}
                                                     >
-                                                        <FaUtensils className="text-white" size={14} />
+                                                        <Utensils className="text-white" size={16} />
                                                     </motion.div>
                                                     <span className="text-white font-semibold text-sm">
                                                         Start Cooking
@@ -441,7 +429,7 @@ const RecipeSection = ({ showBtn = false }) => {
                                                         ease: "easeInOut"
                                                     }}
                                                 >
-                                                    <FaArrowRightLong size={14} />
+                                                    <ArrowRight size={20} />
                                                 </motion.div>
                                             </div>
                                         </motion.div>

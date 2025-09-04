@@ -7,8 +7,6 @@
 // import { toast } from 'react-toastify';
 
 // // react icons 
-// import { FaArrowRight } from "react-icons/fa6";
-// import { ImSpinner9 } from 'react-icons/im';
 
 
 

@@ -1,9 +1,9 @@
 import React, { lazy, Suspense, useState } from 'react'
-import { FaSort, FaSync } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteDocumentFromDatabase, updateCurrentStatus } from '../../../features/admin/adminData';
 import { toast } from 'react-toastify';
 import Loader from '../../common/Loader';
+import { ArrowUpDown, RefreshCw } from 'lucide-react';
 
 const Alert = lazy(() => import('../../alert/Alert'))
 const AdminProductForm = lazy(() => import('../module/admin-products/AdminProductForm'))
@@ -118,7 +118,7 @@ const AdminTable = ({
                         // onClick={handleRefreshOrders} 
                         className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
                     >
-                        <FaSync className={`${loading && 'animate-spin'}`} />
+                        <RefreshCw size={16} className={`${loading && 'animate-spin'}`} />
                     </button>
                 )}
 
@@ -136,7 +136,7 @@ const AdminTable = ({
                                         {header.label}
                                         {header.label === 'Date' && (
                                             <button onClick={handleSort} className="ml-1">
-                                                <FaSort />
+                                                <ArrowUpDown size={14}  />
                                             </button>
                                         )}
                                     </div>

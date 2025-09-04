@@ -3,12 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 // import Title from '../title/Title';
 import Product from '../product/Product';
 import { getSpotlightProducts } from '../../features/spotlightProducts/spotlightProducts';
-import { MdLocalOffer, MdNewReleases } from 'react-icons/md';
-import { GiPodium, GiSunflower } from 'react-icons/gi';
 import Tabs from '../button/Tabs';
 import { motion } from 'framer-motion';
-import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { scrollToSlide } from '../../helper/helperFunctions';
+import { ChevronLeft, ChevronRight, MapPlus, Spotlight, Sun, Tag } from 'lucide-react';
 
 const ProductSkeleton = () => (
     <div className="animate-pulse">
@@ -51,10 +49,10 @@ const SpotlightSection = () => {
     // };
 
     const tabs = [
-        { key: 'best_seller', icon: GiPodium, label: 'Best Seller' },
-        { key: 'new_arrivals', icon: MdNewReleases, label: 'New Arrival' },
-        { key: 'deal_of_the_day', icon: MdLocalOffer, label: 'Deal of the Day' },
-        { key: 'season_special', icon: GiSunflower, label: 'Season Special' }
+        { key: 'best_seller', icon: Spotlight, label: 'Best Seller' },
+        { key: 'new_arrivals', icon: MapPlus, label: 'New Arrival' },
+        { key: 'deal_of_the_day', icon: Tag, label: 'Deal of the Day' },
+        { key: 'season_special', icon: Sun, label: 'Season Special' }
     ]
 
     return (
@@ -95,13 +93,13 @@ const SpotlightSection = () => {
                                             onClick={() => scrollToSlide(scrollContainerRef, 'prev')}
                                             className="sm:p-3 p-1 bg-white/80 hover:bg-white border border-[#DCD2C0]/30 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 text-[#7A2E1D] hover:text-[#9B7A2F]"
                                         >
-                                            <FiChevronLeft className="w-5 h-5" />
+                                            <ChevronLeft className="w-5 h-5" />
                                         </button>
                                         <button
                                             onClick={() => scrollToSlide(scrollContainerRef, 'next')}
                                             className="sm:p-3 p-1 bg-white/80 hover:bg-white border border-[#DCD2C0]/30 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 text-[#7A2E1D] hover:text-[#9B7A2F]"
                                         >
-                                            <FiChevronRight className="w-5 h-5" />
+                                            <ChevronRight className="w-5 h-5" />
                                         </button>
                                     </div>
                                 )}

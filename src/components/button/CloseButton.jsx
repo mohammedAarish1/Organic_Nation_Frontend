@@ -1,6 +1,6 @@
 import React from 'react'
-import { IoCloseSharp } from 'react-icons/io5';
 import { motion } from 'framer-motion';
+import { X } from 'lucide-react';
 
 
 const CloseButton = ({action}) => {
@@ -12,7 +12,7 @@ const CloseButton = ({action}) => {
             whileHover={{ scale: 1.1, rotate: 90 }}
             whileTap={{ scale: 0.9 }}
         >
-            <IoCloseSharp className="text-2xl" />
+            <X size={20}  />
         </motion.button>
     )
 }

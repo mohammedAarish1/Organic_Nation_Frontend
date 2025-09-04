@@ -1,13 +1,12 @@
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-
-import { FiX, FiSave, } from 'react-icons/fi';
 import { states } from '../../helper/stateList';
 import { useDispatch, useSelector } from 'react-redux';
 import { handleAddingNewAddress, updateExistingAddress } from '../../features/user-profile/userProfile';
 import { checkDeliveryAndCalculateShippingFee } from "../../helper/helperFunctions";
 import { toast } from 'react-toastify';
 import { getUserData } from '../../features/auth/auth';
+import { Save, X } from 'lucide-react';
 
 const AddressForm = ({ onSubmit, onCancel, address }) => {
 
@@ -184,7 +183,7 @@ const AddressForm = ({ onSubmit, onCancel, address }) => {
                             onClick={onCancel}
                             className="w-full md:w-auto px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors duration-200 flex items-center justify-center gap-2"
                         >
-                            <FiX size={18} />
+                            <X size={18} />
                             <span>Cancel</span>
                         </button>
                         <button
@@ -192,7 +191,7 @@ const AddressForm = ({ onSubmit, onCancel, address }) => {
                             disabled={isSubmitting}
                             className="w-full md:w-auto px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200 flex items-center justify-center gap-2"
                         >
-                            <FiSave size={18} />
+                            <Save size={18} />
                             <span>{address ? 'Update Address' : 'Save Address'}</span>
                         </button>
                     </div>

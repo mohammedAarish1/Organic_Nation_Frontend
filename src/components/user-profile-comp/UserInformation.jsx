@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { FiX, FiEdit2, FiSave } from 'react-icons/fi';
-import { ImSpinner9 } from 'react-icons/im';
 import { useDispatch, useSelector } from 'react-redux';
 import { updatePersonalInfo, updateUserPhoneNumber } from '../../features/user-profile/userProfile';
 import { getUserData, requestOTP } from '../../features/auth/auth';
 import { toast } from 'react-toastify';
+import { Edit2, Loader, Save, X } from 'lucide-react';
 
 const FormInput = ({ label, name, type = 'text', disabled, value, onChange, error, touched, prefix }) => (
   <div>
@@ -51,10 +50,10 @@ const SaveButton = ({ isSubmitting, loading }) => (
     className="mt-6 w-full md:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200"
   >
     {loading || isSubmitting ? (
-      <ImSpinner9 className="animate-spin" />
+      <Loader className="animate-spin" />
     ) : (
       <>
-        <FiSave size={18} />
+        <Save size={18} />
         <span>Save Changes</span>
       </>
     )}
@@ -79,12 +78,12 @@ const InfoCard = ({ title, isEditing, onEdit, onCancel, children }) => (
         >
           {isEditing ? (
             <>
-              <FiX size={18} />
+              <X size={18} />
               <span>Cancel</span>
             </>
           ) : (
             <>
-              <FiEdit2 size={18} />
+              <Edit2 size={18} />
               <span>Edit</span>
             </>
           )}

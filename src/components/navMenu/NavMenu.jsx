@@ -6,13 +6,6 @@
 // import { setShowSidebar } from '../../features/toggleSidebar/toggleSidebar';
 // import Logo from '../logo/Logo';
 // // react icons 
-// import { MdOutlineHome, MdKeyboardArrowDown } from "react-icons/md";
-// import { RiShoppingBasketFill, RiMenu3Fill } from "react-icons/ri";
-// import { TbPhoneCall } from "react-icons/tb";
-// import { IoCloseSharp } from "react-icons/io5";
-// import { FaBlog ,FaRegUser} from "react-icons/fa";
-// import { LiaGiftsSolid } from "react-icons/lia";
-// import { LuChefHat } from "react-icons/lu";
 
 
 // const NAV_ITEMS = [
@@ -224,7 +217,7 @@
 // export default memo(NavMenu);
 
 
-import React, { memo, useCallback, useEffect, useState } from 'react'
+import  { memo,  useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom';
 // import { fetchCategoryWiseData, setCategoryBtnValue } from '../../features/filter/filterSlice';
 // import { setCurrentPage } from '../../features/pagination/pagination';
@@ -232,28 +225,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setShowSidebar } from '../../features/toggleSidebar/toggleSidebar';
 import Logo from '../logo/Logo';
 // react icons 
-import { MdOutlineHome, MdKeyboardArrowDown } from "react-icons/md";
-import { RiShoppingBasketFill, RiMenu3Fill } from "react-icons/ri";
-import { TbPhoneCall } from "react-icons/tb";
-// import { IoCloseSharp } from "react-icons/io5";
-import { FaBlog, FaRegUser, FaLeaf } from "react-icons/fa";
-import { LiaGiftsSolid } from "react-icons/lia";
-import { LuChefHat } from "react-icons/lu";
 import { motion, AnimatePresence } from 'framer-motion';
-import CloseButton from '../button/CloseButton';
-import { BsFillBoxSeamFill } from 'react-icons/bs';
+// import CloseButton from '../button/CloseButton';
 import { getCatogoriesWithImages } from '../../helper/helperFunctions';
+import { ALargeSmall, ArrowDown,  ArrowRight, ChevronDown, CookingPot, Gift, History, Home, Leaf, Menu, PhoneCall, PhoneCallIcon, ShoppingBasket, User } from 'lucide-react';
 
 const NAV_ITEMS = [
-    { path: '/', icon: MdOutlineHome, label: 'Home' },
-    { path: '/shop/all', icon: RiShoppingBasketFill, label: 'Shop', hasDropdown: true },
-    { path: '/shop/gifts-&-combos', icon: RiShoppingBasketFill, label: 'Gifts & Combos', },
-    { path: '/manage-orders', icon: BsFillBoxSeamFill, label: 'Order History' },
+    { path: '/', icon: Home, label: 'Home' },
+    { path: '/shop/all', icon: ShoppingBasket, label: 'Shop', hasDropdown: true },
+    { path: '/shop/gifts-&-combos', icon: Gift, label: 'Gifts & Combos', },
+    { path: '/manage-orders', icon: History , label: 'Order History' },
     // { path: '/about-us', icon: LiaGiftsSolid, label: 'About us' },
-    { path: '/contact-us', icon: TbPhoneCall, label: 'Contact Us' },
-    { path: '/our-blogs', icon: FaBlog, label: 'Blogs', mobileOnly: true },
-    { path: '/our-recipes', icon: LuChefHat, label: 'Recipe', mobileOnly: true },
-    { path: '/profile/personal-info', icon: FaRegUser, label: 'Profile', mobileOnly: true }
+    { path: '/contact-us', icon: PhoneCall, label: 'Contact Us' },
+    { path: '/our-blogs', icon: ALargeSmall, label: 'Blogs', mobileOnly: true },
+    { path: '/our-recipes', icon: CookingPot, label: 'Recipe', mobileOnly: true },
+    { path: '/profile/personal-info', icon: User, label: 'Profile', mobileOnly: true }
 ];
 
 const CategoryItem = memo(({ category, onClick }) => {
@@ -329,7 +315,7 @@ const MobileMenuItem = memo(({ item, onClick, index }) => {
                                 setIsOpen(!isOpen);
                             }}
                         >
-                            <MdKeyboardArrowDown className="text-xl text-[#ffe9a1]" />
+                            <ArrowDown size={20} className="text-[#ffe9a1]" />
                         </motion.div>
                     )}
                 </Link>
@@ -376,7 +362,7 @@ const MobileMenuItem = memo(({ item, onClick, index }) => {
                             className="flex items-center gap-2 py-2 px-3 rounded-lg text-[var(--secondary-color)] hover:bg-[var(--neutral-color)] transition-colors font-medium"
                             onClick={onClick}
                         >
-                            View All Categories <MdKeyboardArrowDown className="rotate-90" />
+                            View All Categories <ArrowRight size={20}/>
                         </Link>
                     </div>
                 </motion.div>
@@ -467,7 +453,7 @@ const NavMenu = () => {
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                 >
-                    <RiMenu3Fill size={20} />
+                    <Menu size={20} />
                 </motion.button>
 
                 <ul className="hidden md:flex items-center lg:gap-1 font-medium text-[var(--themeColor)]">
@@ -480,7 +466,7 @@ const NavMenu = () => {
                                 {/* <item.icon className="text-xl" /> */}
                                 <span className="flex items-center">
                                     {item.label}
-                                    {item.hasDropdown && <MdKeyboardArrowDown className="mt-[3px] text-[18px]" />}
+                                    {item.hasDropdown && <ChevronDown size={20} className="mt-[3px]" />}
                                 </span>
                             </NavLink>
 
@@ -529,7 +515,7 @@ const NavMenu = () => {
                                 variants={headerVariants}
                             >
                                 <div className="flex items-center gap-2">
-                                    <FaLeaf className="text-[var(--secondary-color)] text-xl" />
+                                    <Leaf className="text-[var(--secondary-color)] text-xl" />
                                     <Logo />
                                 </div>
                                 {/* <CloseButton action={() => dispatch(setShowSidebar(false))} /> */}
@@ -570,7 +556,7 @@ const NavMenu = () => {
                                         className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--secondary-color)] text-white rounded-lg font-medium text-sm hover:bg-[var(--themeColor)] transition-colors"
                                         onClick={() => dispatch(setShowSidebar(false))}
                                     >
-                                        <TbPhoneCall /> Contact Us
+                                        <PhoneCallIcon size={16} /> Contact Us
                                     </Link>
                                 </motion.div>
                             </div>

@@ -5,18 +5,17 @@ import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-// import { ImSpinner9 } from 'react-icons/im';
 // import ResendOTP from '../../components/otp/ResendOTP';
 import { motion } from 'framer-motion';
 
 // react icons 
-// import { FaArrowRight } from "react-icons/fa6";
 import { requestOTP } from '../../features/auth/auth';
 import axios from 'axios';
 import OtpVerification from '../../components/auth/OtpVerification';
 import { getAllCartItems, mergeCart } from '../../features/cart/cart';
-import { FaLeaf, FaPhone, FaUserFriends } from 'react-icons/fa';
 import SubmitButton from '../../components/button/SubmitButton';
+
+import { Leaf, PhoneCall } from 'lucide-react';
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -283,13 +282,13 @@ const OtpLogin = ({ isCheckout = false, setShowOtpInput, setPhoneNumber }) => {
                                         <div className="flex flex-col gap-3">
                                             <div className="flex items-center gap-2 text-[var(--text-light-color)]">
                                                 <span className="p-2 bg-white/10 rounded-full">
-                                                    <FaLeaf className="text-[var(--text-light-color)]" />
+                                                    <Leaf size={20} className="text-[var(--text-light-color)]" />
                                                 </span>
-                                                <span>100% Organic Products</span>
+                                                <span>Organic Products</span>
                                             </div>
                                             <div className="flex items-center gap-2 text-[var(--text-light-color)]">
                                                 <span className="p-2 bg-white/10 rounded-full">
-                                                    <FaPhone className="text-[var(--text-light-color)]" />
+                                                    <PhoneCall size={20} className="text-[var(--text-light-color)]" />
                                                 </span>
                                                 <span>Easy OTP Verification</span>
                                             </div>

@@ -1,7 +1,5 @@
 // import React, { memo, useEffect, useRef, useState } from 'react';
 // import { useCallback } from 'react';
-// import { IoSearch } from "react-icons/io5";
-// import { IoIosClose } from "react-icons/io";
 // import { useDispatch, useSelector } from 'react-redux';
 // import {
 //   getFilteredData,
@@ -102,7 +100,6 @@
 //           aria-label="Search"
 //           className="absolute top-[50%] -translate-y-1/2 xs:right-3 right-2 cursor-pointer bg-[var(--bgColorSecondary)]"
 //         >
-//           <IoSearch />
 //         </button>
 
 //         {inputValue.length > 0 && (
@@ -124,12 +121,11 @@
 
 import React, { memo, useEffect, useRef, useState } from 'react';
 import { useCallback } from 'react';
-import { IoSearch } from "react-icons/io5";
-import { IoIosClose } from "react-icons/io";
 import { useDispatch, useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getFilteredData } from '../../features/filter/filterSlice';
 import { useNavigate } from 'react-router-dom';
+import { Search as SearchIcon, X } from 'lucide-react';
 
 const items = [
   "pickle",
@@ -245,7 +241,7 @@ const Search = () => {
                   onClick={handleClearInput}
                   aria-label="Clear search"
                 >
-                  <IoIosClose className="text-2xl text-gray-500" />
+                  <X size={18} className=" text-gray-500" />
                 </motion.button>
               )}
             </AnimatePresence>
@@ -257,7 +253,7 @@ const Search = () => {
               aria-label="Search"
               className="p-2 bg-[var(--themeColor)] text-white rounded-full flex items-center justify-center shadow-md"
             >
-              <IoSearch className="text-lg" />
+              <SearchIcon size={14} />
             </motion.button>
           </div>
         </form>
@@ -284,7 +280,6 @@ const Search = () => {
                       inputRef.current.focus();
                     }}
                   >
-                    <IoSearch className="mr-2 text-gray-400" />
                     <span>{item}</span>
                   </div>
                 ))

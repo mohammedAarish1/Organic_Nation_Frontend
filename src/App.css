@@ -299,7 +299,7 @@ input[type="range"]::-moz-range-thumb {
     visibility: visible;
   }
   .filters {
-    background-color: var(--bgColorPrimary);
+    background-color: var(--background-color);
     font-family: "Courier New", Courier, monospace;
     z-index: 999;
     width: 50%;

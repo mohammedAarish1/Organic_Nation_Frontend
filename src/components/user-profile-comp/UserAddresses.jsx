@@ -1,16 +1,10 @@
 import { lazy, Suspense, useState } from "react";
-// import AddressForm from "./AddressForm";
-import {
-  FiMapPin,
-  FiEdit2,
-  FiTrash2,
-  FiPlus,
-} from 'react-icons/fi';
 import { useDispatch, useSelector } from "react-redux";
 import { handleDeletingAddress } from "../../features/user-profile/userProfile";
 import { toast } from "react-toastify";
 import { getUserData } from "../../features/auth/auth";
 import Loader from "../common/Loader";
+import { MapPin, Pencil, Trash, Plus } from 'lucide-react';
 
 const AddressForm = lazy(() => import('./AddressForm'))
 
@@ -74,7 +68,7 @@ const UserAddresses = () => {
           }}
           className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-500"
         >
-          <FiPlus size={18} />
+          <Plus size={18} />
           <span>Add New Address</span>
         </button>
       </div>
@@ -87,7 +81,7 @@ const UserAddresses = () => {
           >
             <div className="flex justify-between items-start mb-4">
               <span className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-green-700 text-sm font-medium capitalize">
-                <FiMapPin size={16} className="mr-2" />
+                <MapPin size={14} className="mr-2" />
                 {address.addressType}
               </span>
               <div className="flex">
@@ -98,13 +92,13 @@ const UserAddresses = () => {
                     setShowAddForm(!showAddForm)
                   }}
                 >
-                  <FiEdit2 size={18} />
+                  <Pencil size={18} />
                 </button>
                 <button
                   className="p-2 text-red-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200"
                   onClick={() => handleAddressDelete(address._id)}
                 >
-                  <FiTrash2 size={18} />
+                  <Trash size={18} />
                 </button>
               </div>
             </div>

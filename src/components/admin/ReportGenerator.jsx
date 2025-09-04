@@ -3,8 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { generateReport } from '../../features/admin/adminData';
 // react icons 
-import { FiDownload } from "react-icons/fi";
-import { ImSpinner9 } from 'react-icons/im';
+import { Download, Loader } from 'lucide-react';
 
 
 
@@ -71,7 +70,7 @@ const ReportGenerator = ({title,type}) => {
         disabled={generatingSaleReport}
         className={`mt-6 w-full px-4 py-2 outline-none cursor-pointer border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-500 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2  ${generatingSaleReport ? ' cursor-not-allowed' : ''}`}
       >
-        {generatingSaleReport ? <span className='flex items-center justify-center'><ImSpinner9 className='animate-spin' /> </span> : <span className='flex items-center justify-center gap-2 text-white'>Download Report  <FiDownload className='text-[16px]' /></span>}
+        {generatingSaleReport ? <span className='flex items-center justify-center'><Loader size={16} /> </span> : <span className='flex items-center justify-center gap-2 text-white'>Download Report  <Download size={16} /></span>}
       </button>
       {errorMessage && <p className="mt-2 text-sm text-red-600">{errorMessage}</p>}
       {error && <p className="mt-2 text-sm text-red-600">Error: {error}</p>}

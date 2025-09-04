@@ -1,7 +1,5 @@
 // import React, {  useEffect,  useState } from 'react';
 // import { motion, AnimatePresence } from 'framer-motion';
-// import { FaStar, FaQuoteLeft, FaChevronLeft, FaChevronRight, FaStore, FaLeaf, FaTruck, FaAward } from 'react-icons/fa';
-// import { GiHoneyJar,  GiPickle } from 'react-icons/gi';
 
 
 // const ClientLogosShowcase = () => {
