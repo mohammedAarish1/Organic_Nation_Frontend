@@ -14,7 +14,7 @@
 //             {data.map((item, index) => (
 //                 <div key={item.title} className="border-b border-gray-200 last:border-b-0">
 //                     <button
-//                         className="flex justify-between items-center w-full py-5 px-6 text-left transition-colors duration-200 hover:bg-[var(--hoverEffect)]"
+//                         className="flex justify-between items-center w-full py-5 px-6 text-left transition-colors duration-200 hover:bg-[var(--accent-color)]"
 //                         onClick={() => handleToggle(index)}
 //                     >
 //                         <span className=" text-l text-gray-800">{item.title}</span>
@@ -36,7 +36,7 @@
 //                         className={`overflow-hidden transition-all duration-300 ease-in-out ${openIndex === index ? 'max-h-96' : 'max-h-0'
 //                             }`}
 //                     >
-//                         <div className="py-6 px-10 text-gray-600 bg-[var(--hoverEffect)]">
+//                         <div className="py-6 px-10 text-gray-600 bg-[var(--hoverEaccent-colorffect)]">
 //                             {item.content.map(item => (
 //                                 <ul key={item.subContent} className="list-disc">
 //                                     <li><span className="font-semibold">{item.subTitle}</span> {item.subContent}</li>

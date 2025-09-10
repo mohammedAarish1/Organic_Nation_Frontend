@@ -89,6 +89,7 @@ const DeliveryFeedbackForm = ({ invoiceNumber, setShowDeliveryFeedbackForm }) =>
             </div>
 
             <SubmitButton
+              id='feedbackSubmitBtn'
               isSubmitting={isSubmitting}
               text='Submit'
             />

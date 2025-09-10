@@ -46,7 +46,7 @@ const InstagramEmbed = React.memo(({ postUrl, className = "" }) => {
       {!isLoaded && (
         <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 z-10">
           <div className="text-center text-white">
-            {InstagramIcon()}
+            <InstagramIcon color = "url(#igGradient)" />
             <p className="text-sm font-medium">Loading...</p>
           </div>
         </div>
@@ -65,7 +65,7 @@ const InstagramEmbed = React.memo(({ postUrl, className = "" }) => {
           className="flex items-center justify-center h-96 bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 text-white rounded-2xl"
         >
           <div className="text-center">
-            {InstagramIcon()}
+            <InstagramIcon color = "url(#igGradient)" />
             <p className="text-sm font-medium">View on Instagram</p>
           </div>
         </a>
@@ -148,7 +148,7 @@ const InstagramShowcase = () => {
           className="text-center mb-12"
         >
           <div className="inline-flex items-center gap-2 mb-4">
-            {InstagramIcon()}
+            <InstagramIcon color = "url(#igGradient)" />
             <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#7A2E1D] to-[#9B7A2F] bg-clip-text text-transparent">
               Follow Our Journey
             </h2>
@@ -223,7 +223,7 @@ const InstagramShowcase = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            {InstagramIcon()}
+            <InstagramIcon color = "url(#igGradient)" />
             Visit Our Instagram Profile
             <SquareArrowOutUpRight size={18}  />
           </motion.a>

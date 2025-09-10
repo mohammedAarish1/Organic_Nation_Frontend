@@ -6,13 +6,10 @@ import * as Yup from 'yup';
 import { motion } from 'framer-motion';
 import { submitContactForm } from '../../features/contactedUser/contactedUser';
 import Logo from '../../components/logo/Logo';
-import { GrLinkedin } from "react-icons/gr";
-import { FaSquareXTwitter, FaYoutube } from "react-icons/fa6";
-import { FaInstagram } from "react-icons/fa";
-import { RiFacebookCircleFill } from "react-icons/ri";
 import SEO from '../../helper/SEO/SEO';
 import SubmitButton from '../../components/button/SubmitButton';
-import { Building2,PhoneCall ,Mail,Leaf  } from 'lucide-react';
+import { Building2, PhoneCall, Mail, Leaf } from 'lucide-react';
+import { FacebookIcon, InstagramIcon, LinkedInIcon, XIcon, YouTubeIcon } from '../../icons/SvgIcons'
 
 // Animated form input component
 const AnimatedInputField = ({ label, type, name, isTextarea = false, icon }) => {
@@ -118,19 +115,18 @@ const ContactUs = () => {
       });
     actions.resetForm();
   };
-
   const socialLinks = [
-    { href: 'https://www.linkedin.com/company/organicnationofficial', icon: <GrLinkedin size={24} />, delay: 0.3 },
-    { href: 'https://x.com/organicnation_', icon: <FaSquareXTwitter size={24} />, delay: 0.4 },
-    { href: 'https://www.facebook.com/organicnationofficial', icon: <RiFacebookCircleFill size={26} />, delay: 0.5 },
-    { href: 'https://www.instagram.com/organicnationofficial/', icon: <FaInstagram size={26} />, delay: 0.6 },
-    { href: 'https://www.youtube.com/@organicnationofficial', icon: <FaYoutube size={26} />, delay: 0.7 },
+    { href: 'https://www.linkedin.com/company/organicnationofficial', icon: <LinkedInIcon color="#0A66C2" />, delay: 0.3 },
+    { href: 'https://x.com/organicnation_', icon: <XIcon color='#000' />, delay: 0.4 },
+    { href: 'https://www.facebook.com/organicnationofficial', icon: <FacebookIcon color="#1877F2" />, delay: 0.5 },
+    { href: 'https://www.instagram.com/organicnationofficial/', icon: <InstagramIcon color="url(#igGradient)" />, delay: 0.6 },
+    { href: 'https://www.youtube.com/@organicnationofficial', icon: <YouTubeIcon background="#FF0000" playButton="#fff" />, delay: 0.7 },
   ];
 
   // Form field configurations
   const formFields = [
     { label: 'Full Name', type: 'text', name: 'fullName', icon: <Leaf size={14} /> },
-    { label: 'Email Address', type: 'email', name: 'email', icon: <Mail size={14}  /> },
+    { label: 'Email Address', type: 'email', name: 'email', icon: <Mail size={14} /> },
     { label: 'Phone Number', type: 'tel', name: 'phoneNumber', icon: <PhoneCall size={14} /> },
     { label: 'City', type: 'text', name: 'city', icon: <Building2 size={12} /> },
     { label: 'Message', type: 'textarea', name: 'message', isTextarea: true, icon: <Leaf size={14} /> },
@@ -226,7 +222,7 @@ const ContactUs = () => {
                     transition={{ delay: 0.3 }}
                   >
                     <div className="bg-[var(--background-color)] p-3 rounded-full text-[var(--themeColor)]">
-                      <PhoneCall  size={20} />
+                      <PhoneCall size={20} />
                     </div>
                     <div>
                       <h3 className="font-semibold text-lg">Call Us</h3>
@@ -249,7 +245,7 @@ const ContactUs = () => {
                     transition={{ delay: 0.4 }}
                   >
                     <div className="bg-[var(--background-color)] p-3 rounded-full text-[var(--themeColor)]">
-                      <Mail  size={20} />
+                      <Mail size={20} />
                     </div>
                     <div>
                       <h3 className="font-semibold text-lg">Email Us</h3>
@@ -266,7 +262,7 @@ const ContactUs = () => {
                 {/* Social links section */}
                 <div className="mt-10">
                   <h3 className="font-semibold text-lg mb-4">Connect With Us</h3>
-                  <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-4 bg-white max-w-min px-4 py-2 rounded-lg">
                     {socialLinks.map((link, index) => (
                       <SocialLink key={index} {...link} />
                     ))}
@@ -342,7 +338,7 @@ const ContactUs = () => {
                         ))}
 
                         {/* Submit button */}
-                        <SubmitButton isSubmitting={isSubmitting} text='Send Message' />
+                        <SubmitButton id='contactSubmitBtn' isSubmitting={isSubmitting} text='Send Message' />
                       </div>
                     </Form>
                   )}

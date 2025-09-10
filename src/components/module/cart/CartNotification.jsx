@@ -10,6 +10,7 @@ import CheckoutModal from '../../CheckoutModal';
 import CloseButton from '../../button/CloseButton';
 import { formatPrice } from '../../../helper/helperFunctions';
 import { ArrowRight, CheckCircle, ShoppingCart, Trash } from 'lucide-react';
+import SubmitButton from '../../button/SubmitButton';
 
 const CartNotification = () => {
   const dispatch = useDispatch();
@@ -336,6 +337,7 @@ const CartNotification = () => {
                 {/* Buttons */}
                 <div className="grid grid-cols-2 gap-3">
                   <button
+                    id='viewCartBtn'
                     onClick={handleViewCart}
                     className="py-3 px-4 rounded-xl font-medium text-center transition-all hover:shadow-md"
                     style={{
@@ -346,8 +348,10 @@ const CartNotification = () => {
                   >
                     View Cart
                   </button>
+                  {/* <SubmitButton id='checkoutBtn' text='Checkout' action={handleCheckout} /> */}
 
                   <motion.button
+                    id='checkoutBtn'
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={handleCheckout}

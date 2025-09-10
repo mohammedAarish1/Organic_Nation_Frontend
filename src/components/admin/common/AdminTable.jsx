@@ -125,7 +125,7 @@ const AdminTable = ({
             </div>
             <div className="overflow-x-auto">
                 <table className="min-w-full shadow-md rounded-lg table-auto">
-                    <thead className="bg-[var(--bgColorPrimary)] text-white">
+                    <thead className="bg-[var(--themeColor)] text-white">
                         <tr>
                             <th className="p-3">
                                 <input type="checkbox" className="form-checkbox" />

@@ -100,7 +100,7 @@
 //         <button
 //           type="button"
 //           onClick={handleClosePopup}
-//           className="absolute right-4 top-4 shadow-md rounded-full shadow-green-700 hover:scale-110 text-[var(--bgColorPrimary)] bg-[var(--bgColorSecondary)] transition-transform focus:outline-none focus:ring-2 focus:ring-green-700"
+//           className="absolute right-4 top-4 shadow-md rounded-full shadow-green-700 hover:scale-110 text-[var(--background-color)] bg-[var(--background-color)] transition-transform focus:outline-none focus:ring-2 focus:ring-green-700"
 //           aria-label="Close popup"
 //         >
 //           <IoCloseSharp className="text-4xl" />

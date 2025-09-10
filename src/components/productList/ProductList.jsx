@@ -47,7 +47,7 @@ const ProductList = ({ gridView }) => {
             </p>
             <div className='flex justify-center items-center mb-3 lg:w-[80%] w-[90%] mx-auto '>
               <div>
-                <Link to="/shop/all" className=" flex underline-hover text-[var(--bgColorPrimary)] hover:text-orange-500 justify-center items-center gap-2 py-1   font-semibold rounded-lg  uppercase "> <ArrowLeft /><span className='text-sm sm:text-[16px]'>Continue Shopping</span></Link>
+                <Link to="/shop/all" className=" flex underline-hover text-[var(--text-color)] hover:text-orange-500 justify-center items-center gap-2 py-1   font-semibold rounded-lg  uppercase "> <ArrowLeft /><span className='text-sm sm:text-[16px]'>Continue Shopping</span></Link>
               </div>
             </div>
           </div>

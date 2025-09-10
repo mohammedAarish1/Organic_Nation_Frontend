@@ -90,7 +90,7 @@
 //           type="text"
 //           value={inputValue}
 //           onChange={handleOnChange}
-//           className="w-full xs:py-2 py-1 bg-[var(--bgColorSecondary)] xs:px-4 px-2 border border-gray-400 rounded-lg focus:outline-none focus:border-[var(--themeColor)]"
+//           className="w-full xs:py-2 py-1 bg-[var(--background-color)] xs:px-4 px-2 border border-gray-400 rounded-lg focus:outline-none focus:border-[var(--themeColor)]"
 //         />
 
 //         {!inputValue && <AnimatedPlaceholder />}
@@ -98,14 +98,14 @@
 //         <button 
 //           type="submit"
 //           aria-label="Search"
-//           className="absolute top-[50%] -translate-y-1/2 xs:right-3 right-2 cursor-pointer bg-[var(--bgColorSecondary)]"
+//           className="absolute top-[50%] -translate-y-1/2 xs:right-3 right-2 cursor-pointer bg-[var(--background-color)]"
 //         >
 //         </button>
 
 //         {inputValue.length > 0 && (
 //           <button
 //             type="button"
-//             className="absolute top-[50%] -translate-y-1/2 xs:right-10 right-6 cursor-pointer bg-[var(--bgColorSecondary)]"
+//             className="absolute top-[50%] -translate-y-1/2 xs:right-10 right-6 cursor-pointer bg-[var(--background-color)]"
 //             onClick={handleClearInput}
 //           >
 //             <IoIosClose className="text-2xl" />
@@ -222,7 +222,7 @@ const Search = () => {
             onChange={handleOnChange}
             onFocus={handleFocus}
             onBlur={handleBlur}
-            className="w-full py-3 bg-[var(--bgColorSecondary)] px-5 rounded-xl focus:outline-none text-base"
+            className="w-full py-3  px-5 rounded-xl focus:outline-none text-base"
             aria-label="Search products"
           />
 

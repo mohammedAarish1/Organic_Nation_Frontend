@@ -24,7 +24,7 @@ const Header = memo(() => {
 
   // Memoize the header class string
   const headerClassName = `sticky top-0 w-full z-30 ${
-    isScrolled ? 'bg-[var(--bgColorSecondary)] shadow-xl' : 'bg-transparent'
+    isScrolled ? 'bg-[var(--background-color)] shadow-xl' : 'bg-transparent'
   }`;
 
   const containerClassName = 'flex justify-between gap-2 items-center sm:px-10 px-3 relative py-4 xs:py-1 z-30';

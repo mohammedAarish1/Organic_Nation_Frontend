@@ -4,10 +4,10 @@ import { address } from '../../../../helper/helperFunctions';
 import { useDispatch, useSelector } from 'react-redux';
 import { generateInvoice } from '../../../../features/admin/adminData';
 import { Loader } from 'lucide-react';
-
+import SubmitButton from '../../../../components/button/SubmitButton'
 const AdminOrderDetails = ({ order }) => {
 
-    const dispatch=useDispatch();
+    const dispatch = useDispatch();
     const modalRef = useRef();
     const [selectedOrder, setSelectedOrder] = useState(null);
 
@@ -48,13 +48,13 @@ const AdminOrderDetails = ({ order }) => {
         <>
             <button
                 onClick={() => handleOrderDetails(order)}
-                className="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-800"
+                className="bg-[var(--background-color)] px-2 py-1 rounded hover:bg-white font-semibold"
             >
                 Order Details
             </button>
             {selectedOrder && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-                    <div ref={modalRef} className="bg-[var(--bgColorPrimary)] flex flex-col gap-2 mx-2 text-white p-6 rounded-lg max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+                    <div ref={modalRef} className="bg-[var(--background-color)] flex flex-col gap-2 mx-2 p-6 rounded-lg max-w-2xl w-full max-h-[80vh] overflow-y-auto">
                         <h2 className="text-2xl font-bold mb-4">Order Details</h2>
                         <p><strong>Order No:</strong> {selectedOrder.orderNo}</p>
                         <UpdateInvoiceNo selectedOrder={selectedOrder} />
@@ -74,12 +74,18 @@ const AdminOrderDetails = ({ order }) => {
                                 <li key={item.id}>({index + 1}) -- Item: {item['name-url']} | Quantity: {item.quantity} | Weight: {item.weight} </li>
                             ))}
                         </ul>
-                        <button
+                        {/* <button
                             className="flex justify-center items-center gap-1 mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
                             onClick={() => handleInvoiceGeneration(selectedOrder._id)}
                         >
                             {!generatingInvoice ? ' Generate Invoice' : <Loader className='animate-spin' />}
-                        </button>
+                        </button> */}
+                        <SubmitButton
+                            id='generateInvoiceBtn'
+                            isSubmitting={generatingInvoice}
+                            text={!generatingInvoice ? ' Generate Invoice' : <Loader className='animate-spin' />}
+                            action={() => handleInvoiceGeneration(selectedOrder._id)}
+                        />
                     </div>
                 </div>
             )}

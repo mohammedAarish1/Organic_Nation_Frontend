@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { BiChevronLeft, BiChevronRight, BiDownload } from 'react-icons/bi';
-import { RxCross2 } from "react-icons/rx";
+import  { useState } from 'react';
+import { ChevronLeft, ChevronRight, Download, X } from 'lucide-react';
 // Sample image array - replace with your actual images
 // const sampleImages = [
 //   '/api/placeholder/800/600',
@@ -67,7 +66,7 @@ const handleDownload = () => {
               onClick={() => setIsOpen(false)}
               className="absolute -top-10 right-0 text-white hover:text-gray-300 z-10"
             >
-              <RxCross2  size={24} />
+              <X  size={24} />
             </button>
             
             <div className="relative aspect-video bg-black rounded-lg overflow-hidden">
@@ -81,14 +80,14 @@ const handleDownload = () => {
                 onClick={handlePrevious}
                 className="absolute left-0 top-1/2 -translate-y-1/2 p-2 bg-black bg-opacity-50 text-white hover:bg-opacity-75 transition-opacity"
               >
-                <BiChevronLeft size={24} />
+                <ChevronLeft size={24} />
               </button>
               
               <button
                 onClick={handleNext}
                 className="absolute right-0 top-1/2 -translate-y-1/2 p-2 bg-black bg-opacity-50 text-white hover:bg-opacity-75 transition-opacity"
               >
-                <BiChevronRight size={24} />
+                <ChevronRight size={24} />
               </button>
               
               <button
@@ -96,7 +95,7 @@ const handleDownload = () => {
                 className="absolute top-4 right-4 p-2 bg-black bg-opacity-50 text-white rounded-full hover:bg-opacity-75 transition-opacity"
                 title="Download Image"
               >
-                <BiDownload size={20} />
+                <Download size={20} />
               </button>
               
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">

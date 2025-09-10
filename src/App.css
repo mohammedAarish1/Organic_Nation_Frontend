@@ -17,9 +17,9 @@ body {
 }
 
 :root {
-  --bgColorPrimary: #1b381a;
+  /* --bgColorPrimary: #1b381a; */
   /* --bgColorSecondary: #f0ece0; */
-  --bgColorSecondary: #ffffff;
+  /* --bgColorSecondary: #ffffff; */
   --hoverEffect: #dcd3b9;
   /* --gradient: linear-gradient(#6d613b, #d3bb71); */
 

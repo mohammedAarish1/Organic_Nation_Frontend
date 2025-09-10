@@ -55,7 +55,7 @@ const SortSection = ({ setGridView, gridView }) => {
         <div className=' gap-2 flex'>
           {/* <div>
             <button
-              className={`${!gridView ? "bg-gray-400 p-2 " : "bg-[var(--bgColorPrimary)] text-white p-2"}`}
+              className={`${!gridView ? "bg-gray-400 p-2 " : "bg-[var(--background-color)] text-white p-2"}`}
               onClick={() => setGridView(true)}
               data-tooltip-id="grideView"
               data-tooltip-content="Grid View"
@@ -82,7 +82,7 @@ const SortSection = ({ setGridView, gridView }) => {
 
           <div>
             <button
-              className={`${!gridView ? "bg-[var(--bgColorPrimary)] text-white p-2 " : "bg-gray-400 p-2 "}`}
+              className={`${!gridView ? "bg-[var(--background-color)] text-white p-2 " : "bg-gray-400 p-2 "}`}
               onClick={() => setGridView(false)}
               data-tooltip-id="listView"
               data-tooltip-content="List View"

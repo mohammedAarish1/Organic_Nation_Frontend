@@ -9,6 +9,7 @@ import { Plus, X } from 'lucide-react';
 
 
 const productSchema = Yup.object().shape({
+    isActive: Yup.boolean().required('Required'),
     name: Yup.string().required('Required'),
     weight: Yup.string().required('Required'),
     grossWeight: Yup.string().required('Required'),
@@ -23,6 +24,32 @@ const productSchema = Yup.object().shape({
     get: Yup.number().min(0, 'Must be at least 0'),
     images: Yup.array().min(1, 'At least one image is required').required('Required')
 });
+
+
+
+const SwitchField = ({ name, label }) => (
+    <div className="flex items-center justify-between mb-4 p-3 bg-gray-50 rounded-lg">
+        <label className="text-sm font-medium text-gray-700">{label}</label>
+        <Field name={name}>
+            {({ field, form }) => (
+                <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                        type="checkbox"
+                        className="sr-only peer"
+                        checked={field.value}
+                        onChange={() => form.setFieldValue(name, !field.value)}
+                    />
+                    <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                    <span className="ml-3 text-sm font-medium text-gray-900">
+                        {field.value ? 'Active' : 'Inactive'}
+                    </span>
+                </label>
+            )}
+        </Field>
+    </div>
+);
+
+
 
 const FormField = ({ name, label, type = "text", as }) => {
 
@@ -91,6 +118,7 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
     }, [product]);
 
     const initialValues = product ? {
+        isActive: product.isActive ?? true,
         name: product.name,
         weight: product.weight,
         grossWeight: product.grossWeight,
@@ -109,6 +137,7 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
         deal_of_the_day: product.meta.deal_of_the_day,
         images: product.img || []
     } : {
+        isActive: true,
         name: '',
         weight: '',
         grossWeight: '',
@@ -185,9 +214,9 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
             } else {
                 // for adding new product
                 await dispatch(addNewProductInDatabase(data))
-                .then(result=>{
-                    toast.success(result.payload?.message)
-                })
+                    .then(result => {
+                        toast.success(result.payload?.message)
+                    })
             }
 
             // Clean up object URLs
@@ -213,8 +242,12 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
             validationSchema={productSchema}
             onSubmit={handleSubmit}
         >
-            {({ values,isSubmitting ,setFieldValue}) => (
+            {({ values, isSubmitting, setFieldValue }) => (
                 <Form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+
+                    <SwitchField name="isActive" label="Product Status" />
+
+
                     {/* Existing form fields */}
                     <FormField name="name" label="Product Name" />
                     <FormField name="weight" label="Weight" />

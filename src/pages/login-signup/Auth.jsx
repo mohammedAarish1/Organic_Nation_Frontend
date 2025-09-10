@@ -140,10 +140,10 @@
 //                 <Logo />
 //               </div>
 //               <div className="flex flex-col justify-center items-center">
-//                 <span className="sm:text-2xl uppercase text-[var(--bgColorSecondary)]">
+//                 <span className="sm:text-2xl uppercase text-[var(--background-color)]">
 //                   {!userRegistered ? "Sign up to" : "Log in"}
 //                 </span>
-//                 <span className="sm;text-2xl uppercase text-[var(--bgColorSecondary)]">
+//                 <span className="sm;text-2xl uppercase text-[var(--background-color)]">
 //                   Organic Nation
 //                 </span>
 //               </div>
@@ -180,7 +180,7 @@
 //                           First Name
 //                         </label>
 //                         <Field
-//                           className="shadow appearance-none border bg-[var(--bgColorSecondary)] w-full py-2 px-3  tracking-widest leading-tight focus:outline-none focus:shadow-outline"
+//                           className="shadow appearance-none border bg-[var(--background-color)] w-full py-2 px-3  tracking-widest leading-tight focus:outline-none focus:shadow-outline"
 //                           id="firstName"
 //                           type="text"
 //                           name="firstName"
@@ -200,7 +200,7 @@
 //                           Last Name
 //                         </label>
 //                         <Field
-//                           className="shadow appearance-none border bg-[var(--bgColorSecondary)] w-full py-2 px-3 tracking-widest leading-tight focus:outline-none focus:shadow-outline"
+//                           className="shadow appearance-none border bg-[var(--background-color)] w-full py-2 px-3 tracking-widest leading-tight focus:outline-none focus:shadow-outline"
 //                           id="lastName"
 //                           type="text"
 //                           name="lastName"
@@ -221,7 +221,7 @@
 //                           User ID
 //                         </label>
 //                         <Field
-//                           className="shadow appearance-none border bg-[var(--bgColorSecondary)] w-full py-2 px-3  tracking-widest leading-tight focus:outline-none focus:shadow-outline"
+//                           className="shadow appearance-none border bg-[var(--background-color)] w-full py-2 px-3  tracking-widest leading-tight focus:outline-none focus:shadow-outline"
 //                           id="userId"
 //                           type="text"
 //                           name="userId"
@@ -243,7 +243,7 @@
 //                           Email
 //                         </label>
 //                         <Field
-//                           className="shadow appearance-none border bg-[var(--bgColorSecondary)] w-full py-2 px-3  tracking-widest leading-tight focus:outline-none focus:shadow-outline"
+//                           className="shadow appearance-none border bg-[var(--background-color)] w-full py-2 px-3  tracking-widest leading-tight focus:outline-none focus:shadow-outline"
 //                           id="email"
 //                           type="text"
 //                           name="email"
@@ -263,8 +263,8 @@
 //                         >
 //                           Phone No.
 //                         </label>
-//                         <div className="flex  items-center gap-2 border border-[var(--bgColorSecondary)] ">
-//                           <div className="flex justify-center items-center pl-2 pr-1 gap-1 text-[var(--bgColorSecondary)]">
+//                         <div className="flex  items-center gap-2 border border-[var(--background-color)] ">
+//                           <div className="flex justify-center items-center pl-2 pr-1 gap-1 text-[var(--background-color)]">
 //                             {/* <FaFlag /> */}
 //                             <img
 //                               src="https://organicnationmages.s3.ap-south-1.amazonaws.com/other_images/flag.png"
@@ -274,7 +274,7 @@
 //                             <span>+91</span>
 //                           </div>
 //                           <Field
-//                             className="shadow appearance-none  bg-[var(--bgColorSecondary)] w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline"
+//                             className="shadow appearance-none  bg-[var(--background-color)] w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline"
 //                             id="phoneNumber"
 //                             type="text"
 //                             maxLength={10}
@@ -296,7 +296,7 @@
 //                         Password
 //                       </label>
 //                       <Field
-//                         className="shadow appearance-none border  bg-[var(--bgColorSecondary)] w-full py-2 px-3   leading-tight focus:outline-none focus:shadow-outline"
+//                         className="shadow appearance-none border  bg-[var(--background-color)] w-full py-2 px-3   leading-tight focus:outline-none focus:shadow-outline"
 //                         id="password"
 //                         type="password"
 //                         name="password"
@@ -307,7 +307,7 @@
 //                       {userRegistered && (
 //                         <Link
 //                           to="/auth/forgot-password"
-//                           className="text-end text-[var(--bgColorSecondary)] text-[11px] hover:underline cursor-pointer"
+//                           className="text-end text-[var(--background-color)] text-[11px] hover:underline cursor-pointer"
 //                         >
 //                           Forgot Password
 //                         </Link>
@@ -328,7 +328,7 @@
 //                       {!userRegistered ? (
 //                         <button
 //                           type="submit"
-//                           className="p-2 bg-[var(--bgColorSecondary)] hover:bg-green-500 hover:text-white transition-all duration-300 w-full flex justify-center items-center gap-2 rounded-md "
+//                           className="p-2 bg-[var(--background-color)] hover:bg-green-500 hover:text-white transition-all duration-300 w-full flex justify-center items-center gap-2 rounded-md "
 //                         >
 //                           Sign up
 //                           {user_loading ? (
@@ -340,7 +340,7 @@
 //                       ) : (
 //                         <button
 //                           type="submit"
-//                           className="p-2 bg-[var(--bgColorSecondary)] hover:bg-green-500 hover:text-white transition-all duration-300 w-full flex justify-center items-center gap-2 rounded-md "
+//                           className="p-2 bg-[var(--background-color)] hover:bg-green-500 hover:text-white transition-all duration-300 w-full flex justify-center items-center gap-2 rounded-md "
 //                         >
 //                           Log in
 //                           {user_loading ? (
@@ -362,7 +362,7 @@
 //               {/* horizontal line */}
 //               {/* <div className='flex justify-center gap-4 items-center mb-4'>
 //                 <div className='h-1 md:w-[35%] xs:w-[35%] w-[30%] bg-gradient-to-r from-[#6D613B] to-[#D3BB71]'></div>
-//                 <span className='text-[var(--bgColorSecondary)]'>or</span>
+//                 <span className='text-[var(--background-color)]'>or</span>
 //                 <div className='h-1 md:w-[35%] xs:w-[35%] w-[30%] bg-gradient-to-r from-[#D3BB71] to-[#6D613B]'></div>
 //               </div> */}
 //               {/* other login options */}

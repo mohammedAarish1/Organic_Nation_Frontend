@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react';
 
 const SubmitButton = ({
+    id = 'btn',
     isSubmitting = false,
     text,
     action = null,
@@ -10,7 +11,7 @@ const SubmitButton = ({
     type = "submit"
 }) => {
     const isDisabled = isSubmitting || disabled;
-    
+
     return (
         <motion.div
             className="mt-8"
@@ -19,6 +20,7 @@ const SubmitButton = ({
             transition={{ delay: 0.6 }}
         >
             <button
+                id={id}
                 type={type}
                 disabled={isDisabled}
                 onClick={action ? action : undefined}

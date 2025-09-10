@@ -13,7 +13,7 @@ const Alert = ({ isOpen, alertMessage, hideAlert, handleAction, updatingOrderSta
 
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 font-sans">
-      <div className="relative top-20 mx-auto p-5 border xs:w-96 w-72 shadow-lg rounded-md bg-[var(--bgColorSecondary)]">
+      <div className="relative top-20 mx-auto p-5 border xs:w-96 w-72 shadow-lg rounded-md bg-[var(--background-color)]">
         <div className="mt-3 text-center">
           {/* <h3 className="text-lg leading-6 font-medium text-gray-900">Cancel Order</h3> */}
           <div className="mt-2 px-7 py-3">

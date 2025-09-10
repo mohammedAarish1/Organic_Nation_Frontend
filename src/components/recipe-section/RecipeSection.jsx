@@ -44,7 +44,7 @@
 //                         </div>
 
 //                         <div className=' flex flex-col justify-between gap-  h-full'>
-//                             <p className=' text-[var(--bgColorPrimary)] font-semibold  text-[18px]'>{recipe.title}</p>
+//                             <p className=' text-[var(--background-color)] font-semibold  text-[18px]'>{recipe.title}</p>
 
 //                             <div className='place-self-end'>
 //                                 <div className=" flex  text-[var(--themeColor)] hover:text-orange-500 justify-end items-center gap-2 py-1   font-semibold rounded-lg  uppercase "><span className='underline-hover text-sm'>Continue Reading</span> <FaArrowRightLong /></div>
@@ -451,7 +451,7 @@ const RecipeSection = ({ showBtn = false }) => {
                 >
                     <Link to="/our-recipes" className='flex justify-center'>
 
-                        <SubmitButton text='Explore All Recipes' />
+                        <SubmitButton id='exploreRecipeBtn' text='Explore All Recipes' />
 
                     </Link>
                 </motion.div>

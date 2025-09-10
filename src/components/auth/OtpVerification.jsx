@@ -17,18 +17,18 @@ const slideUp = {
     }
   };
 
-const Button = ({ children, onClick, type = 'button', disabled = false, className = '' }) => (
-  <motion.button
-    type={type}
-    onClick={onClick}
-    disabled={disabled}
-    className={`w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium py-3.5 rounded-lg hover:opacity-90 transition-all disabled:opacity-70 ${className}`}
-    whileHover={{ scale: 1.02, boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)" }}
-    whileTap={{ scale: 0.98 }}
-  >
-    {children}
-  </motion.button>
-);
+// const Button = ({ children, onClick, type = 'button', disabled = false, className = '' }) => (
+//   <motion.button
+//     type={type}
+//     onClick={onClick}
+//     disabled={disabled}
+//     className={`w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium py-3.5 rounded-lg hover:opacity-90 transition-all disabled:opacity-70 ${className}`}
+//     whileHover={{ scale: 1.02, boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)" }}
+//     whileTap={{ scale: 0.98 }}
+//   >
+//     {children}
+//   </motion.button>
+// );
 
 
 const OtpInput = ({ otpInputs, handleOtpChange, handleOtpKeyDown, handleOtpPaste }) => (

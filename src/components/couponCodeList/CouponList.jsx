@@ -267,7 +267,7 @@
 //         <div className="fixed inset-0 bg-black bg-opacity-50  flex justify-center items-center z-40 ">
 //           <div
 //             ref={modalRef}
-//             className="bg-[var(--bgColorSecondary)] shadow-lg rounded-lg max-w-xl pt-2 pb-6 px-4 w-full max-h-[80vh] overflow-y-auto mx-5 "
+//             className="bg-[var(--background-color)] shadow-lg rounded-lg max-w-xl pt-2 pb-6 px-4 w-full max-h-[80vh] overflow-y-auto mx-5 "
 //           >
 
 //             <div className="capitalize flex flex-col gap-4 font-serif xs:text-sm text-[10px] text-[var(--themeColor)]">

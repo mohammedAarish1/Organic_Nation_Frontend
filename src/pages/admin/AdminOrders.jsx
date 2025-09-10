@@ -1,8 +1,9 @@
 import React, { lazy, Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getOrdersByStatus,
-  getTotalOrders,
+  getList,
+  // getOrdersByStatus,
+  // getTotalOrders,
 } from "../../features/admin/adminData";
 import AdminOrderTabs from "../../components/admin/module/admin-orders/AdminOrderTabs";
 import Loader from "../../components/common/Loader";
@@ -22,14 +23,14 @@ const headers = [
 
 const AdminOrders = () => {
   const dispatch = useDispatch();
-  const { loading, ordersByStatus } = useSelector(
+  const { loading, orders } = useSelector(
     (state) => state.adminData
   );
-  const adminToken = JSON.parse(sessionStorage.getItem("adminToken"));
   useEffect(() => {
-    dispatch(getTotalOrders());
-    dispatch(getOrdersByStatus("total"));
-  }, [adminToken, getOrdersByStatus, dispatch]);
+    dispatch(getList('orders'));
+    // dispatch(getTotalOrders());
+    // dispatch(getOrdersByStatus("total"));
+  }, []);
 
   if (loading) return <div>Loading...</div>;
 
@@ -43,7 +44,8 @@ const AdminOrders = () => {
           <AdminTable
             title='Orders'
             headers={headers}
-            data={ordersByStatus.filteredOrderData}
+            data={orders.filteredOrders}
+          // data={ordersByStatus.filteredOrderData}
           />
         </Suspense>
 

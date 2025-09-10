@@ -410,7 +410,7 @@ const Cart = () => {
                   <FiArrowRight className="ml-2" />
                 </motion.button> */}
 
-                <SubmitButton text='Proceed to Checkout' action={() => setIsCheckoutOpen(true)} />
+                <SubmitButton id='checkoutBtn' text='Checkout' action={() => setIsCheckoutOpen(true)} />
 
                 {/* Additional info */}
                 <div className="mt-6 text-xs text-[#3E2C1B] opacity-70">

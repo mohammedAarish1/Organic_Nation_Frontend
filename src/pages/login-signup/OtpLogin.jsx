@@ -215,6 +215,7 @@ const OtpLogin = ({ isCheckout = false, setShowOtpInput, setPhoneNumber }) => {
                             <PhoneNumberField itemVariants={itemVariants} />
 
                             <SubmitButton
+                                id='addAddressBtn'
                                 isSubmitting={isSubmitting}
                                 text={isSubmitting ? 'Sending OTP...' : 'Add Address'}
                             />
@@ -399,6 +400,7 @@ const OtpLogin = ({ isCheckout = false, setShowOtpInput, setPhoneNumber }) => {
 
                                                             {/* Submit Button */}
                                                             <SubmitButton
+                                                                id='sendOtpBtn'
                                                                 isSubmitting={sendingOTP}
                                                                 text='Send OTP'
                                                             />

@@ -5,12 +5,8 @@
 // import { useDispatch, useSelector } from "react-redux";
 // import Alert from "../alert/Alert";
 // // react icons
-// import { MdOutlineCancel } from "react-icons/md";
-// import { GoDotFill } from "react-icons/go";
 
 // import { toast } from "react-toastify";
-// import { GrInProgress } from "react-icons/gr";
-// import { MdOutlineFileDownloadDone } from "react-icons/md";
 // import axios from "axios";
 // import ButtonTwo from "../button/ButtonTwo";
 // import { Link, useNavigate } from "react-router-dom";
@@ -87,7 +83,7 @@
 //       <div className="shadow-xl font-sans">
 //         <div>
 //           {/* order details heading  */}
-//           <div className="flex sm:justify-between justify-center items-center bg-[var(--bgColorPrimary)] text-white sm:text-[16px] text-[10px] py-3 px-4 uppercase">
+//           <div className="flex sm:justify-between justify-center items-center bg-[var(--background-color)] text-white sm:text-[16px] text-[10px] py-3 px-4 uppercase">
 //             <div className="flex justify-start items-center gap-10 ">
 //               <div className="">
 //                 <p>Order Number</p>
@@ -246,48 +242,35 @@ import {
 import { addToCart, getAllCartItems } from "../../features/cart/cart";
 import { cancelReturnRequest, getAllReturnItems } from "../../features/manage-returns/manageReturns";
 
-// Icons
-import { 
-  MdOutlineCancel, 
-  MdOutlineFileDownloadDone,
-  MdCancel
-} from "react-icons/md";
-import { 
-  GoDotFill, 
-  GoPackage, 
-  GoCalendar, 
-  GoInfo 
-} from "react-icons/go";
-import { GrInProgress } from "react-icons/gr";
-import {  FaEye, FaShoppingCart, FaUndo } from 'react-icons/fa';
 
 // Helper functions
 import { getButtonStyles } from '../../helper/helperFunctions';
+import { Calendar, CheckCheckIcon, CheckLine, CircleX, Dot, Eye, Hourglass, Info, Package, ShoppingCart, Undo } from "lucide-react";
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
 // Status Configuration
 const RETURN_STATUS_CONFIG = {
   requested: {
-    icon: <GoDotFill className="text-xl text-[var(--secondary-color)]" />,
+    icon: <Dot size={60} strokeWidth={'3px'} className="text-[var(--secondary-color)]" />,
     color: "var(--secondary-color)",
     bgColor: "var(--secondary-color)/10",
     label: "Requested"
   },
   rejected: {
-    icon: <MdOutlineCancel className="text-xl text-[var(--alert-color)]" />,
+    icon: <CircleX size={20} className="text-[var(--alert-color)]" />,
     color: "var(--alert-color)",
     bgColor: "var(--alert-color)/10",
     label: "Rejected"
   },
   inProgress: {
-    icon: <GrInProgress className="text-sm text-[var(--warning-color)]" />,
+    icon: <Hourglass size={16} className="text-[var(--warning-color)]" />,
     color: "var(--warning-color)",
     bgColor: "var(--warning-color)/10",
     label: "In Progress"
   },
   completed: {
-    icon: <MdOutlineFileDownloadDone className="text-xl text-[var(--secondary-color)]" />,
+    icon: <CheckCheckIcon className="text-[var(--secondary-color)]" />,
     color: "var(--secondary-color)",
     bgColor: "var(--secondary-color)/10",
     label: "Completed"
@@ -303,19 +286,19 @@ const ReturnHeader = ({ singleReturn, statusIcon }) => {
 
   const headerItems = [
     {
-      icon: GoPackage,
+      icon: Package,
       label: "Order Number",
       value: `#${singleReturn?.invoiceNumber}`,
       className: "flex"
     },
     {
-      icon: GoCalendar,
+      icon: Calendar,
       label: "Return Requested",
       value: new Date(singleReturn?.createdAt).toLocaleDateString(),
       className: "md:flex hidden"
     },
     {
-      icon: GoInfo,
+      icon: Info,
       label: "Status",
       value: statusConfig?.label || singleReturn?.returnStatus,
       statusIcon: statusIcon,
@@ -434,14 +417,14 @@ const ReturnedOrder = ({ singleReturn }) => {
 
   const actionButtons = [
     {
-      icon: FaEye,
+      icon: Eye,
       text: "View Product",
       action: () => {},
       link: `/shop/all/${singleReturn.itemName}`,
       variant: "primary"
     },
     {
-      icon: FaShoppingCart,
+      icon: ShoppingCart,
       text: "Buy Again",
       action: handleAddToCart,
       variant: "secondary"
@@ -474,7 +457,7 @@ const ReturnedOrder = ({ singleReturn }) => {
           {/* Item Description Header */}
           <div className="mb-4">
             <h4 className="text-[var(--text-color)] text-xl font-semibold flex items-center gap-2">
-              <FaUndo className="text-[var(--alert-color)]" />
+              <Undo className="text-[var(--alert-color)]" />
               Return Details
             </h4>
           </div>
@@ -596,7 +579,7 @@ const ReturnedOrder = ({ singleReturn }) => {
             onClick={() => setIsAlertOpen(true)}
             disabled={!canCancelReturn}
           >
-            <MdCancel className="w-5 h-5" />
+            <CircleX size={20}/>
             <span>Cancel Return Request</span>
           </motion.button>
         </div>
@@ -606,7 +589,7 @@ const ReturnedOrder = ({ singleReturn }) => {
       {isCompleted && (
         <div className="border-t border-[var(--neutral-color)]/30 bg-[var(--secondary-color)]/10">
           <div className="flex justify-center items-center gap-2 py-4 text-[var(--secondary-color)] font-medium">
-            <MdOutlineFileDownloadDone className="w-5 h-5" />
+            <CheckLine />
             <span>Return Completed Successfully</span>
           </div>
         </div>

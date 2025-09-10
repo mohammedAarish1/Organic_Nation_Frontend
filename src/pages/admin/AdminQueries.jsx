@@ -1,6 +1,7 @@
-import React, { lazy, Suspense } from 'react';
-import { useSelector } from 'react-redux';
+import React, { lazy, Suspense, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../components/common/Loader';
+import { getList } from '../../features/admin/adminData';
 const AdminTable = lazy(() => import('../../components/admin/common/AdminTable'))
 
 const headers = [
@@ -12,8 +13,12 @@ const headers = [
 ]
 
 const AdminQueries = () => {
-
+  const dispatch = useDispatch()
   const { totalUserQueries, loading } = useSelector(state => state.adminData);
+
+  useEffect(() => {
+    dispatch(getList('queries'))
+  }, [])
 
   if (loading) return <div>Loading..</div>
   return (

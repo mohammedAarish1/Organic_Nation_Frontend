@@ -61,7 +61,7 @@ const UpdateInvoiceNo = ({ selectedOrder }) => {
                     <button onClick={handleCancel}>Cancel</button>
                 </>
             ) : (
-                <button onClick={handleEditClick} className='bg-gray-500 px-4'>Edit</button>
+                <button onClick={handleEditClick} className='bg-gray-500 text-white rounded-lg py-1 px-4'>Edit</button>
             )}
         </div>
     );

@@ -5,9 +5,9 @@ const AdminDelete = ({handleDelete}) => {
         <div>
             <button
                 onClick={handleDelete}
-                className=" text-red-500 py-1 rounded hover:text-red-800"
+                className=" text-red-500 py-1 rounded hover:text-red-700"
             >
-                <Trash className="text-xl" />
+                <Trash size={20} className="text-xl" />
             </button>
         </div>
     )

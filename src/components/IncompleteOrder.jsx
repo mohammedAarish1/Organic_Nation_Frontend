@@ -1,8 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BiChevronRight, BiCreditCard } from 'react-icons/bi';
-// import { BsClock } from 'react-icons/bs';
-import { CgShoppingCart } from 'react-icons/cg';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form } from 'formik';
@@ -15,14 +12,7 @@ import { initiatePayment } from '../features/orderPayment/payment';
 import { generateTransactionID } from '../helper/helperFunctions';
 import api from '../config/axiosConfig';
 
-// React Icons
-import {
-  GoCreditCard,
-  GoInfo
-} from "react-icons/go";
-import {
-  MdDeliveryDining,
-} from "react-icons/md";
+import { Banknote, ChevronRight, CreditCard, Info, ShoppingCart } from 'lucide-react';
 
 
 
@@ -147,14 +137,14 @@ const CompleteOrderModal = ({ isOpen, onClose, order, }) => {
                     <div className="space-y-3">
 
                       <PaymentMethodButton
-                        icon={GoCreditCard}
+                        icon={CreditCard}
                         label={`Pay Now ₹${order?.subTotal}`}
                         selected={values.paymentMethod === 'online_payment'}
                         onClick={() => setFieldValue('paymentMethod', 'online_payment')}
                         badge="5% off"
                       />
                       <PaymentMethodButton
-                        icon={MdDeliveryDining}
+                        icon={Banknote}
                         label={`Cash on Delivery ₹${getOriginalAmt(order?.subTotal) + CODCharge}`}
                         selected={values.paymentMethod === 'cash_on_delivery'}
                         onClick={() => setFieldValue('paymentMethod', 'cash_on_delivery')}
@@ -162,8 +152,9 @@ const CompleteOrderModal = ({ isOpen, onClose, order, }) => {
                       />
                     </div>
                     <SubmitButton
+                      id='placeOrderBtn'
                       isSubmitting={isSubmitting}
-                      text={values.paymentMethod === 'online_payment' ? `Proceed to Pay ` : `Place Order`}
+                      text={values.paymentMethod === 'online_payment' ? `Place Order` : `Place Order`}
                     />
                   </Form>
                 )
@@ -176,7 +167,7 @@ const CompleteOrderModal = ({ isOpen, onClose, order, }) => {
             <div className="bg-[var(--accent-color)]/10 rounded-xl p-4 border-2 border-[var(--accent-color)]/20">
               <div className="flex items-start gap-3">
                 <div className="p-2 bg-[var(--accent-color)]/20 rounded-lg flex-shrink-0">
-                  <GoInfo className="w-5 h-5 text-[var(--accent-color)]" />
+                  <Info className="w-5 h-5 text-[var(--accent-color)]" />
                 </div>
                 <div>
                   <h4 className="font-bold text-[var(--text-color)] mb-2">🔒 Secure & Protected</h4>
@@ -197,7 +188,7 @@ const CompleteOrderModal = ({ isOpen, onClose, order, }) => {
 
 
 
-const IncompleteOrder = ({onDismiss }) => {
+const IncompleteOrder = ({ onDismiss }) => {
   const [isVisible, setIsVisible] = useState(false);
   const { user } = useSelector(state => state.auth)
   // const [dismissed, setDismissed] = useState(false);
@@ -254,7 +245,7 @@ const IncompleteOrder = ({onDismiss }) => {
                   transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
                   className="bg-white/20 p-1.5 rounded-lg"
                 >
-                  <BiCreditCard className="w-5 h-5 text-[#F5EFE6]" />
+                  <CreditCard size={20} className=" text-[#F5EFE6]" />
                 </motion.div>
                 <div>
                   <h3 className="text-[#F5EFE6] font-semibold text-sm">
@@ -290,7 +281,7 @@ const IncompleteOrder = ({onDismiss }) => {
             {/* Items Preview */}
             <div className="mb-4">
               <div className="flex items-center space-x-2 text-gray-600 mb-2">
-                <CgShoppingCart className="w-4 h-4" />
+                <ShoppingCart className="w-4 h-4" />
                 <span className="text-sm">Items in your order:</span>
               </div>
               <div className="space-y-1 max-h-20 overflow-y-auto">
@@ -314,9 +305,9 @@ const IncompleteOrder = ({onDismiss }) => {
               onClick={handleCompletePayment}
               className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white py-3 px-4 rounded-xl font-semibold text-sm flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl transition-shadow"
             >
-              <BiCreditCard className="w-4 h-4" />
+              <CreditCard size={17} />
               <span>Complete Payment</span>
-              <BiChevronRight className="w-4 h-4" />
+              <ChevronRight size={17} />
             </motion.button>
           </div>
         </div>

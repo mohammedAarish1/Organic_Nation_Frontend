@@ -48,8 +48,8 @@
 //     return (
 //         <section className='xs:px-10 px-2 pb-20 mt-5 sm:mt-0 font-mono'>
 //             <div className='lg:w-[80%] h-auto py-2 bg-opacity-35 mx-auto'>
-//                 <h2 className="text- text-center sm:mt-6 mt-10 sm:mb-2 mb-6 text-[var(--bgColorPrimary)] text-2xl tracking-widest ">Reset Your Password</h2>
-//                 <div className='md:w-[90%] py-10 sm:px-0 px-4 flex sm:flex-row flex-col sm:gap-0 gap-6 shadow-md shadow-black justify-center h-[100%] mx-auto  my-auto bg-[var(--bgColorPrimary)] '>
+//                 <h2 className="text- text-center sm:mt-6 mt-10 sm:mb-2 mb-6 text-[var(--themeColor)] text-2xl tracking-widest ">Reset Your Password</h2>
+//                 <div className='md:w-[90%] py-10 sm:px-0 px-4 flex sm:flex-row flex-col sm:gap-0 gap-6 shadow-md shadow-black justify-center h-[100%] mx-auto  my-auto bg-[var(--themeColor)] '>
 
 //                     {/* ============== right side ================  */}
 
@@ -59,8 +59,8 @@
 //                                 <Logo />
 //                             </div>
 //                             <div className='flex flex-col justify-center items-center'>
-//                                 <span className='sm:text-2xl uppercase text-[var(--bgColorSecondary)]'>Login to</span>
-//                                 <span className='sm;text-2xl uppercase text-[var(--bgColorSecondary)]'>Organic Nation</span>
+//                                 <span className='sm:text-2xl uppercase text-[var(--text-color)]'>Login to</span>
+//                                 <span className='sm;text-2xl uppercase text-[var(--text-color)]'>Organic Nation</span>
 //                             </div>
 //                         </div>
 //                     </div>
@@ -83,18 +83,18 @@
 //                                                 <div className='flex flex-col gap-1'>
 //                                                     <label
 //                                                         htmlFor="newPassword"
-//                                                         className='text-[var(--bgColorSecondary)]'
+//                                                         className='text-[var(--background-color)]'
 //                                                     >
 //                                                         Please Enter Your New Password
 //                                                     </label>
-//                                                     <div className='flex  items-center gap-2 border border-[var(--bgColorSecondary)]  rounded-md'>
+//                                                     <div className='flex  items-center gap-2 border border-[var(--text-color)]  rounded-md'>
 
 //                                                         <div className='w-full'>
 //                                                             <Field
 //                                                                 type="password"
 //                                                                 placeholder=''
 //                                                                 name='newPassword'
-//                                                                 className=' outline-none w-full bg-transparent py-2 text-[var(--bgColorSecondary)] pl-2 tracking-widest'
+//                                                                 className=' outline-none w-full bg-transparent py-2 text-[var(--background-color)] pl-2 tracking-widest'
 //                                                             />
 //                                                         </div>
 
@@ -105,18 +105,18 @@
 //                                                 <div className='flex flex-col gap-1'>
 //                                                     <label
 //                                                         htmlFor="confirm_password"
-//                                                         className='text-[var(--bgColorSecondary)]'
+//                                                         className='text-[var(--background-color)]'
 //                                                     >
 //                                                         Re-Enter Your New Password
 //                                                     </label>
-//                                                     <div className='flex  items-center gap-2 border border-[var(--bgColorSecondary)]  rounded-md'>
+//                                                     <div className='flex  items-center gap-2 border border-[var(--background-color)]  rounded-md'>
 
 //                                                         <div className='w-full'>
 //                                                             <Field
 //                                                                 type="password"
 //                                                                 placeholder=''
 //                                                                 name='confirm_password'
-//                                                                 className=' outline-none w-full bg-transparent py-2 text-[var(--bgColorSecondary)] pl-2 tracking-widest'
+//                                                                 className=' outline-none w-full bg-transparent py-2 text-[var(--background-color)] pl-2 tracking-widest'
 //                                                             />
 //                                                         </div>
 
@@ -126,7 +126,7 @@
 //                                                 <div>
 //                                                     <button
 //                                                         type="submit"
-//                                                         className='p-2 text-[#712522] bg-[var(--bgColorSecondary)] hover:bg-green-500 hover:text-white transition-all duration-300 w-full flex justify-center items-center gap-2 rounded-md '
+//                                                         className='p-2 text-[#712522] bg-[var(--background-color)] hover:bg-green-500 hover:text-white transition-all duration-300 w-full flex justify-center items-center gap-2 rounded-md '
 //                                                     >
 //                                                         Reset Password
 //                                                         {loading ? (
@@ -147,10 +147,10 @@
 //                                 <div className='flex flex-col gap-5 text-2xl'>
 //                                     <div className='flex flex-col justify-center items-center gap-5'>
 
-//                                         <p className='text-[var(--bgColorSecondary)] text-center'>Password Resetted Successfully. You can log in now !</p>
+//                                         <p className='text-[var(--background-color)] text-center'>Password Resetted Successfully. You can log in now !</p>
 //                                         <Link
 //                                             to='/register'
-//                                             className='bg-[var(--bgColorSecondary)] text-[15px] text-center px-4 py-1 rounded-md flex justify-center items-center gap-2 hover:scale-90 duration-500 transition-all'
+//                                             className='bg-[var(--background-color)] text-[15px] text-center px-4 py-1 rounded-md flex justify-center items-center gap-2 hover:scale-90 duration-500 transition-all'
 //                                         >
 //                                             Login Here <FaArrowRight />
 //                                         </Link>

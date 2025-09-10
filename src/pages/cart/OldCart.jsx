@@ -21,7 +21,7 @@
 // const CouponList = lazy(() => import("../../components/couponCodeList/CouponList"));
 
 // const CartTableHeader = () => (
-//   <thead className="bg-[var(--bgColorPrimary)] text-white">
+//   <thead className="bg-[var(--background-color)] text-white">
 //     <tr>
 //       <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider">S No.</th>
 //       <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider lg:table-cell hidden">Image</th>
@@ -102,7 +102,7 @@
 //         <div className="flex justify-between items-center mb-3 lg:w-[80%] w-[90%] mx-auto">
 //           <Link
 //             to="/shop/all"
-//             className="flex underline-hover text-[var(--bgColorPrimary)] hover:text-orange-500 items-center gap-2 py-1 font-semibold rounded-lg uppercase"
+//             className="flex underline-hover text-[var(--background-color)] hover:text-orange-500 items-center gap-2 py-1 font-semibold rounded-lg uppercase"
 //           >
 //             <FaArrowLeftLong />
 //             <span className="text-sm sm:text-[16px]">Continue Shopping</span>
@@ -134,7 +134,7 @@
 
 //           {cartItemsList?.length === 0 && !loading && renderEmptyCartMessage()}
 
-//           <div className="w-full h-[1px] bg-[var(--bgColorPrimary)] mt-8" />
+//           <div className="w-full h-[1px] bg-[var(--background-color)] mt-8" />
 //         </div>
 
 //         {cartItemsList?.length !== 0 && (

@@ -384,6 +384,7 @@ const ReturnItemForm = ({
             <div className="flex items-center flex-wrap  gap-2 justify-between">
               <div className="w-full">
                 <SubmitButton
+                  id="submitBtn"
                   isSubmitting={addingReturnedItems || isSubmitting}
                   text='Submit Request'
                 />

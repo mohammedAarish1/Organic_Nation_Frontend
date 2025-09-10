@@ -19,7 +19,6 @@
 //     try {
 //       // const response = await axios.get(`${apiUrl}/products/organic-honey/${item.productName}`);
 //       // const product = response.data.product;
-//       console.log('product', product)
 //       // if (!product) continue;
 //       const discountedPrice = product.price * (1 - product.discount / 100);
 //       const itemSubtotal = discountedPrice * product.quantity;
@@ -27,7 +26,6 @@
 //       totalCartAmount += itemSubtotal;
 //       // Check if item is eligible for progressive discount
 //       if (ELIGIBLE_CATEGORIES.includes(product.category) && product.price >= 249) {
-//         console.log('this is problem')
 //         totalEligibleAmount += itemSubtotal;
 //         eligibleItems.push({
 //           productName: product.name,
@@ -68,17 +66,14 @@
 
 
 //   // calculation of total tax amount
-// console.log('dddddddddd',discountPercentage)
 //   let totalTax = cartItems.reduce((total, product) => {
 //     let discount;
 
 //     eligibleItems.forEach(item => {
 //       if (item.productName === product.name) {
-//         console.log('idhaaaaaaaaaaaaar')
 //         discount = discountPercentage;
 //       }
 //     })
-// console.log('discounttttttt',discount)
 //     const discountedPrice = product.price * (1 - discount / 100);
 //     const totalAmountWithTax = discountedPrice * product.quantity;
 
@@ -90,15 +85,10 @@
 
 //     return Math.round(total + taxAmount);
 //   }, 0);
-// console.log('totalTax',totalTax)
 //   // calculation of total tax amount ended =======
 
 
-//   console.log('totalCartAmount', totalCartAmount)
-//   console.log('totalEligibleAmount', totalEligibleAmount)
-//   console.log('discountAmount', discountAmount)
-//   console.log('eligibleItems', eligibleItems)
-//   console.log('discountType', discountType)
+
 
 //   return {
 //     totalCartAmount,

@@ -3,75 +3,125 @@ import axios from "axios";
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
+// get total numbers of orders, users, etc..
+export const getResourcesCount = createAsyncThunk(
+    'adminData/getResourcesCount',
+    async (_, { rejectWithValue }) => {
+        const adminToken = JSON.parse(sessionStorage.getItem('adminToken'))
+        try {
+            const response = await axios.get(`${apiUrl}/api/admin/resources/count`, {
+                headers: {
+                    'Authorization': `Bearer ${adminToken}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+            if (response.data.success) {
+                return response.data.resourcesCount
+            }
+        } catch (error) {
+            if (error.response && error.response.data) {
+                return rejectWithValue(error.response.data);
+            } else {
+                return rejectWithValue(error.message);
+            }
+        }
+    }
+)
+
+
+// get users, orders, etc.. list
+export const getList = createAsyncThunk(
+    'adminData/getList',
+    async (type, { rejectWithValue }) => {
+        const adminToken = JSON.parse(sessionStorage.getItem('adminToken'))
+        try {
+            const response = await axios.get(`${apiUrl}/api/admin/resources?type=${type}`, {
+                headers: {
+                    'Authorization': `Bearer ${adminToken}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+            return response.data
+        } catch (error) {
+            if (error.response && error.response.data) {
+                return rejectWithValue(error.response.data);
+            } else {
+                return rejectWithValue(error.message);
+            }
+        }
+    }
+);
+
+
 // get all orders 
-export const getTotalOrders = createAsyncThunk(
-    'adminData/getTotalOrders',
-    async (_, { rejectWithValue }) => {
-        const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
-        try {
-            const response = await axios.get(`${apiUrl}/api/admin/orders`, {
-                headers: {
-                    'Authorization': `Bearer ${adminToken}`,
-                    'Content-Type': 'application/json'
-                }
-            })
+// export const getTotalOrders = createAsyncThunk(
+//     'adminData/getTotalOrders',
+//     async (_, { rejectWithValue }) => {
+//         const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
+//         try {
+//             const response = await axios.get(`${apiUrl}/api/admin/orders`, {
+//                 headers: {
+//                     'Authorization': `Bearer ${adminToken}`,
+//                     'Content-Type': 'application/json'
+//                 }
+//             })
 
-            return response.data;
-        } catch (error) {
-            if (error.response && error.response.data) {
-                return rejectWithValue(error.response.data);
-            } else {
-                return rejectWithValue(error.message);
-            }
-        }
-    }
-)
+//             return response.data;
+//         } catch (error) {
+//             if (error.response && error.response.data) {
+//                 return rejectWithValue(error.response.data);
+//             } else {
+//                 return rejectWithValue(error.message);
+//             }
+//         }
+//     }
+// )
 // get all users
-export const getAllUsers = createAsyncThunk(
-    'adminData/getAllUsers',
-    async (_, { rejectWithValue }) => {
-        const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
-        try {
-            const response = await axios.get(`${apiUrl}/api/admin/users`, {
-                headers: {
-                    'Authorization': `Bearer ${adminToken}`,
-                    'Content-Type': 'application/json'
-                }
-            })
+// export const getAllUsers = createAsyncThunk(
+//     'adminData/getAllUsers',
+//     async (_, { rejectWithValue }) => {
+//         const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
+//         try {
+//             const response = await axios.get(`${apiUrl}/api/admin/users`, {
+//                 headers: {
+//                     'Authorization': `Bearer ${adminToken}`,
+//                     'Content-Type': 'application/json'
+//                 }
+//             })
 
-            return response.data;
-        } catch (error) {
-            if (error.response && error.response.data) {
-                return rejectWithValue(error.response.data);
-            } else {
-                return rejectWithValue(error.message);
-            }
-        }
-    }
-)
+//             return response.data;
+//         } catch (error) {
+//             if (error.response && error.response.data) {
+//                 return rejectWithValue(error.response.data);
+//             } else {
+//                 return rejectWithValue(error.message);
+//             }
+//         }
+//     }
+// )
 // get all users queris
-export const getAllUserQueries = createAsyncThunk(
-    'adminData/getAllUserQueries',
-    async (_, { rejectWithValue }) => {
-        const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
-        try {
-            const response = await axios.get(`${apiUrl}/api/admin/queries`, {
-                headers: {
-                    'Authorization': `Bearer ${adminToken}`,
-                    'Content-Type': 'application/json'
-                }
-            })
+// export const getAllUserQueries = createAsyncThunk(
+//     'adminData/getAllUserQueries',
+//     async (_, { rejectWithValue }) => {
+//         const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
+//         try {
+//             const response = await axios.get(`${apiUrl}/api/admin/queries`, {
+//                 headers: {
+//                     'Authorization': `Bearer ${adminToken}`,
+//                     'Content-Type': 'application/json'
+//                 }
+//             })
 
-            return response.data;
-        } catch (error) {
-            if (error.response && error.response.data) {
-                return rejectWithValue(error.response.data);
-            } else {
-                return rejectWithValue(error.message);
-            }
-        }
-    }
-)
+//             return response.data;
+//         } catch (error) {
+//             if (error.response && error.response.data) {
+//                 return rejectWithValue(error.response.data);
+//             } else {
+//                 return rejectWithValue(error.message);
+//             }
+//         }
+//     }
+// )
 
 
 // generate invoice
@@ -215,28 +265,28 @@ export const generateReport = createAsyncThunk(
 
 
 // get all returns 
-export const getTotalReturns = createAsyncThunk(
-    'adminData/getTotalReturns',
-    async (_, { rejectWithValue }) => {
-        const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
-        try {
-            const response = await axios.get(`${apiUrl}/api/admin/returns`, {
-                headers: {
-                    'Authorization': `Bearer ${adminToken}`,
-                    'Content-Type': 'application/json'
-                }
-            })
+// export const getTotalReturns = createAsyncThunk(
+//     'adminData/getTotalReturns',
+//     async (_, { rejectWithValue }) => {
+//         const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
+//         try {
+//             const response = await axios.get(`${apiUrl}/api/admin/returns`, {
+//                 headers: {
+//                     'Authorization': `Bearer ${adminToken}`,
+//                     'Content-Type': 'application/json'
+//                 }
+//             })
 
-            return response.data;
-        } catch (error) {
-            if (error.response && error.response.data) {
-                return rejectWithValue(error.response.data);
-            } else {
-                return rejectWithValue(error.message);
-            }
-        }
-    }
-)
+//             return response.data;
+//         } catch (error) {
+//             if (error.response && error.response.data) {
+//                 return rejectWithValue(error.response.data);
+//             } else {
+//                 return rejectWithValue(error.message);
+//             }
+//         }
+//     }
+// )
 
 
 
@@ -279,7 +329,6 @@ export const deleteBannerFromDatabase = createAsyncThunk(
 
 
 // experiment with images
-
 export const optimizeImages = createAsyncThunk(
     'adminData/optimizeImages',
     async (data, { rejectWithValue }) => {
@@ -332,22 +381,35 @@ export const updateCurrentStatus = createAsyncThunk(
 
 
 const initialState = {
-    totalOrders: [],
-    totalReturns: [],
+    resourcesCount: {},
+    totalProducts: [],
+    orders: {
+        totalOrders: [],
+        filteredOrders: [],
+        curOrderStatusTab: 'total'
+    },
+    returns: {
+        totalReturns: [],
+        filteredReturns: [],
+        curReturnStatusTab: 'requested'
+    },
+    // totalOrders: [],
+    // curStatusTab: 'total',
+    // totalReturns: [],
     totalUsers: [],
     totalUserQueries: [],
     loading: false,
     error: null,
     generatingInvoice: false,
     generatingSaleReport: false,
-    ordersByStatus: {
-        filteredOrderData: [],
-        orderStatusTab: "total"
-    },
-    returnsByStatus: {
-        returnData: [],
-        returnStatusTab: "requested"
-    },
+    // ordersByStatus: {
+    //     filteredOrderData: [],
+    //     orderStatusTab: "total"
+    // },
+    // returnsByStatus: {
+    //     returnData: [],
+    //     returnStatusTab: "requested"
+    // },
     otherLoading: {
         updatingOrderStatus: false
     },
@@ -359,209 +421,171 @@ const adminData = createSlice({
     initialState,
     reducers: {
         getOrdersByStatus: (state, action) => {
+            let currentOrders = state.orders.totalOrders
             if (action.payload === "total") {
-                return {
-                    ...state,
-                    ordersByStatus: {
-                        ...state.ordersByStatus,
-                        filteredOrderData: state.totalOrders,
-                        orderStatusTab: action.payload
-                    }
-                }
+                state.orders.filteredOrders = currentOrders
+                state.orders.curOrderStatusTab = action.payload
             } else if (action.payload === "active") {
-                let activeOrders = state.totalOrders.filter(order => order.orderStatus === action.payload);
-                return {
-                    ...state,
-                    ordersByStatus: {
-                        ...state.ordersByStatus,
-                        filteredOrderData: activeOrders,
-                        orderStatusTab: action.payload
-                    }
-                }
+                currentOrders = state.orders.totalOrders.filter(order => order.orderStatus === action.payload);
+                state.orders.filteredOrders = currentOrders
+                state.orders.curOrderStatusTab = action.payload
             } else if (action.payload === "completed") {
-                let completedOrders = state.totalOrders.filter(order => order.orderStatus === action.payload);
-                return {
-                    ...state,
-                    ordersByStatus: {
-                        ...state.ordersByStatus,
-                        filteredOrderData: completedOrders,
-                        orderStatusTab: action.payload
-                    }
-                }
+                currentOrders = state.orders.totalOrders.filter(order => order.orderStatus === action.payload);
+                state.orders.filteredOrders = currentOrders
+                state.orders.curOrderStatusTab = action.payload
             } else if (action.payload === "cancelled") {
-                let cancelledOrders = state.totalOrders.filter(order => order.orderStatus === action.payload);
-                return {
-                    ...state,
-                    ordersByStatus: {
-                        ...state.ordersByStatus,
-                        filteredOrderData: cancelledOrders,
-                        orderStatusTab: action.payload
-                    }
-                }
+                currentOrders = state.orders.totalOrders.filter(order => order.orderStatus === action.payload);
+                state.orders.filteredOrders = currentOrders
+                state.orders.curOrderStatusTab = action.payload
+
             } else if (action.payload === "dispatched") {
-                let dispatchOrders = state.totalOrders.filter(order => order.orderStatus === action.payload);
-                return {
-                    ...state,
-                    ordersByStatus: {
-                        ...state.ordersByStatus,
-                        filteredOrderData: dispatchOrders,
-                        orderStatusTab: action.payload
-                    }
-                }
+                currentOrders = state.orders.totalOrders.filter(order => order.orderStatus === action.payload);
+                state.orders.filteredOrders = currentOrders
+                state.orders.curOrderStatusTab = action.payload
+
             } else {
-                return {
-                    ...state,
-                    ordersByStatus: {
-                        ...state.ordersByStatus,
-                        filteredOrderData: state.cancelledOrders,
-                    }
-                }
+                state.orders.filteredOrders = currentOrders
+                state.orders.curOrderStatusTab = action.payload
             }
         },
         getReturnsByStatus: (state, action) => {
+            let currentReturns = state.returns.totalReturns
             if (action.payload === "requested") {
-                let activeReturns = state.totalReturns.filter(curReturn => curReturn.returnStatus === action.payload);
+                currentReturns = state.returns.totalReturns.filter(curReturn => curReturn.returnStatus === action.payload);
+                state.returns.filteredReturns = currentReturns
+                state.returns.curReturnStatusTab = action.payload
 
-                return {
-                    ...state,
-                    returnsByStatus: {
-                        ...state.returnsByStatus,
-                        returnData: activeReturns,
-                        returnStatusTab: action.payload
-                    }
-                }
-            } else if (action.payload === "rejected") {
-                let activeReturns = state.totalReturns.filter(curReturn => curReturn.returnStatus === action.payload);
+            }
+            else if (action.payload === "rejected") {
+                currentReturns = state.returns.totalReturns.filter(curReturn => curReturn.returnStatus === action.payload);
+                state.returns.filteredReturns = currentReturns
+                state.returns.curReturnStatusTab = action.payload
 
-                return {
-                    ...state,
-                    returnsByStatus: {
-                        ...state.returnsByStatus,
-                        returnData: activeReturns,
-                        returnStatusTab: action.payload
-                    }
-                }
             } else if (action.payload === "inProgress") {
-                let activeReturns = state.totalReturns.filter(curReturn => curReturn.returnStatus === action.payload);
+                currentReturns = state.returns.totalReturns.filter(curReturn => curReturn.returnStatus === action.payload);
 
-                return {
-                    ...state,
-                    returnsByStatus: {
-                        ...state.returnsByStatus,
-                        returnData: activeReturns,
-                        returnStatusTab: action.payload
-                    }
-                }
+                state.returns.filteredReturns = currentReturns
+                state.returns.curReturnStatusTab = action.payload
+
             } else if (action.payload === "completed") {
-                let activeReturns = state.totalReturns.filter(curReturn => curReturn.returnStatus === action.payload);
+                currentReturns = state.returns.totalReturns.filter(curReturn => curReturn.returnStatus === action.payload);
+                state.returns.filteredReturns = currentReturns
+                state.returns.curReturnStatusTab = action.payload
 
-                return {
-                    ...state,
-                    returnsByStatus: {
-                        ...state.returnsByStatus,
-                        returnData: activeReturns,
-                        returnStatusTab: action.payload
-                    }
-                }
             } else {
-                return {
-                    ...state,
-                    returnsByStatus: {
-                        ...state.returnsByStatus,
-                        returnData: state.totalReturns,
-                    }
-                }
+                state.returns.filteredReturns = currentReturns
+                state.returns.curReturnStatusTab = action.payload
+
             }
         },
     },
     extraReducers: (builder) => {
         builder
-            // ========= totla orders ==========
-            .addCase(getTotalOrders.pending, (state) => {
-                return {
-                    ...state,
-                    loading: true,
-                    error: null,
-                }
-            })
-            .addCase(getTotalOrders.fulfilled, (state, action) => {
-                return {
-                    ...state,
-                    loading: false,
-                    totalOrders: action.payload,
-                    ordersByStatus: {
-                        ...state.ordersByStatus,
-                        filteredOrderData: state.totalOrders,
-                        orderStatusTab: action.payload
-                    }
-
-                }
-            })
-            .addCase(getTotalOrders.rejected, (state, action) => {
-                return {
-                    ...state,
-                    loading: false,
-                    error: action.payload,
-                }
-            })
-            // ========= totla users ==========
-            .addCase(getAllUsers.pending, (state) => {
+            // get users, orders, etc count
+            .addCase(getResourcesCount.pending, (state) => {
                 state.loading = true;
-                state.error = null;
-                // return {
-                //     ...state,
-                //     loading: true,
-                //     error: null,
-                // }
+                state.error = null
             })
-            .addCase(getAllUsers.fulfilled, (state, action) => {
-                state.loading = false;
-                state.totalUsers = action.payload;
-                // return {
-                //     ...state,
-                //     loading: false,
-                //     totalUsers: action.payload,
-
-                // }
+            .addCase(getResourcesCount.fulfilled, (state, action) => {
+                state.loading = false,
+                    state.resourcesCount = action.payload
             })
-            .addCase(getAllUsers.rejected, (state, action) => {
-                state.loading = false;
+            .addCase(getResourcesCount.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.payload.message
+            })
+            // get orders, users, etc list 
+            .addCase(getList.pending, (state, action) => {
+                state.loading = true
+                state.error = null
+            })
+            .addCase(getList.fulfilled, (state, action) => {
+                const { type, list } = action.payload
+                state.loading = false
+                if (type === 'products') {
+                    state.totalProducts = list
+                }
+                if (type === 'orders') {
+                    state.orders.totalOrders = list
+                    state.orders.filteredOrders = list
+                    state.orders.curOrderStatusTab = 'total'
+                }
+                if (type === 'users') {
+                    state.totalUsers = list
+                }
+                if (type === 'queries') {
+                    state.totalUserQueries = list
+                }
+                if (type === 'returns') {
+                    state.returns.totalReturns = list
+                    state.returns.filteredReturns = list
+                    state.returns.curReturnStatusTab = 'requested'
+                }
+            })
+            .addCase(getList.rejected, (state, action) => {
+                state.loading = false
                 state.error = action.payload
-                // return {
-                //     ...state,
-                //     loading: false,
-                //     error: action.payload,
-                // }
             })
-            // ========= totla user queries ==========
-            .addCase(getAllUserQueries.pending, (state) => {
-                state.loading = true;
-                state.error = null;
-                // return {
-                //     ...state,
-                //     loading: true,
-                //     error: null,
-                // }
-            })
-            .addCase(getAllUserQueries.fulfilled, (state, action) => {
-                state.loading = false;
-                state.totalUserQueries = action.payload;
-                // return {
-                //     ...state,
-                //     loading: false,
-                //     totalUserQueries: action.payload,
+            // ========= totla orders ==========
+            // .addCase(getTotalOrders.pending, (state) => {
+            //     return {
+            //         ...state,
+            //         loading: true,
+            //         error: null,
+            //     }
+            // })
+            // .addCase(getTotalOrders.fulfilled, (state, action) => {
+            //     return {
+            //         ...state,
+            //         loading: false,
+            //         totalOrders: action.payload,
+            //         ordersByStatus: {
+            //             ...state.ordersByStatus,
+            //             filteredOrderData: state.totalOrders,
+            //             orderStatusTab: action.payload
+            //         }
 
-                // }
-            })
-            .addCase(getAllUserQueries.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload;
-                // return {
-                //     ...state,
-                //     loading: false,
-                //     error: action.payload,
-                // }
-            })
+            //     }
+            // })
+            // .addCase(getTotalOrders.rejected, (state, action) => {
+            //     return {
+            //         ...state,
+            //         loading: false,
+            //         error: action.payload,
+            //     }
+            // })
+            // ========= totla users ==========
+            // .addCase(getAllUsers.pending, (state) => {
+            //     state.loading = true;
+            //     state.error = null;
+              
+            // })
+            // .addCase(getAllUsers.fulfilled, (state, action) => {
+            //     state.loading = false;
+            //     state.totalUsers = action.payload;
+               
+            // })
+            // .addCase(getAllUsers.rejected, (state, action) => {
+            //     state.loading = false;
+            //     state.error = action.payload
+               
+            // })
+            // ========= totla user queries ==========
+            // .addCase(getAllUserQueries.pending, (state) => {
+            //     state.loading = true;
+            //     state.error = null;
+               
+            // })
+            // .addCase(getAllUserQueries.fulfilled, (state, action) => {
+            //     state.loading = false;
+            //     state.totalUserQueries = action.payload;
+               
+            // })
+            // .addCase(getAllUserQueries.rejected, (state, action) => {
+            //     state.loading = false;
+            //     state.error = action.payload;
+               
+            // })
             // ========= invoice generate ==========
             .addCase(generateInvoice.pending, (state) => {
                 state.generatingInvoice = true,
@@ -588,33 +612,33 @@ const adminData = createSlice({
             })
 
             // ========= totla orders ==========
-            .addCase(getTotalReturns.pending, (state) => {
-                return {
-                    ...state,
-                    loading: true,
-                    error: null,
-                }
-            })
-            .addCase(getTotalReturns.fulfilled, (state, action) => {
-                return {
-                    ...state,
-                    loading: false,
-                    totalReturns: action.payload,
-                    returnsByStatus: {
-                        ...state.returnsByStatus,
-                        returnData: state.totalReturns,
-                        // orderStatusTab: action.payload
-                    }
+            // .addCase(getTotalReturns.pending, (state) => {
+            //     return {
+            //         ...state,
+            //         loading: true,
+            //         error: null,
+            //     }
+            // })
+            // .addCase(getTotalReturns.fulfilled, (state, action) => {
+            //     return {
+            //         ...state,
+            //         loading: false,
+            //         totalReturns: action.payload,
+            //         returnsByStatus: {
+            //             ...state.returnsByStatus,
+            //             returnData: state.totalReturns,
+            //             // orderStatusTab: action.payload
+            //         }
 
-                }
-            })
-            .addCase(getTotalReturns.rejected, (state, action) => {
-                return {
-                    ...state,
-                    loading: false,
-                    error: action.payload,
-                }
-            })
+            //     }
+            // })
+            // .addCase(getTotalReturns.rejected, (state, action) => {
+            //     return {
+            //         ...state,
+            //         loading: false,
+            //         error: action.payload,
+            //     }
+            // })
             // delete from database
             .addCase(deleteDocumentFromDatabase.pending, (state) => {
                 return {
@@ -626,8 +650,8 @@ const adminData = createSlice({
             .addCase(deleteDocumentFromDatabase.fulfilled, (state, action) => {
                 const { data, collection } = action.payload;
                 if (collection === 'Orders') {
-                    state.ordersByStatus.filteredOrderData = state.ordersByStatus.filteredOrderData.filter(order => order._id !== data._id)
-                    state.totalOrders = state.totalOrders.filter(order => order._id !== data._id)
+                    state.orders.filteredOrders = state.orders.filteredOrders.filter(order => order._id !== data._id)
+                    state.orders.totalOrders = state.orders.totalOrders.filter(order => order._id !== data._id)
                 } else if (collection === 'Users') {
                     state.totalUsers = state.totalUsers.filter(user => user._id !== data._id)
                 } else if (collection === 'Queries') {
@@ -675,7 +699,6 @@ const adminData = createSlice({
 
 })
 
-// export const { userLogout, clearLocalCartFlag } = userSlice.actions;
 export const { getOrdersByStatus, getReturnsByStatus } = adminData.actions;
 
 

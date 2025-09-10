@@ -81,7 +81,6 @@ export const cancelReturnRequest = createAsyncThunk(
       }
 
     } catch (error) {
-
       return rejectWithValue(error.response?.data || error.message);
     }
   }
@@ -125,7 +124,7 @@ const manageReturns = createSlice({
           returnsByStatus: {
             ...state.returnsByStatus,
             returnData: activeReturns,
-            orderStatusTab: action.payload,
+            returnStatusTab: action.payload,
           },
         };
       } else if (action.payload === "inProgress") {

@@ -1,11 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import {
-    FaChevronDown,
-    FaHome, FaBriefcase, FaMapMarkerAlt, FaMoneyBillWave,
-    FaCreditCard, FaPercent
-} from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { additionalDiscountforOnlinePayment, checkDeliveryAndCalculateShippingFee, generateTransactionID } from '../../helper/helperFunctions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,6 +16,7 @@ import { freeShippingEligibleAmt } from '../../constants';
 import api from '../../config/axiosConfig';
 import { calculateCODCharges } from '../../features/check-delivery/checkDelivery';
 import PaymentMethodButton from './PaymentMethodButton';
+import { Banknote, Briefcase, ChevronLeft, CreditCard, Home, MapPin } from 'lucide-react';
 
 const SavedAddressCard = ({
     user,
@@ -110,6 +106,7 @@ const SelectionButton = ({ icon, label, selected, onClick }) => {
     const IconComponent = icon;
     return (
         <button
+            id='addressTypeBtn'
             type="button"
             className={`flex-1 py-2.5 px-3 rounded-lg border flex items-center justify-center transition-all ${selected
                 ? 'bg-blue-50 border-[var(--accent-color)] shadow-sm'
@@ -117,7 +114,7 @@ const SelectionButton = ({ icon, label, selected, onClick }) => {
                 }`}
             onClick={onClick}
         >
-            <IconComponent className="mr-2" /> {label}
+            <IconComponent size={16} className="mr-1" /> {label}
         </button>
     );
 };
@@ -177,7 +174,7 @@ const PaymentMethodSelection = ({
                 )} */}
 
                 <PaymentMethodButton
-                    icon={FaMoneyBillWave}
+                    icon={Banknote}
                     label="Cash on Delivery"
                     selected={paymentMethod === 'cash_on_delivery'}
                     onClick={() => setPaymentMethod('cash_on_delivery')}
@@ -185,7 +182,7 @@ const PaymentMethodSelection = ({
                 />
 
                 <PaymentMethodButton
-                    icon={FaCreditCard}
+                    icon={CreditCard}
                     label="Online Payment"
                     selected={paymentMethod === 'online_payment'}
                     onClick={() => setPaymentMethod('online_payment')}
@@ -388,7 +385,7 @@ const NewCheckoutForm = ({ close }) => {
                 }
             }
         } catch (error) {
-            console.error('Order processing failed:', error);
+            throw error
         }
     };
 
@@ -474,10 +471,11 @@ const NewCheckoutForm = ({ close }) => {
                     />
 
                     <SubmitButton
+                        id='placeOrderBtn'
                         isSubmitting={addingNewOrder}
                         // text={paymentMethod === 'online_payment' ? 'Proceed to Pay' : 'Place Order'}
                         // text={paymentMethod === 'online_payment' ? `Proceed to Pay (₹${Math.round(totalCartAmount - discountAmount + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0))})` : `Place Order (₹${Math.round(totalCartAmount + CODCharge + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0))})`}
-                        text={paymentMethod === 'online_payment' ? `Proceed to Pay (₹${Math.round(totalCartAmount)})` : `Place Order (₹${Math.round(totalCartAmount)})`}
+                        text={paymentMethod === 'online_payment' ? `Place Order (₹${Math.round(totalCartAmount)})` : `Place Order (₹${Math.round(totalCartAmount)})`}
                         action={handleSavedAddressCheckout}
                     />
                 </>
@@ -491,7 +489,7 @@ const NewCheckoutForm = ({ close }) => {
                             whileHover={{ x: -3 }}
                             whileTap={{ scale: 0.97 }}
                         >
-                            <FaChevronDown className="transform rotate-90 mr-1" /> Back to saved addresses
+                            <ChevronLeft size={20} className="mr-1" /> Back to saved addresses
                         </motion.button>
                     )}
 
@@ -561,19 +559,19 @@ const NewCheckoutForm = ({ close }) => {
                                     <label className="block text-sm font-medium mb-1">Save Address As</label>
                                     <div className="flex space-x-2">
                                         <SelectionButton
-                                            icon={FaHome}
+                                            icon={Home}
                                             label="Home"
                                             selected={addressType === 'Home'}
                                             onClick={() => setAddressType('Home')}
                                         />
                                         <SelectionButton
-                                            icon={FaBriefcase}
+                                            icon={Briefcase}
                                             label="Office"
                                             selected={addressType === 'Office'}
                                             onClick={() => setAddressType('Office')}
                                         />
                                         <SelectionButton
-                                            icon={FaMapMarkerAlt}
+                                            icon={MapPin}
                                             label="Other"
                                             selected={addressType === 'Other'}
                                             onClick={() => setAddressType('Other')}
@@ -591,9 +589,10 @@ const NewCheckoutForm = ({ close }) => {
                                 />
 
                                 <SubmitButton
+                                    id='placeOrderBtn'
                                     isSubmitting={isSubmitting || addingNewOrder}
                                     // text={paymentMethod === 'online_payment' ? `Proceed to Pay (₹${Math.round(totalCartAmount - discountAmount + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0))})` : `Place Order (₹${Math.round(totalCartAmount + CODCharge + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0))})`}
-                                    text={paymentMethod === 'online_payment' ? `Proceed to Pay (₹${Math.round(totalCartAmount)})` : `Place Order (₹${Math.round(totalCartAmount)})`}
+                                    text={paymentMethod === 'online_payment' ? `Place Order (₹${Math.round(totalCartAmount)})` : `Place Order (₹${Math.round(totalCartAmount)})`}
                                 />
                             </Form>
                         )}

@@ -1,21 +1,20 @@
-import React, { useEffect, useState, Suspense } from 'react';
+import  { useEffect, useState, Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAdminData } from '../features/admin/adminSlice';
-import { getAllUserQueries, getAllUsers, getOrdersByStatus, getTotalOrders, getTotalReturns } from '../features/admin/adminData';
 // import { getProductsData } from '../imports';
 import { ToastContainer } from 'react-toastify';
-import { CircleUserRound,Menu  } from 'lucide-react';
+import { CircleUserRound, Menu } from 'lucide-react';
 
 // Lazy-load the admin components
-const AdminDashboard = React.lazy(() => import('../pages/admin/AdminDashboard'));
-const AdminOrders = React.lazy(() => import('../pages/admin/AdminOrders'));
-const AdminSidebar = React.lazy(() => import('../components/admin/AdminSidebar'));
-const AdminUsers = React.lazy(() => import('../pages/admin/AdminUsers'));
-const AdminQueries = React.lazy(() => import('../pages/admin/AdminQueries'));
-const AdminProducts = React.lazy(() => import('../pages/admin/AdminProducts'));
-const AdminReturnItems = React.lazy(() => import('../pages/admin/AdminReturnItems'));
-const AdminBanners = React.lazy(() => import('../pages/admin/AdminBanners'));
+const AdminDashboard = lazy(() => import('../pages/admin/AdminDashboard'));
+const AdminOrders = lazy(() => import('../pages/admin/AdminOrders'));
+const AdminSidebar = lazy(() => import('../components/admin/AdminSidebar'));
+const AdminUsers = lazy(() => import('../pages/admin/AdminUsers'));
+const AdminQueries = lazy(() => import('../pages/admin/AdminQueries'));
+const AdminProducts = lazy(() => import('../pages/admin/AdminProducts'));
+const AdminReturns = lazy(() => import('../pages/admin/AdminReturns'));
+const AdminBanners = lazy(() => import('../pages/admin/AdminBanners'));
 
 const AdminRoutes = () => {
   const dispatch = useDispatch();
@@ -26,19 +25,20 @@ const AdminRoutes = () => {
 
   useEffect(() => {
     if (adminToken) {
-      dispatch(fetchAdminData(adminToken)).then(res => {
-        dispatch(getTotalOrders());
-        dispatch(getTotalReturns());
-        // dispatch(getProductsData());
-        dispatch(getAllUsers());
-        dispatch(getAllUserQueries());
-        dispatch(getOrdersByStatus("total"));
-      });
+      dispatch(fetchAdminData(adminToken))
+        // .then(res => {
+        //   dispatch(getTotalOrders());
+        //   dispatch(getTotalReturns());
+        //   // dispatch(getProductsData());
+        //   dispatch(getAllUsers());
+        //   dispatch(getAllUserQueries());
+        //   dispatch(getOrdersByStatus("total"));
+        // });
     }
   }, [adminToken, dispatch]);
 
   return (
-    <div className="min-h-screen h-full bg-[var(--bgColorSecondary)]">
+    <div className="min-h-screen h-full">
       <div className='flex flex-row'>
         {/* Sidebar */}
         <div className={`w-full sm:w-64 adminSidebar`}>
@@ -67,7 +67,7 @@ const AdminRoutes = () => {
                 className="px-4 py-2 bg-gray-800 text-white rounded-md sm:hidden block"
                 onClick={() => setShowSidebar(!showSidebar)}
               >
-                <Menu  />
+                <Menu />
               </button>
             </div>
           </div>
@@ -81,7 +81,7 @@ const AdminRoutes = () => {
               <Route path="/users" element={<AdminUsers />} />
               <Route path="/queries" element={<AdminQueries />} />
               <Route path="/products" element={<AdminProducts />} />
-              <Route path="/returns" element={<AdminReturnItems />} />
+              <Route path="/returns" element={<AdminReturns />} />
               <Route path="/banners" element={<AdminBanners />} />
             </Routes>
           </Suspense>

@@ -100,10 +100,10 @@
 //   return (
 //     <section className="xs:px-10 px-2 pb-20 mt-5 sm:mt-0 font-mono ">
 //       <div className="lg:w-[80%] h-auto py-2 mt-10 bg-opacity-35 mx-auto">
-//         {/* <h2 className="text- text-center sm:mt-6 mt-10 sm:mb-2 mb-6 text-[var(--bgColorPrimary)] text-2xl tracking-widest ">
+//         {/* <h2 className="text- text-center sm:mt-6 mt-10 sm:mb-2 mb-6 text-[var(--background-color)] text-2xl tracking-widest ">
 //           Log in with OTP
 //         </h2> */}
-//         <div className="md:w-[90%] py-10 sm:px-0 px-4 flex sm:flex-row flex-col sm:gap-0 gap-6 shadow-md shadow-black justify-center h-[100%] mx-auto  my-auto bg-[var(--bgColorPrimary)] ">
+//         <div className="md:w-[90%] py-10 sm:px-0 px-4 flex sm:flex-row flex-col sm:gap-0 gap-6 shadow-md shadow-black justify-center h-[100%] mx-auto  my-auto bg-[var(--background-color)] ">
 //           {/* ============== right side ================  */}
 
 //           <div className="sm:w-[40%] mt-3 sm:mt-0 flex justify-center items-center">
@@ -112,10 +112,10 @@
 //                 <Logo />
 //               </div>
 //               <div className="flex flex-col justify-center items-center">
-//                 <span className="sm:text-2xl uppercase text-[var(--bgColorSecondary)]">
+//                 <span className="sm:text-2xl uppercase text-[var(--background-color)]">
 //                   Login to
 //                 </span>
-//                 <span className="sm;text-2xl uppercase text-[var(--bgColorSecondary)]">
+//                 <span className="sm;text-2xl uppercase text-[var(--background-color)]">
 //                   Organic Nation
 //                 </span>
 //               </div>
@@ -128,7 +128,7 @@
 //             <div className="sm:w-[80%]  mx-auto">
 //               <div className="flex flex-col gap-5">
 //                 <header className="">
-//                   <h1 className="text-2xl font-bold mb-1 text-[var(--bgColorSecondary)] tracking-wide">
+//                   <h1 className="text-2xl font-bold mb-1 text-[var(--background-color)] tracking-wide">
 //                     OTP Verification
 //                   </h1>
 //                   <p className="text-[15px] text-slate-400">
@@ -140,7 +140,7 @@
 //                 <div>
 //                   <button
 //                     type="submit"
-//                     className="p-2 bg-[var(--bgColorSecondary)] text-[#712522] hover:bg-green-500 hover:text-white transition-all duration-300 w-full flex justify-center items-center gap-2 rounded-md "
+//                     className="p-2 bg-[var(--background-color)] text-[#712522] hover:bg-green-500 hover:text-white transition-all duration-300 w-full flex justify-center items-center gap-2 rounded-md "
 //                   >
 //                     Submit OTP
 //                     {verifyingOTP ? (

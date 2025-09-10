@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import  { useEffect } from 'react'
 // react icons 
 // product image 
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,9 +7,49 @@ import { getAllReturnItems, getReturnsByStatus } from '../../features/manage-ret
 import ReturnedOrder from '../../components/return/ReturnedOrder';
 
 //icons
-import { ChevronDown, MoveLeft ,Box } from 'lucide-react';
+import {  MoveLeft } from 'lucide-react';
+import StatusTabs from '../../components/common/StatusTabs';
 
 
+const STATUS_BUTTONS = [
+    {
+        id: 'requested',
+        label: 'Requested',
+        borderColor: 'orange-500',
+        iconBgColor: 'EEF2FF',
+        iconColor: 'blue',
+        shadowColor: 'blue-400',
+        getCount: (returns) => returns?.filter(order => order.returnStatus === "requested").length || 0
+    },
+
+    {
+        id: 'rejected',
+        label: 'Rejected',
+        borderColor: 'orange-500',
+        iconBgColor: 'EEF2FF',
+        iconColor: 'red',
+        shadowColor: 'red-500',
+        getCount: (returns) => returns?.filter(order => order.returnStatus === "rejected").length || 0
+    },
+    {
+        id: 'inProgress',
+        label: 'In Progress',
+        borderColor: 'purple-500',
+        iconBgColor: 'ECFDF5',
+        iconColor: 'purple',
+        shadowColor: 'purple-400',
+        getCount: (returns) => returns?.filter(order => order.returnStatus === "inProgress").length || 0
+    },
+    {
+        id: 'completed',
+        label: 'Completed',
+        borderColor: 'orange-500',
+        iconBgColor: 'FFFBEB',
+        iconColor: 'orange',
+        shadowColor: 'orange-400',
+        getCount: (returns) => returns?.filter(order => order.returnStatus === "completed").length || 0
+    },
+];
 
 
 const ManageReturns = () => {
@@ -18,7 +58,6 @@ const ManageReturns = () => {
     const dispatch = useDispatch();
     const { returns, returnsByStatus } = useSelector(state => state.returns)
     const { user } = useSelector(state => state.auth)
-
 
     useEffect(() => {
         if (user) {
@@ -40,68 +79,23 @@ const ManageReturns = () => {
                 </div>
                 {/* buttons */}
                 <div className='py-5 font-serif'>
-                    <div className='flex flex-wrap sm:gap-10 gap-2   '>
-
-                        {/* button1 */}
-                        <div className={`${returnsByStatus.returnStatusTab === 'requested' && 'border-blue-500 border-[1px]'} flex justify-start items-center xs:gap-3 rounded-lg  max-w-max sm:pr-6 pr-1 pl-2 xs:py-2 cursor-pointer shadow-sm shadow-blue-400  transition-all duration-500 hover:bg-[var(--hoverEffect)]`} onClick={() => dispatch(getReturnsByStatus("requested"))}>
-                            <div className='sm:block hidden bg-[#EEF2FF] md:p-4 p-2 rounded-full'><Box color='blue' size={24} /></div>
-                            <div>
-                                <p className='font-semibold lg:text-[22px] xs:text-xl max-w-max'>{returns?.filter(order => order.returnStatus === "requested").length || 0}</p>
-                                <p className='text-gray-600 tracking-wider lg:text-[16px] xs:text-xs text-[10px]'>Requested</p>
-                            </div>
-                            <div className='sm:hidden block bg-[#EEF2FF] md:p-5 xs:p-2 rounded-full'><ChevronDown size={20} /></div>
-                        </div>
-
-                        {/* button2 */}
-                        <div className={`${returnsByStatus.returnStatusTab === 'rejected' && 'border-red-500 border-[1px]'} flex justify-start items-center xs:gap-3 rounded-lg  max-w-max sm:pr-6 pr-1 pl-2 xs:py-2 cursor-pointer shadow-sm shadow-red-500  transition-all duration-500 hover:bg-[var(--hoverEffect)]`} onClick={() => dispatch(getReturnsByStatus("rejected"))}>
-                            <div className='sm:block hidden bg-[#ECFDF5] md:p-4 p-2 rounded-full'><Box color='red' size={24} /></div>
-                            <div>
-                                <p className='font-semibold lg:text-[22px] xs:text-xl max-w-max'>
-                                    {returns?.filter(order => order.returnStatus === "rejected").length || 0}
-                                </p>
-                                <p className='text-gray-600 tracking-wider lg:text-[16px] xs:text-xs text-[10px]'>Rejected</p>
-                            </div>
-                            <div className='sm:hidden block bg-[#ECFDF5] md:p-5 xs:p-2 rounded-full'><ChevronDown size={20} /></div>
-                        </div>
-                        {/* button3 */}
-                        <div className={`${returnsByStatus.returnStatusTab === 'inProgress' && 'border-purple-500 border-[1px]'} flex justify-start items-center xs:gap-3 rounded-lg  max-w-max sm:pr-6 pr-1 pl-2 xs:py-2 cursor-pointer shadow-sm shadow-orange-400  transition-all duration-500 hover:bg-[var(--hoverEffect)]`} onClick={() => dispatch(getReturnsByStatus("inProgress"))}>
-                            <div className='sm:block hidden bg-[#ECFDF5] md:p-4 p-2 rounded-full'><Box color='orange' size={24} /></div>
-                            <div>
-                                <p className='font-semibold lg:text-[22px] xs:text-xl max-w-max'>
-                                    {returns?.filter(order => order.returnStatus === "inProgress").length || 0}
-                                </p>
-                                <p className='text-gray-600 tracking-wider lg:text-[16px] xs:text-xs text-[10px]'>In Progress</p>
-                            </div>
-                            <div className='sm:hidden block bg-[#ECFDF5] md:p-5 xs:p-2 rounded-full'><ChevronDown size={20} /></div>
-                        </div>
-
-                        {/* button4 */}
-                        <div className={`${returnsByStatus.returnStatusTab === 'completed' && 'border-green-500 border-[1px]'} flex justify-start items-center xs:gap-3 rounded-lg  max-w-max sm:pr-6 pr-1 pl-2 xs:py-2 cursor-pointer shadow-sm shadow-green-500  transition-all duration-500 hover:bg-[var(--hoverEffect)]`} onClick={() => dispatch(getReturnsByStatus("completed"))}>
-                            <div className='sm:block hidden bg-[#FFFBEB] md:p-4 p-2 rounded-full'><Box color='green' size={24} /></div>
-                            <div>
-                                <p className='font-semibold lg:text-[22px] xs:text-xl max-w-max'>
-                                    {returns?.filter(order => order.returnStatus === "completed").length || 0}
-                                </p>
-                                <p className='text-gray-600 tracking-wider lg:text-[16px] xs:text-xs text-[10px]'>Completed</p>
-                            </div>
-                            <div className='sm:hidden block bg-[#FFFBEB] md:p-5 xs:p-2 rounded-full'><ChevronDown size={20} /></div>
-                        </div>
-
-                        {/* button5 */}
-                        {/* <div className={`${returnsByStatus.returnStatusTab === 'cancelled' && 'border-gray-500 border-[1px]'} flex justify-start items-center xs:gap-3 rounded-lg  max-w-max sm:pr-6 pr-1 pl-2 xs:py-2 cursor-pointer shadow-sm shadow-gray-500  transition-all duration-500 hover:bg-[var(--hoverEffect)]`} onClick={() => dispatch(getReturnsByStatus("cancelled"))}>
-                        <div className='sm:block hidden bg-[#FEF2F2] md:p-4 p-2 rounded-full'><IoCubeOutline className='text-2xl text-[red]' /></div>
-                        <div>
-                            <p className='font-semibold lg:text-[22px] xs:text-xl max-w-max'>
-                                {returns?.filter(order => order.returnStatus === "cancelled").length || 0}
-
-                            </p>
-                            <p className='text-gray-600 tracking-wider lg:text-[16px] xs:text-xs text-[10px]'>Cancelled</p>
-                        </div>
-                        <div className='sm:hidden block bg-[#FEF2F2] md:p-5 xs:p-2 rounded-full'><ChevronDown size={20} /></div>
-                    </div> */}
-
+                    <div className='flex flex-wrap sm:gap-10 gap-2'>
+                        {STATUS_BUTTONS.map(button => (
+                            <StatusTabs
+                                key={button.id}
+                                isActive={returnsByStatus.returnStatusTab === button.id}
+                                count={button.getCount(returns)}
+                                label={button.label}
+                                onClick={() => dispatch(getReturnsByStatus(button.id))}
+                                borderColor={button.borderColor}
+                                iconBgColor={button.iconBgColor}
+                                iconColor={button.iconColor}
+                                shadowColor={button.shadowColor}
+                            />
+                        ))}
                     </div>
                 </div>
+
                 {/*  all orders  */}
                 <div className='mt-6 flex flex-col gap-20'>
 
@@ -112,7 +106,7 @@ const ManageReturns = () => {
                         <div className='flex flex-col gap-8 justify-center items-start xs:text-2xl font-mono'>
                             <p className=''>You have no returns !!!</p>
                             <div>
-                                <Link to="/shop/all" className=" flex underline-hover text-[var(--bgColorPrimary)] max-w-max hover:text-orange-500 justify-center items-center gap-2 py-1   font-semibold rounded-lg  uppercase "> <MoveLeft /><span className='text-sm sm:text-[16px]'>Continue Shopping</span></Link>
+                                <Link to="/shop/all" className=" flex underline-hover text-[var(--text-color)] max-w-max hover:text-orange-500 justify-center items-center gap-2 py-1   font-semibold rounded-lg  uppercase "> <MoveLeft /><span className='text-sm sm:text-[16px]'>Continue Shopping</span></Link>
                             </div>
                         </div>
                     )}

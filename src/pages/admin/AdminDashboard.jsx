@@ -1,6 +1,7 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { getResourcesCount } from '../../features/admin/adminData';
 // import AdminBulkEmail from './AdminBulkEmail';
 
 
@@ -12,16 +13,21 @@ const StatBox = ({ value, title, onClick }) => (
     <p className="text-4xl font-bold">{value}</p>
     <h3 className="text-2xl font-bold mb-2">{title}</h3>
   </div>
-); 
+);
 
 
 const AdminDashboard = () => {
 
-  const navigate = useNavigate()
-  const { totalOrders, loading, totalUsers, totalUserQueries } = useSelector(state => state.adminData);
-  const  products  = useSelector((state) => state.filterData.products);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { resourcesCount, loading } = useSelector(state => state.adminData);
+  // const products = useSelector((state) => state.filterData.products);
 
+  const { orderCount, productCount, returnCount, queryCount, userCount } = resourcesCount;
 
+  useEffect(() => {
+    dispatch(getResourcesCount())
+  }, [])
   if (loading) return <div>Loading..</div>
 
   const handleNavigate = (path) => () => {
@@ -30,24 +36,29 @@ const AdminDashboard = () => {
 
   const stats = [
     {
-      value: totalUsers?.length,
+      value: userCount,
       title: 'Total Users',
       path: '/admin/users',
     },
     {
-      value: totalOrders.length,
+      value: orderCount,
       title: 'Total Orders',
       path: '/admin/orders',
     },
     {
-      value: totalUserQueries.length,
+      value: queryCount,
       title: 'Total Queries',
       path: '/admin/queries',
     },
     {
-      value: products.length,
+      value: productCount,
       title: 'Total Products',
       path: '/admin/products',
+    },
+    {
+      value: returnCount,
+      title: 'Total Returns',
+      path: '/admin/returns',
     },
   ];
 

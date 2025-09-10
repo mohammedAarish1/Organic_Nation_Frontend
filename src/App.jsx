@@ -41,7 +41,7 @@ import MyAppRoutes from './routes/MyAppRoutes';
 
 const MainContent = memo(() => {
   return (
-    <div className="bg-[var(--bgColorSecondary)] relative">
+    <div className=" relative">
       <Info text="Free shipping on orders over Rs. 199/- | Order over Rs. 499 and get Flat 20% OFF" fontSize='[10px]' />
       <ToastContainer position='top-right' autoClose={1000} />
       <Header />

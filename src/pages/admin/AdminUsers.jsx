@@ -1,9 +1,10 @@
-import React, { lazy, Suspense } from 'react';
-import { useSelector } from 'react-redux';
+import React, { lazy, Suspense, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../components/common/Loader';
+import { getList } from '../../features/admin/adminData';
 
 const AdminTable = lazy(() => import('../../components/admin/common/AdminTable'))
-const ReportGenerator=lazy(()=>import('../../components/admin/ReportGenerator'))
+const ReportGenerator = lazy(() => import('../../components/admin/ReportGenerator'))
 
 const headers = [
     { key: 'fullName', label: 'Name' },
@@ -14,7 +15,13 @@ const headers = [
 ]
 
 const AdminUsers = () => {
-    const { totalUsers, loading } = useSelector(state => state.adminData);
+    const dispatch = useDispatch();
+    const { loading, totalUsers } = useSelector(state => state.adminData);
+
+    useEffect(() => {
+        dispatch(getList('users'));
+    }, []);
+
 
     if (loading) return <div>Loading..</div>
     return (

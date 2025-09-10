@@ -175,18 +175,18 @@
 //         <div className='w-[80%] mx-auto flex justify-start gap-3'>
 //                     {/* line  */}
 //                     <div className='py-1 '>
-//                         <div className='w-1 h-full bg-[var(--bgColorPrimary)]'></div>
+//                         <div className='w-1 h-full bg-[var(--background-color)]'></div>
 //                     </div>
 //                     {/* content  */}
 //                     <div className='flex flex-col gap-2'>
 //                         <p>Welcome to <span className='font-medium'>ORGANIC NATION -  A "FOODSBAY INDIA" unit (Partnership Firm ) </span>, a distinguished name in the realm of organic food processing. Established in 2019 and situated in the serene landscapes of Bailparao, Uttarakhand, we have swiftly emerged as the largest supplier of organic honey in North India.</p>
-//                         <p>At <span className='font-medium'>ORGANIC NATION</span>, we pride ourselves on producing 100% natural and homestyle pickles, chutneys, and murrabbas. Our products are crafted with traditional recipes and the finest organic ingredients, ensuring a delightful and authentic taste experience in every jar.</p>
+//                         <p>At <span className='font-medium'>ORGANIC NATION</span>, we pride ourselves on producing  natural and homestyle pickles, chutneys, and murrabbas. Our products are crafted with traditional recipes and the finest organic ingredients, ensuring a delightful and authentic taste experience in every jar.</p>
 //                     </div>
 //                 </div>
 //                 <div className='w-[80%] mx-auto flex justify-start gap-3'>
 //                     {/* line  */}
 //                     <div className='py-1 '>
-//                         <div className='w-1 h-full bg-[var(--bgColorPrimary)]'></div>
+//                         <div className='w-1 h-full bg-[var(--background-color)]'></div>
 //                     </div>
 //                     {/* content  */}
 //                     <div className='flex flex-col gap-2'>
@@ -196,7 +196,7 @@
 //                 <div className='w-[80%] mx-auto flex justify-start gap-3'>
 //                     {/* line  */}
 //                     <div className='py-1 '>
-//                         <div className='w-1 h-full bg-[var(--bgColorPrimary)]'></div>
+//                         <div className='w-1 h-full bg-[var(--background-color)]'></div>
 //                     </div>
 //                     {/* content  */}
 //                     <div className='flex flex-col gap-2'>
@@ -396,7 +396,7 @@ const IntroSection = () => {
 
               <div className="relative pl-6 border-l-4 border-[var(--secondary-color)]">
                 <p className="italic text-lg">
-                  At <span className="font-medium text-[var(--themeColor)]">ORGANIC NATION</span>, we pride ourselves on producing 100% natural and homestyle pickles, chutneys, and murrabbas. Our products are crafted with traditional recipes and the finest organic ingredients, ensuring a delightful and authentic taste experience in every jar.
+                  At <span className="font-medium text-[var(--themeColor)]">ORGANIC NATION</span>, we pride ourselves on producing chemical preservative free homestyle pickles, chutneys, and murrabbas. Our products are crafted with traditional recipes and the finest organic ingredients, ensuring a delightful and authentic taste experience in every jar.
                 </p>
               </div>
 

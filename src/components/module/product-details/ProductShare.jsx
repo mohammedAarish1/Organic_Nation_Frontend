@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { FaFacebook, FaLinkedin, FaWhatsapp, FaLink } from 'react-icons/fa';
+import { useState } from 'react';
 import { FacebookIcon, LinkedInIcon, XIcon } from '../../../icons/SvgIcons'
 import { Link } from 'lucide-react';
 const sharePlatforms = [
@@ -12,21 +11,21 @@ const sharePlatforms = [
   {
     name: 'facebook',
     // icon: <FaFacebook className="text-xl" />,
-    icon: FacebookIcon(),
+    icon:<FacebookIcon color="#1877F2" />,
     // colorClass: 'bg-blue-600 hover:bg-blue-700',
     label: 'Facebook',
   },
   {
     name: 'twitter',
     // icon: <FaXTwitter  className="text-xl" />,
-    icon: XIcon(),
+    icon:<XIcon color='#000' />,
     // colorClass: 'bg-sky-500 hover:bg-sky-600',
     label: 'Twitter',
   },
   {
     name: 'linkedin',
     // icon: <FaLinkedin className="text-xl" />,
-    icon: LinkedInIcon(),
+    icon: <LinkedInIcon color = "#0A66C2" />,
     // colorClass: 'bg-blue-800 hover:bg-blue-900',
     label: 'LinkedIn',
   },

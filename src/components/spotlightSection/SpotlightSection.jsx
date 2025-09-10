@@ -137,7 +137,7 @@ const SpotlightSection = () => {
                             key={key}
                             onClick={() => setActiveTab(key)}
                             className={`transition-all duration-300 rounded-full cursor-pointer ${productsType === key
-                                ? 'bg-[var(--bgColorPrimary)] w-5 h-5'
+                                ? 'bg-[var(--background-color)] w-5 h-5'
                                 : 'bg-[var(--themeColor)] w-3 h-3'
                                 }`}
                             aria-label={`${label} indicator`}

@@ -7,6 +7,7 @@ const PaymentMethodButton = ({ icon, label, selected, onClick, badge = null }) =
     const IconComponent = icon;
     return (
         <button
+            id='paymentMethodBtn'
             type="button"
             className={`w-full p-5 rounded-lg border flex items-center justify-between relative transition-all ${selected
                 ? 'bg-blue-100 border-[var(--accent-color)] shadow-sm'

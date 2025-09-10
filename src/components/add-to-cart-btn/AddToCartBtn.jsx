@@ -65,7 +65,7 @@
 //           // }
 
 //         }}
-//         className={`${isOutOfStock ? 'opacity-60' : 'hover:bg-[var(--bgColorPrimary)]'}  flex justify-center items-center sm:mt-1  w-full text-white sm:py-2 py-1 sm:px-4 px-2 rounded-2xl bg-[#712522]   transition-all duration-500 gap-1 `}>
+//         className={`${isOutOfStock ? 'opacity-60' : 'hover:bg-[var(--themeColor)]'}  flex justify-center items-center sm:mt-1  w-full text-white sm:py-2 py-1 sm:px-4 px-2 rounded-2xl bg-[#712522]   transition-all duration-500 gap-1 `}>
 
 
 
@@ -137,7 +137,7 @@ const AddToCartBtn = ({ item, qty = 1 }) => {
         dispatch(getAllCartItems());
         // toast.info('Item Added to the Cart');
         // Show cart notification instead of toast
-         // ADD THIS LINE - Update discount progress
+        // ADD THIS LINE - Update discount progress
         // dispatch(getDiscountProgress());
         showCartNotification();
       });
@@ -154,6 +154,7 @@ const AddToCartBtn = ({ item, qty = 1 }) => {
       }}
     >
       <motion.button
+        id='addToCartBtn'
         // type="button"
         disabled={isOutOfStock}
         data-tooltip-id={isOutOfStock ? tooltipId : undefined}
@@ -163,10 +164,10 @@ const AddToCartBtn = ({ item, qty = 1 }) => {
         //   sm:py-2 py-1.5 xs:px-4 
         //    text-sm font-medium
         //   transition-all duration-500 tracking-tight
-        //   ${isOutOfStock ? 'bg-gray-400 cursor-not-allowed opacity-50'  : ' hover:bg-[var(--bgColorPrimary)] hover:text-white border border-black' }
+        //   ${isOutOfStock ? 'bg-gray-400 cursor-not-allowed opacity-50'  : ' hover:bg-[var(--themeColor)] hover:text-white border border-black' }
         // `}
 
-        className={`flex-1 py-2 xs:px-8 rounded-2xl font-bold xs:text-lg text-white flex items-center justify-center space-x-3 shadow-lg transition-all duration-300 w-full bg-[var(--themeColor)] ${isOutOfStock ? 'bg-gray-400 cursor-not-allowed opacity-50'  : '' }`}
+        className={`flex-1 py-2 xs:px-8 rounded-2xl font-bold xs:text-lg text-white flex items-center justify-center space-x-3 shadow-lg transition-all duration-300 w-full bg-[var(--themeColor)] ${isOutOfStock ? 'bg-gray-400 cursor-not-allowed opacity-50' : ''}`}
         whileHover={!isOutOfStock && {
           scale: 1.02,
           backgroundColor: '#9B7A2F',
@@ -174,7 +175,7 @@ const AddToCartBtn = ({ item, qty = 1 }) => {
         }}
         whileTap={{ scale: 0.98 }}
       >
-        <ShoppingCart size={20}/>
+        <ShoppingCart size={20} />
         <span>Add to Cart</span>
       </motion.button>
 

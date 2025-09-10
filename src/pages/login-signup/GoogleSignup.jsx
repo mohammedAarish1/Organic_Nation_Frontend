@@ -68,10 +68,10 @@
 //   return (
 //     <section className="xs:px-10 px-2 pb-20 mt-5 sm:mt-0">
 //       <div className="lg:w-[80%] h-auto py-2 bg-opacity-35 mx-auto">
-//         <h2 className="text- text-center sm:mt-6 mt-10 sm:mb-2 mb-6 text-[var(--bgColorPrimary)] ">
+//         <h2 className="text- text-center sm:mt-6 mt-10 sm:mb-2 mb-6 text-[var(--background-color)] ">
 //           Please provide your "Phone number" and "Password"
 //         </h2>
-//         <div className="md:w-[90%] py-10 flex sm:flex-row flex-col sm:gap-0 gap-6 shadow-xl shadow-black justify-center h-[100%] mx-auto  my-auto bg-[var(--bgColorPrimary)] ">
+//         <div className="md:w-[90%] py-10 flex sm:flex-row flex-col sm:gap-0 gap-6 shadow-xl shadow-black justify-center h-[100%] mx-auto  my-auto bg-[var(--background-color)] ">
 //           {/* ============== right side ================  */}
 
 //           <div className="sm:w-[40%] mt-3 sm:mt-0 flex justify-center items-center">
@@ -80,10 +80,10 @@
 //                 <Logo />
 //               </div>
 //               <div className="flex flex-col justify-center items-center">
-//                 <span className="sm:text-2xl uppercase text-[var(--bgColorSecondary)]">
+//                 <span className="sm:text-2xl uppercase text-[var(--background-color)]">
 //                   Login to
 //                 </span>
-//                 <span className="sm;text-2xl uppercase text-[var(--bgColorSecondary)]">
+//                 <span className="sm;text-2xl uppercase text-[var(--background-color)]">
 //                   Organic Nation
 //                 </span>
 //               </div>
@@ -107,25 +107,25 @@
 //                   <Form>
 //                     <div className="mb-4">
 //                       <label
-//                         className="uppercase tracking-widest block text-[var(--bgColorSecondary)] text-sm font-bold mb-2"
+//                         className="uppercase tracking-widest block text-[var(--background-color)] text-sm font-bold mb-2"
 //                         htmlFor="phoneNumber"
 //                       >
 //                         Phone No.
 //                       </label>
-//                       <div className="flex  items-center gap-2 border border-[var(--bgColorSecondary)] ">
-//                         <div className="flex justify-center items-center pl-2 pr-1 gap-1 text-[var(--bgColorSecondary)]">
+//                       <div className="flex  items-center gap-2 border border-[var(--background-color)] ">
+//                         <div className="flex justify-center items-center pl-2 pr-1 gap-1 text-[var(--background-color)]">
 //                           {/* <FaFlag /> */}
 //                           <img
 //                             src="https://organicnationmages.s3.ap-south-1.amazonaws.com/other_images/flag.png"
 //                             alt="country_flag"
 //                             className="w-8"
 //                           />
-//                           <span className="shadow appearance-none  bg-[var(--bgColorPrimary)] text-white w-full py-2 px-  leading-tight focus:outline-none focus:shadow-outline">
+//                           <span className="shadow appearance-none  bg-[var(--background-color)] text-white w-full py-2 px-  leading-tight focus:outline-none focus:shadow-outline">
 //                             +91
 //                           </span>
 //                         </div>
 //                         <Field
-//                           className="shadow appearance-none  bg-[var(--bgColorPrimary)] text-white w-full py-2 px-  leading-tight focus:outline-none focus:shadow-outline"
+//                           className="shadow appearance-none  bg-[var(--background-color)] text-white w-full py-2 px-  leading-tight focus:outline-none focus:shadow-outline"
 //                           id="phoneNumber"
 //                           type="text"
 //                           maxLength={10}
@@ -144,13 +144,13 @@
 //                     {/* password input  */}
 //                     <div className="mb-6">
 //                       <label
-//                         className="uppercase tracking-widest block text-[var(--bgColorSecondary)] text-sm font-bold mb-2"
+//                         className="uppercase tracking-widest block text-[var(--background-color)] text-sm font-bold mb-2"
 //                         htmlFor="password"
 //                       >
 //                         Password
 //                       </label>
 //                       <Field
-//                         className="shadow appearance-none border  bg-[var(--bgColorPrimary)] w-full py-2 px-3 text-white  leading-tight focus:outline-none focus:shadow-outline"
+//                         className="shadow appearance-none border  bg-[var(--background-color)] w-full py-2 px-3 text-white  leading-tight focus:outline-none focus:shadow-outline"
 //                         id="password"
 //                         type="password"
 //                         name="password"
@@ -162,7 +162,7 @@
 //                       {errors.password && touched.password ? (
 //                         <p className="text-red-600">*{errors.password}</p>
 //                       ) : null}
-//                       <p className="text-end text-[var(--bgColorSecondary)] text-[11px] hover:underline cursor-pointer">
+//                       <p className="text-end text-[var(--background-color)] text-[11px] hover:underline cursor-pointer">
 //                         Forgot Password
 //                       </p>
 //                     </div>
@@ -170,7 +170,7 @@
 //                     <div className="flex items-center justify-between">
 //                       <button
 //                         type="submit"
-//                         className="bg-[var(--bgColorSecondary)] hover:bg-green-700 hover:text-white text-[var(--bgColorPrimary)] font-bold py-2 px-4  focus:outline-none focus:shadow-outline"
+//                         className="bg-[var(--background-color)] hover:bg-green-700 hover:text-white text-[var(--background-color)] font-bold py-2 px-4  focus:outline-none focus:shadow-outline"
 //                       >
 //                         {user_loading
 //                           ? "Signing Up"

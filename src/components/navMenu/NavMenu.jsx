@@ -47,7 +47,7 @@
 
 //     return (
 //         <>
-//             <li className="rounded-md text-[#ffe9a1] hover:bg-[var(--bgColorSecondary)] p-[2px] hover:text-white transition-colors">
+//             <li className="rounded-md text-[#ffe9a1] hover:bg-[var(--background-color)] p-[2px] hover:text-white transition-colors">
 //                 <div className='flex justify-between items-center'>
 //                     <Link
 //                         to={item.path}
@@ -159,7 +159,7 @@
 
 //                             {item.hasDropdown && (
 //                                 <div className="dropDown absolute lg:right-44 right-24 lg:w-[60%] w-[80%] md:top-[84%] shadow-xl rounded-lg overflow-hidden">
-//                                     <div className="grid grid-cols-7 gap-x-3 bg-[var(--bgColorSecondary)] p-2">
+//                                     <div className="grid grid-cols-7 gap-x-3 bg-[var(--background-color)] p-2">
 
 //                                         {filteredCategories.map(category => (
 //                                             <CategoryItem
@@ -184,7 +184,7 @@
 //                 onClick={() => dispatch(setShowSidebar(false))}
 //             >
 //                 <div
-//                     className={`absolute left-0 top-0 h-full w-[280px] bg-[var(--bgColorPrimary)] transform transition-transform ${showSidebar ? 'translate-x-0' : '-translate-x-full'
+//                     className={`absolute left-0 top-0 h-full w-[280px] bg-[var(--background-color)] transform transition-transform ${showSidebar ? 'translate-x-0' : '-translate-x-full'
 //                         }`}
 //                     onClick={e => e.stopPropagation()}
 //                 >
@@ -387,7 +387,6 @@ const NavMenu = () => {
 
     const categoriesImages = getCatogoriesWithImages(categoryList)
 
-
     // Sidebar animation variants
     const sidebarVariants = {
         hidden: { x: "-100%" },
@@ -472,7 +471,7 @@ const NavMenu = () => {
 
                             {item.hasDropdown && (
                                 <div className="dropDown absolute lg:right-44 right-24 lg:w-[60%] w-[80%] md:top-[84%] shadow-xl rounded-lg overflow-hidden">
-                                    <div className="grid grid-cols-7 gap-x-3 bg-[var(--bgColorSecondary)] p-2">
+                                    <div className="grid grid-cols-7 gap-x-3 bg-[var(--background-color)] p-2">
                                         {categoriesImages.map(category => (
                                             <CategoryItem
                                                 key={category.categoryUrl}

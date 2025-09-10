@@ -3,6 +3,17 @@ import { calculateShippingFee, checkDeliveryAvailability, updateShippingFee } fr
 import api from "../config/axiosConfig";
 
 
+// below funtion is to use the css variables
+// const getCssVariable = (variableName) => {
+//   // Get the computed styles of the root element (document.documentElement)
+//   const rootStyles = getComputedStyle(document.documentElement);
+
+
+
+//   // Retrieve the value of the CSS variable and remove any extra spaces
+//   return rootStyles.getPropertyValue(variableName).trim();
+// };
+
 // extracting the wwight since weight is in different formats like 900 gm, 1 Ltr, 20 bags *1.8g=36g
 // function extractWeight(description) {
 //     // Remove all spaces from the description
@@ -33,8 +44,26 @@ import api from "../config/axiosConfig";
 // }
 
 
-const getCatogoriesWithImages = (categoryList) => {
- 
+const getCatogoriesWithImages = (categoryList, type) => {
+
+
+  const icons = [
+    { name: 'Pickles', category: 'Homestyle-Pickles', url: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/pickle.webp' },
+    { name: 'Honey', category: 'Organic-Honey', url: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/honey.webp' },
+    { name: 'Seasonings', category: 'Seasonings-&-Herbs', url: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/seasonings.webp' },
+    { name: 'Salt', category: 'Salt', url: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/salt.webp' },
+    { name: 'Cereals', category: 'Breakfast-Cereals', url: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/breakfast.webp' },
+    { name: 'Chutney', category: 'Chutney-&-Dip', url: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/chutney.webp' },
+    { name: 'Oats', category: 'Oats', url: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/oats.webp' },
+    { name: 'Oils', category: 'Organic-Oils', url: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/oils.webp' },
+    { name: 'Preserves', category: 'Fruit-Preserves', url: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/fruit_preserves.webp' },
+    { name: 'Vegan', category: 'Vegan', url: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/vegan.webp' },
+    { name: 'Sweeteners', category: 'Sweeteners', url: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/sweeteners.webp' },
+    { name: 'Tea', category: 'Organic-Tea', url: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/tea.webp' },
+    { name: 'Combo', category: 'Gifts-&-Combos', url: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/combo.webp' },
+  ];
+
+
   const categoriesImages = [
     { 'Organic-Honey': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/honey.webp' },
     { 'Homestyle-Pickles': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/pickle.webp' },
@@ -50,16 +79,28 @@ const getCatogoriesWithImages = (categoryList) => {
     { 'Breakfast-Cereals': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/breakfast.webp' },
     { 'Gifts-&-Combos': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/combo.webp' },
   ]
+
+  // below code will convert the above array into a new object of key value pair
   const imageLookup = categoriesImages.reduce((acc, obj) => {
     const [key, value] = Object.entries(obj)[0];
     acc[key] = value;
     return acc;
   }, {});
-  const categoriesWithImages = categoryList?.filter(item => item.category !== 'All')
-    .map(item => ({
+
+
+  // const categoriesWithImages = categoryList?.filter(item => item.category !== 'All')
+  //   .map(item => ({
+  //     ...item,
+  //     image: imageLookup[item.categoryUrl] || null,
+  //   }));
+  const categoriesWithImages = categoryList?.filter(item => item.category !== 'All' && item.category !== 'Demo' )
+    .map(item => {
+      return({
       ...item,
-      image: imageLookup[item.categoryUrl] || null,
-    }));
+      // image: imageLookup[item.categoryUrl] || null,
+      name:icons.filter(curIcon => curIcon.category === item.categoryUrl)[0]?.name || null,
+      image: icons.filter(curIcon => curIcon.category === item.categoryUrl)[0]?.url || null,
+    })});
 
   return categoriesWithImages
 }

@@ -71,7 +71,7 @@
 
 //                     </div>
 //                 </div>
-//                 <div className="lg:absolute left-0 bottom-0 bg-[var(--bgColorPrimary)] w-full p-4">
+//                 <div className="lg:absolute left-0 bottom-0 bg-[var(--themeColor)] w-full p-4">
 //                     {/* <h4 className="flex flex-wrap gap-4 text-base text-white">Total taxes (+) <span className="ml-auto">₹ {totalTax}</span></h4> */}
 //                     {/* <h4 className="flex flex-wrap gap-4 text-base text-white">Shipping Fee (+) <span className="ml-auto">₹ {totalCartAmount < freeShippingEligibleAmt ? shippingFee : 'FREE'}</span></h4> */}
 //                     <h4 className="flex flex-wrap gap-4 text-base text-white">

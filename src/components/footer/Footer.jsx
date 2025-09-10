@@ -56,7 +56,7 @@
 //     <div className="flex justify-center items-center gap-3">
 //         {socialData.map(({ href, icon, fontSize, label }, index) => (
 //             <a key={index} href={href} target='_blank' rel="noopener noreferrer" aria-label={label}>
-//                 {React.cloneElement(icon, { className: `${fontSize} hover:text-[var(--bgColorPrimary)] hover:scale-125 transition-all duration-300` })}
+//                 {React.cloneElement(icon, { className: `${fontSize} hover:text-[var(--themeColor)] hover:scale-125 transition-all duration-300` })}
 //             </a>
 //         ))}
 //     </div>
@@ -115,7 +115,7 @@
 //         }));
 //     }, [categoryList]);
 //     return (
-//         <footer className="relative bg-[var(--hoverEffect)] xs:px-10 px-1 py-6 text-sm text-[var(--themeColor)]">
+//         <footer className="relative bg-[var(--accent-color)] xs:px-10 px-1 py-6 text-sm text-[var(--themeColor)]">
 //             <div className="lg:container mx-auto px-4">
 //                 <div className='mb-4 flex flex-wrap gap-8 justify-between items-center lg:pr-28'>
 //                     <Logo />
@@ -125,7 +125,7 @@
 //                     <div className='flex flex-col gap-3 md:pb-0 pb-4'>
 //                         <h2 className="text-lg font-semibold uppercase">About Us</h2>
 //                         <p className='tracking-widest md:w-[90%] text-justify'>
-//                             Welcome to ORGANIC NATION (A Unit of <span className='font-semibold'>Foodsbay India</span>), we pride ourselves on producing 100% natural and homestyle pickles, chutneys, and murrabbas. Our products are crafted with traditional recipes and the finest organic ingredients, ensuring a delightful and authentic taste experience in every jar.
+//                             Welcome to ORGANIC NATION (A Unit of <span className='font-semibold'>Foodsbay India</span>), we pride ourselves on producing natural and homestyle pickles, chutneys, and murrabbas. Our products are crafted with traditional recipes and the finest organic ingredients, ensuring a delightful and authentic taste experience in every jar.
 //                         </p>
 //                     </div>
 
@@ -185,36 +185,36 @@ import { FacebookIcon, InstagramIcon, LinkedInIcon, XIcon, YouTubeIcon } from '.
 import { Ban, Building, ChevronsRight, Globe, HeartHandshake, Leaf, Mail, MapPin, Phone, ShieldCheck, Sprout } from 'lucide-react';
 
 const socialData = [
-   {
+  {
     href: 'https://www.instagram.com/organicnationofficial/',
-    icon: InstagramIcon(),
+    icon: <InstagramIcon color="url(#igGradient)" />,
     label: "Instagram",
     color: "#7A2E1D"
   },
-   {
+  {
     href: 'https://www.facebook.com/organicnationofficial',
     // icon: <ImFacebook2 />,
-    icon: FacebookIcon(),
+    icon: <FacebookIcon color="#1877F2" />,
     label: "Facebook",
     color: "#7A2E1D"
   },
   {
     href: 'https://www.linkedin.com/company/organicnationofficial',
     // icon: <GrLinkedin />,
-    icon: LinkedInIcon(),
+    icon: <LinkedInIcon color="#0A66C2" />,
     label: "LinkedIn",
     color: "#7A2E1D"
   },
- 
+
   {
     href: 'https://x.com/organicnation_',
-    icon: XIcon(),
+    icon: <XIcon color='#000' />,
     label: "Twitter",
     color: '#7A2E1D'
   },
   {
     href: 'https://www.youtube.com/@organicnationofficial',
-    icon: YouTubeIcon(),
+    icon: <YouTubeIcon background="#FF0000" playButton="#fff" />,
     label: "YouTube",
     color: "#7A2E1D"
   }
@@ -342,7 +342,7 @@ const Logo = memo(() => (
     </div>
     <div className="flex flex-col">
       <span className="font-bold text-xl md:text-2xl tracking-wide text-[var(--themeColor)]">ORGANIC NATION</span>
-      <span className="text-xs md:text-sm text-[var(--accent-color)]">100% Natural & Organic</span>
+      <span className="text-xs md:text-sm text-[var(--accent-color)]">Brings Homemade Taste</span>
     </div>
   </Link>
 ));
@@ -437,7 +437,7 @@ const Footer = () => {
                 About Us
               </h2>
               <p className="tracking-wide text-sm leading-relaxed">
-                Welcome to <span className="font-bold text-[var(--themeColor)]">ORGANIC NATION</span> (A Unit of <span className="font-semibold">Foodsbay India</span>), we pride ourselves on producing 100% natural and homestyle pickles, chutneys, and murrabbas. Our products are crafted with traditional recipes and the finest organic ingredients, ensuring a delightful and authentic taste experience in every jar.
+                Welcome to <span className="font-bold text-[var(--themeColor)]">ORGANIC NATION</span> (A Unit of <span className="font-semibold">Foodsbay India</span>), we pride ourselves on producing chemical preservative free homestyle pickles, chutneys, and murrabbas. Our products are crafted with traditional recipes and the finest organic ingredients, ensuring a delightful and authentic taste experience in every jar.
               </p>
               <Newsletter />
             </motion.div>
