@@ -76,7 +76,7 @@ const AdminRoutes = () => {
 
           <Suspense fallback={<div>Loading Content...</div>}>
             <Routes>
-              <Route path="/" element={<AdminDashboard />} />
+              <Route path="/dashboard" element={<AdminDashboard />} />
               <Route path="/orders" element={<AdminOrders />} />
               <Route path="/users" element={<AdminUsers />} />
               <Route path="/queries" element={<AdminQueries />} />

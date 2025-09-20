@@ -72,7 +72,7 @@ import { BadgeCheck, CircleX } from 'lucide-react';
 // Enhanced SingleOrderFooterSection Component
 const SingleOrderFooterSection = ({ order, onCancelOrder, isActive }) => {
   const calculateTotal = () => order?.orderDetails.reduce(
-    (total, item) => total + item.unitPrice * item.quantity,
+    (total, item) => total + item?.unitPrice * item?.quantity,
     0
   );
 

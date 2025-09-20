@@ -40,8 +40,8 @@ const useAdminToken = () => {
 // Reusable Form Field Component
 const FormField = ({ field, className = "" }) => (
   <div className={`mb-4 ${className}`}>
-    <label 
-      htmlFor={field.name} 
+    <label
+      htmlFor={field.name}
       className="block text-sm mb-1 uppercase tracking-widest"
     >
       {field.label}
@@ -52,10 +52,10 @@ const FormField = ({ field, className = "" }) => (
       name={field.name}
       className="w-full px-3 py-2 text-black border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors"
     />
-    <ErrorMessage 
-      name={field.name} 
-      component="div" 
-      className="text-red-400 text-sm mt-1" 
+    <ErrorMessage
+      name={field.name}
+      component="div"
+      className="text-red-400 text-sm mt-1"
     />
   </div>
 );
@@ -64,10 +64,10 @@ const FormField = ({ field, className = "" }) => (
 const BackgroundContainer = ({ children }) => (
   <div
     className="relative min-h-screen flex items-center justify-center"
-    style={{ 
-      backgroundImage: `url(${BACKGROUND_IMAGE_URL})`, 
-      backgroundSize: 'cover', 
-      backgroundPosition: 'center' 
+    style={{
+      backgroundImage: `url(${BACKGROUND_IMAGE_URL})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
     }}
   >
     <div className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-lg" />
@@ -81,18 +81,20 @@ const AdminLogin = () => {
   const navigate = useNavigate();
   const adminToken = useAdminToken();
 
-  const handleFormSubmission = async (values, { setSubmitting }) => {
+  const handleFormSubmission = (values, { setSubmitting }) => {
     try {
-      const result = await dispatch(adminLogin(values));
-      
-      if (result.meta.requestStatus === 'fulfilled') {
-        const { token, message } = result.payload;
-        sessionStorage.setItem("adminToken", JSON.stringify(token));
-        dispatch(fetchAdminData(token));
-        toast.success(message || 'Login successful');
-      } else {
-        toast.error(result.payload?.message || 'Login failed');
-      }
+      dispatch(adminLogin(values))
+        .then(result => {
+          if (result.payload.success) {
+            const { token, message } = result.payload;
+            sessionStorage.setItem("adminToken", JSON.stringify(token));
+            dispatch(fetchAdminData(token));
+            navigate('/admin/dashboard');
+            toast.success(message || 'Login successful');
+          } else {
+            toast.error(result.payload?.message || 'Login failed');
+          }
+        })
     } catch (error) {
       toast.error('Network error occurred');
     } finally {
@@ -100,15 +102,15 @@ const AdminLogin = () => {
     }
   };
 
-  useEffect(() => {
-    if (adminToken) {
-      navigate('/admin');
-    }
-  }, [navigate, adminToken]);
+  // useEffect(() => {
+  //   if (adminToken) {
+  //     navigate('/admin/dashboard');
+  //   }
+  // }, [navigate, adminToken]);
 
   return (
     <>
-      
+
       <BackgroundContainer>
         <div className="z-50 fixed top-10 left-10">
           <Logo />
@@ -125,11 +127,11 @@ const AdminLogin = () => {
                 <h1 className="text-3xl font-bold mb-8 text-center">
                   Admin Login
                 </h1>
-                
+
                 {FORM_FIELDS.map((field, index) => (
-                  <FormField 
+                  <FormField
                     key={field.name}
-                    field={field} 
+                    field={field}
                     className={index === FORM_FIELDS.length - 1 ? "mb-6" : ""}
                   />
                 ))}
@@ -140,8 +142,8 @@ const AdminLogin = () => {
                   className={`
                     w-full py-3 px-4 font-semibold rounded-md shadow-sm 
                     transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500
-                    ${isSubmitting 
-                      ? 'bg-gray-500 cursor-not-allowed' 
+                    ${isSubmitting
+                      ? 'bg-gray-500 cursor-not-allowed'
                       : 'bg-blue-600 hover:bg-blue-700 active:bg-blue-800'
                     } text-white
                   `}

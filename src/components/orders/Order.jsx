@@ -214,7 +214,7 @@ const Order = ({ order }) => {
         <AnimatePresence>
           {visibleItems?.map((curOrder, index) => (
             <motion.div
-              key={curOrder._id}
+              key={curOrder?._id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}

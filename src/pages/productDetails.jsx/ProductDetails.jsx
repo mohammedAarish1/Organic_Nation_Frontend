@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import SEO from '../../helper/SEO/SEO';
@@ -18,70 +18,6 @@ const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
 
 
-// const productInfo = [
-//   {
-//     title: 'Description',
-//     content: [
-//       {
-//         subTitle: '',
-//         subContent: "Organic Nation's Light Flora Honey is a pure, unprocessed honey sourced from the pristine Himalayan region. It is harvested from bees that collect nectar from a variety of wild, organic flora, offering a unique and natural flavor profile. This honey is certified organic and tested for purity, ensuring a high-quality product."
-//       }
-//     ]
-//   },
-//   {
-//     title: 'Benefits',
-//     content: [
-//       {
-//         subTitle: "Natural Sweetener:",
-//         subContent: 'A healthier alternative to refined sugar, honey provides sweetness without the artificial additives.'
-//       },
-//       {
-//         subTitle: "Rich in Nutrients:",
-//         subContent: "Contains essential vitamins, minerals, and antioxidants that support overall health."
-//       },
-//       {
-//         subTitle: "Antibacterial Properties:",
-//         subContent: "Helps fight infections and promote wound healing. Immune System Boost: Can strengthen the immune system and protect against illness."
-//       },
-//       {
-//         subTitle: "Digestive Aid:",
-//         subContent: "May improve digestion and alleviate digestive discomfort."
-//       },
-//     ]
-//   },
-//   {
-//     title: 'Usage',
-//     content: [
-//       {
-//         subTitle: "Sweetener:",
-//         subContent: "Add to tea, coffee, yogurt, or oatmeal."
-//       },
-//       {
-//         subTitle: "Baking:",
-//         subContent: "Use as a natural sweetener in baked goods like cakes, cookies, and bread. Topical Application: Apply to minor cuts, scrapes, or burns for its antibacterial properties."
-//       },
-//       {
-//         subTitle: "Skincare:",
-//         subContent: "Incorporate into homemade face masks or moisturizers for a natural glow. Cough Relief: Mix with warm water and lemon for a soothing cough remedy."
-//       },
-//     ],
-//   }
-// ];
-
-// const faq = [
-//   {
-//     title: 'heading1',
-//     content: ['testing testing']
-//   },
-//   {
-//     title: 'heading1',
-//     content: ['testing testing']
-//   },
-//   {
-//     title: 'heading1',
-//     content: ['testing testing']
-//   },
-// ]
 
 
 // const productone = {
@@ -139,6 +75,32 @@ const apiUrl = import.meta.env.VITE_BACKEND_URL;
 //   },
 //   updatedAt: new Date(1735292337798)
 // };
+
+const pData =
+{
+  "name-url": "pineapple-conserve",
+  "description": "Bright, tropical, and irresistibly delicious — our Pineapple Conserve is packed with the natural goodness of sun-ripened pineapples. Crafted using traditional methods, this preserve captures the tangy-sweet flavour and golden freshness of pineapple in every spoonful. Perfect for those looking for pineapple jam, pineapple fruit spread, or tropical fruit conserve, this jar brings a burst of sunshine to your breakfast and snacks. Smooth yet fruity in texture, it spreads beautifully and pairs effortlessly with both Indian and continental dishes. A delightful blend of taste and tradition, our Pineapple Conserve is your go-to choice for adding a tropical twist to everyday meals.",
+  "caution": "",
+  "brand": "Organic Nation",
+  "manufacturer": "",
+  "countryOfOrigin": "India",
+  "shelfLife": "12 Months",
+  "features": [
+    "Smooth and fruity texture for easy spreading.",
+    "Authentic recipe crafted with traditional methods.",
+    "Versatile conserve — works as spread, topping, or dessert base.",
+    "Perfect for breakfast, snacks, and gourmet pairings."
+  ],
+  "usage": [
+    "Spread on toast, croissants, or parathas for a fruity breakfast.",
+    "Layer between cakes, pastries, or muffins for a tropical dessert.",
+    "Mix into yogurt, smoothies, or shakes for added flavour.",
+    "Serve as a topping for pancakes, waffles, or ice cream.",
+    "Pair with cheese platters or crackers for a gourmet twist."
+  ]
+}
+
+
 
 const ProductDetails = () => {
   const { nameUrl } = useParams();
@@ -217,7 +179,7 @@ const ProductDetails = () => {
             </section>
           </Suspense>
         )}
-
+        {/* <ProductAdditionalInfo productInfo={pData} /> */}
 
         {/* =============== you may also like section ========== */}
         <Suspense fallback={<Loader height='300px' />}>

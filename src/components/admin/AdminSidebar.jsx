@@ -19,14 +19,14 @@ const AdminSidebar = memo(({ setShowSidebar }) => {
     }, [setShowSidebar]);
 
     const sidebarLinks = [
-        { path: "/admin", icon: Home, label: "Dashboard" },
+        { path: "/admin/dashboard", icon: Home, label: "Dashboard" },
         { path: "/admin/orders", icon: ShoppingCart, label: "Orders" },
         { path: "/admin/users", icon: User, label: "Users" },
         { path: "/admin/queries", icon: MailQuestionMark, label: "Queries" },
         { path: "/admin/returns", icon: Undo2, label: "Returns" },
         { path: "/admin/products", icon: StretchHorizontal, label: "Products" },
         { path: "/admin/banners", icon: Image, label: "Banners" },
-        { path: "#", icon: LogOut, label: "Logout" },
+        { path: "/admin", icon: LogOut, label: "Logout" },
     ];
 
     return (

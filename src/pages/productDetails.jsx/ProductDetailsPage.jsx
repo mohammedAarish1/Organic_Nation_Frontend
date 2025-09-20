@@ -3,9 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import AddToCartBtn from '../../components/add-to-cart-btn/AddToCartBtn';
 import ProductQty from '../../components/productQty/ProductQty';
 import { freeShippingEligibleAmt } from '../../constants';
-import { X, Heart, ChevronLeft, ChevronRight, Truck, Shield, RotateCcw, CircleCheck } from 'lucide-react';
+import { X, Heart, ChevronLeft, ChevronRight, Truck, Shield, RotateCcw, CircleCheck, CheckLine, CircleX } from 'lucide-react';
 const ProductDetailsPage = ({ product }) => {
-
 
 
   const [selectedImage, setSelectedImage] = useState(0);
@@ -323,7 +322,8 @@ const ProductDetailsPage = ({ product }) => {
                   // { label: 'Roast', value: product.details.color },
                   // { label: 'Origin', value: product.details.model },
                   // { label: 'Guarantee', value: product.details.warranty },
-                  { label: 'Stock', value: `${product.details.availability} available` }
+                  // { label: 'Stock', value: `${product.details.availability} available` }
+                  { label: 'Stock', value: product.details.availability === 0 ?  <CircleX color='red' /> : <CheckLine /> }
                 ].map((detail, index) => (
                   <motion.div
                     key={index}

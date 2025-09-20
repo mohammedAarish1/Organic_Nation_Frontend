@@ -22,7 +22,7 @@ const SingleOrder = ({
   isReturnDisabled,
   orderStatus,
 }) => {
-  const nameUrl = curOrder["name-url"];
+  const nameUrl = curOrder &&  curOrder["name-url"];
   const dispatch = useDispatch();
   const [singleOrderItem, setSingleOrderItem] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
@@ -75,9 +75,9 @@ const SingleOrder = ({
     });
   };
 
-  const isReturned = curOrder.quantity === curOrder.returnInfo.returnedQuantity;
+  const isReturned = curOrder?.quantity === curOrder?.returnInfo.returnedQuantity;
   const canReturn = !isReturned && !isReturnDisabled && orderStatus === "completed";
-  const partialReturn = curOrder.returnInfo.returnedQuantity > 0 && curOrder.returnInfo.returnedQuantity < curOrder.quantity;
+  const partialReturn = curOrder?.returnInfo.returnedQuantity > 0 && curOrder?.returnInfo.returnedQuantity < curOrder?.quantity;
 
   if (isLoading) {
     return (

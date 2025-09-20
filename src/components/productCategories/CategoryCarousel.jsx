@@ -101,7 +101,7 @@ const CategoryCarousel = () => {
                 >
                     {categoriesImages.map((item, index) => (
                         <Link
-                            to={`/shop/${item.category.toLowerCase()}`}
+                            to={`/shop/${item.categoryUrl.toLowerCase()}`}
                             key={item.name}
                             className="flex flex-col items-center flex-shrink-0 snap-center group cursor-pointer"
                         // onClick={() => {

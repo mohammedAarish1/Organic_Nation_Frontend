@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getList,
   getReturnsByStatus,
-  getTotalReturns,
 } from "../../features/admin/adminData";
 import Loader from "../../components/common/Loader";
 import StatusTabs from "../../components/common/StatusTabs";

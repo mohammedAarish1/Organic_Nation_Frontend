@@ -14,7 +14,6 @@ const AdminOrderDetails = ({ order }) => {
     const { generatingInvoice, loading } = useSelector(state => state.adminData);
 
 
-
     const handleInvoiceGeneration = (orderId) => {
         dispatch(generateInvoice(orderId))
             .unwrap()
@@ -70,7 +69,7 @@ const AdminOrderDetails = ({ order }) => {
                         <p><strong>Total:</strong> ₹ {selectedOrder.subTotal + selectedOrder.shippingFee}</p>
                         <h3 className="text-xl font-bold mt-4 mb-2">Order Items:</h3>
                         <ul>
-                            {selectedOrder.orderDetails.map((item, index) => (
+                            {selectedOrder.orderDetails[0] !== null && selectedOrder.orderDetails.map((item, index) => (
                                 <li key={item.id}>({index + 1}) -- Item: {item['name-url']} | Quantity: {item.quantity} | Weight: {item.weight} </li>
                             ))}
                         </ul>
