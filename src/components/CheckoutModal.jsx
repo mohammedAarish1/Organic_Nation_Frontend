@@ -408,8 +408,8 @@ const CheckoutModal = ({ isOpen, onClose }) => {
                 <p
                   className="text-xl font-bold bg-[var(--text-color)] bg-clip-text text-transparent"
                 >
-                  {/* ₹ {Math.round(totalCartAmount + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0))} */}
-                  ₹ {Math.round(totalCartAmount + (totalCartAmount < freeShippingEligibleAmt ? 0 : 0))}
+                  ₹ {Math.round(totalCartAmount + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0))}
+                  {/* ₹ {Math.round(totalCartAmount + (totalCartAmount < freeShippingEligibleAmt ? 0 : 0))} */}
                 </p>
               </div>
             </div>

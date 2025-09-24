@@ -9,7 +9,7 @@ import Image from "../image/Image";
 import Loader from "../common/Loader";
 import CloseButton from '../button/CloseButton';
 import { motion, AnimatePresence } from 'framer-motion';
-import {getButtonStyles} from '../../helper/helperFunctions'
+import { getButtonStyles } from '../../helper/helperFunctions'
 import { Eye, ShoppingCart, SquareChartGantt, Star, Undo } from "lucide-react";
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
@@ -22,7 +22,7 @@ const SingleOrder = ({
   isReturnDisabled,
   orderStatus,
 }) => {
-  const nameUrl = curOrder &&  curOrder["name-url"];
+  const nameUrl = curOrder && curOrder["name-url"];
   const dispatch = useDispatch();
   const [singleOrderItem, setSingleOrderItem] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
@@ -33,11 +33,14 @@ const SingleOrder = ({
 
   const getCurOrderItem = async () => {
     try {
-      setIsLoading(true);
-      const response = await axios.get(`${apiUrl}/products/organic-honey/${nameUrl}`);
-      if (response.data.product) {
-        setSingleOrderItem(response.data.product);
+      if (nameUrl) {
+        setIsLoading(true);
+        const response = await axios.get(`${apiUrl}/products/organic-honey/${nameUrl}`);
+        if (response.data.product) {
+          setSingleOrderItem(response.data.product);
+        }
       }
+
     } catch (error) {
       console.error("Error fetching order item:", error);
     } finally {
@@ -79,6 +82,9 @@ const SingleOrder = ({
   const canReturn = !isReturned && !isReturnDisabled && orderStatus === "completed";
   const partialReturn = curOrder?.returnInfo.returnedQuantity > 0 && curOrder?.returnInfo.returnedQuantity < curOrder?.quantity;
 
+
+
+
   if (isLoading) {
     return (
       <motion.div
@@ -103,7 +109,7 @@ const SingleOrder = ({
     {
       icon: Eye,
       text: "View Product",
-      action: () => {},
+      action: () => { },
       link: `/shop/all/${nameUrl}`,
       variant: "primary"
     },
@@ -148,14 +154,14 @@ const SingleOrder = ({
             <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden bg-white shadow-md">
               <Image
                 src={{
-                  sm: Array.isArray(singleOrderItem.img) 
-                    ? singleOrderItem.img.find(path => path.sm?.toLowerCase().includes("front"))?.sm 
+                  sm: Array.isArray(singleOrderItem.img)
+                    ? singleOrderItem.img.find(path => path.sm?.toLowerCase().includes("front"))?.sm
                     : null,
-                  md: Array.isArray(singleOrderItem.img) 
-                    ? singleOrderItem.img.find(path => path.md?.toLowerCase().includes("front"))?.md 
+                  md: Array.isArray(singleOrderItem.img)
+                    ? singleOrderItem.img.find(path => path.md?.toLowerCase().includes("front"))?.md
                     : null,
-                  lg: Array.isArray(singleOrderItem.img) 
-                    ? singleOrderItem.img.find(path => path.lg?.toLowerCase().includes("front"))?.lg 
+                  lg: Array.isArray(singleOrderItem.img)
+                    ? singleOrderItem.img.find(path => path.lg?.toLowerCase().includes("front"))?.lg
                     : null,
                 }}
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
@@ -164,7 +170,7 @@ const SingleOrder = ({
             </div>
             {/* Quantity Badge */}
             <div className="absolute -top-2 -right-2 bg-[var(--themeColor)] text-[var(--text-light-color)] text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
-              {curOrder.quantity}
+              {curOrder?.quantity}
             </div>
           </motion.div>
 
@@ -173,15 +179,15 @@ const SingleOrder = ({
             <h3 className="font-semibold text-[var(--text-color)] text-lg leading-tight">
               {singleOrderItem.name}
             </h3>
-            
+
             <div className="space-y-1 text-sm">
               <div className="flex items-center gap-2">
                 <span className="text-[var(--text-color)]/70">Quantity:</span>
                 <span className="font-medium text-[var(--themeColor)]">
-                  {curOrder.quantity} {curOrder.quantity > 1 ? 'Pcs' : 'Pc'}
+                  {curOrder?.quantity} {curOrder?.quantity > 1 ? 'Pcs' : 'Pc'}
                 </span>
               </div>
-              
+
               <div className="flex items-center gap-2">
                 <span className="text-[var(--text-color)]/70">Rate:</span>
                 <span className="font-bold text-[var(--accent-color)] text-base">
@@ -197,7 +203,7 @@ const SingleOrder = ({
                   className="inline-flex items-center gap-1 bg-[var(--alert-color)]/10 text-[var(--alert-color)] px-2 py-1 rounded-full text-xs font-medium"
                 >
                   <Undo className="w-3 h-3" />
-                  {curOrder.returnInfo.returnedQuantity} item(s) returned
+                  {curOrder?.returnInfo.returnedQuantity} item(s) returned
                 </motion.div>
               )}
             </div>
@@ -333,8 +339,8 @@ const SingleOrder = ({
               <div className="p-6 overflow-y-auto max-h-[50vh]">
                 <Suspense fallback={<Loader height="50px" />}>
                   <ReturnItemForm
-                    product={curOrder}
-                    returnedQuantity={curOrder.returnInfo.returnedQuantity || 0}
+                    product={curOrder && curOrder}
+                    returnedQuantity={curOrder?.returnInfo.returnedQuantity || 0}
                     paymentMethod={paymentMethod}
                     amountPaid={Math.round(
                       singleOrderItem.price -

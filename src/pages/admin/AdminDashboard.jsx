@@ -7,7 +7,7 @@ import { getResourcesCount } from '../../features/admin/adminData';
 
 const StatBox = ({ value, title, onClick }) => (
   <div
-    className="cursor-pointer flex justify-center flex-col text-white hover:scale-95 duration-300 shadow-md rounded-md p-4 lg:w-1/5 md:w-1/3 w-full h-36 hover:opacity-85 bg-gradient-to-r from-[var(--themeColor)] to-[var(--accent-color)]"
+    className="cursor-pointer flex justify-center flex-col text-white hover:scale-95 duration-300 shadow-lg rounded-md p-4 lg:w-1/5 md:w-1/3 w-full h-36 hover:opacity-85 bg-gradient-to-r from-[var(--accent-color)] to-[var(--accent-color)] shadow-orange-300"
     onClick={onClick}
   >
     <p className="text-4xl font-bold">{value}</p>

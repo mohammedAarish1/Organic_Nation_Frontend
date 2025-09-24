@@ -174,34 +174,6 @@ import { motion } from 'framer-motion';
 import { Check, Star } from 'lucide-react';
 import { LeftQuote, RightQuote } from '../../icons/SvgIcons';
 
-// Optimized Star Rating Component with consistent styling
-// const StarRating = memo(({ rating }) => {
-//   const stars = useMemo(() => {
-//     return [...Array(5)].map((_, index) => {
-//       const ratingValue = index + 1;
-//       return (
-//         <motion.div
-//           key={index}
-//           initial={{ scale: 0, rotate: 180 }}
-//           animate={{ scale: 1, rotate: 0 }}
-//           transition={{ delay: 0.1 * index, type: "spring" }}
-//         >
-//           <FaStar
-//             className="text-lg transition-all duration-300"
-//             style={{
-//               color: ratingValue <= rating ? '#9B7A2F' : '#DCD2C0',
-//               filter: ratingValue <= rating ? "drop-shadow(0 1px 2px rgba(155, 122, 47, 0.3))" : "none"
-//             }}
-//           />
-//         </motion.div>
-//       );
-//     });
-//   }, [rating]);
-
-//   return <div className="flex gap-1 items-center">{stars}</div>;
-// });
-
-
 // Optimized StarRating Component with half-star support
 const StarRating = memo(({ rating }) => {
   const stars = useMemo(() => {

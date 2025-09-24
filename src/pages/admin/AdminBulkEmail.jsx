@@ -45,7 +45,6 @@
 //     };
 
 //     const handleSubmit = async (values, { setSubmitting, resetForm, setStatus }) => {
-//         console.log('triggered')
 
 //         // setIsLoading(true);
 //         try {
@@ -62,7 +61,6 @@
 //                 }
 //             );
 
-//             console.log('response', response)
 //             //   // Replace with your API endpoint
 //             //   const response = await fetch('/api/send-bulk-email', {
 //             //     method: 'POST',

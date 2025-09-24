@@ -120,7 +120,6 @@ const ProductDetails = () => {
     }
   }
 
-
   useEffect(() => {
     getProductDetail(nameUrl)
 
@@ -175,11 +174,11 @@ const ProductDetails = () => {
         {product?.productInfo && (
           <Suspense fallback={<Loader height='300px' />}>
             <section className='pt-20'>
-              <ProductAdditionalInfo data={product.productInfo} />
+              <ProductAdditionalInfo productInfo={product?.productInfo} />
             </section>
           </Suspense>
         )}
-        {/* <ProductAdditionalInfo productInfo={pData} /> */}
+        {/* <ProductAdditionalInfo productInfo={product?.productInfo} /> */}
 
         {/* =============== you may also like section ========== */}
         <Suspense fallback={<Loader height='300px' />}>

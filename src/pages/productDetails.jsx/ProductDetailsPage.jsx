@@ -4,6 +4,7 @@ import AddToCartBtn from '../../components/add-to-cart-btn/AddToCartBtn';
 import ProductQty from '../../components/productQty/ProductQty';
 import { freeShippingEligibleAmt } from '../../constants';
 import { X, Heart, ChevronLeft, ChevronRight, Truck, Shield, RotateCcw, CircleCheck, CheckLine, CircleX } from 'lucide-react';
+import { Star } from '../../icons/SvgIcons';
 const ProductDetailsPage = ({ product }) => {
 
 
@@ -227,9 +228,10 @@ const ProductDetailsPage = ({ product }) => {
                       animate={{ scale: 1, rotate: 0 }}
                       transition={{ delay: 0.1 * i, type: "spring" }}
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill={i < Math.floor(product.averageRating) ? '#9B7A2F' : '#DCD2C0'} className="bi bi-star-fill" viewBox="0 0 16 16">
+                      <Star i={i} rating={product.averageRating} />
+                      {/* <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill={i < Math.floor(product.averageRating) ? '#9B7A2F' : '#DCD2C0'} className="bi bi-star-fill" viewBox="0 0 16 16">
                         <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                      </svg>
+                      </svg> */}
 
                     </motion.div>
                   ))}
@@ -323,7 +325,7 @@ const ProductDetailsPage = ({ product }) => {
                   // { label: 'Origin', value: product.details.model },
                   // { label: 'Guarantee', value: product.details.warranty },
                   // { label: 'Stock', value: `${product.details.availability} available` }
-                  { label: 'Stock', value: product.details.availability === 0 ?  <CircleX color='red' /> : <CheckLine /> }
+                  { label: 'Stock', value: product.details.availability === 0 ? <CircleX color='red' /> : <CheckLine /> }
                 ].map((detail, index) => (
                   <motion.div
                     key={index}
@@ -350,7 +352,7 @@ const ProductDetailsPage = ({ product }) => {
 
             {/* Features */}
 
-            {product.productInfo?.productInfo[1].content.length > 0 && (
+            {product.productInfo?.features.length > 0 && (
               <motion.div
                 className="p-6 rounded-2xl shadow-lg"
                 style={{ backgroundColor: '#FFFFFF' }}
@@ -363,7 +365,7 @@ const ProductDetailsPage = ({ product }) => {
                   Premium Features
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {product.productInfo.productInfo[1].content.map((feature, index) => (
+                  {product.productInfo.features.map((feature, index) => (
                     <motion.div
                       key={index}
                       className="flex items-center space-x-3 p-3 rounded-xl transition-all duration-300"
@@ -439,19 +441,6 @@ const ProductDetailsPage = ({ product }) => {
 
               <div className="flex flex-col sm:flex-row gap-4">
                 <AddToCartBtn item={product.details} qty={qty} />
-                {/* <motion.button
-                  className="flex-1 py-4 px-8 rounded-2xl font-bold text-lg text-white flex items-center justify-center space-x-3 shadow-lg transition-all duration-300"
-                  style={{ backgroundColor: '#7A2E1D' }}
-                  whileHover={{
-                    scale: 1.02,
-                    backgroundColor: '#9B7A2F',
-                    boxShadow: "0 10px 30px rgba(122, 46, 29, 0.3)"
-                  }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <FaShoppingCart />
-                  <span>Add to Cart</span>
-                </motion.button> */}
                 {/* <motion.button
                   className="flex-1 py-4 px-8 rounded-2xl font-bold text-lg text-white shadow-lg transition-all duration-300"
                   style={{ backgroundColor: '#9B7A2F' }}

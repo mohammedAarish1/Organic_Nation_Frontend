@@ -712,7 +712,6 @@ export const cartSlice = createSlice({
         //     state.loading = true;
         // })
         // .addCase(getDiscountProgress.fulfilled, (state, action) => {
-        //     console.log('dddd', action.payload)
         //     state.loading = false;
         //     state.discountProgress = action.payload;
         // })

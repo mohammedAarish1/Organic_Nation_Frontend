@@ -349,8 +349,8 @@ const NewCheckoutForm = ({ close }) => {
                     state: shippingInfo.state,
                 },
                 orderDetails: orderDetails,
-                // subTotal: paymentMethod === "cash_on_delivery" ? totalCartAmount + CODCharge : totalCartAmount - discountAmount,
-                subTotal: totalCartAmount,
+                subTotal: paymentMethod === "cash_on_delivery" ? totalCartAmount + CODCharge : totalCartAmount - discountAmount,
+                // subTotal: totalCartAmount,
                 taxAmount: paymentMethod === "cash_on_delivery" ? totalTax : totalTax - taxDiscount,
                 shippingFee: totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0,
                 paymentMethod: paymentMethod,
@@ -374,8 +374,8 @@ const NewCheckoutForm = ({ close }) => {
                             dispatch(
                                 initiatePayment({
                                     number: shippingInfo.phoneNumber.replace('+91', ''),
-                                    // amount: totalCartAmount - discountAmount + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0),
-                                    amount: totalCartAmount,
+                                    amount: totalCartAmount - discountAmount + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0),
+                                    // amount: totalCartAmount,
                                     merchantTransactionId: merchantTransactionId,
                                 })
                             );
@@ -474,8 +474,8 @@ const NewCheckoutForm = ({ close }) => {
                         id='placeOrderBtn'
                         isSubmitting={addingNewOrder}
                         // text={paymentMethod === 'online_payment' ? 'Proceed to Pay' : 'Place Order'}
-                        // text={paymentMethod === 'online_payment' ? `Proceed to Pay (₹${Math.round(totalCartAmount - discountAmount + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0))})` : `Place Order (₹${Math.round(totalCartAmount + CODCharge + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0))})`}
-                        text={paymentMethod === 'online_payment' ? `Place Order (₹${Math.round(totalCartAmount)})` : `Place Order (₹${Math.round(totalCartAmount)})`}
+                        text={paymentMethod === 'online_payment' ? `Place Order (₹${Math.round(totalCartAmount - discountAmount + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0))})` : `Place Order (₹${Math.round(totalCartAmount + CODCharge + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0))})`}
+                        // text={paymentMethod === 'online_payment' ? `Place Order (₹${Math.round(totalCartAmount)})` : `Place Order (₹${Math.round(totalCartAmount)})`}
                         action={handleSavedAddressCheckout}
                     />
                 </>
@@ -591,8 +591,8 @@ const NewCheckoutForm = ({ close }) => {
                                 <SubmitButton
                                     id='placeOrderBtn'
                                     isSubmitting={isSubmitting || addingNewOrder}
-                                    // text={paymentMethod === 'online_payment' ? `Proceed to Pay (₹${Math.round(totalCartAmount - discountAmount + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0))})` : `Place Order (₹${Math.round(totalCartAmount + CODCharge + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0))})`}
-                                    text={paymentMethod === 'online_payment' ? `Place Order (₹${Math.round(totalCartAmount)})` : `Place Order (₹${Math.round(totalCartAmount)})`}
+                                    text={paymentMethod === 'online_payment' ? `Place Order (₹${Math.round(totalCartAmount - discountAmount + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0))})` : `Place Order (₹${Math.round(totalCartAmount + CODCharge + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0))})`}
+                                    // text={paymentMethod === 'online_payment' ? `Place Order (₹${Math.round(totalCartAmount)})` : `Place Order (₹${Math.round(totalCartAmount)})`}
                                 />
                             </Form>
                         )}
