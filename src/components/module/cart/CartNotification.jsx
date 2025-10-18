@@ -318,7 +318,7 @@ const CartNotification = () => {
                   </div>
                   {discountProgress.progressInfo?.nextThreshold && (
                     <div className="flex justify-between items-center mb-1 text-[var(--themeColor)] font-bold">
-                      <span className="text-sm opacity-75">You are just ₹{Math.round(discountProgress.progressInfo?.nextThreshold - (discountProgress.progressInfo?.nextThreshold === 1999 ? discountProgress.progressInfo.currentCartAmount : discountProgress.progressInfo?.currentEligibleAmount))} away from FLAT {discountProgress.progressInfo?.nextDiscountType} discount:</span>
+                      <span className="text-sm opacity-75">You are just ₹{Math.round(discountProgress.progressInfo?.nextThreshold - (discountProgress.progressInfo?.nextThreshold === 1999 ? discountProgress.progressInfo.currentCartAmount : discountProgress.progressInfo?.currentEligibleAmount))} away from FLAT {discountProgress.progressInfo?.nextDiscountType}:</span>
                     </div>
                   )}
 

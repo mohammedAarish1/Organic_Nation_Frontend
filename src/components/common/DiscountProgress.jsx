@@ -399,7 +399,7 @@ const DiscountProgress = () => {
                       </div>
                       {isDiscountActive && (
                         <div className="text-xs text-green-500 mt-1">
-                          You saved ₹{discountAmount}
+                          You saved ₹{Math.round(discountAmount)}
                         </div>
                       )}
                     </div>
