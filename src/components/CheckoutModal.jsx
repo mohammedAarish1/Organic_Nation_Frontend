@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useDispatch, useSelector } from "react-redux";
 // import CouponCodeList from './couponCodeList/CouponCodeList';
-import OtpLogin from '../pages/login-signup/OtpLogin';
-import OtpVerification from './auth/OtpVerification';
-import { getAllCartItems, mergeCart } from '../features/cart/cart';
+import OtpLogin from "../pages/login-signup/OtpLogin";
+import OtpVerification from "./auth/OtpVerification";
+import { getAllCartItems, mergeCart } from "../features/cart/cart";
 // import { verifyOTP } from '../features/auth/auth';
 // import { toast } from 'react-toastify';
-import NewCheckoutForm from './checkout/NewCheckoutForm';
-import { freeShippingEligibleAmt } from '../constants';
-import { formatPrice } from '../helper/helperFunctions';
-import FamilyCoupon from './couponCodeList/FamilyCoupon';
+import NewCheckoutForm from "./checkout/NewCheckoutForm";
+import { freeShippingEligibleAmt } from "../constants";
+import { formatPrice } from "../helper/helperFunctions";
+import FamilyCoupon from "./couponCodeList/FamilyCoupon";
 
-import {X, ShoppingCart ,ChevronDown } from 'lucide-react';
+import { X, ShoppingCart, ChevronDown } from "lucide-react";
 // Animation variants
 const fadeIn = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: 0.3 } }
+  visible: { opacity: 1, transition: { duration: 0.3 } },
 };
 
 // const slideUp = {
@@ -50,7 +50,7 @@ const Accordion = ({ title, icon, isOpen, setIsOpen, children }) => {
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.3 }}
         >
-          <ChevronDown  />
+          <ChevronDown />
         </motion.div>
       </button>
 
@@ -66,18 +66,18 @@ const Accordion = ({ title, icon, isOpen, setIsOpen, children }) => {
                   type: "spring",
                   stiffness: 500,
                   damping: 30,
-                  duration: 0.4
+                  duration: 0.4,
                 },
-                opacity: { duration: 0.25 }
-              }
+                opacity: { duration: 0.25 },
+              },
             }}
             exit={{
               opacity: 0,
               height: 0,
               transition: {
                 height: { duration: 0.3 },
-                opacity: { duration: 0.25 }
-              }
+                opacity: { duration: 0.25 },
+              },
             }}
             className="mt-3 bg-gray-50 rounded-lg overflow-hidden"
           >
@@ -87,7 +87,7 @@ const Accordion = ({ title, icon, isOpen, setIsOpen, children }) => {
               animate={{
                 opacity: 1,
                 y: 0,
-                transition: { delay: 0.1, duration: 0.2 }
+                transition: { delay: 0.1, duration: 0.2 },
               }}
               exit={{ opacity: 0, transition: { duration: 0.15 } }}
             >
@@ -109,18 +109,31 @@ const CartItem = ({ item, index }) => {
       animate={{
         opacity: 1,
         x: 0,
-        transition: { delay: 0.05 * index, duration: 0.3 }
+        transition: { delay: 0.05 * index, duration: 0.3 },
       }}
       className="flex items-center mb-3 pb-3 border-b border-gray-200 last:border-b-0 last:mb-0 last:pb-0"
     >
-      <img src={Array.isArray(item.img) ? item.img.filter(path => path.lg.includes('front'))[0].lg : null} alt='product image' className="w-16 h-16 object-cover rounded-lg mr-3 border border-gray-100 shadow-sm" />
+      <img
+        src={
+          Array.isArray(item.img)
+            ? item.img.filter((path) => path.lg.includes("front"))[0].lg
+            : null
+        }
+        alt="product image"
+        className="w-16 h-16 object-cover rounded-lg mr-3 border border-gray-100 shadow-sm"
+      />
       <div className="flex-1">
         <h4 className="font-medium">{item.name}</h4>
         <p className="text-gray-500 text-sm">Qty: {item.quantity}</p>
       </div>
-      <p className="font-medium">₹ {Math.round((item.price - (item.price * item.discount / 100)) * item.quantity)}</p>
+      <p className="font-medium">
+        ₹{" "}
+        {Math.round(
+          (item.price - (item.price * item.discount) / 100) * item.quantity
+        )}
+      </p>
     </motion.div>
-  )
+  );
 };
 
 // Coupon Item Component
@@ -161,8 +174,6 @@ const CartItem = ({ item, index }) => {
 //     </motion.button>
 //   </motion.div>
 // );
-
-
 
 // // OTP Input component
 // const OtpInput = ({ otpInputs, handleOtpChange, handleOtpKeyDown, handleOtpPaste }) => (
@@ -254,7 +265,7 @@ const CartItem = ({ item, index }) => {
 // Main CheckoutModal Component
 const CheckoutModal = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
-  const { user } = useSelector(state => state.auth)
+  const { user } = useSelector((state) => state.auth);
   const [step, setStep] = useState(1);
   const [orderSummaryOpen, setOrderSummaryOpen] = useState(false);
   const [couponOpen, setCouponOpen] = useState(false);
@@ -263,18 +274,25 @@ const CheckoutModal = ({ isOpen, onClose }) => {
   // const [paymentMethod, setPaymentMethod] = useState('');
   const [showOtpInput, setShowOtpInput] = useState(false);
   const [appliedCoupon, setAppliedCoupon] = useState(null);
-  const [phoneNumber, setPhoneNumber] = useState(null)
+  const [phoneNumber, setPhoneNumber] = useState(null);
   // const otpInputs = Array(4).fill(0).map(() => useRef(null));
 
-  const { cartItemsList, totalCartAmount, totalTax, couponCodeApplied, discountProgress } = useSelector((state) => state.cart);
-  const { checking, shippingFee } = useSelector(state => state.delivery)
-
+  const {
+    cartItemsList,
+    totalCartAmount,
+    totalTax,
+    couponCodeApplied,
+    discountProgress,
+  } = useSelector((state) => state.cart);
+  const { checking, shippingFee } = useSelector((state) => state.delivery);
 
   const coupons = [
-    { code: 'BUY4PICKLES', description: 'Get Any Four Pickles at Flat ₹999' },
-    { code: 'FOODSBAY5YEARS', description: 'Get additional 10% off on all orders above ₹ 1299' },
+    { code: "BUY4PICKLES", description: "Get Any Four Pickles at Flat ₹999" },
+    {
+      code: "FOODSBAY5YEARS",
+      description: "Get additional 10% off on all orders above ₹ 1299",
+    },
   ];
-
 
   const getDataAfterLogin = () => {
     // dispatch(getAllOrders())
@@ -284,9 +302,8 @@ const CheckoutModal = ({ isOpen, onClose }) => {
         items: localCart,
         totalCartAmount: totalCartAmount,
         totalTaxes: totalTax,
-        couponCodeApplied: couponCodeApplied
-      }
-
+        couponCodeApplied: couponCodeApplied,
+      };
 
       dispatch(mergeCart({ cart })).then(() => {
         // localStorage.removeItem("cart");
@@ -303,10 +320,7 @@ const CheckoutModal = ({ isOpen, onClose }) => {
     //  else {
     //   navigate("/");
     // }
-
   };
-
-
 
   // Add this in the CheckoutModal component
   useEffect(() => {
@@ -331,7 +345,7 @@ const CheckoutModal = ({ isOpen, onClose }) => {
         initial={{ opacity: 0 }}
         animate={{
           opacity: 1,
-          transition: { delay: 0.2, duration: 0.3 }
+          transition: { delay: 0.2, duration: 0.3 },
         }}
       >
         <div className="flex justify-between mb-1 text-sm">
@@ -344,16 +358,23 @@ const CheckoutModal = ({ isOpen, onClose }) => {
         </div>
         <div className="flex justify-between mb-1 text-sm">
           <span>Shipping</span>
-          <span>₹ {totalCartAmount < freeShippingEligibleAmt ? shippingFee : "FREE"}</span>
+          <span>
+            ₹ {totalCartAmount < freeShippingEligibleAmt ? shippingFee : "FREE"}
+          </span>
         </div>
         <div className="flex justify-between font-bold text-lg mt-2">
           <span>Total</span>
-          <span>₹ {Math.round(totalCartAmount + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0))}</span>
+          <span>
+            ₹{" "}
+            {Math.round(
+              totalCartAmount +
+                (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0)
+            )}
+          </span>
         </div>
       </motion.div>
     </>
   );
-
 
   return (
     <AnimatePresence>
@@ -372,10 +393,11 @@ const CheckoutModal = ({ isOpen, onClose }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-          // onClick={onClose}
+            // onClick={onClose}
           />
 
           <motion.div
+            id="checkout-popup"
             className="bg-white rounded-xl shadow-2xl w-full max-w-md md:max-w-lg relative z-10"
             initial={{ scale: 0.8, y: 50, opacity: 0 }}
             animate={{ scale: 1, y: 0, opacity: 1 }}
@@ -384,7 +406,7 @@ const CheckoutModal = ({ isOpen, onClose }) => {
               type: "spring",
               stiffness: 400,
               damping: 30,
-              mass: 1
+              mass: 1,
             }}
           >
             {/* Close button */}
@@ -392,7 +414,10 @@ const CheckoutModal = ({ isOpen, onClose }) => {
               <motion.button
                 onClick={onClose}
                 className="text-gray-500 hover:text-gray-700 transition-colors hover:bg-gray-100 p-2 rounded-full"
-                whileHover={{ scale: 1.1, backgroundColor: "rgba(239, 246, 255, 0.6)" }}
+                whileHover={{
+                  scale: 1.1,
+                  backgroundColor: "rgba(239, 246, 255, 0.6)",
+                }}
                 whileTap={{ scale: 0.95 }}
               >
                 <X size={20} />
@@ -402,13 +427,21 @@ const CheckoutModal = ({ isOpen, onClose }) => {
             {/* Header */}
             <div className="flex justify-between items-center px-6 pb-4 border-b mb-4">
               <div className="flex items-center">
-                <img src='https://organicnationmages.s3.ap-south-1.amazonaws.com/logo/logo.png' alt="Company Logo" className="h-10" />
+                <img
+                  src="https://organicnationmages.s3.ap-south-1.amazonaws.com/logo/logo.png"
+                  alt="Company Logo"
+                  className="h-10"
+                />
               </div>
               <div className="text-right">
-                <p
-                  className="text-xl font-bold bg-[var(--text-color)] bg-clip-text text-transparent"
-                >
-                  ₹ {Math.round(totalCartAmount + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0))}
+                <p className="text-xl font-bold bg-[var(--text-color)] bg-clip-text text-transparent">
+                  ₹{" "}
+                  {Math.round(
+                    totalCartAmount +
+                      (totalCartAmount < freeShippingEligibleAmt
+                        ? shippingFee
+                        : 0)
+                  )}
                   {/* ₹ {Math.round(totalCartAmount + (totalCartAmount < freeShippingEligibleAmt ? 0 : 0))} */}
                 </p>
               </div>
@@ -417,9 +450,7 @@ const CheckoutModal = ({ isOpen, onClose }) => {
             {/* Body */}
             <div className="px-6 pb-6 max-h-[70vh] overflow-y-auto">
               {/* ======================================== Order Summary  ======================================= */}
-              {user && (
-                <FamilyCoupon />
-              )}
+              {user && <FamilyCoupon />}
 
               <Accordion
                 title="Order Summary"
@@ -457,7 +488,11 @@ const CheckoutModal = ({ isOpen, onClose }) => {
                     exit="hidden"
                   >
                     {/* {renderPhoneForm()} */}
-                    <OtpLogin isCheckout={true} setShowOtpInput={setShowOtpInput} setPhoneNumber={setPhoneNumber} />
+                    <OtpLogin
+                      isCheckout={true}
+                      setShowOtpInput={setShowOtpInput}
+                      setPhoneNumber={setPhoneNumber}
+                    />
                   </motion.div>
                 )}
 
@@ -470,7 +505,11 @@ const CheckoutModal = ({ isOpen, onClose }) => {
                     exit="hidden"
                   >
                     {/* {renderOtpVerification()} */}
-                    <OtpVerification phoneNumber={phoneNumber} showOtpInput={showOtpInput} getDataAfterLogin={getDataAfterLogin} />
+                    <OtpVerification
+                      phoneNumber={phoneNumber}
+                      showOtpInput={showOtpInput}
+                      getDataAfterLogin={getDataAfterLogin}
+                    />
                   </motion.div>
                 )}
 

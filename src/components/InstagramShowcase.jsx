@@ -76,6 +76,7 @@ const InstagramEmbed = React.memo(({ postUrl, className = "" }) => {
 
 const InstagramShowcase = () => {
   const instagramPosts = [
+    "https://www.instagram.com/p/DQMfzWfAU-f/",
     "https://www.instagram.com/p/DO83Mi2jbMC/",
     "https://www.instagram.com/p/DOd5misDvLS/",
     "https://www.instagram.com/p/DNfvmQQNVIA/",

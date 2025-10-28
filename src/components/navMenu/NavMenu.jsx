@@ -498,6 +498,7 @@ const NavMenu = () => {
                         exit="exit"
                     >
                         <motion.div
+                        id='mobile-menu'
                             className="absolute left-0 top-0 h-full w-[300px] bg-gradient-to-br from-[var(--background-color)] to-[var(--neutral-color)] rounded-r-3xl overflow-hidden"
                             onClick={e => e.stopPropagation()}
                             variants={sidebarVariants}

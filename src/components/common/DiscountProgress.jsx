@@ -1,23 +1,39 @@
-import  { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { formatPrice } from '../../helper/helperFunctions';
-import confetti from 'canvas-confetti';
-import { ChevronDown, Flame, Gift, GripVertical, Star, Tags, Trophy, X } from 'lucide-react';
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { formatPrice } from "../../helper/helperFunctions";
+import confetti from "canvas-confetti";
+import {
+  ChevronDown,
+  Flame,
+  Gift,
+  GripVertical,
+  Star,
+  Tags,
+  Trophy,
+  X,
+} from "lucide-react";
 
 // Constants
 const DISCOUNT_TIERS = [
-  { threshold: 199, discount: '10% OFF', type: '10%' },
-  { threshold: 499, discount: '20% OFF', type: '20%' },
-  { threshold: 1999, discount: '30% OFF', type: '30%' }
+  { threshold: 199, discount: "10% OFF", type: "10%" },
+  { threshold: 499, discount: "20% OFF", type: "20%" },
+  { threshold: 1999, discount: "30% OFF", type: "30%" },
 ];
 
-const HIDDEN_PAGES = ['/checkout', '/blogs', '/about', '/contact', '/login', '/register'];
-const ELIGIBLE_ITEMS = ['Pickles', 'Honey', 'Chutney', 'Jam', 'Oats', 'Chaap'];
+const HIDDEN_PAGES = [
+  "/checkout",
+  "/blogs",
+  "/about",
+  "/contact",
+  "/login",
+  "/register",
+];
+const ELIGIBLE_ITEMS = ["Pickles", "Honey", "Chutney", "Jam", "Oats", "Chaap"];
 
 const DiscountProgress = () => {
-  const { couponCodeApplied } = useSelector(state => state.cart)
+  const { couponCodeApplied } = useSelector((state) => state.cart);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [isDragging, setIsDragging] = useState(false);
@@ -28,50 +44,53 @@ const DiscountProgress = () => {
   const componentRef = useRef(null);
   const location = useLocation();
 
-  const { discountProgress, totalCartItems, totalCartAmount } = useSelector(state => state.cart);
+  const { discountProgress, totalCartItems, totalCartAmount } = useSelector(
+    (state) => state.cart
+  );
 
   // Memoized calculations
   const progressData = useMemo(() => {
     if (!discountProgress?.progressInfo) return null;
 
-    const { currentEligibleAmount, currentCartAmount } = discountProgress.progressInfo;
+    const { currentEligibleAmount, currentCartAmount } =
+      discountProgress.progressInfo;
     const { discountAmount, discountType, currentDiscount } = discountProgress;
 
     let progressPercentage = 0;
     let currentAmount = 0;
     let targetAmount = 0;
-    let nextDiscount = '';
+    let nextDiscount = "";
     let remainingAmount = 0;
-    let currentTier = '';
+    let currentTier = "";
 
     if (currentCartAmount >= 1999) {
       progressPercentage = 100;
       currentAmount = currentCartAmount;
       targetAmount = 1999;
-      nextDiscount = '30% OFF';
+      nextDiscount = "30% OFF";
       remainingAmount = 0;
-      currentTier = '30% OFF';
+      currentTier = "30% OFF";
     } else if (currentEligibleAmount >= 499) {
       progressPercentage = Math.min((currentCartAmount / 1999) * 100, 100);
       currentAmount = currentCartAmount;
       targetAmount = 1999;
-      nextDiscount = '30% OFF';
+      nextDiscount = "30% OFF";
       remainingAmount = 1999 - currentCartAmount;
-      currentTier = '20% OFF';
+      currentTier = "20% OFF";
     } else if (currentEligibleAmount >= 199) {
       progressPercentage = Math.min((currentEligibleAmount / 499) * 100, 100);
       currentAmount = currentEligibleAmount;
       targetAmount = 499;
-      nextDiscount = '20% OFF';
+      nextDiscount = "20% OFF";
       remainingAmount = 499 - currentEligibleAmount;
-      currentTier = '10% OFF';
+      currentTier = "10% OFF";
     } else {
       progressPercentage = Math.min((currentEligibleAmount / 199) * 100, 100);
       currentAmount = currentEligibleAmount;
       targetAmount = 199;
-      nextDiscount = '10% OFF';
+      nextDiscount = "10% OFF";
       remainingAmount = 199 - currentEligibleAmount;
-      currentTier = 'None';
+      currentTier = "None";
     }
 
     return {
@@ -83,16 +102,16 @@ const DiscountProgress = () => {
       currentTier,
       discountAmount,
       discountType,
-      isDiscountActive: currentDiscount !== '0%',
+      isDiscountActive: currentDiscount !== "0%",
       currentEligibleAmount,
-      currentCartAmount
+      currentCartAmount,
     };
   }, [discountProgress]);
 
   // Check if should show component
   const shouldShow = useMemo(() => {
     const pathname = location.pathname;
-    const isHiddenPage = HIDDEN_PAGES.some(page => pathname.includes(page));
+    const isHiddenPage = HIDDEN_PAGES.some((page) => pathname.includes(page));
     return totalCartItems > 0 && !isHiddenPage && isVisible;
   }, [totalCartItems, location.pathname, isVisible]);
 
@@ -114,14 +133,17 @@ const DiscountProgress = () => {
         spread: 360,
         ticks: 50,
         origin: { x: Math.random() * 0.4 + 0.3, y: Math.random() - 0.2 },
-        colors: ['#7A2E1D', '#9B7A2F', '#6B8E23', '#D87C45']
+        colors: ["#7A2E1D", "#9B7A2F", "#6B8E23", "#D87C45"],
       });
     }, 200);
   }, []);
 
   // Effects
   useEffect(() => {
-    if (progressData?.discountAmount > lastDiscountAmount && lastDiscountAmount > 0) {
+    if (
+      progressData?.discountAmount > lastDiscountAmount &&
+      lastDiscountAmount > 0
+    ) {
       triggerCelebration();
     }
     setLastDiscountAmount(progressData?.discountAmount || 0);
@@ -134,39 +156,43 @@ const DiscountProgress = () => {
   }, [totalCartItems]);
   // Drag handlers
   const handleDragStart = useCallback((e) => {
-    const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
-    const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+    const clientX = e.type === "touchstart" ? e.touches[0].clientX : e.clientX;
+    const clientY = e.type === "touchstart" ? e.touches[0].clientY : e.clientY;
 
-    if (e.target.closest('.drag-handle')) {
+    if (e.target.closest(".drag-handle")) {
       setIsDragging(true);
       const rect = componentRef.current.getBoundingClientRect();
       setDragOffset({
         x: clientX - rect.left,
-        y: clientY - rect.top
+        y: clientY - rect.top,
       });
       e.preventDefault();
     }
   }, []);
 
-  const handleDragMove = useCallback((e) => {
-    if (!isDragging) return;
+  const handleDragMove = useCallback(
+    (e) => {
+      if (!isDragging) return;
 
-    const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
-    const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+      const clientX = e.type === "touchmove" ? e.touches[0].clientX : e.clientX;
+      const clientY = e.type === "touchmove" ? e.touches[0].clientY : e.clientY;
 
-    const newX = clientX - dragOffset.x;
-    const newY = clientY - dragOffset.y;
+      const newX = clientX - dragOffset.x;
+      const newY = clientY - dragOffset.y;
 
-    const maxX = window.innerWidth - (componentRef.current?.offsetWidth || 0);
-    const maxY = window.innerHeight - (componentRef.current?.offsetHeight || 0);
+      const maxX = window.innerWidth - (componentRef.current?.offsetWidth || 0);
+      const maxY =
+        window.innerHeight - (componentRef.current?.offsetHeight || 0);
 
-    setPosition({
-      x: Math.max(0, Math.min(newX, maxX)),
-      y: Math.max(0, Math.min(newY, maxY))
-    });
+      setPosition({
+        x: Math.max(0, Math.min(newX, maxX)),
+        y: Math.max(0, Math.min(newY, maxY)),
+      });
 
-    e.preventDefault();
-  }, [isDragging, dragOffset]);
+      e.preventDefault();
+    },
+    [isDragging, dragOffset]
+  );
 
   const handleDragEnd = useCallback(() => {
     setIsDragging(false);
@@ -176,10 +202,10 @@ const DiscountProgress = () => {
     if (!isDragging) return;
 
     const events = [
-      ['mousemove', handleDragMove],
-      ['mouseup', handleDragEnd],
-      ['touchmove', handleDragMove, { passive: false }],
-      ['touchend', handleDragEnd]
+      ["mousemove", handleDragMove],
+      ["mouseup", handleDragEnd],
+      ["touchmove", handleDragMove, { passive: false }],
+      ["touchend", handleDragEnd],
     ];
 
     events.forEach(([event, handler, options]) => {
@@ -205,40 +231,41 @@ const DiscountProgress = () => {
     discountType,
     isDiscountActive,
     currentEligibleAmount,
-    currentCartAmount
+    currentCartAmount,
   } = progressData;
 
-  const positionStyles = isDragging || position.x !== 0 || position.y !== 0
-    ? {
-      position: 'fixed',
-      left: `${position.x}px`,
-      top: `${position.y}px`,
-      zIndex: 9999,
-      maxWidth: '320px',
-      width: '90vw'
-    }
-    : {
-      position: 'fixed',
-      top: '64px',
-      left: '8px',
-      right: '8px',
-      zIndex: 40,
-      margin: '0 auto',
-      maxWidth: '400px'
-    };
+  const positionStyles =
+    isDragging || position.x !== 0 || position.y !== 0
+      ? {
+          position: "fixed",
+          left: `${position.x}px`,
+          top: `${position.y}px`,
+          zIndex: 9999,
+          maxWidth: "320px",
+          width: "90vw",
+        }
+      : {
+          position: "fixed",
+          top: "64px",
+          left: "8px",
+          right: "8px",
+          zIndex: 40,
+          margin: "0 auto",
+          maxWidth: "400px",
+        };
   return (
     <motion.div
+      id="discount-progress-popup"
       ref={componentRef}
       initial={{ opacity: 0, y: -20, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: -20, scale: 0.95 }}
-      className={`${isDragging ? 'cursor-grabbing' : ''} touch-none`}
+      className={`${isDragging ? "cursor-grabbing" : ""} touch-none`}
       style={positionStyles}
       onMouseDown={handleDragStart}
       onTouchStart={handleDragStart}
     >
       <div className="bg-white rounded-2xl shadow-2xl overflow-hidden relative backdrop-blur-sm border border-white/20">
-
         {/* Compact Header */}
         <div className="flex items-center justify-between px-3 py-1 bg-gradient-to-r from-amber-600 via-amber-700 to-orange-600 text-white relative overflow-hidden">
           {/* Background Pattern */}
@@ -265,7 +292,9 @@ const DiscountProgress = () => {
                   transition={{ type: "spring", stiffness: 200 }}
                 >
                   <Flame size={22} className="text-orange-300 animate-pulse" />
-                  <span className="truncate">₹{Math.round(discountAmount)} Saved!</span>
+                  <span className="truncate">
+                    ₹{Math.round(discountAmount)} Saved!
+                  </span>
                 </motion.span>
               ) : (
                 <span className="truncate flex items-center gap-2">
@@ -275,7 +304,6 @@ const DiscountProgress = () => {
               )}
             </div>
           </div>
-
 
           <div className="flex items-center gap-2 relative z-10">
             <motion.button
@@ -326,7 +354,11 @@ const DiscountProgress = () => {
                 >
                   {remainingAmount > 0 ? (
                     <>
-                      You are Just <span className="text-[var(--themeColor)] text-lg font-bold">₹{Math.round(remainingAmount)}</span> away from FLAT{' '}
+                      You are Just{" "}
+                      <span className="text-[var(--themeColor)] text-lg font-bold">
+                        ₹{Math.round(remainingAmount)}
+                      </span>{" "}
+                      away from FLAT{" "}
                       <span className=" text-[var(--themeColor)] font-bold py-1 text-lg rounded-md">
                         {nextDiscount}
                       </span>
@@ -352,18 +384,19 @@ const DiscountProgress = () => {
           {isExpanded && (
             <motion.div
               initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
+              animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
               className="border-t border-gray-100"
             >
               <div className="p-4 bg-gradient-to-br from-gray-50 to-white space-y-4">
-
                 {/* Progress Bar */}
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
                     <span className="font-medium text-gray-700">Progress</span>
-                    <span className="text-amber-600 font-bold">{Math.round(progressPercentage)}%</span>
+                    <span className="text-amber-600 font-bold">
+                      {Math.round(progressPercentage)}%
+                    </span>
                   </div>
 
                   <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
@@ -387,15 +420,23 @@ const DiscountProgress = () => {
                 <div className="bg-white p-2 rounded-xl border border-gray-100 shadow-sm">
                   <div className="flex justify-between items-start mb-3">
                     <div>
-                      <h3 className="font-semibold text-gray-800 mb-1">Current Status</h3>
+                      <h3 className="font-semibold text-gray-800 mb-1">
+                        Current Status
+                      </h3>
                       <p className="text-sm text-gray-600">
-                        {totalCartItems} items • ₹{formatPrice(totalCartAmount)} total
+                        {totalCartItems} items • ₹{formatPrice(totalCartAmount)}{" "}
+                        total
                       </p>
                     </div>
                     <div className="text-right">
-                      <div className={`text-sm font-bold ${isDiscountActive ? 'text-green-600' : 'text-gray-500'
-                        }`}>
-                        {isDiscountActive ? `${discountType} Applied` : 'No Discount Yet'}
+                      <div
+                        className={`text-sm font-bold ${
+                          isDiscountActive ? "text-green-600" : "text-gray-500"
+                        }`}
+                      >
+                        {isDiscountActive
+                          ? `${discountType} Applied`
+                          : "No Discount Yet"}
                       </div>
                       {isDiscountActive && (
                         <div className="text-xs text-green-500 mt-1">
@@ -408,30 +449,41 @@ const DiscountProgress = () => {
 
                 {/* Discount Tiers */}
                 <div className="space-y-3">
-                  <h3 className="font-semibold text-gray-800">Discount Tiers</h3>
+                  <h3 className="font-semibold text-gray-800">
+                    Discount Tiers
+                  </h3>
                   <div className="grid grid-cols-3 gap-2">
                     {DISCOUNT_TIERS.map((tier, index) => {
-                      const isUnlocked = (tier.threshold === 1999 ? currentCartAmount : currentEligibleAmount) >= tier.threshold;
+                      const isUnlocked =
+                        (tier.threshold === 1999
+                          ? currentCartAmount
+                          : currentEligibleAmount) >= tier.threshold;
 
                       return (
                         <motion.div
                           key={index}
-                          className={`text-center p-1 rounded-xl border-2 transition-all duration-200 ${isUnlocked
-                            ? 'border-green-400 bg-green-50 shadow-md'
-                            : 'border-gray-200 bg-gray-50 hover:border-gray-300'
-                            }`}
+                          className={`text-center p-1 rounded-xl border-2 transition-all duration-200 ${
+                            isUnlocked
+                              ? "border-green-400 bg-green-50 shadow-md"
+                              : "border-gray-200 bg-gray-50 hover:border-gray-300"
+                          }`}
                           whileHover={{ scale: 1.02 }}
                           animate={isUnlocked ? { scale: [1, 1.05, 1] } : {}}
                           transition={{ duration: 0.3 }}
                         >
-                          <div className={`font-bold text-sm ${isUnlocked ? 'text-green-700' : 'text-gray-600'
-                            }`}>
+                          <div
+                            className={`font-bold text-sm ${
+                              isUnlocked ? "text-green-700" : "text-gray-600"
+                            }`}
+                          >
                             {tier.discount}
                           </div>
                           <div className="text-xs text-gray-500 mt-1">
                             ₹{tier.threshold}+
                             {tier.threshold === 1999 && (
-                              <div className="text-[10px] text-gray-400">(Any Item)</div>
+                              <div className="text-[10px] text-gray-400">
+                                (Any Item)
+                              </div>
                             )}
                           </div>
                           {isUnlocked && (
