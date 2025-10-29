@@ -146,6 +146,11 @@ const Home = memo(() => {
 
             <Banner />
 
+            <div className='pt-10 px-5 flex justify-center'>
+                {/* <img src="./mobikwik-banner.jpeg" alt="" className='' /> */}
+                <img src="https://organicnationmages.s3.ap-south-1.amazonaws.com/mobiqwik_banner.png" alt="mobikwik_image"  />
+            </div>
+
             {/* <div className='max-w-2xl font-semibold mx-auto font-sans py-4 italic px-2 text-[10px] xs:text-base'>
                 <p className="text-[var(--themeColor)] text-center">
                     Refer a friend, and earn a coupon worth ₹100 when they place an order. Share the love!
