@@ -374,8 +374,8 @@ const NewCheckoutForm = ({ close }) => {
                             dispatch(
                                 initiatePayment({
                                     number: shippingInfo.phoneNumber.replace('+91', ''),
-                                    amount: totalCartAmount - discountAmount + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0),
-                                    // amount: totalCartAmount,
+                                    // amount: totalCartAmount - discountAmount + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0),
+                                    amount: totalCartAmount,
                                     merchantTransactionId: merchantTransactionId,
                                 })
                             );
