@@ -353,6 +353,7 @@ const NewCheckoutForm = ({ close }) => {
                 // subTotal: totalCartAmount,
                 taxAmount: paymentMethod === "cash_on_delivery" ? totalTax : totalTax - taxDiscount,
                 shippingFee: totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0,
+                CODCharge:paymentMethod==="cash_on_delivery"? CODCharge:0,
                 paymentMethod: paymentMethod,
                 paymentStatus: "pending",
                 merchantTransactionId: paymentMethod === "cash_on_delivery" ? '' : merchantTransactionId,
@@ -374,8 +375,8 @@ const NewCheckoutForm = ({ close }) => {
                             dispatch(
                                 initiatePayment({
                                     number: shippingInfo.phoneNumber.replace('+91', ''),
-                                    // amount: totalCartAmount - discountAmount + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0),
-                                    amount: totalCartAmount,
+                                    amount: totalCartAmount - discountAmount + (totalCartAmount < freeShippingEligibleAmt ? shippingFee : 0),
+                                    // amount: totalCartAmount,
                                     merchantTransactionId: merchantTransactionId,
                                 })
                             );

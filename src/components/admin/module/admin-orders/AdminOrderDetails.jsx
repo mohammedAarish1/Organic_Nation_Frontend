@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import  { useEffect, useRef, useState } from 'react'
 import UpdateInvoiceNo from '../../UpdateInvoiceNo'
 import { address } from '../../../../helper/helperFunctions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,8 +11,7 @@ const AdminOrderDetails = ({ order }) => {
     const modalRef = useRef();
     const [selectedOrder, setSelectedOrder] = useState(null);
 
-    const { generatingInvoice, loading } = useSelector(state => state.adminData);
-
+    const { generatingInvoice } = useSelector(state => state.adminData);
 
     const handleInvoiceGeneration = (orderId) => {
         dispatch(generateInvoice(orderId))
@@ -64,7 +63,10 @@ const AdminOrderDetails = ({ order }) => {
                         <p><strong>Payment Method:</strong> {selectedOrder.paymentMethod}</p>
                         <p><strong>Payment Status:</strong> {selectedOrder.paymentStatus}</p>
                         <p><strong>Order Status:</strong> {selectedOrder.orderStatus}</p>
-                        <p><strong>Sub Total:</strong> ₹ {selectedOrder.subTotal}</p>
+                        <p><strong>Sub Total:</strong> ₹ {selectedOrder.subTotal} {selectedOrder.CODCharge && selectedOrder.CODCharge !== 0  &&  '(COD charges included)'} </p>
+                        {selectedOrder.CODCharge && selectedOrder.CODCharge !== 0 && (
+                            <p><strong>COD Charges:</strong> ₹ {selectedOrder.CODCharge}</p>
+                        )}
                         <p><strong>Shipping Fee:</strong> {selectedOrder.shippingFee === 0 ? 'FREE' : '₹' + selectedOrder.shippingFee}</p>
                         <p><strong>Total:</strong> ₹ {selectedOrder.subTotal + selectedOrder.shippingFee}</p>
                         <h3 className="text-xl font-bold mt-4 mb-2">Order Items:</h3>

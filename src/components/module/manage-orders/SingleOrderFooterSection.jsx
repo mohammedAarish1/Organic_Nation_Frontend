@@ -1,4 +1,3 @@
-
 // const SingleOrderFooterSection = ({ order, onCancelOrder, isActive }) => {
 //     const calculateTotal = () => order?.orderDetails.reduce(
 //       (total, item) => total + item.unitPrice * item.quantity,
@@ -63,34 +62,38 @@
 
 //   export default SingleOrderFooterSection;
 
-
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 // React Icons
-import { BadgeCheck, CircleX } from 'lucide-react';
-
+import { BadgeCheck, CircleX } from "lucide-react";
 
 // Enhanced SingleOrderFooterSection Component
 const SingleOrderFooterSection = ({ order, onCancelOrder, isActive }) => {
-  const calculateTotal = () => order?.orderDetails.reduce(
-    (total, item) => total + item?.unitPrice * item?.quantity,
-    0
-  );
+  const calculateTotal = () =>
+    order?.orderDetails.reduce(
+      (total, item) => total + item?.unitPrice * item?.quantity,
+      0
+    );
 
   const total = calculateTotal();
-  const discount = Math.round(total - order.subTotal);
+  const CODCharge = order?.CODCharge ? order?.CODCharge : 0;
+  const discount = Math.round(total + CODCharge - order.subTotal);
   const finalAmount = order?.subTotal + order?.shippingFee;
 
   const priceBreakdown = [
     { label: "Subtotal", value: `₹${total}`, type: "regular" },
-    { label: "Discount", value: `₹${discount}`, type: "discount" },
+    { label: "COD Charges(+)", value: `₹${CODCharge}`, type: "codCharge" },
+    { label: "Discount(-)", value: `₹${discount}`, type: "discount" },
     { label: "Shipping Fee", value: `₹${order?.shippingFee}`, type: "regular" },
   ];
+
+  const filteredPriceBreakdown = priceBreakdown.filter(item =>  !(item.type === "codCharge" && (item.value === "₹0" || !CODCharge))
+);
 
   return (
     <div className="border-t border-[var(--neutral-color)]/20">
       {/* Price Breakdown */}
       <div className="p-6 space-y-3">
-        {priceBreakdown.map((item, index) => (
+        {filteredPriceBreakdown.map((item, index) => (
           <motion.div
             key={item.label}
             initial={{ opacity: 0, x: -20 }}
@@ -99,8 +102,15 @@ const SingleOrderFooterSection = ({ order, onCancelOrder, isActive }) => {
             className="flex justify-between items-center text-sm"
           >
             <span className="text-[var(--text-color)]/70">{item.label}:</span>
-            <span className={`font-medium ${item.type === 'discount' ? 'text-[var(--secondary-color)]' : 'text-[var(--text-color)]'}`}>
-              {item.type === 'discount' && discount > 0 && '-'}{item.value}
+            <span
+              className={`font-medium ${
+                item.type === "discount"
+                  ? "text-[var(--secondary-color)]"
+                  : "text-[var(--text-color)]"
+              }`}
+            >
+              {item.type === "discount" && discount > 0 && "-"}
+              {item.value}
             </span>
           </motion.div>
         ))}
@@ -123,22 +133,23 @@ const SingleOrderFooterSection = ({ order, onCancelOrder, isActive }) => {
           animate={{ opacity: 1, y: 0 }}
           className="flex justify-between items-center pt-3 border-t border-[var(--neutral-color)]/20"
         >
-          <span className="font-bold text-[var(--text-color)] text-lg">Total Amount:</span>
-          <span className="font-bold text-[var(--themeColor)] text-xl">₹{Math.round(finalAmount)}</span>
+          <span className="font-bold text-[var(--text-color)] text-lg">
+            Total Amount:
+          </span>
+          <span className="font-bold text-[var(--themeColor)] text-xl">
+            ₹{Math.round(finalAmount)}
+          </span>
         </motion.div>
       </div>
 
       {/* Cancel Order Button */}
-      <div className='flex items-center justify-end'>
+      <div className="flex items-center justify-end">
         <motion.button
           // whileHover={isActive ? { scale: 1.02 } : {}}
           whileTap={isActive ? { scale: 0.98 } : {}}
           className={`
            pr-4 flex items-center justify-end hover:underline gap-2 py-2 font-medium
-          ${isActive
-              ? ' text-gray-600'
-              : ' text-gray-400 cursor-not-allowed'
-            }
+          ${isActive ? " text-gray-600" : " text-gray-400 cursor-not-allowed"}
         `}
           onClick={onCancelOrder}
           disabled={!isActive}

@@ -1,6 +1,4 @@
-import React, { lazy, Suspense } from 'react'
-// import bannerImg from '../../images/blog.png'
-// import BlogSection from '../../components/blog-section/BlogSection';
+import  { lazy, Suspense } from 'react'
 import SEO from '../../helper/SEO/SEO';
 
 const BlogSection = lazy(() => import('../../components/blog-section/BlogSection'))

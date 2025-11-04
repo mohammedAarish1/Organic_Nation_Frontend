@@ -4,20 +4,7 @@ import Title from '../../title/Title';
 import { CheckCircle, Leaf,ShieldCheck, Star  } from 'lucide-react';
 
 
-// const Image = memo(({ src, alt, className }) => {
-//   const [isLoaded, setIsLoaded] = useState(false);
-//   const handleLoad = useCallback(() => setIsLoaded(true), []);
 
-//   return (
-//     <img
-//       src={src}
-//       alt={alt}
-//       className={`${className} ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
-//       onLoad={handleLoad}
-//       loading="lazy"
-//     />
-//   );
-// });
 
 const BetterImagesSection = memo(({ images }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -36,30 +23,7 @@ const BetterImagesSection = memo(({ images }) => {
     return () => cancelAnimationFrame(frameId);
   }, [setVisibility]);
 
-  // Memoized animation variants
-  // const containerVariants = {
-  //   hidden: { opacity: 0 },
-  //   visible: {
-  //     opacity: 1,
-  //     transition: {
-  //       staggerChildren: 0.15,
-  //       delayChildren: 0.2
-  //     }
-  //   }
-  // };
-
-  // const itemVariants = {
-  //   hidden: { y: 20, opacity: 0 },
-  //   visible: {
-  //     y: 0,
-  //     opacity: 1,
-  //     transition: {
-  //       type: 'spring',
-  //       stiffness: 80,
-  //       damping: 14
-  //     }
-  //   }
-  // };
+ 
 
   // Memoized TrustBadge component
   const TrustBadge = memo(({ type }) => {
@@ -166,12 +130,6 @@ const BetterImagesSection = memo(({ images }) => {
           </div>
         </motion.div>
 
-
-        {/* Decorative elements */}
-        {/* <div className="hidden md:block absolute top-0 right-0 w-32 h-32 opacity-10" 
-             style={{ backgroundColor: 'var(--accent-color)', borderRadius: '50%' }}></div>
-        <div className="hidden md:block absolute bottom-0 left-0 w-24 h-24 opacity-10" 
-             style={{ backgroundColor: 'var(--themeColor)', borderRadius: '50%' }}></div> */}
       </div>
     </div>
   );

@@ -329,28 +329,28 @@ export const deleteBannerFromDatabase = createAsyncThunk(
 
 
 // experiment with images
-export const optimizeImages = createAsyncThunk(
-    'adminData/optimizeImages',
-    async (data, { rejectWithValue }) => {
-        const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
-        try {
-            const response = await axios.post(`${apiUrl}/api/admin/product/upload/optimized/images`, data, {
-                headers: {
-                    'Authorization': `Bearer ${adminToken}`,
-                    'Content-Type': 'multipart/form-data'  // Changed this line
-                }
-            });
+// export const optimizeImages = createAsyncThunk(
+//     'adminData/optimizeImages',
+//     async (data, { rejectWithValue }) => {
+//         const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
+//         try {
+//             const response = await axios.post(`${apiUrl}/api/admin/product/upload/optimized/images`, data, {
+//                 headers: {
+//                     'Authorization': `Bearer ${adminToken}`,
+//                     'Content-Type': 'multipart/form-data'  // Changed this line
+//                 }
+//             });
 
-            // return response.data;
-        } catch (error) {
-            if (error.response && error.response.data) {
-                return rejectWithValue(error.response.data);
-            } else {
-                return rejectWithValue(error.message);
-            }
-        }
-    }
-);
+//             // return response.data;
+//         } catch (error) {
+//             if (error.response && error.response.data) {
+//                 return rejectWithValue(error.response.data);
+//             } else {
+//                 return rejectWithValue(error.message);
+//             }
+//         }
+//     }
+// );
 
 
 
@@ -360,6 +360,29 @@ export const updateCurrentStatus = createAsyncThunk(
         const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
         try {
             const response = await axios.put(`${apiUrl}/api/admin/update/status`, data, {
+                headers: {
+                    'Authorization': `Bearer ${adminToken}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+            return response.data;
+        } catch (error) {
+            if (error.response && error.response.data) {
+                return rejectWithValue(error.response.data);
+            } else {
+                return rejectWithValue(error.message);
+            }
+        }
+    }
+)
+
+
+export const createCustomOrder = createAsyncThunk(
+    'adminData/createCustomOrder',
+    async (data, { rejectWithValue }) => {
+        const adminToken = JSON.parse(sessionStorage.getItem('adminToken'));
+        try {
+            const response = await axios.put(`${apiUrl}/api/admin/custom/order/create`, data, {
                 headers: {
                     'Authorization': `Bearer ${adminToken}`,
                     'Content-Type': 'application/json'
