@@ -52,7 +52,8 @@ const CompleteOrderModal = ({ isOpen, onClose, order, }) => {
           orderId: order._id,
           paymentMethod,
           subTotal: getOriginalAmt(order.subTotal) + CODCharge,
-          taxAmount: getOriginalTaxAmt(order.taxAmount)
+          taxAmount: getOriginalTaxAmt(order.taxAmount),
+          CODCharge
         }
         const response = await api.post('/api/orders/recomplete-order', payload)
         if (response.status === 200) {

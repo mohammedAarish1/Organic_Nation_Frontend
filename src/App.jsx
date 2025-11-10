@@ -36,13 +36,14 @@ import DiscountProgress from './components/common/DiscountProgress';
 import IncompleteOrder from './components/IncompleteOrder';
 import ScrollToTop from './helper/ScrollToTop'
 import MyAppRoutes from './routes/MyAppRoutes';
+import { freeShippingEligibleAmt } from './constants';
 
 // Memoized components
 
 const MainContent = memo(() => {
   return (
     <div className=" relative">
-      <Info text="Free shipping on orders over Rs. 199/- | Order over Rs. 499 and get Flat 20% OFF" fontSize='[10px]' />
+      <Info text={`Free shipping on orders over Rs. ${freeShippingEligibleAmt}/- | Order over Rs. 499 and get Flat 20% OFF`} fontSize='[10px]' />
       <ToastContainer position='top-right' autoClose={1000} />
       <Header />
       <DiscountProgress />

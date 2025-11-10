@@ -12,6 +12,7 @@ import CODEligibility from '../../components/module/cart/CODEligibility';
 import FreeShippingAlert from '../../components/module/cart/FreeShippingAlert';
 import { formatPrice } from '../../helper/helperFunctions';
 import { ArrowLeft, ShoppingBag, Trash2 } from 'lucide-react';
+import { freeShippingEligibleAmt } from '../../constants';
 
 // Demo product data
 // const demoProducts = [
@@ -317,7 +318,7 @@ const Cart = () => {
                 )}
 
                 {/* Free Shipping Alert */}
-                {totalCartAmount < 199 && totalCartAmount > 0 && (
+                {totalCartAmount < freeShippingEligibleAmt && totalCartAmount > 0 && (
                   <FreeShippingAlert totalCartAmount={totalCartAmount} />
                 )}
 

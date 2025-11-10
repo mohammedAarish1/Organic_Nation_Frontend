@@ -63,8 +63,8 @@ const AdminOrderDetails = ({ order }) => {
                         <p><strong>Payment Method:</strong> {selectedOrder.paymentMethod}</p>
                         <p><strong>Payment Status:</strong> {selectedOrder.paymentStatus}</p>
                         <p><strong>Order Status:</strong> {selectedOrder.orderStatus}</p>
-                        <p><strong>Sub Total:</strong> ₹ {selectedOrder.subTotal} {selectedOrder.CODCharge && selectedOrder.CODCharge !== 0  &&  '(COD charges included)'} </p>
-                        {selectedOrder.CODCharge && selectedOrder.CODCharge !== 0 && (
+                        <p><strong>Sub Total:</strong> ₹ {selectedOrder.subTotal} {selectedOrder.CODCharge !== undefined && selectedOrder.CODCharge !== 0  &&  '(COD charges included)'} </p>
+                        {selectedOrder.CODCharge !== undefined && selectedOrder.CODCharge !== 0 && (
                             <p><strong>COD Charges:</strong> ₹ {selectedOrder.CODCharge}</p>
                         )}
                         <p><strong>Shipping Fee:</strong> {selectedOrder.shippingFee === 0 ? 'FREE' : '₹' + selectedOrder.shippingFee}</p>

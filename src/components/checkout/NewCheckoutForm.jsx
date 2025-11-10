@@ -198,7 +198,7 @@ const PaymentMethodSelection = ({
                 {/* {totalCartAmount < 399 && totalCartAmount > 0 && (
                     <CODEligibility />
                 )} */}
-                {totalCartAmount < 199 && totalCartAmount > 0 && (
+                {totalCartAmount < freeShippingEligibleAmt && totalCartAmount > 0 && (
                     <FreeShippingAlert totalCartAmount={totalCartAmount} shippingFee={shippingFee} />
                 )}
 
