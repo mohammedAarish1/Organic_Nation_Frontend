@@ -219,7 +219,11 @@ const Cart = () => {
                               {item.discount > 0 ? (
                                 <>
                                   <span className="text-lg font-semibold ">
-                                    ₹{Math.round(item.price - (item.price * item.discount) / 100)}
+                                    {/* ₹{Math.round(item.price - (item.price * item.discount) / 100)} */}
+                                    ₹{Math.round(item.price - (item.price * (item.name.includes("Honey") &&
+                                        discountProgress.offerDiscount?.category === "Organic Honey"
+                                          ? discountProgress.offerDiscount?.discountPercentage
+                                          : item.discount)) / 100)}
                                   </span>
                                   <span className="line-through text-xs text-gray-500">
                                     ₹{item.price}
@@ -259,7 +263,11 @@ const Cart = () => {
                         {item.discount > 0 ? (
                           <>
                             <span className="text-lg font-semibold ">
-                              ₹{Math.round(item.price - (item.price * item.discount) / 100)}
+                              {/* ₹{Math.round(item.price - (item.price * item.discount) / 100)} */}
+                              ₹{Math.round(item.price - (item.price *  (item.name.includes("Honey") &&
+                                        discountProgress.offerDiscount?.category === "Organic Honey"
+                                          ? discountProgress.offerDiscount?.discountPercentage
+                                          : item.discount)) / 100)}
                             </span>
                             <span className="line-through text-xs text-gray-500">
                               ₹{item.price}
@@ -290,8 +298,11 @@ const Cart = () => {
 
                       {/* Subtotal */}
                       <div className="md:col-span-2 flex items-center justify-end md:text-right text-[#3E2C1B] font-semibold">
-                        {/* ₹{item.discount > 0 ? formatPrice(item.price - (item.price * item.discount) / 100) * item.quantity : formatPrice(item.price * item.quantity)} */}
-                        ₹{formatPrice(item.discount > 0 ? (item.price - (item.price * item.discount) / 100) * item.quantity : (item.price * item.quantity))}
+                        {/* ₹{formatPrice(item.discount > 0 ? (item.price - (item.price * item.discount) / 100) * item.quantity : (item.price * item.quantity))} */}
+                        ₹{Math.round(item.discount > 0 ? (item.price - (item.price *  (item.name.includes("Honey") &&
+                                        discountProgress.offerDiscount?.category === "Organic Honey"
+                                          ? discountProgress.offerDiscount?.discountPercentage
+                                          : item.discount)) / 100) * item.quantity : (item.price * item.quantity))}
                       </div>
                     </div>
                   </motion.div>
@@ -381,10 +392,12 @@ const Cart = () => {
                 <div className="border-t border-[#DCD2C0] pt-4 mb-6">
                   <div className="flex justify-between py-2">
                     <span className="text-[#3E2C1B]">Subtotal</span>
-                    <span className="text-[#3E2C1B] font-medium">₹{formatPrice(discountProgress.totalCartAmount)}</span>
+                    {/* <span className="text-[#3E2C1B] font-medium">₹{formatPrice(discountProgress.totalCartAmount)}</span> */}
+                    <span className="text-[#3E2C1B] font-medium">₹{formatPrice(discountProgress.totalMRP)}</span>
                   </div>
                   <div className="flex justify-between py-2">
-                    <span className="text-[#3E2C1B]">Discount Applied ({discountProgress.discountType}):</span>
+                    {/* <span className="text-[#3E2C1B]">Discount Applied ({discountProgress.discountType}):</span> */}
+                    <span className="text-[#3E2C1B]">Discount Applied (-):</span>
                     <span className="text-[#3E2C1B] font-medium">₹{formatPrice(discountProgress.discountAmount)}</span>
                   </div>
                   {/* <div className="flex justify-between py-2">

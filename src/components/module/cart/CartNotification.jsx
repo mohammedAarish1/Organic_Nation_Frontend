@@ -254,7 +254,10 @@ const CartNotification = () => {
                       >
                         {item.discount > 0 && (
                           <div className="absolute top-4 left-4 px-2 py-1 bg-red-500 text-white text-sm font-semibold rounded z-20">
-                            {item.discount}% OFF
+                            {(item.name.includes("Honey") &&
+                                        discountProgress.offerDiscount?.category === "Organic Honey"
+                                          ? discountProgress.offerDiscount?.discountPercentage
+                                          : item.discount)}% OFF
                           </div>
                         )}
 
@@ -318,9 +321,19 @@ const CartNotification = () => {
                               {formatPrice(
                                 item.discount > 0
                                   ? (item.price -
-                                      (item.price * item.discount) / 100) *
+                                      (item.price *
+                                        (item.name.includes("Honey") &&
+                                        discountProgress.offerDiscount?.category === "Organic Honey"
+                                          ? discountProgress.offerDiscount?.discountPercentage
+                                          : item.discount)) /
+                                        100) *
                                       item.quantity
                                   : item.price * item.quantity
+                              )}{" "}
+                              {item.discount > 0 && (
+                                <span className="line-through text-xs text-gray-500">
+                                  ₹{item.price * item.quantity}
+                                </span>
                               )}
                             </div>
                           </div>
@@ -362,16 +375,18 @@ const CartNotification = () => {
                   <div className="flex justify-between items-center mb-1">
                     <span className="text-sm opacity-75">Subtotal:</span>
                     <span>
-                      ₹ {discountProgress.totalCartAmount?.toFixed(2)}
+                      {/* ₹ {discountProgress.totalCartAmount?.toFixed(2)} */}₹{" "}
+                      {discountProgress.totalMRP?.toFixed(2)}
                     </span>
                   </div>
                   <div className="flex justify-between items-center mb-1">
                     <span className="text-sm opacity-75">
-                      Discount Applied ({discountProgress.discountType}):
+                      {/* Discount Applied ({discountProgress.discountType}): */}
+                      Discount Amount:
                     </span>
                     <span>₹ {discountProgress.discountAmount?.toFixed(2)}</span>
                   </div>
-                  {discountProgress.progressInfo?.nextThreshold && (
+                  {/* {discountProgress.progressInfo?.nextThreshold && (
                     <div className="flex justify-between items-center mb-1 text-[var(--themeColor)] font-bold">
                       <span className="text-sm opacity-75">
                         You are just ₹
@@ -387,7 +402,7 @@ const CartNotification = () => {
                         {discountProgress.progressInfo?.nextDiscountType}:
                       </span>
                     </div>
-                  )}
+                  )} */}
 
                   <div
                     className="h-px w-full my-2"

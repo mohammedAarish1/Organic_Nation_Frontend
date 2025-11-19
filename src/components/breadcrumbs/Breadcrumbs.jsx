@@ -36,7 +36,7 @@ const Breadcrumbs = () => {
     let breadcrumbPath = '';
 
     return (
-        <div className='bg-[var(--background-color)] '>
+        <div className=''>
             <div className={`${pathNames.length > 0 && 'pt-8 pb-2'}  max-w-7xl mx-auto sm:px-10 px-2 text-sm text-[#3E2C1B]`}>
                 <motion.nav
                     initial={{ opacity: 0, x: -20 }}

@@ -350,10 +350,12 @@ const CheckoutModal = ({ isOpen, onClose }) => {
       >
         <div className="flex justify-between mb-1 text-sm">
           <span>Subtotal</span>
-          <span>₹ {formatPrice(discountProgress.totalCartAmount)}</span>
+          {/* <span>₹ {formatPrice(discountProgress.totalCartAmount)}</span> */}
+          <span>₹ {formatPrice(discountProgress.totalMRP)}</span>
         </div>
         <div className="flex justify-between mb-1 text-sm font-bold">
-          <span>Less: Discount Applied ({discountProgress?.discountType})</span>
+          {/* <span>Less: Discount Applied ({discountProgress?.discountType})</span> */}
+          <span>Less: Discount Applied (-)</span>
           <span>₹ {formatPrice(discountProgress?.discountAmount)}</span>
         </div>
         <div className="flex justify-between mb-1 text-sm">

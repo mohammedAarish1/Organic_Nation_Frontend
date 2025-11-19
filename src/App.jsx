@@ -32,7 +32,7 @@ import { checkAuthStatus } from './features/auth/auth';
 import { getProductsData } from './features/filter/filterSlice';
 import { CartNotificationProvider } from './context/CartNotificationContext';
 import CartNotification from './components/module/cart/CartNotification';
-import DiscountProgress from './components/common/DiscountProgress';
+// import DiscountProgress from './components/common/DiscountProgress';
 import IncompleteOrder from './components/IncompleteOrder';
 import ScrollToTop from './helper/ScrollToTop'
 import MyAppRoutes from './routes/MyAppRoutes';
@@ -46,7 +46,7 @@ const MainContent = memo(() => {
       <Info text={`Free shipping on orders over Rs. ${freeShippingEligibleAmt}/- | Order over Rs. 499 and get Flat 20% OFF`} fontSize='[10px]' />
       <ToastContainer position='top-right' autoClose={1000} />
       <Header />
-      <DiscountProgress />
+      {/* <DiscountProgress /> */}
       <IncompleteOrder />
       <div>
         <Breadcrumbs />
