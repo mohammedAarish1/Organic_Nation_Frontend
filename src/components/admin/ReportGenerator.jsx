@@ -46,7 +46,7 @@ const ReportGenerator = ({title,type}) => {
             id="startDate"
             type="date"
             value={startDate}
-            min={'2024-08-11'}
+            min={'2024-07-30'}
             onChange={(e) => setStartDate(e.target.value)}
             className="mt-1 px-4 py-2 outline-none cursor-pointer block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
           />

@@ -381,8 +381,7 @@ const ReturnsSection = () =>  (
                 <p>ADDRESS FOR SELF-SHIP OF RETURNS</p>
                 <p>You can send the return to any one of the following returns processing facilities depending on your location. Kindly do not send it to on any other address as the package would not be acceptable then.</p>
                 <div className='flex flex-col gap-1 font-medium mt-2'>
-                  <p className='w-1/4'>Shop No - 336, Plot No - 134B,  Shopprix Mall, Sector-61, Noida, Gautam Buddha Nagar, Uttar Pradesh, 201301</p>
-                  <p>Info@foodsbay.com</p>
+                 <p className='w-1/4'>D-166/25, GROUND FLOOR, SECTOR-50 NOIDA, NOIDA CITY ZONE-4, Gautam Buddha Nagar , Uttar Pradesh-201301</p>
                   <p>+919999532041</p>
                 </div>
               </li>
