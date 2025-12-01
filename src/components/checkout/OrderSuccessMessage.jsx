@@ -67,7 +67,7 @@ const OrderSuccessMessage = () => {
   const [orderDetails, setOrderDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [paymentStatus, setPaymentStatus] = useState(null);
+  const [orderStatus, setOrderStatus] = useState(null);
 
   const { orderId: paramOrderId } = useParams();
   const navigate = useNavigate();
@@ -86,14 +86,14 @@ const OrderSuccessMessage = () => {
   // Set payment status based on URL
   useEffect(() => {
     if (status === "success") {
-      setPaymentStatus("success");
+      setOrderStatus("success");
     } else if (status === "failure") {
-      setPaymentStatus("failure");
+      setOrderStatus("failure");
     } else if (urlError) {
-      setPaymentStatus("error");
+      setOrderStatus("error");
     } else {
       // Default to success for COD orders or direct page access
-      setPaymentStatus("success");
+      setOrderStatus("success");
     }
   }, [status, urlError]);
 
@@ -131,7 +131,7 @@ const OrderSuccessMessage = () => {
 
   // Handle confetti effect for successful payments
   useEffect(() => {
-    if (!orderDetails || paymentStatus !== "success" || !showConfetti) return;
+    if (!orderDetails || orderStatus !== "confirmed" || !showConfetti) return;
 
     const end = Date.now() + CONFETTI_DURATION;
 
@@ -173,11 +173,11 @@ const OrderSuccessMessage = () => {
     // Cleanup timer
     const timer = setTimeout(() => setShowConfetti(false), CONFETTI_DURATION);
     return () => clearTimeout(timer);
-  }, [orderDetails, showConfetti, paymentStatus]);
+  }, [orderDetails, showConfetti, orderStatus]);
 
   // FB Pixel tracking for successful payments
   useEffect(() => {
-    if (paymentStatus === "success" && orderDetails) {
+    if (orderStatus === "confirmed" && orderDetails) {
       // Clear cart after successful payment
       dispatch(clearCart());
 
@@ -192,7 +192,7 @@ const OrderSuccessMessage = () => {
       //     });
       // }
     }
-  }, [paymentStatus, orderDetails, dispatch]);
+  }, [orderStatus, orderDetails, dispatch]);
 
   // Create order stages based on current status
   const orderStages = useMemo(() => {
@@ -246,7 +246,7 @@ const OrderSuccessMessage = () => {
   }
 
   // Error state with improved UI
-  if (error && paymentStatus !== "error" && paymentStatus !== "failure") {
+  if (error && orderStatus !== "error" && orderStatus !== "failure") {
     return (
       <div
         id="payment-error-popup"
@@ -271,7 +271,7 @@ const OrderSuccessMessage = () => {
   }
 
   // Payment failed UI - Using the same styled modal for consistency
-  if (paymentStatus === "failure" || paymentStatus === "error") {
+  if (orderStatus === "failure" || orderStatus === "error") {
     return (
       <AnimatePresence>
         <motion.div
@@ -326,7 +326,7 @@ const OrderSuccessMessage = () => {
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.4 }}
                 >
-                  {paymentStatus === "failure"
+                  {orderStatus === "failure"
                     ? "Payment Failed"
                     : "Internal Server Error"}
                 </motion.h2>
@@ -337,7 +337,7 @@ const OrderSuccessMessage = () => {
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.5 }}
                 >
-                  {paymentStatus === "failure"
+                  {orderStatus === "failure"
                     ? "We were unable to process your payment."
                     : "We encountered an error processing your request."}
                 </motion.p>
@@ -352,7 +352,7 @@ const OrderSuccessMessage = () => {
                 initial="hidden"
                 animate="visible"
               >
-                {paymentStatus === "failure"
+                {orderStatus === "failure"
                   ? "Please check your payment details and try again."
                   : "Please try again or contact customer support if the issue persists."}
               </motion.p>

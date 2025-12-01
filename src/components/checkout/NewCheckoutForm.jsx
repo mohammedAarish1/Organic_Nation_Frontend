@@ -407,7 +407,8 @@ const NewCheckoutForm = ({ close }) => {
             if (value.type === "manageOrders/addOrders/fulfilled") {
               close();
               dispatch(getUserData());
-              navigate(`/order-confirmed/${value.payload.orderId}`);
+              // navigate(`/order-confirmed/${value.payload.orderId}`);
+              navigate(`/order-status?status=confirmed&orderId=${value.payload.orderId}`);
             }
           });
         } else {

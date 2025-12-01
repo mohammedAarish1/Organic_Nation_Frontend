@@ -190,14 +190,19 @@ const MyAppRoutes = () => {
              path='/order-confirmed/:orderId'
              element={<OrderConfirm />}
          />, */}
-            <Route
+            {/* <Route
                 key="order-confirmed"
                 path='/order-confirmed/:orderId'
                 element={<OrderSuccessMessage />}
-            />
-            <Route
+            /> */}
+            {/* <Route
                 key="payment-status"
                 path='/payment-status'
+                element={<OrderSuccessMessage />}
+            /> */}
+            <Route
+                key="order-status"
+                path='/order-status'
                 element={<OrderSuccessMessage />}
             />
             <Route

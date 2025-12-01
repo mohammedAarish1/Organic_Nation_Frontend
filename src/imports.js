@@ -38,7 +38,7 @@ export const Blogs = lazy(() => import('./pages/blogs/Blogs'));
 export const RecipeDetails = lazy(() => import('./pages/recipe-detail-page/RecipeDetails'));
 // export const GoogleSignup = lazy(() => import('./pages/login-signup/GoogleSignup'));
 // export const OrderConfirm = lazy(() => import('./pages/order-confirmation/OrderConfirm'));
-export const PaymentStatus = lazy(() => import('./pages/payment-status/PaymentStatus'));
+// export const PaymentStatus = lazy(() => import('./pages/payment-status/PaymentStatus'));
 export const NoPageFound = lazy(() => import('./pages/no-page-found/NoPageFound'));
 export const UserProfile = lazy(() => import('./pages/user-profile/UserProfile'))
 export const ManageOrders = lazy(() => import('./pages/manage-orders/ManageOrders'))
