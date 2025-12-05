@@ -8,7 +8,10 @@ import PaymentMethodButton from "./checkout/PaymentMethodButton";
 import SubmitButton from "./button/SubmitButton";
 import { calculateCODCharges } from "../features/check-delivery/checkDelivery";
 import { getUserData } from "../features/auth/auth";
-import { initiatePayment } from "../features/orderPayment/payment";
+import {
+  initiatePayment,
+  updateMerchantTransId,
+} from "../features/orderPayment/payment";
 import { generateTransactionID } from "../helper/helperFunctions";
 import api from "../config/axiosConfig";
 
@@ -36,7 +39,6 @@ const CompleteOrderModal = ({ isOpen, onClose, order }) => {
   // const { loading } = useSelector(state => state.payment)
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   useEffect(() => {
     if (
       order?.paymentMethod === "online_payment" &&
@@ -63,18 +65,27 @@ const CompleteOrderModal = ({ isOpen, onClose, order }) => {
           payload
         );
         if (response.status === 200) {
+          sessionStorage.setItem("newOrderId", response.data.orderId);
           dispatch(getUserData());
-          navigate(
-            `/order-status?status=confirmed&orderId=${response.data.orderId}`
-          );
+          navigate(`/order-status?status=confirmed`);
         }
       } else if (paymentMethod === "online_payment") {
+        sessionStorage.setItem("newOrderId", order?._id);
+        const newMerchantTransactionId = generateTransactionID();
         const payload = {
-          number: order.phoneNumber.replace("+91", ""),
-          amount: order.subTotal,
-          merchantTransactionId: generateTransactionID(),
+          newMerchantTransactionId,
+          id: order.merchantTransactionId,
         };
-        dispatch(initiatePayment(payload));
+        dispatch(updateMerchantTransId(payload)).then((result) => {
+          if (result.payload.success) {
+            const payload = {
+              number: order.phoneNumber.replace("+91", ""),
+              amount: order.subTotal,
+              merchantTransactionId: newMerchantTransactionId,
+            };
+            dispatch(initiatePayment(payload));
+          }
+        });
       }
     } catch (error) {
       throw error;

@@ -407,13 +407,15 @@ const NewCheckoutForm = ({ close }) => {
             if (value.type === "manageOrders/addOrders/fulfilled") {
               close();
               dispatch(getUserData());
+              sessionStorage.setItem('newOrderId', value.payload.orderId);
               // navigate(`/order-confirmed/${value.payload.orderId}`);
-              navigate(`/order-status?status=confirmed&orderId=${value.payload.orderId}`);
+              navigate(`/order-status?status=confirmed`);
             }
           });
         } else {
           dispatch(addOrders(checkoutData)).then((value) => {
             if (value.type === "manageOrders/addOrders/fulfilled") {
+              sessionStorage.setItem('newOrderId', value.payload.orderId);
               dispatch(
                 initiatePayment({
                   number: shippingInfo.phoneNumber.replace("+91", ""),

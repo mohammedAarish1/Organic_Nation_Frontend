@@ -1,4 +1,4 @@
-import  { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import axios from "axios";
@@ -69,7 +69,7 @@ const OrderSuccessMessage = () => {
   const [error, setError] = useState(null);
   const [orderStatus, setOrderStatus] = useState(null);
 
-  const { orderId: paramOrderId } = useParams();
+  // const { orderId: paramOrderId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const apiUrl = import.meta.env.VITE_BACKEND_URL;
@@ -77,12 +77,13 @@ const OrderSuccessMessage = () => {
   // Get URL parameters for payment status
   const urlParams = new URLSearchParams(window.location.search);
   const status = urlParams.get("status");
-  const urlOrderId = urlParams.get("orderId");
+  // const urlOrderId = urlParams.get("orderId");
   const retryToken = urlParams.get("retryToken");
   const urlError = urlParams.get("error");
 
   // Determine which orderId to use
-  const orderId = paramOrderId || urlOrderId;
+  // const orderId = paramOrderId || urlOrderId;
+  const orderId = sessionStorage.getItem("newOrderId");
   // Set payment status based on URL
   useEffect(() => {
     if (status === "success") {
@@ -97,14 +98,19 @@ const OrderSuccessMessage = () => {
     }
   }, [status, urlError]);
 
-  // Fetch order data
   useEffect(() => {
     const getOrderDetails = async () => {
+      if (!orderId) {
+        navigate("/", { replace: true });
+        return;
+      }
+
       try {
         setIsLoading(true);
         const response = await axios.get(`${apiUrl}/api/orders/${orderId}`);
         if (response.data) {
           setOrderDetails(response.data);
+          sessionStorage.removeItem('newOrderId');
         }
       } catch (err) {
         setError("Failed to load order details");
@@ -113,10 +119,32 @@ const OrderSuccessMessage = () => {
       }
     };
 
-    if (orderId) {
+     if (orderId) {
       getOrderDetails();
     }
-  }, [orderId, apiUrl]);
+
+  }, [orderId,apiUrl]);
+
+  // Fetch order data
+  // useEffect(() => {
+  //   const getOrderDetails = async () => {
+  //     try {
+  //       setIsLoading(true);
+  //       const response = await axios.get(`${apiUrl}/api/orders/${orderId}`);
+  //       if (response.data) {
+  //         setOrderDetails(response.data);
+  //       }
+  //     } catch (err) {
+  //       setError("Failed to load order details");
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
+
+  //   if (orderId) {
+  //     getOrderDetails();
+  //   }
+  // }, [orderId, apiUrl]);
 
   // Handle retry payment logic
   const handleRetryPayment = () => {

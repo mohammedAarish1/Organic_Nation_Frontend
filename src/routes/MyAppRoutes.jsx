@@ -40,7 +40,7 @@ const MyAppRoutes = () => {
 
     // const { cartItemsList } = useSelector((state) => state.cart);
     const { user } = useSelector(state => state.auth);
-
+ const orderId = sessionStorage.getItem('newOrderId');
     return (
 
         <Routes>
@@ -203,7 +203,9 @@ const MyAppRoutes = () => {
             <Route
                 key="order-status"
                 path='/order-status'
-                element={<OrderSuccessMessage />}
+                // element={<OrderSuccessMessage />}
+                element={user && orderId ? <OrderSuccessMessage /> : <Home />}
+
             />
             <Route
                 key="no-page-found"
