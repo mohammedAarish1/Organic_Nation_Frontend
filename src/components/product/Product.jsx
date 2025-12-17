@@ -349,7 +349,7 @@ const Product = memo(({ gridView, product }) => {
                 </div>
               </NavLink>
               <div className="w-full relative z-30">
-                <AddToCartBtn item={product} />
+                <AddToCartBtn item={product} extraClasses='flex py-3 gap-1 w-full items-center justify-center z-30' />
               </div>
             </div>
           </div>

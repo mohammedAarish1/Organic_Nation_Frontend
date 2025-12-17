@@ -8,27 +8,28 @@ import api from "../../config/axiosConfig";
 // for adding reviews 
 export const addReviews = createAsyncThunk(
     'reviews/addReviews',
-    async (reviews, { rejectWithValue,getState }) => {
+    async (formData, { rejectWithValue,getState }) => {
         const {auth}=getState()
         try {
             // const token = JSON.parse(sessionStorage.getItem('token'));
             if (auth.user) {
-                const response = await api.post(`/api/reviews`, reviews,
-                    // {
-                    //     headers: {
-                    //         // 'Authorization': `Bearer ${token}`,
-                    //         'Content-Type': 'application/json'
-                    //     }
-                    // }
+                const response = await api.post(`/api/reviews`, formData,
+                    {
+                        headers: {
+                            // 'Authorization': `Bearer ${token}`,
+                            // 'Content-Type': 'application/json'
+                            //  'Content-Type': 'multipart/form-data' 
+                        }
+                    }
                 );
-                // return response.data;
+                return response.data;
             }
 
 
         } catch (error) {
             return rejectWithValue({
-                message: err.message,
-                status: err.response?.status
+                message: error.message,
+                status: error.response?.status
             });
         }
     }
@@ -94,8 +95,8 @@ export const addDeliveryFeedback = createAsyncThunk(
 
         } catch (error) {
             return rejectWithValue({
-                message: err.message,
-                status: err.response?.status
+                message: error.message,
+                status: error.response?.status
             });
         }
     }

@@ -19,6 +19,7 @@ import manageReturnsReducer from '../features/manage-returns/manageReturns';
 import manageOrdersReducer from '../features/manageOrders/manageOrders'
 import userProfileReducer from '../features/user-profile/userProfile';
 import notificationSliceReducer from '../features/recent-purchase-notification/notificationSlice';
+import wishlistReducer from '../features/wishlistSlice';
 
 // import adminFeatureReducer from '../features/admin/adminFeatures'
 
@@ -47,6 +48,7 @@ import { setStore } from '../helper/storeUtils';
         orders: manageOrdersReducer,
         userProfile:userProfileReducer,
         notification:notificationSliceReducer,
+        wishlist: wishlistReducer,
         // adminFeatures: adminFeatureReducer,
     },
 })

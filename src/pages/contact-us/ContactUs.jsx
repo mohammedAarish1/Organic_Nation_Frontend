@@ -210,7 +210,7 @@ const ContactUs = () => {
                       <h3 className="font-semibold text-lg">Visit Us</h3>
                       <p className="mt-1 text-sm md:text-base opacity-90">
                         Foodsbay India, Bailparao, Ramnagar Road,
-                        <br />Nainital, Uttarakhand-263159
+                        <br />Nainital, Uttarakhand-263163
                       </p>
                     </div>
                   </motion.div>

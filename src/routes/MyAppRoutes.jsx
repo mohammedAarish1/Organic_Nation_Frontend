@@ -33,6 +33,8 @@ import {
 } from '../imports';
 // import GoogleLoginHandler from '../pages/login-signup/GoogleLoginHandler';
 import OrderSuccessMessage from '../components/checkout/OrderSuccessMessage';
+import Wishlist from '../pages/Wishlist';
+import AllReviews from '../pages/AllReviews'
 
 
 
@@ -208,9 +210,21 @@ const MyAppRoutes = () => {
 
             />
             <Route
+                key="wish-list"
+                path='/wish-list'
+                // element={<OrderSuccessMessage />}
+                element={<Wishlist/>}
+
+            />
+            <Route
                 key="no-page-found"
                 path='*'
                 element={<NoPageFound />}
+            />
+            <Route
+                key="no-page-found"
+                path="/product/:productId/reviews"
+                element={<AllReviews/>}
             />
         </Routes>
 

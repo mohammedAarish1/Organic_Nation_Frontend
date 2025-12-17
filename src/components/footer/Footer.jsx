@@ -141,7 +141,7 @@
 //                         <div className='flex flex-col gap-2 tracking-widest'>
 //                             <p>Email: <a href="mailto:info@organicnation.co.in" className='underline underline-offset-2'>info@organicnation.co.in</a></p>
 //                             <p>Phone Number: <a href="tel:+919999532041" className='underline underline-offset-2'>+91-9999532041</a></p>
-//                             <p><span className='font-semibold'>Work Address:</span> Foodsbay India, Bailparao, Ramnagar Road, Nainital, Uttarakhand-263159</p>
+//                             <p><span className='font-semibold'>Work Address:</span> Foodsbay India, Bailparao, Ramnagar Road, Nainital, Uttarakhand-263163</p>
 {/* <p className='sm:w-1/4'>D-166/25, GROUND FLOOR, SECTOR-50 NOIDA, NOIDA CITY ZONE-4, Gautam Buddha Nagar , Uttar Pradesh-201301</p> */}
 //                             <p><span className='font-semibold'>Phone</span> <a href="tel:+919999532041" className='underline underline-offset-2'>+91-9999532041</a> (For Bulk Queries)</p>
 //                         </div>
@@ -497,7 +497,7 @@ const Footer = () => {
                 <ContactItem
                   icon={<MapPin size={18} />}
                   content={<>
-                    <span className="font-semibold">Work & Manufacturing Address:</span> Foodsbay India, Bailparao, Ramnagar Road, Nainital, Uttarakhand-263159
+                    <span className="font-semibold">Work & Manufacturing Address:</span> Foodsbay India, Bailparao, Ramnagar Road, Nainital, Uttarakhand-263163
                   </>}
                 />
               </div>
