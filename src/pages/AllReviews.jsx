@@ -6,7 +6,7 @@ import ProductReviews from "./productDetails/ProductReviews";
 // Main All Reviews Page
 const AllReviews = () => {
   const location = useLocation();
-  const { productId } = useParams();
+  const { category,productId } = useParams();
   // Get data from location state or use defaults
   const {
     reviews = [],
@@ -20,6 +20,7 @@ const AllReviews = () => {
       averageRating={averageRating}
       totalReviews={totalReviews}
       productId={productId}
+      categoryUrl={category}
       isFullPage
     />
   );

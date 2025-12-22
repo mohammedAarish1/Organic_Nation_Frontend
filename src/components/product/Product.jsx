@@ -193,9 +193,9 @@
 
 
 
-import React, { useState, memo, lazy, Suspense } from 'react';
+import  { useState, memo, lazy, Suspense } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import AddToCartBtn from '../add-to-cart-btn/AddToCartBtn';
 import Image from '../image/Image';
 import Loader from '../../components/common/Loader';
@@ -207,7 +207,7 @@ const QuickViewModal = lazy(() => import('./QuickViewModal'))
 const Product = memo(({ gridView, product }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [showQuickView, setShowQuickView] = useState(false);
-  const { categoryBtnValue } = useSelector((state) => state.filterData);
+  // const { categoryBtnValue } = useSelector((state) => state.filterData);
 
   // Find images specifically marked as front and left views
   const frontImage = product?.img?.find(img =>
@@ -238,7 +238,7 @@ const Product = memo(({ gridView, product }) => {
           }
         `}>
           {/* Image Container */}
-          <NavLink to={`/shop/${categoryBtnValue}/${product['name-url']}`}>
+          <NavLink to={`/shop/${product['category-url'].toLowerCase()}/${product['name-url']}`}>
             <div
               className={`
               relative aspect-square z-10 overflow-hidden
@@ -319,7 +319,7 @@ const Product = memo(({ gridView, product }) => {
             flex flex-col relative z-20
             ${gridView ? 'xs:p-2 p-1 xs:gap-2' : 'p-4 sm:p-6 flex-1 lg:gap-7'}`}>
             <NavLink
-              to={`/shop/${categoryBtnValue}/${product['name-url']}`}
+              to={`/shop/${product['category-url'].toLowerCase()}/${product['name-url']}`}
               className=" z-20"
             >
               <h3 className={`text-sm sm:text-base  text-gray-900 hover:text-[#712522] transition-colors duration-200 ${gridView ? 'min-h-10 xs:min-h-full' : ''} `}>
@@ -335,7 +335,7 @@ const Product = memo(({ gridView, product }) => {
             </NavLink>
             <div className="space-y-2 relative z-20">
               <NavLink
-                to={`/shop/${categoryBtnValue}/${product['name-url']}`}
+                to={`/shop/${product['category-url'].toLowerCase()}/${product['name-url']}`}
                 className="relative z-20"
               >
                 <div className="flex items-baseline sm:gap-2 flex-wrap">

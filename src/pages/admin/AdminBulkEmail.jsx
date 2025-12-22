@@ -88,14 +88,11 @@
 //                 }
 //             } else {
 //                 const error = await response.json();
-//                 console.log('errr', error)
 //                 setStatus({ type: 'error', message: error.message || 'Failed to send bulk email' });
 //             }
 //         } catch (error) {
-//             console.log('eeee', error)
 //             setStatus({ type: 'error', message: 'Network error. Please try again.' });
 //         } finally {
-//             console.log('finally')
 //             // setIsLoading(false);     
 //             setSubmitting(false);
 //         }

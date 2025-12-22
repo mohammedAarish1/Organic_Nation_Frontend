@@ -5,7 +5,7 @@
 
 // // Optimized StarRating Component with half-star support
 // const StarRating = memo(({ rating }) => {
-//   const stars = useMemo(() => {
+//   const stars = useMemo(() => {  
 //     return [...Array(5)].map((_, i) => {
 //       const filled = Math.min(Math.max(rating - i, 0), 1);
 

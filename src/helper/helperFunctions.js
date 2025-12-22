@@ -1,14 +1,15 @@
 import { toast } from "react-toastify";
-import { calculateShippingFee, checkDeliveryAvailability, updateShippingFee } from "../features/check-delivery/checkDelivery";
+import {
+  calculateShippingFee,
+  checkDeliveryAvailability,
+  updateShippingFee,
+} from "../features/check-delivery/checkDelivery";
 import api from "../config/axiosConfig";
-
 
 // below funtion is to use the css variables
 // const getCssVariable = (variableName) => {
 //   // Get the computed styles of the root element (document.documentElement)
 //   const rootStyles = getComputedStyle(document.documentElement);
-
-
 
 //   // Retrieve the value of the CSS variable and remove any extra spaces
 //   return rootStyles.getPropertyValue(variableName).trim();
@@ -43,26 +44,74 @@ import api from "../config/axiosConfig";
 //     return null; // Return null if no match is found
 // }
 
-
 const getCatogoriesWithImages = (categoryList, type) => {
-
-
   const icons = [
-    { name: 'Pickles', category: 'Homestyle-Pickles', url: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/pickle.webp' },
-    { name: 'Honey', category: 'Organic-Honey', url: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/honey.webp' },
-    { name: 'Seasonings', category: 'Seasonings-&-Herbs', url: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/seasonings.webp' },
-    { name: 'Salt', category: 'Salt', url: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/salt.webp' },
-    { name: 'Cereals', category: 'Breakfast-Cereals', url: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/breakfast.webp' },
-    { name: 'Chutney', category: 'Chutney-&-Dip', url: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/chutney.webp' },
-    { name: 'Oats', category: 'Oats', url: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/oats.webp' },
-    { name: 'Oils', category: 'Organic-Oils', url: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/oils.webp' },
-    { name: 'Preserves', category: 'Fruit-Preserves', url: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/fruit_preserves.webp' },
-    { name: 'Vegan', category: 'Vegan', url: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/vegan.webp' },
-    { name: 'Sweeteners', category: 'Sweeteners', url: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/sweeteners.webp' },
-    { name: 'Tea', category: 'Organic-Tea', url: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/tea.webp' },
-    { name: 'Combo', category: 'Gifts-&-Combos', url: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/combo.webp' },
+    {
+      name: "Pickles",
+      category: "Homestyle-Pickles",
+      url: "https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/pickle.webp",
+    },
+    {
+      name: "Honey",
+      category: "Organic-Honey",
+      url: "https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/honey.webp",
+    },
+    {
+      name: "Seasonings",
+      category: "Seasonings-&-Herbs",
+      url: "https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/seasonings.webp",
+    },
+    {
+      name: "Salt",
+      category: "Salt",
+      url: "https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/salt.webp",
+    },
+    {
+      name: "Cereals",
+      category: "Breakfast-Cereals",
+      url: "https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/breakfast.webp",
+    },
+    {
+      name: "Chutney",
+      category: "Chutney-&-Dip",
+      url: "https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/chutney.webp",
+    },
+    {
+      name: "Oats",
+      category: "Oats",
+      url: "https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/oats.webp",
+    },
+    {
+      name: "Oils",
+      category: "Organic-Oils",
+      url: "https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/oils.webp",
+    },
+    {
+      name: "Preserves",
+      category: "Fruit-Preserves",
+      url: "https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/fruit_preserves.webp",
+    },
+    {
+      name: "Vegan",
+      category: "Vegan",
+      url: "https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/vegan.webp",
+    },
+    {
+      name: "Sweeteners",
+      category: "Sweeteners",
+      url: "https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/sweeteners.webp",
+    },
+    {
+      name: "Tea",
+      category: "Organic-Tea",
+      url: "https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/tea.webp",
+    },
+    {
+      name: "Combo",
+      category: "Gifts-&-Combos",
+      url: "https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/combo.webp",
+    },
   ];
-
 
   // const categoriesImages = [
   //   { 'Organic-Honey': 'https://organicnationmages.s3.ap-south-1.amazonaws.com/category_carousel_new/reduced-quality/honey.webp' },
@@ -87,36 +136,39 @@ const getCatogoriesWithImages = (categoryList, type) => {
   //   return acc;
   // }, {});
 
-
   // const categoriesWithImages = categoryList?.filter(item => item.category !== 'All')
   //   .map(item => ({
   //     ...item,
   //     image: imageLookup[item.categoryUrl] || null,
   //   }));
-  const categoriesWithImages = categoryList?.filter(item => item.category !== 'All' && item.category !== 'Demo' )
-    .map(item => {
-      return({
-      ...item,
-      // image: imageLookup[item.categoryUrl] || null,
-      name:icons.filter(curIcon => curIcon.category === item.categoryUrl)[0]?.name || null,
-      image: icons.filter(curIcon => curIcon.category === item.categoryUrl)[0]?.url || null,
-    })});
+  const categoriesWithImages = categoryList
+    ?.filter((item) => item.category !== "All" && item.category !== "Demo")
+    .map((item) => {
+      return {
+        ...item,
+        // image: imageLookup[item.categoryUrl] || null,
+        name:
+          icons.filter((curIcon) => curIcon.category === item.categoryUrl)[0]
+            ?.name || null,
+        image:
+          icons.filter((curIcon) => curIcon.category === item.categoryUrl)[0]
+            ?.url || null,
+      };
+    });
 
-  return categoriesWithImages
-}
-
+  return categoriesWithImages;
+};
 
 // generate random Transaction Id
 const generateTransactionID = () => {
   const timestamp = Date.now();
   const randomNum = Math.floor(Math.random() * 1000000);
-  const merchantPrefix = 'T';
+  const merchantPrefix = "T";
   const transactionID = `${merchantPrefix}${timestamp}${randomNum}`;
   return transactionID;
-}
+};
 
-
-// // to convert the address object into plain string 
+// // to convert the address object into plain string
 // const address = (obj) => {
 //   let result = '';
 //   for (const key in obj) {
@@ -134,21 +186,17 @@ const generateTransactionID = () => {
 
 // for calculating additional 5% discount on MRP and tax include in that discount
 const additionalDiscountforOnlinePayment = (totalCartAmount, totalTax) => {
-
-
-  const DISCOUNT_PERCENTAGE = 5
+  const DISCOUNT_PERCENTAGE = 5;
 
   //calculate additional 5% discount
-  const additionalDiscount = totalCartAmount * DISCOUNT_PERCENTAGE / 100
-  const additionalTaxDiscount = totalTax * DISCOUNT_PERCENTAGE / 100
+  const additionalDiscount = (totalCartAmount * DISCOUNT_PERCENTAGE) / 100;
+  const additionalTaxDiscount = (totalTax * DISCOUNT_PERCENTAGE) / 100;
 
   return {
     discountAmount: Math.round(additionalDiscount),
-    taxDiscount: Math.round(additionalTaxDiscount)
+    taxDiscount: Math.round(additionalTaxDiscount),
   };
-
-}
-
+};
 
 // const handleDocumentDeleteFromDatabase = (collection, id, dispatch, updateLists) => {
 //   dispatch(deleteDocumentFromDatabase({ collection, id }))
@@ -158,21 +206,15 @@ const additionalDiscountforOnlinePayment = (totalCartAmount, totalTax) => {
 //     })
 // }
 
-
 // for checking delivery availability and calculating shipping fee
-const checkDeliveryAndCalculateShippingFee = (
-  pinCode,
-  dispatch
-) => {
+const checkDeliveryAndCalculateShippingFee = (pinCode, dispatch) => {
   if (pinCode) {
     if (localStorage.getItem("deliveryChargeToken")) {
       localStorage.removeItem("deliveryChargeToken");
     }
     dispatch(checkDeliveryAvailability(pinCode)).then((res) => {
       if (res.payload.available) {
-        dispatch(
-          calculateShippingFee({ pinCode: res.meta.arg })
-        )
+        dispatch(calculateShippingFee({ pinCode: res.meta.arg }));
       } else {
         toast.error(`Delivery is not available for pin code ${pinCode}`);
         dispatch(updateShippingFee());
@@ -181,38 +223,34 @@ const checkDeliveryAndCalculateShippingFee = (
   }
 };
 
-
-
-// to convert the address object into plain string 
+// to convert the address object into plain string
 const address = (obj) => {
-  let result = '';
+  let result = "";
   for (const key in obj) {
-    if (obj.hasOwnProperty(key) && key !== '_id') {  // Skip _id field
+    if (obj.hasOwnProperty(key) && key !== "_id") {
+      // Skip _id field
       const value = obj[key];
       if (Array.isArray(value)) {
-        result += value.flat().join(' ') + ' ';
+        result += value.flat().join(" ") + " ";
       } else {
-        result += value + ' ';
+        result += value + " ";
       }
     }
   }
   return result.trim();
-}
-
+};
 
 const getCouponDetails = async (couponId) => {
   try {
     const response = await api.get(`/api/validate/${couponId}`);
     if (response.status === 200) {
       // setCouponDetails(response.data);
-      return response.data
+      return response.data;
     }
   } catch (error) {
     throw error;
   }
 };
-
-
 
 // Carousel controls
 const scrollToSlide = (ref, direction) => {
@@ -220,15 +258,13 @@ const scrollToSlide = (ref, direction) => {
   if (!container) return;
 
   const cardWidth = 280;
-  const scrollAmount = direction === 'next' ? cardWidth : -cardWidth;
+  const scrollAmount = direction === "next" ? cardWidth : -cardWidth;
 
   container.scrollBy({
     left: scrollAmount,
-    behavior: 'smooth'
+    behavior: "smooth",
   });
 };
-
-
 
 // Helper function for button styles used in manage-order page
 const getButtonStyles = (variant, disabled) => {
@@ -239,44 +275,74 @@ const getButtonStyles = (variant, disabled) => {
   }
 
   switch (variant) {
-    case 'primary':
+    case "primary":
       return `${baseStyles} bg-[var(--themeColor)] hover:bg-[var(--themeColor)]/90 text-[var(--text-light-color)] border-[var(--themeColor)]`;
-    case 'secondary':
+    case "secondary":
       return `${baseStyles} bg-[var(--accent-color)] hover:bg-[var(--accent-color)]/90 text-[var(--text-light-color)] border-[var(--accent-color)]`;
-    case 'accent':
+    case "accent":
       return `${baseStyles} bg-[var(--secondary-color)] hover:bg-[var(--secondary-color)]/90 text-[var(--text-light-color)] border-[var(--secondary-color)]`;
-    case 'return':
+    case "return":
       return `${baseStyles} bg-[var(--alert-color)] hover:bg-[var(--alert-color)]/90 text-[var(--text-light-color)] border-[var(--alert-color)]`;
     default:
       return `${baseStyles} bg-[var(--background-color)] hover:bg-[var(--neutral-color)]/20 text-[var(--text-color)] border-[var(--neutral-color)]`;
   }
 };
 
-
 // Format price with comma separators
 const formatPrice = (price) => {
   return price?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
-
 const timeAgo = (createdAt) => {
   const now = new Date();
   const diffInSeconds = Math.floor((now - new Date(createdAt)) / 1000);
-  
+
   const minutes = Math.floor(diffInSeconds / 60);
   const hours = Math.floor(diffInSeconds / 3600);
   const days = Math.floor(diffInSeconds / 86400);
-  const months = Math.floor(diffInSeconds / 2592000);  // 30 days in a month
-  const years = Math.floor(diffInSeconds / 31536000);  // 365 days in a year
-  
-  if (years > 0) return `${years} year${years > 1 ? 's' : ''} ago`;
-  if (months > 0) return `${months} month${months > 1 ? 's' : ''} ago`;
-  if (days > 0) return `${days} day${days > 1 ? 's' : ''} ago`;
-  if (hours > 0) return `${hours} hour${hours > 1 ? 's' : ''} ago`;
-  if (minutes > 0) return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
-  return `${diffInSeconds} second${diffInSeconds > 1 ? 's' : ''} ago`;
+  const months = Math.floor(diffInSeconds / 2592000); // 30 days in a month
+  const years = Math.floor(diffInSeconds / 31536000); // 365 days in a year
+
+  if (years > 0) return `${years} year${years > 1 ? "s" : ""} ago`;
+  if (months > 0) return `${months} month${months > 1 ? "s" : ""} ago`;
+  if (days > 0) return `${days} day${days > 1 ? "s" : ""} ago`;
+  if (hours > 0) return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+  if (minutes > 0) return `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
+  return `${diffInSeconds} second${diffInSeconds > 1 ? "s" : ""} ago`;
 };
 
+const allTags = {
+  "organic-honey": [
+    "all",
+    "Taste",
+    "Packaging",
+    "Texture",
+    "Purity",
+    "Quality",
+    "Aroma",
+  ],
+  "homestyle-pickles": [
+    "all",
+    "Taste",
+    "Packaging",
+    "Authentic",
+    "Pure",
+    "Quality",
+    "Home style",
+  ],
+  'oats':[ "all",'healthy', 'fiber', 'Flavor','quality', 'packaging'],
+  'organic-oils':[ "all",'Cold Pressed', 'Pure', 'aroma','natural', 'healthy'],
+  'vegan':[ "all",'Texture', 'Flavor', 'vegan','alternate', 'healthy'],
+  'chutney-&-dip':[ "all",'Texture', 'Authentic', 'Value for Money','Perfect'],
+  'fruit-preserves':[ "all",'Breakfast', 'Flavor', 'Value for Money','Sweetness','Delicious'],
+  'seasonings-&-herbs':[ "all",'Fresh', 'Quality', 'Value for Money','Ingredients','Authentic'],
+  'salt':[ "all",'Pure', 'Quality', 'Value for Money','Clean','Taste'],
+  'sweeteners':[ "all",'Sweetness', 'Quality', 'Value for Money','Aftertaste','Taste'],
+};
+
+const getReviewFilterTags = (categoryUrl) => {
+  return allTags[categoryUrl.toLowerCase()]
+};
 
 export {
   getCatogoriesWithImages,
@@ -288,5 +354,6 @@ export {
   scrollToSlide,
   getButtonStyles,
   formatPrice,
-  timeAgo
-}
+  timeAgo,
+  getReviewFilterTags,
+};

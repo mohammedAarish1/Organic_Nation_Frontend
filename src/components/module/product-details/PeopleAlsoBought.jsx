@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { motion } from "framer-motion";
-import {  useNavigate } from "react-router-dom";
+import {  Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategoryWiseData } from "../../../features/filter/filterSlice";
 
@@ -11,7 +11,7 @@ import {
 import AddToCartBtn from "../../add-to-cart-btn/AddToCartBtn";
 import WishListBtn from "../../add-to-cart-btn/WishListBtn";
 
-const PeopleAlsoBought = ({ categoryUrl }) => {
+const PeopleAlsoBought = memo(({ categoryUrl }) => {
   const navigate=useNavigate()
   const dispatch = useDispatch();
   const { filteredProducts } = useSelector((state) => state.filterData);
@@ -25,19 +25,19 @@ const PeopleAlsoBought = ({ categoryUrl }) => {
     <div className="bg-white py-12 mt-16 rounded-2xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-3xl font-bold text-gray-900">
+          <h2 className="xs:text-3xl text-xl font-bold text-gray-900">
             You may also like
           </h2>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          <Link
+          to={`/shop/${categoryUrl}`}
             className="text-orange-600 font-semibold hover:text-orange-700 flex items-center gap-1"
           >
             View All
             <ChevronRight size={20} />
-          </motion.button>
+          </Link>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+        {/* <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"> */}
+        <div className="flex overflow-x-auto scrollbar-hide gap-6 pb-4 px-2">
           {filteredProducts.map((item, idx) => (
             <motion.div
               key={item._id}
@@ -49,11 +49,11 @@ const PeopleAlsoBought = ({ categoryUrl }) => {
                 y: -8,
                 boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
               }}
-              className="bg-white border border-gray-200 rounded-2xl overflow-hidden cursor-pointer group"
+              className=" flex-shrink-0 bg-white border border-gray-200 rounded-2xl overflow-hidden cursor-pointer group"
               onClick={()=>navigate(`/shop/${categoryBtnValue}/${item['name-url']}`)}
             >
               {/* Image Container */}
-              <div className="relative aspect-square bg-gray-100 overflow-hidden">
+              <div className="relative h-56 bg-gray-100 overflow-hidden">
                 <img
                   src={item.img[0].lg}
                   alt={item.name}
@@ -248,6 +248,6 @@ const PeopleAlsoBought = ({ categoryUrl }) => {
       </div>
     </div>
   );
-};
+});
 
 export default PeopleAlsoBought;

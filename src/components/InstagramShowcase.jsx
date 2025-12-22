@@ -76,6 +76,7 @@ const InstagramEmbed = React.memo(({ postUrl, className = "" }) => {
 
 const InstagramShowcase = () => {
   const instagramPosts = [
+    "https://www.instagram.com/p/DSZe9DXFFgl/",
     "https://www.instagram.com/p/DQMfzWfAU-f/",
     "https://www.instagram.com/p/DO83Mi2jbMC/",
     "https://www.instagram.com/p/DOd5misDvLS/",
@@ -85,10 +86,10 @@ const InstagramShowcase = () => {
     "https://www.instagram.com/p/DOL2CQKDaEI/",
     "https://www.instagram.com/p/DOEBGwHE9-0/",
     "https://www.instagram.com/p/DOV4feDE9ek/",
-    "https://www.instagram.com/p/DNs8Zq5ZsqB/?img_index=1",
+    // "https://www.instagram.com/p/DNs8Zq5ZsqB/?img_index=1",
     "https://www.instagram.com/p/DKUVzQSI_mB/",
     "https://www.instagram.com/p/DLZtMUkzs5K/",
-    "https://www.instagram.com/p/DK9ZUNhz2jY/",
+    // "https://www.instagram.com/p/DK9ZUNhz2jY/",
     // "https://www.instagram.com/p/DMXt3OVTnC-/",
     // "https://www.instagram.com/p/DLpYEoOP48I/",
     // "https://www.instagram.com/p/DKPhI_yMAkR/",

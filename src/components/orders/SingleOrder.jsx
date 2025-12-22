@@ -1,5 +1,4 @@
-import React, { lazy, Suspense, useEffect, useRef, useState } from "react";
-import ReviewsAndRatings from "../../helper/ReviewsAndRatings";
+import  { lazy, Suspense, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -7,10 +6,10 @@ import { addToCart, getAllCartItems } from "../../features/cart/cart";
 import { toast } from "react-toastify";
 import Image from "../image/Image";
 import Loader from "../common/Loader";
-import CloseButton from '../button/CloseButton';
-import { motion, AnimatePresence } from 'framer-motion';
-import { getButtonStyles } from '../../helper/helperFunctions'
-import { Eye, ShoppingCart, SquareChartGantt, Star, Undo } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { getButtonStyles } from "../../helper/helperFunctions";
+import { Eye, ShoppingCart, SquareChartGantt,  Undo } from "lucide-react";
+import ReviewModal from "../common/ReviewModal";
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 const ReturnItemForm = lazy(() => import("../returnItemForm/ReturnItemForm"));
@@ -26,21 +25,21 @@ const SingleOrder = ({
   const dispatch = useDispatch();
   const [singleOrderItem, setSingleOrderItem] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const [showProductReview, setShowProductReview] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
+  const [showReviewModal, setShowReviewModal] = useState(false);
   const modalRef = useRef();
 
   const getCurOrderItem = async () => {
     try {
       if (nameUrl) {
         setIsLoading(true);
-        const response = await axios.get(`${apiUrl}/products/organic-honey/${nameUrl}`);
+        const response = await axios.get(
+          `${apiUrl}/products/organic-honey/${nameUrl}`
+        );
         if (response.data.product) {
           setSingleOrderItem(response.data.product);
         }
       }
-
     } catch (error) {
       console.error("Error fetching order item:", error);
     } finally {
@@ -78,12 +77,13 @@ const SingleOrder = ({
     });
   };
 
-  const isReturned = curOrder?.quantity === curOrder?.returnInfo.returnedQuantity;
-  const canReturn = !isReturned && !isReturnDisabled && orderStatus === "completed";
-  const partialReturn = curOrder?.returnInfo.returnedQuantity > 0 && curOrder?.returnInfo.returnedQuantity < curOrder?.quantity;
-
-
-
+  const isReturned =
+    curOrder?.quantity === curOrder?.returnInfo.returnedQuantity;
+  const canReturn =
+    !isReturned && !isReturnDisabled && orderStatus === "completed";
+  const partialReturn =
+    curOrder?.returnInfo.returnedQuantity > 0 &&
+    curOrder?.returnInfo.returnedQuantity < curOrder?.quantity;
 
   if (isLoading) {
     return (
@@ -109,29 +109,29 @@ const SingleOrder = ({
     {
       icon: Eye,
       text: "View Product",
-      action: () => { },
+      action: () => {},
       link: `/shop/all/${nameUrl}`,
-      variant: "primary"
+      variant: "primary",
     },
     {
       icon: ShoppingCart,
       text: "Buy Again",
       action: handleAddToCart,
-      variant: "secondary"
+      variant: "secondary",
     },
     {
       icon: SquareChartGantt,
       text: "Review Product",
-      action: () => setShowProductReview(true),
-      variant: "accent"
+      action: () => setShowReviewModal(true),
+      variant: "accent",
     },
     {
       icon: Undo,
       text: isReturned ? "Returned" : "Return Item",
       action: () => setIsFormVisible(true),
       variant: "return",
-      disabled: !canReturn
-    }
+      disabled: !canReturn,
+    },
   ];
 
   return (
@@ -155,13 +155,19 @@ const SingleOrder = ({
               <Image
                 src={{
                   sm: Array.isArray(singleOrderItem.img)
-                    ? singleOrderItem.img.find(path => path.sm?.toLowerCase().includes("front"))?.sm
+                    ? singleOrderItem.img.find((path) =>
+                        path.sm?.toLowerCase().includes("front")
+                      )?.sm
                     : null,
                   md: Array.isArray(singleOrderItem.img)
-                    ? singleOrderItem.img.find(path => path.md?.toLowerCase().includes("front"))?.md
+                    ? singleOrderItem.img.find((path) =>
+                        path.md?.toLowerCase().includes("front")
+                      )?.md
                     : null,
                   lg: Array.isArray(singleOrderItem.img)
-                    ? singleOrderItem.img.find(path => path.lg?.toLowerCase().includes("front"))?.lg
+                    ? singleOrderItem.img.find((path) =>
+                        path.lg?.toLowerCase().includes("front")
+                      )?.lg
                     : null,
                 }}
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
@@ -184,7 +190,7 @@ const SingleOrder = ({
               <div className="flex items-center gap-2">
                 <span className="text-[var(--text-color)]/70">Quantity:</span>
                 <span className="font-medium text-[var(--themeColor)]">
-                  {curOrder?.quantity} {curOrder?.quantity > 1 ? 'Pcs' : 'Pc'}
+                  {curOrder?.quantity} {curOrder?.quantity > 1 ? "Pcs" : "Pc"}
                 </span>
               </div>
 
@@ -249,43 +255,12 @@ const SingleOrder = ({
 
       {/* Product Review Modal */}
       <AnimatePresence>
-        {showProductReview && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm flex justify-center items-center z-50"
-            onClick={() => setShowProductReview(false)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-[var(--background-color)] rounded-2xl shadow-2xl max-w-md w-full max-h-[80vh] overflow-auto"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Modal Header */}
-              <div className="flex items-center justify-between p-6 border-b border-[var(--neutral-color)]/30">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-[var(--themeColor)]/10 rounded-lg">
-                    <Star className="w-5 h-5 text-[var(--themeColor)]" />
-                  </div>
-                  <h2 className="text-xl font-bold text-[var(--text-color)]">
-                    Rate & Review
-                  </h2>
-                </div>
-                <CloseButton action={() => setShowProductReview(false)} />
-              </div>
-
-              {/* Modal Content */}
-              <div className="p-3 overflow-y-auto">
-                <p className="text-[var(--text-color)]/70 mb-4">
-                  Share your experience with this product
-                </p>
-                <ReviewsAndRatings productName={nameUrl} />
-              </div>
-            </motion.div>
-          </motion.div>
+        {showReviewModal && (
+          <ReviewModal
+            isOpen={showReviewModal}
+            onClose={() => setShowReviewModal(false)}
+            productId={nameUrl}
+          />
         )}
       </AnimatePresence>
 
@@ -322,15 +297,23 @@ const SingleOrder = ({
                 <div className="space-y-2 text-sm text-[var(--text-color)]/70">
                   <div className="flex items-start gap-2">
                     <div className="w-1.5 h-1.5 bg-[var(--themeColor)] rounded-full mt-2 flex-shrink-0"></div>
-                    <p>Returns accepted within 2 days of delivery for unused items in original packaging</p>
+                    <p>
+                      Returns accepted within 2 days of delivery for unused
+                      items in original packaging
+                    </p>
                   </div>
                   <div className="flex items-start gap-2">
                     <div className="w-1.5 h-1.5 bg-[var(--themeColor)] rounded-full mt-2 flex-shrink-0"></div>
-                    <p>Please attach images and video for verification during return process</p>
+                    <p>
+                      Please attach images and video for verification during
+                      return process
+                    </p>
                   </div>
                   <div className="flex items-start gap-2">
                     <div className="w-1.5 h-1.5 bg-[var(--themeColor)] rounded-full mt-2 flex-shrink-0"></div>
-                    <p>Refunds processed once return is received and inspected</p>
+                    <p>
+                      Refunds processed once return is received and inspected
+                    </p>
                   </div>
                 </div>
               </div>
@@ -340,11 +323,13 @@ const SingleOrder = ({
                 <Suspense fallback={<Loader height="50px" />}>
                   <ReturnItemForm
                     product={curOrder && curOrder}
-                    returnedQuantity={curOrder?.returnInfo.returnedQuantity || 0}
+                    returnedQuantity={
+                      curOrder?.returnInfo.returnedQuantity || 0
+                    }
                     paymentMethod={paymentMethod}
                     amountPaid={Math.round(
                       singleOrderItem.price -
-                      (singleOrderItem.price * singleOrderItem.discount) / 100
+                        (singleOrderItem.price * singleOrderItem.discount) / 100
                     )}
                     invoiceNumber={invoiceNumber}
                     onSubmit={() => setIsFormVisible(false)}
@@ -359,7 +344,5 @@ const SingleOrder = ({
     </motion.div>
   );
 };
-
-
 
 export default SingleOrder;

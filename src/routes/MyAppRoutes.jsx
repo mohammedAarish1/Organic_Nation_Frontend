@@ -222,8 +222,8 @@ const MyAppRoutes = () => {
                 element={<NoPageFound />}
             />
             <Route
-                key="no-page-found"
-                path="/product/:productId/reviews"
+                key="all-reviews"
+                path="/shop/:category/:productId/reviews"
                 element={<AllReviews/>}
             />
         </Routes>

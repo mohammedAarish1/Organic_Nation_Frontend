@@ -8,6 +8,7 @@ import SEO from '../../helper/SEO/SEO';
 import CategoryCarousel from '../../components/productCategories/CategoryCarousel';
 import Search from '../../components/search/Search';
 import { addReviews } from '../../features/reviews/reviews';
+import ChristmasWish from '../../components/popup-banner/ChristmasWish';
 // import DiwaliWish from '../../components/popup-banner/DiwaliWish';
 // import IndependenceDayWish from '../../components/popup-banner/IndependenceDayWish';
 // import InstagramShowcase from '../../components/InstagramShowcase';
@@ -174,7 +175,7 @@ const Home = memo(() => {
                     <BetterImagesSection images={BETTER_IMAGES} />
                 </LazyLoadSection>
             </Suspense>
-
+<ChristmasWish/>
             {/* <DiwaliWish /> */}
             {/* <IndependenceDayWish /> */}
 

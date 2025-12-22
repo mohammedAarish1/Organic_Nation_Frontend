@@ -284,9 +284,10 @@ const Cart = () => {
                       </div>
 
                       {/* Quantity */}
-                      <div className="md:col-span-2 flex justify-start md:justify-center">
+                      <div className="md:col-span-2 flex justify-start items-center md:justify-center">
                         <ProductQty
                           curItem={item}
+                          extraClass='px-4 py-2' 
                         />
                         {item.quantity >= item.availability && (
                           <span className="text-xs text-[#D87C45] ml-2 mt-2">
