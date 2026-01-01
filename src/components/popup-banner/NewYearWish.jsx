@@ -195,36 +195,8 @@ const NewYearWish = () => {
           </div>
 
           {/* Countdown */}
-          <div
-            style={{
-              opacity: showContent ? 1 : 0,
-              transform: showContent ? 'translateY(0)' : 'translateY(20px)',
-              transition: 'all 0.5s ease-out 0.3s'
-            }}
-            className="mb-6"
-          >
-            <div className="grid grid-cols-4 gap-2 sm:gap-3 max-w-xs mx-auto">
-              {[
-                { label: 'Days', value: countdown.days },
-                { label: 'Hours', value: countdown.hours },
-                { label: 'Mins', value: countdown.minutes },
-                { label: 'Secs', value: countdown.seconds }
-              ].map((item, i) => (
-                <div key={item.label} className="rounded-lg p-2 sm:p-3" style={{
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)'
-                }}>
-                  <div className="text-xl sm:text-2xl md:text-3xl font-bold text-yellow-300">
-                    {String(item.value).padStart(2, '0')}
-                  </div>
-                  <div className="text-xs text-blue-200 mt-1">{item.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
+       
 
-          {/* Message */}
           <div
             style={{
               opacity: showContent ? 1 : 0,
@@ -240,7 +212,6 @@ const NewYearWish = () => {
             </p>
           </div>
 
-          {/* CTA Button */}
           <div
             style={{
               opacity: showContent ? 1 : 0,
