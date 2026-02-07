@@ -50,7 +50,6 @@
 //         setIsOpen(false);
 //         sessionStorage.setItem('newYearPopupSeen', 'true');
 //     };
-//   const handleCelebrate = () => console.log('Navigate to celebration page');
 
 //   if (!isOpen) return null;
 

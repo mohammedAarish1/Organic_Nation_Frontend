@@ -262,7 +262,7 @@ const Product = memo(({ gridView, product }) => {
                     }}
                     blurSrc={frontImage.blur}
                     alt={`${product.name} front view`}
-                    className="w-full h-full object-contain p-2"
+                    className="w-full h-full object-contain p-2 rounded-3xl"
                   />
                 </div>
               )}
@@ -282,7 +282,7 @@ const Product = memo(({ gridView, product }) => {
                     }}
                     blurSrc={leftImage.blur}
                     alt={`${product.name} left view`}
-                    className="w-full h-full object-contain p-2"
+                    className="w-full h-full object-contain p-2 rounded-3xl"
                   />
                 </div>
               )}
@@ -303,7 +303,7 @@ const Product = memo(({ gridView, product }) => {
 
               {/* Discount Badge */}
               {product.discount > 0 && (
-                <div className="absolute top-4 left-4 px-2 py-1 bg-red-500 text-white text-sm font-semibold rounded z-20">
+                <div className="absolute top-4 left-4 px-2 py-1 text-xs sm:text-sm bg-red-500 text-white text-sm font-semibold rounded z-20">
                   {product.discount}% OFF
                 </div>
               )}
@@ -349,7 +349,7 @@ const Product = memo(({ gridView, product }) => {
                 </div>
               </NavLink>
               <div className="w-full relative z-30">
-                <AddToCartBtn item={product} extraClasses='flex py-3 gap-1 w-full items-center justify-center z-30' />
+                <AddToCartBtn item={product} extraClasses='flex py-2 gap-1 w-full items-center justify-center z-30' />
               </div>
             </div>
           </div>

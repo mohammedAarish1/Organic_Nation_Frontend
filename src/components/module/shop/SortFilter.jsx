@@ -24,7 +24,7 @@ const SortFilter = ({ isMobile = false }) => {
                     }
                 }}
                 // className="w-auto block border cursor-pointer bg-white border-gray-300 hover:border-gray-500 p-2  leading-tight focus:outline-none"
-                className="outline-none block border w-auto max-w-40 xs:max-w-full p-2.5"
+                className="outline-none block border w-28 p-2.5 shadow-md rounded-lg"
             >
                 <option defaultValue="sort" >Sort</option>
                 <option value="low_to_high">Price: Low to High</option>

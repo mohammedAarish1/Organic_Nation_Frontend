@@ -223,7 +223,6 @@ const ProductDetails = () => {
   // const [isWishlisted, setIsWishlisted] = useState(false);
   const [activeMobileTab, setActiveMobileTab] = useState("description");
   // const [imageLoading, setImageLoading] = useState(false);
-
   const actionButtonRef = useRef(null); // Ref for action buttons section (to check visibility)
   const productDetailsRef = useRef(null); // Ref for the main page body (for scroll detection)
 

@@ -46,7 +46,7 @@ const CategoryCarousel = () => {
     const scrollRef = useRef(null);
     const [showLeftArrow, setShowLeftArrow] = useState(false);
     const [showRightArrow, setShowRightArrow] = useState(true);
-    const { categoryList } = useSelector(state => state.filterData);
+    const { categoryList,categoryBtnValue } = useSelector(state => state.filterData);
 
     const categoriesImages = getCatogoriesWithImages(categoryList)
 
@@ -111,11 +111,11 @@ const CategoryCarousel = () => {
                         // }}
                         >
                             <div className="relative">
-                                <div className="border-2 border-[var(--themeColor)] p-2 rounded-full 
+                                <div className={`${categoryBtnValue===item.categoryUrl.toLowerCase() ?'border-4' : 'border-2'}  border-[var(--themeColor)] shadow-slate-400 shadow-md p-2 rounded-full 
                                             transform transition-transform duration-300 
                                             group-hover:scale-110 group-hover:shadow-lg
                                             w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24
-                                            flex items-center justify-center">
+                                            flex items-center justify-center`}>
                                     <img
                                         src={item.image}
                                         alt={`Image representing the ${item.name} category`}

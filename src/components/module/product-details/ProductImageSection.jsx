@@ -56,7 +56,7 @@ prevImage
                       e.stopPropagation();
                       prevImage();
                     }}
-                    className="absolute left-4 top-1/2 transform -translate-y-1/2 p-3 rounded-full shadow-lg transition-all duration-300 opacity-0 group-hover:opacity-100"
+                    className="absolute left-4 top-1/2 transform -translate-y-1/2 p-3 rounded-full shadow-lg transition-all duration-300 opacity-0 group-hover:opacity-100 hidden sm:flex"
                     style={{ backgroundColor: "#F5EFE6", color: "#7A2E1D" }}
                   >
                     <ChevronLeft />
@@ -66,7 +66,7 @@ prevImage
                       e.stopPropagation();
                       nextImage();
                     }}
-                    className="absolute right-4 top-1/2 transform -translate-y-1/2 p-3 rounded-full shadow-lg transition-all duration-300 opacity-0 group-hover:opacity-100"
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 p-3 rounded-full shadow-lg transition-all duration-300 opacity-0 group-hover:opacity-100 hidden sm:flex"
                     style={{ backgroundColor: "#F5EFE6", color: "#7A2E1D" }}
                   >
                     <ChevronRight />
@@ -74,7 +74,7 @@ prevImage
 
                   {/* Image Counter */}
                   <div
-                    className="absolute bottom-4 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded-full text-white text-sm font-semibold"
+                    className="absolute bottom-4 left-1/2 transform -translate-x-1/2 sm:px-4 px-2 sm:py-2 py-1 rounded-full text-white sm:text-sm text-[11px] font-semibold"
                     style={{ backgroundColor: "rgba(122, 46, 29, 0.8)" }}
                   >
                     {selectedImage + 1} / {product.img.length}

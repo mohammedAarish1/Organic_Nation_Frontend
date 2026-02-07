@@ -1,9 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
 
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import {
-  fetchWishlist,
+  // fetchWishlist,
   toggleWishlistItem,
 } from "../../features/wishlistSlice";
 import { Heart } from "lucide-react";
@@ -25,11 +25,11 @@ const WishListBtn = ({ productId,extraClasses='p-4' }) => {
     (nameUrl) => nameUrl === productId
   );
   // Fetch wishlist when user is authenticated
-  useEffect(() => {
-    if (user) {
-      dispatch(fetchWishlist());
-    }
-  }, [user, dispatch]);
+  // useEffect(() => {
+  //   if (user) {
+  //     dispatch(fetchWishlist());
+  //   }
+  // }, [user, dispatch]);
 
   // Handle wishlist toggle
   const handleWishlistToggle = async (e) => {
@@ -51,7 +51,6 @@ const WishListBtn = ({ productId,extraClasses='p-4' }) => {
       ).unwrap();
 
       // Refetch to get updated list with full product details
-      // dispatch(fetchWishlist());
 
       toast.success(
         isInWishlist ? "Removed from wishlist" : "Added to wishlist"

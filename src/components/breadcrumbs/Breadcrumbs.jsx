@@ -6,7 +6,7 @@ const Breadcrumbs = () => {
 
     const { pathname } = useLocation();
 
-
+if (pathname === '/shop/all') return null;
 
     // Function to check if the current path should hide breadcrumbs
     const shouldHideBreadcrumbs = (path) => {

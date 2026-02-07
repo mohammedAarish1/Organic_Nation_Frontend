@@ -5,30 +5,31 @@ import {
   // getSortData,
   // setCategoryBtnValue
 } from '../../features/filter/filterSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { setShowFilters } from '../../features/toggleSidebar/toggleSidebar';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { setShowFilters } from '../../features/toggleSidebar/toggleSidebar';
 // import { Tooltip } from 'react-tooltip';
 // react icons 
 // import { setCurrentPage } from '../../features/pagination/pagination';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import SortFilter from '../module/shop/SortFilter';
-import Search from "../../components/search/Search"
-import { Funnel, Grid, List } from 'lucide-react';
+// import Search from "../../components/search/Search"
+// import { Funnel, Grid, List } from 'lucide-react';
+import FilterButton from '../module/shop/FilterButton';
 
 
 const SortSection = ({ setGridView, gridView }) => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const dispatch = useDispatch();
+  // const navigate = useNavigate();
   // const [sortValue, setSortValue] = useState("sort");
-  const { categoryBtnValue, categoryList } = useSelector((state) => state.filterData);
+  // const { categoryBtnValue, categoryList } = useSelector((state) => state.filterData);
   // for searching in mobile devices
   // const [searchValue, setSearchValue] = useState('');
 
   return (
     <div>
-      <div className='md:hidden mb-5'>
+      {/* <div className='md:hidden mb-5'>
         <Search />
-      </div>
+      </div> */}
 
       {/* search filter for mobile */}
       {/* <div className='md:hidden mb-5'>
@@ -49,7 +50,7 @@ const SortSection = ({ setGridView, gridView }) => {
         </form>
       </div> */}
 
-      <div className=' flex md:flex-row flex-row-reverse flex-wrap justify-between sm:gap-0 gap-5 items-center lg:px-32 md:px-2'>
+      <div className=' flex md:flex-row  flex-wrap justify-between sm:gap-0 gap-5 items-center lg:px-[32px] md:px-2'>
 
         {/* grid and list view  */}
         <div className=' gap-2 flex'>
@@ -108,14 +109,13 @@ const SortSection = ({ setGridView, gridView }) => {
           </div> */}
 
           {/* View mode toggle */}
-            <div className="bg-white shadow-md rounded-full p-1 flex">
+            {/* <div className="bg-white shadow-md rounded-full p-1 flex">
               <button
                 onClick={() => setGridView(true)}
 
                 className={`px-4 py-2 rounded-full flex items-center ${gridView ? 'bg-[#712522] text-white' : 'text-gray-600'}`}
               >
                 <Grid size={16} className="mr-2" />
-                {/* <span className="hidden sm:inline">Grid View</span> */}
               </button>
               <button
                 onClick={() => setGridView(false)}
@@ -123,9 +123,10 @@ const SortSection = ({ setGridView, gridView }) => {
                 className={`px-4 py-2 rounded-full flex items-center ${!gridView ? 'bg-[#712522] text-white' : 'text-gray-600'}`}
               >
                 <List size={16} className="mr-2" />
-                {/* <span className="hidden sm:inline">Carousel</span> */}
               </button>
-            </div>
+            </div> */}
+              <FilterButton />
+
         </div>
 
 
@@ -136,13 +137,13 @@ const SortSection = ({ setGridView, gridView }) => {
         </div> */}
 
         {/* sort options  */}
-        <div className="relative md:block hidden">
+        <div className="relative">
           <SortFilter />
         </div>
 
 
         {/* categories options visible in mobile devices  */}
-        <select
+        {/* <select
           name="category"
           id="category"
           value={categoryBtnValue}
@@ -160,18 +161,18 @@ const SortSection = ({ setGridView, gridView }) => {
             <option value={curItem.categoryUrl.toLowerCase()} key={curItem.categoryUrl}>{curItem.category}</option>
 
           ))}
-        </select>
+        </select> */}
         {/* categories options visible in mobile devices end */}
 
 
 
 
         {/* fillter button -- for mobile devices  */}
-        <div className='md:hidden block'>
+        {/* <div className='md:hidden block'>
           <button className='flex justify-center items-center text-[var(--themeColor)] gap-3 py-1 px-2 border border-gray-400 rounded-lg'
             onClick={() => dispatch(setShowFilters('showHide'))}
           >Filters <Funnel size={16} /></button>
-        </div>
+        </div> */}
 
       </div>
     </div>
