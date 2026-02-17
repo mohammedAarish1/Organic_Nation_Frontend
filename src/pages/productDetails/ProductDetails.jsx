@@ -32,39 +32,50 @@ import ProductImageSection from "../../components/module/product-details/Product
 import ProductInfo from "../../components/module/product-details/ProductInfo";
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
-const AdditionalImages = memo(({ 
-  additionalImages,
-  setFullScreenImages,
-  setFullScreenIndex,
-  setIsFullScreen
- }) => {
-  return (
-    <div className="bg-white py-12 rounded-lg">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {additionalImages.map((image, idx) => (
-            <motion.div
-              key={idx}
-              whileHover={{ scale: 1.05 }}
-              className="rounded-xl overflow-hidden shadow-lg cursor-pointer"
-            >
-              <img
-                src={image}
-                alt={`Gallery ${idx + 1}`}
-                className="w-full h-full object-cover"
-                onClick={() => {
-                  setFullScreenImages(additionalImages);
-                  setFullScreenIndex(idx);
-                  setIsFullScreen(true);
-                }}
-              />
-            </motion.div>
-          ))}
+// const videoData = [
+//   "https://organicnationmages.s3.ap-south-1.amazonaws.com/product-detail-page-videos/honey+process-caption.mp4",
+//   "https://organicnationmages.s3.ap-south-1.amazonaws.com/product-detail-page-videos/honey+process-caption.mp4",
+//   "https://organicnationmages.s3.ap-south-1.amazonaws.com/product-detail-page-videos/honey+process-caption.mp4",
+//   "https://organicnationmages.s3.ap-south-1.amazonaws.com/product-detail-page-videos/honey+process-caption.mp4",
+//   "https://organicnationmages.s3.ap-south-1.amazonaws.com/product-detail-page-videos/honey+process-caption.mp4",
+//   "https://organicnationmages.s3.ap-south-1.amazonaws.com/product-detail-page-videos/honey+process-caption.mp4",
+// ];
+
+const AdditionalImages = memo(
+  ({
+    additionalImages,
+    setFullScreenImages,
+    setFullScreenIndex,
+    setIsFullScreen,
+  }) => {
+    return (
+      <div className="bg-white py-12 rounded-lg">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {additionalImages.map((image, idx) => (
+              <motion.div
+                key={idx}
+                whileHover={{ scale: 1.05 }}
+                className="rounded-xl overflow-hidden shadow-lg cursor-pointer"
+              >
+                <img
+                  src={image}
+                  alt={`Gallery ${idx + 1}`}
+                  className="w-full h-full object-cover"
+                  onClick={() => {
+                    setFullScreenImages(additionalImages);
+                    setFullScreenIndex(idx);
+                    setIsFullScreen(true);
+                  }}
+                />
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
-  );
-});
+    );
+  },
+);
 
 const WhyUs = memo(({ whyUs }) => {
   return (
@@ -235,7 +246,7 @@ const ProductDetails = () => {
   const getProductDetail = async (nameUrl) => {
     try {
       const response = await axios.get(
-        `${apiUrl}/products/product/details/${nameUrl}`
+        `${apiUrl}/products/product/details/${nameUrl}`,
       );
       if (response.status === 200) {
         setProductSeoData(response.data.seoData);
@@ -274,15 +285,15 @@ const ProductDetails = () => {
 
   const { isSticky, showMobileTabs } = useStickyDetector(
     productDetailsRef,
-    actionButtonRef
+    actionButtonRef,
   );
   const finalPrice = useMemo(
     () =>
       Math.round(
         product?.details?.price -
-          (product?.details?.price * product?.details?.discount) / 100
+          (product?.details?.price * product?.details?.discount) / 100,
       ),
-    [product?.details.price, product?.details.discount]
+    [product?.details.price, product?.details.discount],
   );
 
   // const faqs = useMemo(
@@ -348,7 +359,7 @@ const ProductDetails = () => {
         skip: false,
       },
     ],
-    [sectionsRefs]
+    [sectionsRefs],
   );
 
   const scrollToSection = useCallback(
@@ -369,21 +380,21 @@ const ProductDetails = () => {
         setActiveMobileTab(id);
       }
     },
-    [showMobileTabs, sectionsRefs]
+    [showMobileTabs, sectionsRefs],
   );
 
   const nextImage = useCallback(
     () => setSelectedImage((prev) => (prev + 1) % product.details.img.length),
-    [product?.details.img.length]
+    [product?.details.img.length],
   );
 
   const prevImage = useCallback(
     () =>
       setSelectedImage(
         (prev) =>
-          (prev - 1 + product.details.img.length) % product.details.img.length
+          (prev - 1 + product.details.img.length) % product.details.img.length,
       ),
-    [product?.details.img.length]
+    [product?.details.img.length],
   );
 
   // Set the theme color as a CSS variable for buttons
@@ -480,21 +491,33 @@ const ProductDetails = () => {
 
       {/* Video Section */}
       {product.productInfo?.video && (
+      // {videoData.length > 0 && (
         <div className="bg-white mt-8 py-12 scroll-smooth">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">
               See It In Action
             </h2>
-            <div className=" bg-gray-900 rounded-2xl shadow-2xl">
+            <div className="flex  flex-row gap-5 overflow-x-auto p-1 scrollbar-hide">
+              {product.productInfo?.video.map((videoUrl,index) => {
+                return (
+                  <video
+                    key={index}
+                    src={videoUrl}
+                    className="w-full h-[420px] object-center rounded-lg border bg-gray-700"
+                    controls
+                  />
+                );
+              })}
+            </div>
+            {/* <div className=" bg-gray-900 rounded-2xl shadow-2xl">
               <div className="flex items-center justify-center">
-                {/* Video player with auto-fit */}
                 <video
                   src={product.productInfo?.video}
                   className="w-full h-[400px] object-center rounded-lg border"
                   controls
                 />
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       )}
@@ -535,7 +558,7 @@ const ProductDetails = () => {
               averageRating={product.averageRating}
               totalReviews={product.reviews.length}
               productId={product?.details["name-url"]}
-              categoryUrl={product?.details['category-url']}
+              categoryUrl={product?.details["category-url"]}
             />
           </div>
         )}
@@ -553,7 +576,7 @@ const ProductDetails = () => {
           id="whyus"
           ref={sectionsRefs.whyus}
         >
-          <WhyUs whyUs={product.productInfo?.whyUs ||[]} />
+          <WhyUs whyUs={product.productInfo?.whyUs || []} />
         </div>
         {/* People Also Bought */}
         <PeopleAlsoBought
@@ -583,7 +606,7 @@ const ProductDetails = () => {
                           {value}
                         </dd>
                       </div>
-                    )
+                    ),
                   )}
               </div>
             </section>
@@ -773,7 +796,7 @@ const ProductDetails = () => {
                   setFullScreenIndex(
                     (prev) =>
                       (prev - 1 + fullScreenImages.length) %
-                      fullScreenImages.length
+                      fullScreenImages.length,
                   )
                 }
                 className="absolute left-1 top-1/2 transform -translate-y-1/2 p-2 rounded-full text-white shadow-lg"
@@ -787,7 +810,7 @@ const ProductDetails = () => {
                 // onClick={nextImage}
                 onClick={() =>
                   setFullScreenIndex(
-                    (prev) => (prev + 1) % fullScreenImages.length
+                    (prev) => (prev + 1) % fullScreenImages.length,
                   )
                 }
                 className="absolute right-1 top-1/2 transform -translate-y-1/2 p-2 rounded-full text-white shadow-lg"

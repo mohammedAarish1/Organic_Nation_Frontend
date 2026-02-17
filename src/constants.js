@@ -1,1 +1,1 @@
-export const freeShippingEligibleAmt = 399
+export const freeShippingEligibleAmt = 599

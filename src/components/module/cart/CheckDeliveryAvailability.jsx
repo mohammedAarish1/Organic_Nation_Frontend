@@ -56,8 +56,8 @@ const CheckDeliveryAvailability = React.memo(() => {
 
   return (
     <div className="mb-6 mt-10 border-b border-[#DCD2C0] pb-4">
-      <h3 className="text-sm font-semibold text-gray-900  mb-3 flex items-center">
-        <MapPin size={16} className="mr-1" /> Check Delivery Availability
+      <h3 className="text-sm font-semibold text-gray-900  mb-3 flex flex-wrap items-center">
+        <MapPin size={16} className="mr-1" /> Check Delivery Availability  <span className='xs:ml-2 ml-4 text-gray-500'>(Delivery: 2-7 days across India)</span>
       </h3>
       <Formik
         initialValues={{ pincode }}
