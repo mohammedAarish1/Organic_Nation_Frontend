@@ -34,12 +34,13 @@ const USER_MENU_ITEMS = [
   ];
 
 
-  const UserMenuItem = memo(({ icon: Icon, label, path, onClick }) => (
+  const UserMenuItem = memo(({ icon: Icon, label, path }) => {
+    return (
     <li>
       <Link
         to={path}
         className="flex items-center gap-3 px-6 py-3 hover:bg-gray-50 transition-all group"
-        onClick={onClick}
+        // onClick={onClick}
       >
         <span className="p-2 rounded-lg bg-gray-100 group-hover:bg-white group-hover:text-green-600 transition-colors">
           <Icon size={20} />
@@ -47,7 +48,7 @@ const USER_MENU_ITEMS = [
         <span className="font-medium text-gray-700 group-hover:text-gray-900">{label}</span>
       </Link>
     </li>
-  ));
+  )});
 
 const UserMenu = ({ user, showMenu, menuRef, onLogout }) => (
     <div 

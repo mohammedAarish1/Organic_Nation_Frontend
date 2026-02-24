@@ -106,11 +106,19 @@ import { memo, useMemo, useState } from "react";
 import ShareBtn from "../../add-to-cart-btn/ShareBtn";
 import StarRating from "../../common/StarRating";
 import { freeShippingEligibleAmt } from "../../../constants";
+import { Link } from "react-router-dom";
 
 const offers = [
+  // {
+  //   tag: "BUNDLE",
+  //   text: "FLAT 40% OFF on buying 2 or more items",
+  //   code: null,
+  //   highlight: true,
+  //   category: "Organic Honey",
+  // },
   {
     tag: "BUNDLE",
-    text: "FLAT 40% OFF on buying 2 or more items",
+    text: "Click to check our Combos",
     code: null,
     highlight: true,
     category: "Organic Honey",
@@ -178,7 +186,7 @@ const OfferBox = ({ offer }) => {
               transition={{ duration: 1.5, repeat: Infinity }}
               className="ml-2 text-xs text-red-600 font-bold"
             >
-              🔥 Most Popular
+              🔥 Limited time deal
             </motion.span>
           )}
         </p>
@@ -207,7 +215,6 @@ const OfferBox = ({ offer }) => {
 
 const ProductInfo = memo(
   ({ product, qty, setQty, setIsCheckoutOpen, actionButtonRef }) => {
-    console.log('product', product)
     const [isWishlisted, setIsWishlisted] = useState(false);
     const finalPrice = useMemo(
       () =>
@@ -256,7 +263,7 @@ const ProductInfo = memo(
             </a>
 
             {/* External Reviews */}
-            {product.productInfo.otherReviews?.length > 0 && (
+            {product.productInfo?.otherReviews?.length > 0 && (
               <div className="flex items-center gap-3 xs:ml-auto">
                 {product.productInfo.otherReviews.map((review, index) => {
                   if (review.rating<4) return null;
@@ -375,9 +382,16 @@ const ProductInfo = memo(
             </h3>
 
             <div className="flex gap-4 overflow-x-auto scrollbar-hide  py-1">
-              {product.details.category === "Organic Honey" && (
+              {/* {product.details.category === "Organic Honey" && (
+                <Link to='/shop/gifts-&-combos'>
                 <OfferBox offer={offers[0]} />
-              )}
+                </Link>
+              )} */}
+             
+                <Link to='/shop/gifts-&-combos'>
+                <OfferBox offer={offers[0]} />
+                </Link>
+              
               <OfferBox offer={offers[1]} />
             </div>
             {/* Limited Time Banner */}
