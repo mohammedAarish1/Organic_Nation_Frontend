@@ -8,6 +8,7 @@ import SEO from '../../helper/SEO/SEO';
 import CategoryCarousel from '../../components/productCategories/CategoryCarousel';
 import Search from '../../components/search/Search';
 import { addReviews } from '../../features/reviews/reviews';
+import HoliWish from '../../components/popup-banner/HoliWish';
 // import ChristmasWish from '../../components/popup-banner/ChristmasWish';
 // import NewYearWish from '../../components/popup-banner/NewYearWish';
 // import DiwaliWish from '../../components/popup-banner/DiwaliWish';
@@ -179,6 +180,7 @@ const Home = memo(() => {
             {/* <NewYearWish/> */}
 {/* <ChristmasWish/> */}
             {/* <DiwaliWish /> */}
+            <HoliWish/>
             {/* <IndependenceDayWish /> */}
 
             {/* <ClientLogosShowcase/> */}
