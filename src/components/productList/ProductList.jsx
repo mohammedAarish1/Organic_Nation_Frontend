@@ -1,25 +1,30 @@
-import React, { lazy, Suspense, useState } from 'react';
+import  { lazy, Suspense, useState } from 'react';
 import Product from '../../components/product/Product'
 import { useSelector } from 'react-redux';
 // import Pagination from '../pagination/Pagination';
 import Loader from '../../components/common/Loader'
 import { Link } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowDown, ArrowDownNarrowWide, ArrowLeft } from 'lucide-react';
 
-const Pagination = lazy(() => import('../pagination/Pagination'))
+// const Pagination = lazy(() => import('../pagination/Pagination'))
 
 const ProductList = ({ gridView }) => {
 
   const { filteredProducts, loading } = useSelector((state) => state.filterData)
-  const { currentPage } = useSelector((state) => state.pagination)
+  // const { currentPage } = useSelector((state) => state.pagination)
+  
+  // const [postPerPage, setPostPerPage] = useState(9);
+  // const lastIndex = currentPage * postPerPage;
+  // const firstIndex = lastIndex - postPerPage;
+  // const currentPageData = filteredProducts?.slice(firstIndex, lastIndex);
+  
+  const [visibleCount, setVisibleCount] = useState(9);
 
+  const currentPageData = filteredProducts?.slice(0, visibleCount);
 
-  const [postPerPage, setPostPerPage] = useState(9);
-
-  const lastIndex = currentPage * postPerPage;
-  const firstIndex = lastIndex - postPerPage;
-  const currentPageData = filteredProducts?.slice(firstIndex, lastIndex);
-
+  const handleViewMore = () => {
+    setVisibleCount((prev) => prev + 10);
+  };
 
   if (loading) return <h1>Loading...</h1>
 
@@ -56,11 +61,22 @@ const ProductList = ({ gridView }) => {
           <Loader height="100px" />
         )}
       </div>
-      <div className=' my-20 py-2'>
+      {/* <div className=' my-20 py-2'>
         <Suspense fallback={<Loader height="10px" />}>
           <Pagination totalPost={filteredProducts?.length} postPerPage={postPerPage} />
         </Suspense>
-      </div>
+      </div> */}
+
+        {visibleCount < filteredProducts?.length && (
+        <div className="flex justify-center sm:my-10 my-5">
+          <button
+            onClick={handleViewMore}
+            className="sm:px-6 px-2 py-2 bg-[var(--alert-color)] text-white rounded-md hover:bg-orange-600 transition"
+          >
+            <span className='flex items-center gap-2'>View More Products <ArrowDown size={18} /> </span>
+          </button>
+        </div>
+      )}
     </div>
   )
 }

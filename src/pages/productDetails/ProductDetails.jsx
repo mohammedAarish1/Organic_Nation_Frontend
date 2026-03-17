@@ -411,7 +411,7 @@ const ProductDetails = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50" ref={productDetailsRef}>
+    <div className="min-h-screen lg:pt-8 pt-5" ref={productDetailsRef}>
       <SEO
         title={curProductSeoData?.title || ""}
         description={curProductSeoData?.description || ""}

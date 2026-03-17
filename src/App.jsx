@@ -13,8 +13,8 @@ import {
   Header,
   Footer,
   Info,
-  Breadcrumbs,
-  WhatsApp,
+  // Breadcrumbs,
+  // WhatsApp,
   // getAllCartItems,
   // getAllBlogs,
   // getAllRecipes,
@@ -52,7 +52,7 @@ const MainContent = memo(() => {
       {/* <DiscountProgress /> */}
       <IncompleteOrder />
       <div>
-        <Breadcrumbs />
+        {/* <Breadcrumbs /> */}
         <Suspense
           fallback={
             <div className="py-52 flex justify-center items-center">
@@ -67,7 +67,7 @@ const MainContent = memo(() => {
         </Suspense>
         <Footer />
         <div className="max-w-max fixed xs:bottom-10 bottom-5 xs:right-10 right-5 z-40">
-          <WhatsApp />
+          {/* <WhatsApp /> */}
         </div>
       </div>
       {/* <Info text="Organic Nation © All rights reserved." fontSize='xs' /> */}

@@ -219,7 +219,7 @@ import { useCartNotification } from '../../context/CartNotificationContext';
 import { motion } from 'framer-motion';
 import { ShoppingCart } from 'lucide-react';
 
-const AddToCartBtn = ({ item, qty = 1 ,extraClasses=''}) => {
+const AddToCartBtn = ({ item, qty = 1 ,extraClasses='',action=null}) => {
   const dispatch = useDispatch();
   const { cartItemsList } = useSelector((state) => state.cart);
   const { showCartNotification } = useCartNotification();
@@ -248,6 +248,9 @@ const AddToCartBtn = ({ item, qty = 1 ,extraClasses=''}) => {
         // Show cart notification instead of toast
         // ADD THIS LINE - Update discount progress
         // dispatch(getDiscountProgress());
+        if(action){
+          action()
+        }
         showCartNotification();
       });
   };

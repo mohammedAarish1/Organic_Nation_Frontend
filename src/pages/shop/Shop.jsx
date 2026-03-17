@@ -10,6 +10,7 @@ import { productCategoriesData } from '../../helper/SEO/SEOdata';
 import SEO from '../../helper/SEO/SEO';
 import FilterSidebar from '../../components/module/shop/FilterSidebar';
 import CategoryCarousel from '../../components/productCategories/CategoryCarousel';
+import ComboOfferPopup from '../../components/module/shop/Comboofferpopup';
 // import OfferBanner from '../../components/offerBanner/OfferBanner';
 
 
@@ -18,12 +19,11 @@ const Shop = () => {
   const dispatch = useDispatch();
   const { category } = useParams();
   const [gridView, setGridView] = useState(true);
-  const { filteredProducts,searchInputValue ,loading,categoryBtnValue} = useSelector(state => state.filterData);
+  const {products, filteredProducts,searchInputValue ,loading,categoryBtnValue} = useSelector(state => state.filterData);
 
   const [curCategorySeoData, setCategorySeoData] = useState(productCategoriesData.all);
 
-
-
+  const comboProducts=products.filter(p=>p['category-url']==='Gifts-&-Combos')
 
 
   useEffect(() => {
@@ -118,6 +118,8 @@ const Shop = () => {
           </div>
         </section>
       </div>
+      <ComboOfferPopup combos={comboProducts} />
+    
     </div>
   )
 

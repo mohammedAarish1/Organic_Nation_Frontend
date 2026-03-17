@@ -86,11 +86,11 @@ const CategoryCarousel = () => {
                 <button
                     onClick={() => scroll('left')}
                     aria-label="Previous Categories"
-                    className={`flex-shrink-0 p-2 rounded-full hover:bg-gray-100 transition-colors duration-200
+                    className={` flex-shrink-0 p-2 rounded-full hover:bg-gray-100 transition-colors duration-200
                               ${showLeftArrow ? 'text-gray-800' : 'text-gray-300'}`}
                     disabled={!showLeftArrow}
                 >
-                    <ChevronLeft className="w-6 h-6" />
+                    <ChevronLeft className="w-6 h-6 sm:block hidden" />
                 </button>
 
                 {/* Carousel Container */}
@@ -143,7 +143,7 @@ const CategoryCarousel = () => {
                               ${showRightArrow ? 'text-gray-800' : 'text-gray-300'}`}
                     disabled={!showRightArrow}
                 >
-                    <ChevronRight className="w-6 h-6" />
+                    <ChevronRight className="w-6 h-6 sm:block hidden" />
                 </button>
             </div>
         </div>

@@ -234,7 +234,7 @@ const ProductInfo = memo(
       <div className="flex flex-col">
         <div className="flex-1">
           {/* Title and Ratings */}
-          <h1 className="text-xl lg:text-2xl font-extrabold text-gray-900 mb-1">
+          <h1 className="text-xl lg:text-2xl font-extrabold text-gray-900 mb-1 hidden lg:block">
             {product?.details.title || product?.details.name}
           </h1>
           {/* USPs */}
@@ -242,7 +242,7 @@ const ProductInfo = memo(
             {product?.productInfo?.usps?.map((usp, idx) => (
               <span
                 key={idx}
-                className="px-3 py-1 bg-green-50 text-green-700 rounded-full text-sm font-medium flex items-center gap-1"
+                className="px-3 py-1 bg-green-50 text-green-700 rounded-full lg:text-sm text-xs font-medium flex items-center gap-1"
               >
                 <CheckCircle size={16} />
                 {usp}

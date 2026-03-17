@@ -7,7 +7,8 @@ const BuyNowBtn = ({
   item,
    qty = 1,
    setIsCheckoutOpen,
-   className=''
+   className='',
+   action=null
   }) => {
 const dispatch=useDispatch();
  const { cartItemsList } = useSelector((state) => state.cart);
@@ -17,7 +18,6 @@ const dispatch=useDispatch();
    const handleBuyNow = (e) => {
       // e.preventDefault();
       // e.stopPropagation();
-  
       if (currentQtyInCart + qty > item.availability) {
         toast.error(`Only ${item.availability} pcs. available`);
         return;
@@ -32,6 +32,9 @@ const dispatch=useDispatch();
           dispatch(getAllCartItems())
           .then(result=>{
             if(result.type==='cart/getAllCartItems/fulfilled'){
+              if(action){
+                action()
+              }
               setIsCheckoutOpen(true)
             }
           })
