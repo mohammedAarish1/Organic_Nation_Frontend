@@ -152,7 +152,7 @@ const OfferBox = ({ offer }) => {
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 1 * 0.1 }}
       whileHover={{ scale: 1.05 }}
-      className={`flex flex-col items-center p-1 min-w-32 w-72 h-18 rounded-lg cursor-pointer transition-all ${
+      className={`flex flex-col  items-center p-1 rounded-lg cursor-pointer transition-all ${
         offer.highlight
           ? "bg-gradient-to-r from-orange-50 to-yellow-50 border-2 border-orange-300 shadow-md"
           : "bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200"
@@ -165,7 +165,7 @@ const OfferBox = ({ offer }) => {
           repeat: Infinity,
           repeatDelay: 2,
         }}
-        className={`px-2 py-0.5 text-white text-xs font-bold rounded-full flex-shrink-0 ${
+        className={`px-2 w-full text-center py-0.5 text-white text-xs font-bold rounded-full flex-shrink-0 ${
           offer.highlight ? "bg-orange-500" : "bg-green-600"
         }`}
       >

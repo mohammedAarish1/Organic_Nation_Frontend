@@ -513,7 +513,7 @@ const AnimatedSection = ({ title, content, imageSrc, imageFirst, index }) => {
         <img
           src={imageSrc}
           alt={title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+          className="w-full h-full object-none group-hover:scale-105 transition-transform duration-700 ease-out"
           loading="lazy"
         />
       </div>
@@ -547,7 +547,7 @@ const ContentSections = ({ isMobile }) => {
       id: 'harmony',
       title: 'Harmony with Nature',
       content: 'Our operations are deeply rooted in environmental stewardship. Set against the backdrop of Uttarakhand\'s lush landscapes, we harness the purity of this region to cultivate and process organic foods that are free from harmful chemicals and pesticides. By prioritizing eco-friendly practices, we strive to preserve the natural beauty and biodiversity of our surroundings. From eco-friendly production processes to sustainable packaging choices, every decision is guided by principles of reducing environmental impact and promoting biodiversity.',
-      imageSrc: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/AboutUs/3.png',
+      imageSrc: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/AboutUs/harmony.webp',
       imageFirst: true
     },
     {
@@ -568,14 +568,14 @@ const ContentSections = ({ isMobile }) => {
       id: 'transparency',
       title: 'Transparency and Trust',
       content: 'We believe that trust is built through transparency. Our customers can trace the journey of their food, knowing the exact origins and the ethical practices behind its production. By fostering open communication, we ensure that every purchase supports sustainable and humane practices. Our open-door policy invites you to connect with the land and the people who nurture it, fostering a deeper understanding and appreciation of the food you consume.',
-      imageSrc: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/AboutUs/2.png',
+      imageSrc: 'https://organicnationmages.s3.ap-south-1.amazonaws.com/AboutUs/organic.webp',
       imageFirst: false
     },
     {
       id: 'journey',
       title: 'Join Our Journey',
       content: "As we continue to grow, we invite you to join us at ORGANIC NATION and embark on a journey of natural goodness. Whether you are a health-conscious individual, a culinary enthusiast, or a supporter of sustainable living, we invite you to experience the exceptional quality and taste of our organic products. Together, we can make a positive impact - one organic meal at a time. Discover the essence of purity and tradition with ORGANIC NATION – where nature's bounty meets unparalleled craftsmanship.",
-      imageSrc: "https://organicnationmages.s3.ap-south-1.amazonaws.com/AboutUs/6.png",
+      imageSrc: "https://organicnationmages.s3.ap-south-1.amazonaws.com/AboutUs/journey.webp",
       imageFirst: true
     },
   ];

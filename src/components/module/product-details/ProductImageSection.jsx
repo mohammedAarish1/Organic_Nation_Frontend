@@ -38,7 +38,7 @@ useEffect(() => {
       
       
       <motion.div variants={itemVariants} className="">
-         <h1 className="text-sm  text-gray-900 mb-2 lg:hidden block">
+         <h1 className="text-sm font-bold tracking-wide text-gray-900 mb-2 lg:hidden block">
             {product?.title || product?.name} 
             
           </h1>
