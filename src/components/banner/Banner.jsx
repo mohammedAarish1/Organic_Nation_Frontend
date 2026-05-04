@@ -639,8 +639,7 @@ const Banner = () => {
     if (!banner?.redirectionUrl) return;
     
     const redirectUrl = `/shop/${banner.redirectionUrl.toLowerCase()}`;
-    const categoryValue = banner.redirectionUrl;
-    
+    const categoryValue = banner.redirectionUrl.split("/")[0];
     // Batch dispatch calls
     dispatch(setCurrentPage(1));
     dispatch(setCategoryBtnValue(categoryValue));

@@ -16,7 +16,6 @@ const PeopleAlsoBought = memo(({ categoryUrl }) => {
   const dispatch = useDispatch();
   const { filteredProducts } = useSelector((state) => state.filterData);
   const { categoryBtnValue } = useSelector((state) => state.filterData);
-
   useEffect(() => {
     dispatch(fetchCategoryWiseData(categoryUrl));
   }, [categoryUrl, dispatch]);

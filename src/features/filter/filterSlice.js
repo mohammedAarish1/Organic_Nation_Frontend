@@ -5,7 +5,7 @@ const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
 export const getProductsData = createAsyncThunk(
     "filterSlice/getProductsData",
-    async () => {
+    async (_,{ rejectWithValue }) => {
         try {
             const response = await axios.get(`${apiUrl}/products`);
             if (response.status === 200) {
@@ -19,7 +19,8 @@ export const getProductsData = createAsyncThunk(
                 return {}
             }
         } catch (error) {
-            throw error
+            return rejectWithValue(error.message);
+
         }
     });
 
