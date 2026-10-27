@@ -37,6 +37,7 @@ import ScrollToTop from "./helper/ScrollToTop";
 import MyAppRoutes from "./routes/MyAppRoutes";
 import { freeShippingEligibleAmt } from "./constants";
 import { fetchWishlist } from "./features/wishlistSlice";
+import Maintanence from "./pages/Maintanence"
 
 // Memoized components
 
@@ -106,44 +107,45 @@ function App() {
   }, [dispatch]);
 
   return (
-    <CartNotificationProvider>
-      <BrowserRouter>
-        <Routes>
-          {/* Admin routes */}
-          <Route
-            path="/admin/*"
-            element={
-              <Suspense
-                fallback={
-                  <div className="py-52 flex justify-center items-center">
-                    <div className="loader"></div>
-                  </div>
-                }
-              >
-                {isAdminLoggedIn || adminToken ? (
-                  <AdminRoutes />
-                ) : (
-                  <AdminLogin />
-                )}
-              </Suspense>
-            }
-          />
+    // <CartNotificationProvider>
+    //   <BrowserRouter>
+    //     <Routes>
+    //       {/* Admin routes */}
+    //       <Route
+    //         path="/admin/*"
+    //         element={
+    //           <Suspense
+    //             fallback={
+    //               <div className="py-52 flex justify-center items-center">
+    //                 <div className="loader"></div>
+    //               </div>
+    //             }
+    //           >
+    //             {isAdminLoggedIn || adminToken ? (
+    //               <AdminRoutes />
+    //             ) : (
+    //               <AdminLogin />
+    //             )}
+    //           </Suspense>
+    //         }
+    //       />
 
-          {/* Normal routes */}
-          <Route
-            path="*"
-            element={
-              <>
-                <ScrollToTop />
-                <MainContent />
-                <CartNotification />
-                {/* <RecentOrderNotification /> */}
-              </>
-            }
-          />
-        </Routes>
-      </BrowserRouter>
-    </CartNotificationProvider>
+    //       {/* Normal routes */}
+    //       <Route
+    //         path="*"
+    //         element={
+    //           <>
+    //             <ScrollToTop />
+    //             <MainContent />
+    //             <CartNotification />
+    //             {/* <RecentOrderNotification /> */}
+    //           </>
+    //         }
+    //       />
+    //     </Routes>
+    //   </BrowserRouter>
+    // </CartNotificationProvider>
+    <Maintanence/>
   );
 }
 
